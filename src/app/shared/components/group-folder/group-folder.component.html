@@ -1,0 +1,12 @@
+<div class="group">
+  <img
+    src="assets/ArrowDown.svg"
+    [ngClass]="folderOpen ? 'arrow-down' : 'arrow-down-closed'"
+    (click)="toggleFolderOpen()"
+  />
+  <img src="assets/group-folder-icon.svg" />
+  <p>{{ title }}</p>
+</div>
+<div class="content" *ngIf="folderOpen">
+  <ng-content></ng-content>
+</div>

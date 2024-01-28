@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="154px" height="130px" viewBox="0 0 154 130" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <path d="M0 0L154 0L154 130L0 130L0 0Z" id="path_1" />
+    <clipPath id="mask_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <g id="posterize">
+    <g id="Rectangle-2-+-Rectangle-3-Mask">
+      <g id="Mask">
+        <g id="Mask">
+          <path d="M0 0L154 0L154 130L0 130L0 0Z" id="Mask" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="4" />
+          <g clip-path="url(#mask_1)">
+            <path d="M-3.88232 58.3088L36.8824 0.955811" id="New-shape" fill="none" fill-rule="evenodd" stroke="#ECECEC" stroke-width="10" />
+            <path d="M-12.5098 88.2598L62.5491 -14.3383" id="New-shape-2" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="11" />
+            <path d="M163.863 48.2055L87.6047 148.848" id="New-shape-4" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="11" />
+          </g>
+        </g>
+        <path d="M154.452 77.917L113.016 134.207" id="New-shape-3" fill="none" fill-rule="evenodd" stroke="#ECECEC" stroke-width="10" />
+      </g>
+      <path d="M97.4453 -47.261L121.275 -9.5121L2.02272 154.761L-21.8068 117.012L97.4453 -47.261Z" id="Rectangle-2" fill="#535353" fill-rule="evenodd" stroke="none" />
+      <path d="M152.899 -23.8958L176.728 13.8531L57.476 178.126L33.6465 140.377L152.899 -23.8958Z" id="Rectangle-3" fill="#535353" fill-rule="evenodd" stroke="none" />
+    </g>
+  </g>
+</svg>

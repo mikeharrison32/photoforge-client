@@ -1,0 +1,13 @@
+<div class="selected-item" (click)="arrowIconClicked = true">
+  <p class="selected-item-text">
+    {{ selectedItem }}
+  </p>
+  <img src="assets/ArrowDown.svg" />
+</div>
+<div class="items" *ngIf="arrowIconClicked">
+  <div *ngFor="let item of Items" (click)="setSelectedItem(item)" class="item">
+    <p>
+      {{ item }}
+    </p>
+  </div>
+</div>

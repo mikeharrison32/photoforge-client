@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="145px" height="100px" viewBox="0 0 145 100" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 1 0" />
+    </filter>
+  </defs>
+  <g id="levels">
+    <g id="Group-4" filter="url(#filter_1)">
+      <path d="M24 13L24 100L24 100L11.5 100L11.5 26.5L11.5 100L0 100L0 100L0 100L0 36" id="New-shape" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="8" />
+      <path d="M119 13L119 100L119 100L132.542 100L132.542 26.5L132.542 100L145 100L145 100L145 100L145 36" id="New-shape-2" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="8" />
+      <path d="M34 13L34 100L34 100L47.5417 100L47.5416 55L47.5417 100L60 100L60 100L60 100L60 3" id="New-shape-3" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="8" />
+      <path d="M109 49L109 100L109 100L94.4167 100L94.4166 13L94.4167 100L81 100L81 100L81 100L81 0" id="New-shape-4" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="8" />
+      <path d="M68 12.9999L68 99.9999L68 99.9999L81.5417 99.9999L81.5417 26.4999L81.5417 99.9999L94 99.9999L94 99.9999L94 99.9999L94 35.9999" id="New-shape-5" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="8" />
+      <path d="M0 56L145 56L145 100L0 100L0 56Z" id="Rectangle" fill="#808080" fill-rule="evenodd" stroke="none" />
+    </g>
+  </g>
+</svg>

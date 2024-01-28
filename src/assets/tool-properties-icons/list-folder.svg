@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="104px" height="104px" viewBox="0 0 104 104" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 1 0" />
+    </filter>
+    <filter id="filter_2">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.42745098 0 0 0 0 0.42745098 0 0 0 0 0.42745098 0 0 0 1 0" />
+    </filter>
+    <path d="M0 0L104 0L104 104L0 104L0 0Z" id="path_1" />
+    <clipPath id="mask_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <g id="list-folder">
+    <g id="Group-25">
+      <g id="Folder-icon" filter="url(#filter_1)">
+        <path d="M0 0L104 0L104 104L0 104L0 0Z" id="Background" fill="none" fill-rule="evenodd" stroke="none" />
+        <g clip-path="url(#mask_1)">
+          <path d="M86.6667 26.0002L52 26.0002L45.8727 19.8728C44.2477 18.2478 42.042 17.3335 39.7453 17.3335L17.3333 17.3335C12.5667 17.3335 8.66666 21.2335 8.66666 26.0002L8.66666 78.0002C8.66666 82.7668 12.5667 86.6668 17.3333 86.6668L86.6667 86.6668C91.4333 86.6668 95.3333 82.7668 95.3333 78.0002L95.3333 34.6668C95.3333 29.9002 91.4333 26.0002 86.6667 26.0002L86.6667 26.0002Z" id="Shape" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+        </g>
+      </g>
+      <g id="Group-22" transform="translate(21 33)" filter="url(#filter_2)">
+        <path d="M0 6.5C0 2.91015 2.03561 0 4.54667 0C7.05772 0 9.09334 2.91015 9.09334 6.5C9.09334 10.0899 7.05772 13 4.54667 13C2.03561 13 0 10.0899 0 6.5Z" id="Ellipse" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+        <path d="M13.2267 2.4375L62 2.4375L62 9.75L13.2267 9.75L13.2267 2.4375Z" id="Rectangle" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+      </g>
+      <g id="Group-23" transform="translate(21 49)" filter="url(#filter_2)">
+        <path d="M0 6.5C0 2.91015 2.03561 0 4.54667 0C7.05772 0 9.09334 2.91015 9.09334 6.5C9.09334 10.0899 7.05772 13 4.54667 13C2.03561 13 0 10.0899 0 6.5Z" id="Ellipse" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+        <path d="M13.2267 2.4375L62 2.4375L62 9.75L13.2267 9.75L13.2267 2.4375Z" id="Rectangle" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+      </g>
+      <g id="Group-24" transform="translate(21 65)" filter="url(#filter_2)">
+        <path d="M0 6.5C0 2.91015 2.03561 0 4.54667 0C7.05772 0 9.09333 2.91015 9.09333 6.5C9.09333 10.0899 7.05772 13 4.54667 13C2.03561 13 0 10.0899 0 6.5Z" id="Ellipse" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+        <path d="M13.2267 2.4375L62 2.4375L62 9.75L13.2267 9.75L13.2267 2.4375Z" id="Rectangle" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+      </g>
+    </g>
+  </g>
+</svg>

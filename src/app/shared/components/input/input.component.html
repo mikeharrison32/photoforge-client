@@ -1,0 +1,35 @@
+<div class="input" (mousedown)="onValueClick($event)">
+  <div class="value" *ngIf="!Disabled && !editMode">
+    <div [style.display]="'flex'">
+      <span>
+        {{ Value }}
+      </span>
+      <span>{{ unit }}</span>
+    </div>
+
+    <div class="volume-drop-down" (click)="toggleVolume()" *ngIf="hasVolume">
+      <img src="assets/ArrowDown.svg" />
+    </div>
+  </div>
+  <div class="volume" *ngIf="hasVolume && volumeActive">
+    <app-volume></app-volume>
+  </div>
+  <div *ngIf="Disabled" class="disabled-value">
+    <div class="" [style.display]="'flex'">
+      <span>{{ Value }}</span>
+      <span>{{ unit }}</span>
+    </div>
+  </div>
+</div>
+<div
+  *ngIf="editMode && !Disabled"
+  class="editMode-input"
+  #input
+  (input)="onInput(Value)"
+>
+  <input
+    type="number"
+    (input)="onEditModeInputChange($event)"
+    [value]="Value"
+  />
+</div>

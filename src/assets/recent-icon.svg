@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="200px" height="200px" viewBox="0 0 200 200" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 1 0" />
+    </filter>
+  </defs>
+  <g id="recent-icon">
+    <g id="Group-4" transform="translate(20.000097 16.033754)" filter="url(#filter_1)">
+      <path d="M0 84.3882C0 37.7819 35.8172 0 80 0C124.183 0 160 37.7819 160 84.3882C160 130.994 124.183 168.776 80 168.776C35.8172 168.776 0 130.994 0 84.3882Z" id="Ellipse" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="15" />
+      <path d="M79.6 84.3882L79.5999 23.7131" id="Line" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="15" stroke-linecap="square" />
+      <path d="M79.6 84.3882L126.8 115.696" id="Line-2" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="15" stroke-linecap="square" />
+      <path d="M71.6 84.3882C71.6 79.7275 75.1817 75.9494 79.6 75.9494C84.0183 75.9494 87.6 79.7275 87.6 84.3882C87.6 89.0488 84.0183 92.827 79.6 92.827C75.1817 92.827 71.6 89.0488 71.6 84.3882Z" id="Ellipse-2" fill="#808080" fill-rule="evenodd" stroke="none" />
+    </g>
+  </g>
+</svg>

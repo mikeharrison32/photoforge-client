@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="154px" height="128px" viewBox="0 0 154 128" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <path d="M0 0L154 0L154 128L0 128L0 0Z" id="path_1" />
+    <clipPath id="mask_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <g id="threshold">
+    <g id="Rectangle-2-+-Rectangle-5-+-Rectangle-6-+-Rectangle-7-Mask">
+      <path d="M0 0L154 0L154 128L0 128L0 0Z" id="Mask" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="4" />
+      <g clip-path="url(#mask_1)">
+        <path d="M-43.732 48.9782L0.126762 16.9984L14.0003 16.9985L14.0003 -2.24554L95.4873 -52.5342L112.371 -23.3427L67.0444 3.53413L59.6641 15.0888L40.7121 18.9924L35.3105 32.7778L18.0001 32.0294L13.2797 48.9102L-26.8482 78.1696L-43.732 48.9782Z" id="Rectangle-2" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+        <path d="M-23.464 81.4746L2.36117 62.6441L12.1754 54.1958L23.8336 40.9414L37.2587 37.1984L51.8036 33.291L60.6774 20.1226L73.2859 14.788L79.4989 3.41914L96.0833 0.288712L115.755 -20.0378L129.371 3.50375L-9.84803 105.016L-23.464 81.4746Z" id="Rectangle-5" fill="#808080" fill-rule="evenodd" stroke="none" />
+        <path d="M181.459 63.6768L139.151 98.1899L125.296 99.0051L126.193 118.223L47.1619 173.231L28.9406 145.071L72.9525 115.568L79.7841 103.595L98.5282 98.5835L103.28 84.4995L120.601 84.2298L124.529 67.0947L163.238 35.5174L181.459 63.6768Z" id="Rectangle-6" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+        <path d="M159.22 32.3017L134.308 52.6239L124.901 61.6373L113.876 75.5586L100.644 80.0853L86.3014 84.842L78.0535 98.5138L65.7109 104.582L60.0364 116.3L43.6205 120.401L24.9229 141.856L10.2283 119.146L144.525 9.59254L159.22 32.3017Z" id="Rectangle-7" fill="#808080" fill-rule="evenodd" stroke="none" />
+      </g>
+    </g>
+  </g>
+</svg>

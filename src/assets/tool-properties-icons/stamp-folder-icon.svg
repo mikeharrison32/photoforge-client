@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="236px" height="190px" viewBox="0 0 236 190" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 1 0" />
+    </filter>
+    <filter filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB" id="filter_2">
+      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+      <feGaussianBlur stdDeviation="1" result="effect0_gaussianBlur" />
+    </filter>
+    <filter id="filter_3">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.2 0 0 0 0 0.2 0 0 0 0 0.2 0 0 0 1 0" />
+    </filter>
+    <path d="M0 0L236 0L236 190L0 190L0 0Z" id="path_1" />
+    <clipPath id="mask_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <g id="stamp-folder-icon">
+    <g id="Folder-icon-2" filter="url(#filter_1)">
+      <path d="M0 0L236 0L236 190L0 190L0 0Z" id="Background" fill="none" fill-rule="evenodd" stroke="none" />
+      <g clip-path="url(#mask_1)">
+        <path d="M212.667 23.9999L118 23.9999L101.268 7.26758C96.8301 2.83008 90.8069 0.333252 84.5353 0.333252L23.3333 0.333252C10.3166 0.333252 -0.333374 10.9833 -0.333374 23.9999L-0.333374 166C-0.333374 179.017 10.3166 189.667 23.3333 189.667L212.667 189.667C225.683 189.667 236.333 179.017 236.333 166L236.333 47.6666C236.333 34.6499 225.683 23.9999 212.667 23.9999L212.667 23.9999Z" id="Shape" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+      </g>
+    </g>
+    <g id="Group-21" transform="translate(66 64.80005)" filter="url(#filter_3)">
+      <path d="M1.72974 66.5654L101.313 66.5654L101.313 85.5555L1.72974 85.5555L1.72974 66.5654Z" id="Rectangle-2" fill="#D3D3D3" fill-rule="evenodd" stroke="none" filter="url(#filter_2)" />
+      <path d="M0 57.5701L104.3 57.5701L104.3 76.5602L0 76.5602L0 57.5701Z" id="Rectangle-3" fill="#D3D3D3" fill-rule="evenodd" stroke="#5A5A5A" stroke-width="1" />
+      <path d="M52.047 56.6482L52.047 32.3831" id="Line" fill="none" fill-rule="evenodd" stroke="#D3D3D3" stroke-width="4" stroke-linecap="square" />
+      <path d="M34.5938 20.0451C34.5938 8.97451 42.1936 0 51.5684 0C60.9433 0 68.5431 8.97451 68.5431 20.0451C68.5431 31.1157 60.9433 40.0902 51.5684 40.0902C42.1936 40.0902 34.5938 31.1157 34.5938 20.0451Z" id="Ellipse" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+    </g>
+  </g>
+</svg>

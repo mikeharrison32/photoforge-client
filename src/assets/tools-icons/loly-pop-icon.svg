@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="72px" height="70px" viewBox="0 0 72 70" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <g id="loly-pop-icon">
+    <g id="Group-19" transform="matrix(0.99939084 -0.034899477 0.034899477 0.99939084 0.12339556 2.3086302)">
+      <path d="M17.5146 24.5396C17.5146 10.9869 29.1355 0.000210114 43.4706 0.000210114C57.8056 0.000210114 69.4265 10.9869 69.4265 24.5396C69.4265 38.0923 57.8056 49.0789 43.4706 49.0789C29.1355 49.0789 17.5146 38.0923 17.5146 24.5396Z" id="Ellipse-2" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+      <path d="M34.5576 33.3386L0 67.8456" id="Line" fill="none" fill-rule="evenodd" stroke="#D3D3D3" stroke-width="4" stroke-linecap="square" />
+    </g>
+  </g>
+</svg>

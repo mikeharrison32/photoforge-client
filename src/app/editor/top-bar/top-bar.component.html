@@ -1,0 +1,16 @@
+<app-menus></app-menus>
+<app-tool-properties></app-tool-properties>
+<div class="opened-projects">
+  <ul>
+    <li
+      *ngFor="let project of projects"
+      [ngClass]="{ active_project: selectedProject?.Id == project.Id }"
+      (click)="setSelectedProject(project)"
+    >
+      <img src="assets/cancel-icon.svg" (click)="closeProject(project.Id)" />{{
+        project.Title
+      }}
+      @ 100% (DSC00984, RGB/8)*
+    </li>
+  </ul>
+</div>

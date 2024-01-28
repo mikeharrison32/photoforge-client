@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="200px" height="200px" viewBox="0 0 200 200" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <g id="rectangle">
+    <path d="M0 0L200 0L200 200L0 200L0 0Z" id="Rectangle" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+  </g>
+</svg>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="191px" height="116px" viewBox="0 0 191 116" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 1 0" />
+    </filter>
+    <path d="M0 53.1264C0 34.191 26.6286 -3.54175 27.1429 0.268208C27.6571 4.07817 54.2857 34.191 54.2857 53.1264C54.2857 72.062 42.1334 87.4121 27.1429 87.4121C12.1523 87.4121 0 72.062 0 53.1264Z" id="path_1" />
+    <path d="M0 53.1264C0 34.191 26.6286 -3.54177 27.1428 0.268193C27.6571 4.07815 54.2857 34.191 54.2857 53.1264C54.2857 72.062 42.1334 87.4121 27.1428 87.4121C12.1523 87.4121 0 72.062 0 53.1264Z" id="path_2" />
+    <clipPath id="mask_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+    <clipPath id="mask_2">
+      <use xlink:href="#path_2" />
+    </clipPath>
+  </defs>
+  <g id="color-balance">
+    <g id="Group-12" filter="url(#filter_1)">
+      <path d="M83.6001 14.2857C83.6001 6.39592 88.461 0 94.4572 0C100.453 0 105.314 6.39592 105.314 14.2857C105.314 22.1755 100.453 28.5714 94.4572 28.5714C88.461 28.5714 83.6001 22.1755 83.6001 14.2857Z" id="Ellipse" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="3" />
+      <path d="M106.4 14.2857L162.857 14.2857" id="New-shape" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="1" />
+      <path d="M26.0571 14.2857L83.6 14.2857" id="New-shape-2" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="1" />
+      <g id="Rectangle-Mask" transform="translate(0 28.571411)">
+        <path d="M0 53.1264C0 34.191 26.6286 -3.54175 27.1429 0.268208C27.6571 4.07817 54.2857 34.191 54.2857 53.1264C54.2857 72.062 42.1334 87.4121 27.1429 87.4121C12.1523 87.4121 0 72.062 0 53.1264Z" id="Mask" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="3" />
+        <g clip-path="url(#mask_1)">
+          <path d="M-24.9714 42.8571L81.4286 42.8571L81.4286 101.714L-24.9714 101.714L-24.9714 42.8571Z" id="Rectangle" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+        </g>
+      </g>
+      <path d="M27.1429 31.4285L27.1429 14.2856" id="New-shape-3" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="1" />
+      <g id="Rectangle-Mask" transform="translate(135.71436 28.58789)">
+        <path d="M0 53.1264C0 34.191 26.6286 -3.54177 27.1428 0.268193C27.6571 4.07815 54.2857 34.191 54.2857 53.1264C54.2857 72.062 42.1334 87.4121 27.1428 87.4121C12.1523 87.4121 0 72.062 0 53.1264Z" id="Mask" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="3" />
+        <g clip-path="url(#mask_2)">
+          <path d="M-27.1429 42.8407L74.9142 42.8407L74.9142 101.698L-27.1429 101.698L-27.1429 42.8407Z" id="Rectangle" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+        </g>
+      </g>
+      <path d="M163.943 31.4451L163.943 14.3022" id="New-shape-4" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="1" />
+    </g>
+  </g>
+</svg>

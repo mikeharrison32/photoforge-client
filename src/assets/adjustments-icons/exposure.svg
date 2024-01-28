@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="153px" height="97px" viewBox="0 0 153 97" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <g id="exposure">
+    <g id="Group-8">
+      <g id="Group-7">
+        <path d="M0 0L153 0L153 97L0 97L0 0Z" id="Rectangle" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="5" />
+      </g>
+      <path d="M0 0L153 0L0 97L0 0Z" id="Rectangle" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+      <path d="M38.5 11.4728L38.5 48.0275" id="Line-4" fill="none" fill-rule="evenodd" stroke="#333333" stroke-width="5" stroke-linecap="square" />
+      <path d="M19.7227 29.2771L56.2773 29.2771" id="Line-5" fill="none" fill-rule="evenodd" stroke="#333333" stroke-width="5" stroke-linecap="square" />
+      <path d="M76 73L128.5 73" id="Line-6" fill="none" fill-rule="evenodd" stroke="#D3D3D3" stroke-width="5" stroke-linecap="square" />
+    </g>
+  </g>
+</svg>

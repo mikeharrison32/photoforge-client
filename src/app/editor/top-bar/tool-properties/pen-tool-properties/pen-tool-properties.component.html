@@ -1,0 +1,15 @@
+<div class="tool-propertie pen-tool">
+  <app-select [Items]="['Path']"></app-select>
+  <div class="make">
+    <span>Make: </span>
+    <app-button [Text]="'Selection...'" (click)="makeSelection()"></app-button>
+    <app-button [Text]="'Mask'" (click)="mask()"></app-button>
+    <app-button [Text]="'Shape'" (click)="makeShape()"></app-button>
+  </div>
+  <img src="assets/tool-properties-icons/double-rectangle.svg" />
+  <img src="assets/tool-properties-icons/align-left.svg" />
+  <img src="assets/tool-properties-icons/stack-up.svg" />
+  <img src="assets/tool-properties-icons/setting-icon.svg" />
+  <app-checkbox [text]="'Auto Add/Delete'"></app-checkbox>
+  <app-checkbox [text]="'Align Edges'"></app-checkbox>
+</div>

@@ -1,0 +1,16 @@
+<div class="tool-propertie blur-tool">
+  <app-brush></app-brush>
+  <div class="brush-folder-icon">
+    <img src="assets/tool-properties-icons/brush-folder-icon.svg" />
+  </div>
+  <div class="mode">
+    <span>Mode:</span>
+    <app-select [Items]="['Normal']"></app-select>
+  </div>
+  <div class="strength">
+    <span>Strength:</span>
+    <app-input [Value]="50" unit="%" [hasVolume]="true"></app-input>
+  </div>
+  <app-checkbox [text]="'Sample All Layers'"></app-checkbox>
+  <img src="assets/tool-properties-icons/bow-hit-icon.svg" />
+</div>

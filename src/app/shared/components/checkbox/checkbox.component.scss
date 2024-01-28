@@ -1,0 +1,31 @@
+:host {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  .box {
+    padding: 0.35rem;
+    background: #262626;
+    box-shadow: #4d4d4d 0 0 0 1px;
+    cursor: pointer;
+  }
+
+  .checked {
+    @extend .box;
+    padding: 0.1rem;
+    background: #ffffff;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.4px;
+    img {
+      width: 0.5rem;
+      filter: brightness(0);
+    }
+  }
+  p {
+    margin: 0;
+    font-size: 0.7rem;
+    color: #c7c7c7;
+  }
+}

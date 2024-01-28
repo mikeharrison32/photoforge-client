@@ -1,0 +1,115 @@
+<p>PRESET DETAILS</p>
+<input
+  [(ngModel)]="presets.Title"
+  type="text"
+  class="project-title"
+  value="Untitled-1"
+/>
+<div>
+  <label for="">Width</label> <br />
+  <input
+    [value]="activeTemplate.width"
+    type="number"
+    name=""
+    id=""
+    class="width"
+  />
+  <select [(ngModel)]="presets.Unit" id="metrics">
+    <option *ngFor="let unit of UnitTypes" [value]="unit">{{ unit }}</option>
+  </select>
+</div>
+<div class="row-1">
+  <div class="flex">
+    <label for="">Height</label>
+    <input
+      [value]="activeTemplate.height"
+      type="number"
+      name=""
+      id=""
+      class="height"
+    />
+  </div>
+  <div class="flex">
+    <label for="">Orientation</label>
+    <div class="orientation">
+      <img class="portrait" src="assets/portrait-orientation.svg" />
+      <img class="landscape" src="assets/landscape-orientation.svg" />
+    </div>
+  </div>
+  <div class="flex">
+    <label for="">Artboards</label>
+    <input type="checkbox" name="" id="" class="artboards" />
+  </div>
+  <br />
+</div>
+<div>
+  <label for="">Resolution</label><br />
+  <input
+    [value]="activeTemplate.resolution"
+    type="number"
+    name=""
+    id=""
+    class="resolution"
+  />
+  <select name="" id="metrics">
+    <option value="pixels">Pixels/Inch</option>
+  </select>
+</div>
+<div>
+  <label for="">Color Mode</label><br />
+  <select name="" id="" class="color-mode">
+    <option value="">RGB Color</option>
+    <option value="">CMYK Color</option>
+    <option value="">Grayscale</option>
+    <option value="">Lab Color</option>
+    <option value="">Indexed</option>
+    <option value="">Duotone</option>
+  </select>
+  <select name="bit" id="" class="bit">
+    <option value="">8 bit</option>
+    <option value="">16 bit</option>
+  </select>
+</div>
+<div>
+  <label for="">Background Content</label><br />
+  <select name="" id="" class="bg-content">
+    <option value="">Custom</option>
+    <option value="">White</option>
+    <option value="">Black</option>
+    <option value="">Transparent</option>
+  </select>
+  <input type="color" name="" id="" class="color" value="fff" />
+</div>
+<!-- Advanced Options -->
+<p (click)="toggleAdvancedOptions()" class="advanced-options">
+  <img
+    [ngClass]="advancedOptionsOpen == false ? 'arrow-right' : ''"
+    src="assets/ArrowDown.svg"
+  />
+  Advanced Options
+</p>
+<div *ngIf="advancedOptionsOpen">
+  <div>
+    <label for="">Color Profile</label><br />
+    <select name="" id="" class="color-profile">
+      <option value="">SRGB IEC61</option>
+      <option value="">Adobe RGB</option>
+      <option value="">ProPhoto RGB</option>
+      <option value="">Color Match RGB</option>
+      <option value="">Display P3</option>
+    </select>
+  </div>
+  <div>
+    <label for="" class="pixel-aspect-ratio">Pixel Aspect Ratio</label><br />
+    <select name="" id="" class="color-profile">
+      <option value="">Square Pixels</option>
+      <option value="">NTSC DV Widescreen</option>
+      <option value="">D1/DV PAL</option>
+      <option value="">Film</option>
+      <option value="">Custom</option>
+    </select>
+  </div>
+</div>
+<!-- Buttons -->
+<button class="close-btn" (click)="onCloseBtnClick()">Close</button>
+<button class="create-btn" (click)="onCreateBtnClick()">Create</button>

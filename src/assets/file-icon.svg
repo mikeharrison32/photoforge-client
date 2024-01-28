@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="100px" height="74px" viewBox="0 0 100 74" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 1 0" />
+    </filter>
+    <path d="M0 0L104.545 0L104.545 73.2043L0 73.2043L0 0Z" id="path_1" />
+    <clipPath id="mask_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <g id="file-icon">
+    <g id="Group-21" filter="url(#filter_1)">
+      <g id="File-icon" transform="translate(3.4089742 0)">
+        <path d="M0 0L104.545 0L104.545 73.2043L0 73.2043L0 0Z" id="Background" fill="none" fill-rule="evenodd" stroke="none" />
+        <g clip-path="url(#mask_1)">
+          <path d="M81.4876 11.8451C80.5137 11.1742 79.5085 10.4813 78.519 9.78844C77.5137 9.09555 76.5399 8.39166 75.5661 7.69877C68.6864 2.78255 64.5869 0 60.3146 0L28.1468 0C19.2881 0 12.0629 5.05919 12.0629 11.2622L12.0629 61.9421C12.0629 68.1451 19.2881 73.2043 28.1468 73.2043L76.3985 73.2043C85.2572 73.2043 92.4824 68.1451 92.4824 61.9421L92.4824 22.5244C92.4824 19.5329 88.5086 16.6623 81.4876 11.8451L81.4876 11.8451ZM84.4405 61.9421C84.4405 65.0546 80.8436 67.5732 76.3986 67.5732L28.1468 67.5732C23.7017 67.5732 20.1049 65.0546 20.1049 61.9421L20.1049 11.2622C20.1049 8.14971 23.7017 5.63111 28.1468 5.63111L57.456 5.62012C60.3618 6.13704 60.3147 8.63363 60.3147 11.1302L60.3147 19.7089C60.3147 21.2596 62.1209 22.5244 64.3356 22.5244L76.3986 22.5244C80.4038 22.5244 84.4405 22.5354 84.4405 25.34L84.4405 61.9421Z" id="Shape" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+        </g>
+      </g>
+      <path d="M0 49.3333L36.0227 49.3333L36.0227 74L0 74L0 49.3333Z" id="Rectangle" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+    </g>
+  </g>
+</svg>

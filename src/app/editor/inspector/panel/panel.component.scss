@@ -1,0 +1,41 @@
+$dark_gray: #282828;
+$light_gray: #3a3a3a;
+
+:host {
+  width: 100%;
+  border: solid 1px $dark_gray;
+  background: $light_gray;
+  .panel-tabs {
+    width: 100%;
+    height: 1.2rem;
+    display: flex;
+    background: $dark_gray;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding-left: 1.8rem;
+    gap: 0.7rem;
+    .tab {
+      font-size: 0.6rem;
+      color: #979797;
+      font-weight: 500;
+      padding-inline: 0.4rem;
+      cursor: pointer;
+    }
+    .active {
+      font-size: 0.6rem;
+      color: #ccc;
+      font-weight: 500;
+      background: $light_gray;
+      padding-inline: 0.4rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      border-radius: 2px 2px 0 0;
+    }
+  }
+  .body {
+    margin-left: 2rem;
+  }
+}

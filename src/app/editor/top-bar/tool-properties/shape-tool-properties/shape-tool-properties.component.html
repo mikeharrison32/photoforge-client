@@ -1,0 +1,48 @@
+<app-select [Items]="['Shape']"></app-select>
+<div class="input">
+  <span>Fill: </span>
+  <input type="color" name="" id="" (change)="onFillColorChange($event)" />
+</div>
+<div class="input">
+  <span>Stroke:</span>
+  <input type="color" name="" id="" (change)="onStrokeChange($event)" />
+</div>
+<app-input
+  [Value]="shapeProps?.strokeWidth"
+  unit="pixel"
+  (onInputChange)="onStrokeWidthChange($event)"
+></app-input>
+<select name="" id="">
+  <option value="----">----</option>
+</select>
+<div class="input">
+  <span>W:</span>
+  <app-input [Value]="shapeProps?.width" unit="pixel"></app-input>
+</div>
+<img src="assets/tool-properties-icons/link-icon.svg" class="link-icon" />
+<div class="input">
+  <span>H:</span>
+  <app-input [Value]="shapeProps?.height" unit="pixel"></app-input>
+</div>
+<div class="icons">
+  <img src="assets/tool-properties-icons/rectangle.svg" />
+  <img src="assets/tool-properties-icons/align-left.svg" />
+  <img src="assets/tool-properties-icons/stack-up.svg" />
+  <img src="assets/tool-properties-icons/setting-icon.svg" />
+</div>
+<div *ngIf="shapeProps?.shape == Shape.RoundedRectangle" class="input">
+  <span>Radius:</span>
+  <app-input
+    [Value]="shapeProps?.radius"
+    unit="pixel"
+    (onInputChange)="onRadiusChange($event)"
+  ></app-input>
+</div>
+<div *ngIf="shapeProps?.shape == Shape.Polygon" class="input">
+  <span>Sides: </span>
+  <app-input
+    [Value]="shapeProps?.radius"
+    (onInputChange)="onRadiusChange($event)"
+  ></app-input>
+</div>
+<app-checkbox [text]="'Align Edges'"></app-checkbox>

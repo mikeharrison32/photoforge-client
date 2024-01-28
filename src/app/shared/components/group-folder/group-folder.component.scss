@@ -1,0 +1,25 @@
+:host {
+  .group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    p {
+      margin: 0;
+      font-size: 0.7rem;
+    }
+    img {
+      width: 0.8rem;
+    }
+    .arrow-down {
+      filter: brightness(2);
+      width: 0.6rem;
+    }
+    .arrow-down-closed {
+      @extend .arrow-down;
+      transform: rotate(-90deg);
+    }
+  }
+  .content {
+    padding-left: 1rem;
+  }
+}

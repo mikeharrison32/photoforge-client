@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="73px" height="69px" viewBox="0 0 73 69" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <g id="eraser-tool">
+    <g id="Group-18">
+      <path d="M-1.66893e-06 46.5071L56.6869 1.10921L72.1879 21.4465L15.501 66.8444L-1.66893e-06 46.5071Z" id="Rectangle" fill="none" fill-rule="evenodd" stroke="#D3D3D3" stroke-width="2" />
+      <path d="M19.966 30.9917L56.8125 1.48307L72.3135 21.8204L35.467 51.329L19.966 30.9917Z" id="Rectangle-2" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+      <path d="M16.1338 67.1566L68.4747 67.1566" id="Line" fill="none" fill-rule="evenodd" stroke="#D3D3D3" stroke-width="2" stroke-linecap="square" />
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="272px" height="219px" viewBox="0 0 272 219" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 1 0" />
+    </filter>
+    <path d="M0 0L137.392 0L137.392 128.619L0 128.619L0 0Z" id="path_1" />
+    <clipPath id="mask_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <g id="rectangular-add-icon">
+    <g id="Group-22" transform="translate(8.354949 13.035714)" filter="url(#filter_1)">
+      <path d="M0 0L252.505 0L252.505 190.321L0 190.321L0 0Z" id="Rectangle" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="12" />
+      <g id="Plus-icon" transform="translate(56.999336 30.416878)">
+        <path d="M0 0L137.392 0L137.392 128.619L0 128.619L0 0Z" id="Background" fill="none" fill-rule="evenodd" stroke="none" />
+        <g clip-path="url(#mask_1)">
+          <path d="M62.9718 10.7178L62.9718 58.9499L11.4496 58.9499L11.4496 69.6682L62.9718 69.6682L62.9718 117.9L74.4212 117.9L74.4212 69.6682L125.943 69.6682L125.943 58.9499L74.4212 58.9499L74.4212 10.7178L62.9718 10.7178Z" id="Shape" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

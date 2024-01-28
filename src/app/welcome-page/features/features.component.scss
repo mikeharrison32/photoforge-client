@@ -1,0 +1,29 @@
+:host {
+  h4 {
+    margin-bottom: 0;
+  }
+  p {
+    margin: 0;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  .features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    .feature {
+      width: 14rem;
+      padding: 1rem;
+      border-radius: 1px;
+      background: #2a2a2a;
+      .feature-image {
+        width: 14rem;
+        height: 9rem;
+      }
+      h4 {
+        margin-bottom: 0.3rem;
+        font-weight: 500;
+      }
+    }
+  }
+}

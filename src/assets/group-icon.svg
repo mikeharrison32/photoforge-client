@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="273px" height="219px" viewBox="0 0 273 219" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 1 0" />
+    </filter>
+    <path d="M0 0L266.171 0L266.171 207.623L0 207.623L0 0Z" id="path_1" />
+    <clipPath id="mask_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <g id="group-icon">
+    <g id="Folder-icon-2" transform="translate(2.9148157 8.532467)" filter="url(#filter_1)">
+      <path d="M0 0L266.171 0L266.171 207.623L0 207.623L0 0Z" id="Background" fill="none" fill-rule="evenodd" stroke="none" />
+      <g clip-path="url(#mask_1)">
+        <path d="M239.854 26.2259L133.085 26.2259L114.214 7.94161C109.209 3.09251 102.416 0.364083 95.3424 0.364083L26.3162 0.364083C11.6355 0.364083 -0.376013 12.0019 -0.376013 26.2259L-0.376013 181.397C-0.376013 195.621 11.6355 207.259 26.3162 207.259L239.854 207.259C254.535 207.259 266.547 195.621 266.547 181.397L266.547 52.0878C266.547 37.8638 254.535 26.2259 239.854 26.2259L239.854 26.2259Z" id="Shape" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="77px" height="65px" viewBox="0 0 77 65" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0" />
+    </filter>
+  </defs>
+  <g id="Group" transform="translate(3 3)" filter="url(#filter_1)">
+    <path d="M10.6974 8.99997L70.9958 8.5" id="Line" fill="none" fill-rule="evenodd" stroke="#B2B2B2" stroke-width="6" stroke-linecap="square" />
+    <path d="M10.6844 28.75L70.9963 28.75" id="Line-Copy" fill="none" fill-rule="evenodd" stroke="#B2B2B2" stroke-width="6" stroke-linecap="square" />
+    <path d="M10.6806 49.75L71 49.75" id="Line-Copy-2" fill="none" fill-rule="evenodd" stroke="#B2B2B2" stroke-width="6" stroke-linecap="square" />
+    <path d="M0 0L10.1038 0L10.1038 15L0 15L0 0Z" id="Rectangle" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+    <path d="M0.134735 21.7L10.2385 21.7L10.2385 36.7L0.134735 36.7L0.134735 21.7Z" id="Rectangle-Copy" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+    <path d="M0.26944 43.4L10.3732 43.4L10.3732 58.4L0.26944 58.4L0.26944 43.4Z" id="Rectangle-Copy-2" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+  </g>
+</svg>

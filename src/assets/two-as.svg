@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="2068px" height="2860px" viewBox="0 0 2068 2860" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 1 0" />
+    </filter>
+  </defs>
+  <g id="two-as">
+    <g id="Group" transform="translate(236.50002 -125)" filter="url(#filter_1)">
+      <g id="A" fill="#5E5E5E" transform="translate(462.00003 1200)">
+        <path d="M178.733 1468.77L38.7614 1468.77L443.602 366.227L581.42 366.227L986.261 1468.77L846.29 1468.77L735.389 1156.53L289.634 1156.53L178.733 1468.77ZM331.625 1038.09L693.398 1038.09L516.818 540.653L508.205 540.653L331.625 1038.09Z" />
+      </g>
+      <path d="M259.5 2715.3L1743.5 2719.3" id="Line" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="81" stroke-linecap="square" />
+      <g id="A" fill="#5E5E5E" transform="translate(462.00003 0)">
+        <path d="M178.733 1468.77L38.7614 1468.77L443.602 366.227L581.42 366.227L986.261 1468.77L846.29 1468.77L735.389 1156.53L289.634 1156.53L178.733 1468.77ZM331.625 1038.09L693.398 1038.09L516.818 540.653L508.205 540.653L331.625 1038.09Z" />
+      </g>
+      <path d="M259.5 1540.3L1743.5 1544.3" id="Line-Copy" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="81" stroke-linecap="square" />
+      <path d="M1 587.3L1 2497.8" id="Line-2" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="59" stroke-linecap="square" />
+    </g>
+  </g>
+</svg>

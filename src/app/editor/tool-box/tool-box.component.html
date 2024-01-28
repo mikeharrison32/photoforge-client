@@ -1,0 +1,173 @@
+<div class="tools">
+  <app-tool
+    ImgSrc="assets/tools-icons/move-tool.svg"
+    (click)="setSelectedTool('moveTool')"
+    [Active]="selectedTool == 'moveTool'"
+  ></app-tool>
+  <app-tool
+    ImgSrc="assets/tools-icons/rectangular-marquee-tool.svg"
+    (click)="setSelectedTool('rectangularSelectTool')"
+    [Active]="selectedTool == 'rectangularSelectTool'"
+  ></app-tool>
+  <app-tool
+    ImgSrc="assets/tools-icons/lasso-tool.svg"
+    (click)="setSelectedTool('lassoTool')"
+    [Active]="selectedTool == 'lassoTool'"
+  ></app-tool>
+  <!-- <app-tool
+    ImgSrc="assets/tools-icons/quick-selection-tool.svg"
+    (click)="setSelectedTool('quickSelectionTool')"
+    [Active]="selectedTool == 'quickSelectionTool'"
+  >
+  </app-tool> -->
+  <app-tool
+    ImgSrc="assets/tools-icons/crop-tool.svg"
+    (click)="setSelectedTool('cropTool')"
+    [Active]="selectedTool == 'cropTool'"
+  >
+  </app-tool>
+  <app-tool
+    ImgSrc="assets/tools-icons/color-picker.svg"
+    (click)="setSelectedTool('colorPickerTool')"
+    [Active]="selectedTool == 'colorPickerTool'"
+  >
+  </app-tool>
+  <!-- <app-tool
+    ImgSrc="assets/tools-icons/spot-healing-brush.svg"
+    (click)="setSelectedTool('spotHealingBrushTool')"
+    [Active]="selectedTool == 'spotHealingBrushTool'"
+  >
+  </app-tool> -->
+  <app-tool
+    ImgSrc="assets/tools-icons/brush-tool.svg"
+    (click)="setSelectedTool('brushTool')"
+    [Active]="selectedTool == 'brushTool'"
+  >
+  </app-tool>
+  <app-tool
+    ImgSrc="assets/tools-icons/raster-tool.svg"
+    (click)="setSelectedTool('cloneStampTool')"
+    [Active]="selectedTool == 'cloneStampTool'"
+  >
+  </app-tool>
+  <app-tool
+    ImgSrc="assets/tools-icons/eraser-tool.svg"
+    (click)="setSelectedTool('eraserTool')"
+    [Active]="selectedTool == 'eraserTool'"
+  >
+  </app-tool>
+  <!-- <app-tool
+    ImgSrc="assets/tools-icons/water-drop-icon.svg"
+    (click)="setSelectedTool('blurTool')"
+    [Active]="selectedTool == 'blurTool'"
+  >
+  </app-tool> -->
+  <!-- <app-tool
+    ImgSrc="assets/tools-icons/gradient-tool.svg"
+    (click)="setSelectedTool('gradienTool')"
+    [Active]="selectedTool == 'gradienTool'"
+  >
+  </app-tool>
+  <app-tool
+    ImgSrc="assets/tools-icons/pen-tool.svg"
+    (click)="setSelectedTool('penTool')"
+    [Active]="selectedTool == 'penTool'"
+  >
+  </app-tool> -->
+  <app-tool
+    ImgSrc="assets/tools-icons/text-tool.svg"
+    (click)="setSelectedTool('textTool')"
+    [Active]="selectedTool == 'textTool'"
+  >
+  </app-tool>
+  <app-tool
+    ImgSrc="assets/tools-icons/pointer-tool.svg"
+    (click)="setSelectedTool('pathSelectionTool')"
+    [Active]="selectedTool == 'pathSelectionTool'"
+  >
+  </app-tool>
+  <app-tool
+    [ImgSrc]="shapeImgSrc"
+    (click)="setSelectedTool('shapeTool')"
+    [Active]="selectedTool == 'shapeTool'"
+    [hasChoices]="true"
+  >
+    <div tool-choices>
+      <div (click)="setSelectedShape(Shape.Rectangle)" class="tool-choice">
+        <img
+          src="assets/tools-icons/shape-tools-icons/rectangle-shape-tool.svg"
+        />
+        <span> Rectangle </span>
+      </div>
+      <div
+        (click)="setSelectedShape(Shape.RoundedRectangle)"
+        class="tool-choice"
+      >
+        <img
+          src="assets/tools-icons/shape-tools-icons/rounded-rectangle-shape-tool.svg"
+        />
+        Rounded Rectangle
+      </div>
+      <div (click)="setSelectedShape(Shape.Ellipse)" class="tool-choice">
+        <img
+          src="assets/tools-icons/shape-tools-icons/ellipse-shape-tool.svg"
+        />
+        Ellipse
+      </div>
+      <div (click)="setSelectedShape(Shape.Polygon)" class="tool-choice">
+        <img
+          src="assets/tools-icons/shape-tools-icons/polygon-shape-tool.svg"
+        />
+        Polygon
+      </div>
+      <div (click)="setSelectedShape(Shape.Line)" class="tool-choice">
+        <img src="assets/tools-icons/shape-tools-icons/line-shape-tool.svg" />
+        Line
+      </div>
+      <div class="tool-choice">
+        <img src="assets/tools-icons/shape-tools-icons/custom-shape-tool.svg" />
+        Custom Shape
+      </div>
+    </div>
+  </app-tool>
+  <app-tool
+    ImgSrc="assets/tools-icons/zoom-tool.svg"
+    (click)="setSelectedTool('zoomTool')"
+    [Active]="selectedTool == 'zoomTool'"
+  >
+  </app-tool>
+  <app-tool
+    ImgSrc="assets/tools-icons/hand-tool.svg"
+    (click)="setSelectedTool('handTool')"
+    [Active]="selectedTool == 'handTool'"
+  >
+  </app-tool>
+  <div class="color-options">
+    <div class="colors-panel">
+      <div class="colors-panel-icons">
+        <img
+          src="assets/tools-icons/flip-colors-icon.svg"
+          (click)="restoreColors()"
+        />
+        <img
+          src="assets/tools-icons/two-arrows-icon.svg"
+          (click)="shiftColors()"
+        />
+      </div>
+      <div class="colors">
+        <div class="foreground">
+          <app-color-picker
+            (colorChange)="setFgColor($event)"
+            [color]="forgroundColor"
+          ></app-color-picker>
+        </div>
+        <div class="background">
+          <app-color-picker
+            (colorChange)="setBgColor($event)"
+            [color]="backgroundColor"
+          ></app-color-picker>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

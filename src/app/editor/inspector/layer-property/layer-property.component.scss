@@ -1,0 +1,313 @@
+:host {
+  .line {
+    width: 100%;
+    height: 1px;
+    background: #2a2a2a;
+    margin: 0;
+  }
+  img {
+    width: 0.8rem;
+  }
+  .pixel-layer {
+    width: 100%;
+    .input {
+      width: 3rem;
+    }
+    p {
+      margin: 0;
+    }
+    .description {
+      width: 100%;
+      gap: 4px;
+      display: flex;
+      align-items: center;
+      font-size: 0.7rem;
+      padding: 0.4rem;
+      border-bottom: solid 1px #2a2a2a;
+    }
+    .grid {
+      width: 100%;
+      display: grid;
+      padding: 0.3rem;
+
+      .row {
+        width: 84%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 0.6rem;
+        margin-block: 0.2rem;
+        .input {
+          margin-left: 1rem;
+        }
+        p {
+          margin: 0;
+          position: absolute;
+        }
+        div {
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+  }
+  .type-layer {
+    @extend .pixel-layer;
+    .font {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      .select,
+      .input {
+        width: 84%;
+      }
+    }
+    .small-input {
+      display: flex;
+      align-items: center;
+      .input {
+        margin-left: 0;
+      }
+    }
+    .row {
+      .text-size {
+        .input {
+          width: 4rem;
+        }
+      }
+      .text-align-buttons {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        .text-align-active {
+          background: #272727;
+          padding: 0.3rem;
+          border-radius: 1px;
+        }
+      }
+      .color {
+        display: flex;
+        align-items: center;
+        input {
+          background: transparent;
+          border: none;
+        }
+      }
+    }
+
+    .icon {
+      background: #262626;
+      padding: 0.2rem;
+    }
+  }
+  .shape-layer {
+    @extend .pixel-layer;
+    .border-radius-all {
+      width: 12rem;
+      height: 1rem;
+      background: #262626;
+      border-radius: 1px;
+      margin-left: 1rem;
+    }
+    .link-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-block: 0.4rem;
+      width: 84%;
+      img {
+        padding: 0.5rem;
+        background: #202020;
+        border-radius: 1px;
+        width: 1rem;
+      }
+    }
+    .border-radius {
+      display: flex;
+      align-items: center;
+      .left-top-border-icon,
+      .right-top-border-icon,
+      .left-bottom-border-icon,
+      .right-bottom-border-icon {
+        width: 0.8rem;
+        height: 0.8rem;
+        border: solid 1px;
+      }
+
+      $border-radius: 5px;
+      .left-top-border-icon {
+        border-top-left-radius: $border-radius;
+      }
+      .left-bottom-border-icon {
+        border-bottom-left-radius: $border-radius;
+      }
+      .right-top-border-icon {
+        border-top-right-radius: $border-radius;
+      }
+      .right-bottom-border-icon {
+        border-bottom-right-radius: $border-radius;
+      }
+    }
+    input {
+      background: transparent;
+      border: none;
+      width: 3rem;
+      height: 1.8rem;
+    }
+    .border-radius-input {
+      margin-inline: 0.4rem;
+      width: 4rem;
+    }
+    .icon-select {
+      width: 3.8rem;
+    }
+    .border-select {
+      width: 2.9rem;
+    }
+    .options {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 0.3rem;
+      justify-content: center;
+      img {
+        background: #242424;
+        padding-block: 0.2rem;
+        padding-inline: 0.4rem;
+        border: solid 1px #6c6c6c;
+      }
+    }
+  }
+  .ad_layer_properity {
+    .tint {
+      width: 1.2rem;
+      height: 1.2rem;
+      border: #2d2d2d solid 1px;
+    }
+    .histogram {
+      width: 12rem;
+      height: 5rem;
+      background: #7e7e7e;
+    }
+    .inputs {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .level-input {
+      width: 2rem;
+    }
+    .output-levels {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      justify-content: center;
+      div {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+      }
+
+      span {
+        font-size: 0.7rem;
+        color: #e1e1e1;
+      }
+    }
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.4rem;
+    display: flex;
+    margin-bottom: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+    .adj_type {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      padding-block: 0.4rem;
+      box-shadow: #282828 0px 1px;
+      img {
+        width: 1.2rem;
+      }
+    }
+    .auto-btn {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      button {
+        width: 3rem;
+      }
+    }
+    .layer-mask {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: #272727 0 1px;
+      padding-bottom: 0.6rem;
+      .mask {
+        width: 2rem;
+        height: 1.5rem;
+        background: #fff;
+      }
+      div {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+      }
+    }
+    .color-preview {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: #272727 0 1px;
+      padding-bottom: 0.6rem;
+      .color {
+        border-radius: 1px;
+        width: 1.8rem;
+        height: 1.8rem;
+      }
+      div {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+      }
+    }
+    .refine {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      .disabled {
+        color: #737373;
+      }
+      div {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        button {
+          width: 9rem;
+          font-size: 0.6rem;
+          border: none;
+          outline: none;
+          background: #2e2e2e;
+          color: #fff;
+          padding: 0.3rem;
+        }
+        .button-disabled {
+          color: #737373;
+        }
+      }
+    }
+    p {
+      margin: 0;
+      font-size: 0.7rem;
+      color: #dbdbdb;
+    }
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+  }
+}

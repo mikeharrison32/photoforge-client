@@ -1,0 +1,80 @@
+<div class="template-choices">
+  <p
+    [ngClass]="selectedTemplateType == 'Recent' ? 'active-template-tab' : ''"
+    (click)="setSelectedTemplateType('Recent')"
+  >
+    <img class="recent-icon" src="assets/recent-icon.svg" />
+    Recent
+  </p>
+  <p
+    [ngClass]="selectedTemplateType == 'Saved' ? 'active-template-tab' : ''"
+    (click)="setSelectedTemplateType('Saved')"
+  >
+    Saved
+  </p>
+  <p
+    [ngClass]="selectedTemplateType == 'Photo' ? 'active-template-tab' : ''"
+    (click)="setSelectedTemplateType('Photo')"
+  >
+    Photo
+  </p>
+  <p
+    [ngClass]="selectedTemplateType == 'Print' ? 'active-template-tab' : ''"
+    (click)="setSelectedTemplateType('Print')"
+  >
+    Print
+  </p>
+  <p
+    [ngClass]="
+      selectedTemplateType == 'ArtAndIllustration' ? 'active-template-tab' : ''
+    "
+    (click)="setSelectedTemplateType('ArtAndIllustration')"
+  >
+    Art & Illustration
+  </p>
+  <p
+    [ngClass]="selectedTemplateType == 'Web' ? 'active-template-tab' : ''"
+    (click)="setSelectedTemplateType('Web')"
+  >
+    Web
+  </p>
+  <p
+    [ngClass]="selectedTemplateType == 'Mobile' ? 'active-template-tab' : ''"
+    (click)="setSelectedTemplateType('Mobile')"
+  >
+    Mobile
+  </p>
+  <p
+    [ngClass]="
+      selectedTemplateType == 'FilmAndVideo' ? 'active-template-tab' : ''
+    "
+    (click)="setSelectedTemplateType('FilmAndVideo')"
+  >
+    Film & Video
+  </p>
+</div>
+<div class="templates" [ngSwitch]="selectedTemplateType">
+  <div *ngSwitchCase="'Recent'" class="template-tab">
+    <app-template
+      *ngFor="let template of recentTemplates"
+      (click)="setActiveTemplate(template.id)"
+      [Title]="template.title"
+      [Width]="template.width"
+      [Height]="template.height"
+      [Resolution]="template.resolution"
+      [Active]="template.id == activeTemplate.id"
+    ></app-template>
+  </div>
+  <div *ngSwitchCase="'Saved'" class="template-tab"></div>
+  <div *ngSwitchCase="'Photo'" class="template-tab"></div>
+  <div *ngSwitchCase="'Print'" class="template-tab"></div>
+  <div *ngSwitchCase="'ArtAndIllustration'" class="template-tab"></div>
+  <div *ngSwitchCase="'Web'" class="template-tab"></div>
+  <div *ngSwitchCase="'Mobile'" class="template-tab"></div>
+  <div *ngSwitchCase="'FilmAndVideo'" class="template-tab"></div>
+</div>
+<app-preset-detail
+  [activeTemplate]="activeTemplate"
+  (closeBtnClicked)="onCloseBtnClick($event)"
+  (createBtnClicked)="onCreateBtnClick($event)"
+></app-preset-detail>

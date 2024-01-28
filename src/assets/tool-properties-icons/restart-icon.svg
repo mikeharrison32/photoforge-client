@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="328px" height="328px" viewBox="0 0 328 328" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <path d="M-6.37573e-05 0.000251782L248.615 0.000251782L248.615 245.45L-6.37573e-05 245.45L-6.37573e-05 0.000251782Z" id="path_1" />
+    <clipPath id="mask_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <g id="restart-icon">
+    <g id="Group-21" transform="translate(-0.0002550274 -8.205023)">
+      <g id="Restart-icon" transform="matrix(0.8480483 0.5299189 0.5299189 -0.8480483 0.83865356 207.31424)">
+        <path d="M-6.37573e-05 0.000251782L248.615 0.000251782L248.615 245.45L-6.37573e-05 245.45L-6.37573e-05 0.000251782Z" id="Background" fill="none" fill-rule="evenodd" stroke="none" />
+        <g clip-path="url(#mask_1)">
+          <path d="M95.621 0.000251782L-6.37573e-05 18.881L28.9851 47.4971C12.1767 68.1847 1.79283 94.1457 1.79283 122.725C1.79283 189.508 56.6255 243.68 124.307 243.68C191.989 243.68 246.822 189.508 246.822 122.725C246.822 72.6468 216.044 29.5751 172.118 11.2107L172.118 40.4168C201.066 56.8268 220.526 87.4342 220.526 122.725C220.526 175.237 177.497 217.719 124.307 217.719C71.1181 217.719 28.0886 175.237 28.0886 122.725C28.0886 101.263 35.3349 81.6815 47.5117 65.7878L76.4968 94.4039L95.621 0.000251782Z" id="Shape" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+        </g>
+      </g>
+      <path d="M46.3571 286.165L255.276 284.103" id="Line" fill="none" fill-rule="evenodd" stroke="#FFFFFF" stroke-width="17" stroke-linecap="square" />
+    </g>
+  </g>
+</svg>

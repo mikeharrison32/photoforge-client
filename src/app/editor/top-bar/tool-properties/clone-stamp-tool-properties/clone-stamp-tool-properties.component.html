@@ -1,0 +1,29 @@
+<div class="tool-propertie clone-stamp-tool">
+  <app-brush (brushSizeChange)="onBrushSizeChange($event)" ></app-brush>
+  <div class="brush-folder-icon">
+    <img src="assets/tool-properties-icons/brush-folder-icon.svg" />
+  </div>
+  <div class="stamp-folder-icon">
+    <img src="assets/tool-properties-icons/stamp-folder-icon.svg" />
+  </div>
+  <div class="mode">
+    <span>Mode:</span>
+    <app-select [Items]="['Normal']"></app-select>
+  </div>
+  <div class="opacity">
+    <span>Opacity:</span>
+    <app-input [Value]="100" unit="%" [hasVolume]="true"></app-input>
+  </div>
+  <img src="assets/tool-properties-icons/bow-hit-icon.svg" />
+  <div class="flow">
+    <app-input [Value]="100" unit="%" [hasVolume]="true"></app-input>
+  </div>
+  <!-- There should be one icon here -->
+  <app-checkbox [text]="'Aligned'"></app-checkbox>
+  <div class="sample">
+    <span>Sample:</span>
+    <app-select [Items]="['Current & Below']"></app-select>
+  </div>
+  <img src="assets/tool-properties-icons/exposure-crossed-icon.svg" />
+  <img src="assets/tool-properties-icons/bow-hit-icon.svg" />
+</div>

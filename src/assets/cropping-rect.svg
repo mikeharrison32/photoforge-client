@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="521px" height="595px" viewBox="0 0 521 595" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <g id="cropping-rect">
+    <g id="Group" transform="translate(10 13)">
+      <path d="M2.74991 2.50006L494.75 2.50006L494.75 568.5L2.74991 568.5L2.74991 2.50006Z" id="Rectangle" fill="none" fill-rule="evenodd" stroke="#FFFFFF" stroke-width="1.6" />
+      <path d="M0.749909 40.5001L0.749909 1.50006L39.2499 1.50006" id="New-shape" fill="none" fill-rule="evenodd" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M1.74991 285.5L1.74991 232.5" id="New-shape-Copy-4" fill="none" fill-rule="evenodd" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M494.75 285.5L494.75 232.5" id="New-shape-Copy-5" fill="none" fill-rule="evenodd" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M275.25 1L222.25 1" id="New-shape-Copy-6" fill="none" fill-rule="evenodd" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M268.25 570L215.25 570" id="New-shape-Copy-7" fill="none" fill-rule="evenodd" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M38.9989 570.254L0 570.254L4.88009e-05 531.754" id="New-shape-Copy" fill="none" fill-rule="evenodd" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M496.736 531.504L496.736 570.504L458.237 570.504" id="New-shape-Copy-2" fill="none" fill-rule="evenodd" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M458.487 0.750177L497.486 0.750128L497.486 39.2504" id="New-shape-Copy-3" fill="none" fill-rule="evenodd" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+  </g>
+</svg>

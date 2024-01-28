@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="116px" height="98px" viewBox="0 0 116 98" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient gradientUnits="objectBoundingBox" cx="0%" cy="0%" fx="0%" fy="0%" r="162.92902%" gradientTransform="translate(0,0),scale(0.84347826,1),rotate(40.146904),scale(1,0.40305653),translate(-0,-0)" id="gradient_1">
+      <stop offset="0%" stop-color="#0D0D0D" stop-opacity="0" />
+      <stop offset="58.522724%" stop-color="#605F5F" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <g id="vibrance">
+    <path d="M57.5005 97.0001L0.000244141 0.000289917L115 0L57.5005 97.0001Z" id="Triangle" fill="url(#gradient_1)" fill-rule="evenodd" stroke="#808080" stroke-width="4" />
+  </g>
+</svg>

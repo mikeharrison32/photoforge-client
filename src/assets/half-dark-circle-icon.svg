@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="219px" height="219px" viewBox="0 0 219 219" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <path d="M0 103.812C0 46.4781 47.0896 0 105.178 0C163.266 0 210.355 46.4781 210.355 103.812C210.355 161.145 163.266 207.623 105.178 207.623C47.0896 207.623 0 161.145 0 103.812Z" id="path_1" />
+    <clipPath id="mask_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <g id="half-dark-circle-icon">
+    <g id="Rectangle-Mask" transform="translate(5.763158 8.532468)">
+      <path d="M0 103.812C0 46.4781 47.0896 0 105.178 0C163.266 0 210.355 46.4781 210.355 103.812C210.355 161.145 163.266 207.623 105.178 207.623C47.0896 207.623 0 161.145 0 103.812Z" id="Mask" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+      <g clip-path="url(#mask_1)">
+        <path d="M-158.941 29.8608L86.0939 -139.498L210.349 35.6643L-34.6862 205.023L-158.941 29.8608Z" id="Rectangle" fill="#484848" fill-rule="evenodd" stroke="none" />
+      </g>
+    </g>
+  </g>
+</svg>

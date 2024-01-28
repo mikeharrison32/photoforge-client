@@ -1,0 +1,538 @@
+<div class="pixel-layer" *ngIf="selectedLayer && selectedLayer.type == 'pixel'">
+  <div class="description">
+    <img src="assets/pic-icon.svg" />
+    <p>Pixel Layer Properies</p>
+  </div>
+  <div class="grid">
+    <div class="row">
+      <div class="value">
+        <p>W:</p>
+        <app-input
+          class="input"
+          unit="px"
+          [Value]="selectedLayer.canvas.clientWidth || 0"
+          [Disabled]="false"
+          (onInputChange)="onWidthChange($event)"
+        ></app-input>
+      </div>
+      <div class="value">
+        <p>H:</p>
+        <app-input
+          class="input"
+          unit="px"
+          [Disabled]="false"
+          [Value]="selectedLayer.canvas.clientHeight || 0 "
+          (onInputChange)="onHeightChange($event)"
+        ></app-input>
+      </div>
+    </div>
+    <div class="row">
+      <div class="value">
+        <p>X:</p>
+        <app-input
+          class="input"
+          [Disabled]="false"
+          unit="px"
+          [Value]="0"
+          (onInputChange)="onXChange($event)"
+        ></app-input>
+      </div>
+      <div class="value">
+        <p>Y:</p>
+        <app-input
+          class="input"
+          unit="px"
+          [Disabled]="false"
+          [Value]="0"
+          (onInputChange)="onYChange($event)"
+        ></app-input>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div
+  class="type-layer"
+  *ngIf="selectedLayer && selectedLayer.Type == LayerType.Type"
+>
+  <div class="description">
+    <img src="assets/tools-icons/text-tool.svg" class="icon" />
+    <p>Type Layer Properies</p>
+  </div>
+  <div class="grid">
+    <div class="row">
+      <div class="value">
+        <p>W:</p>
+        <app-input
+          class="input"
+          unit="px"
+          [Value]="properties.width"
+          [Disabled]="selectedLayer.Locked!"
+          (onInputChange)="onWidthChange($event)"
+        ></app-input>
+      </div>
+      <div class="value">
+        <p>H:</p>
+        <app-input
+          class="input"
+          unit="px"
+          [Disabled]="selectedLayer.Locked!"
+          [Value]="properties.height"
+          (onInputChange)="onHeightChange($event)"
+        ></app-input>
+      </div>
+    </div>
+    <div class="row">
+      <div class="value">
+        <p>X:</p>
+        <app-input
+          class="input"
+          [Disabled]="selectedLayer.Locked!"
+          unit="px"
+          [Value]="properties.left"
+          (onInputChange)="onXChange($event)"
+        ></app-input>
+      </div>
+      <div class="value">
+        <p>Y:</p>
+        <app-input
+          class="input"
+          unit="px"
+          [Disabled]="selectedLayer.Locked!"
+          [Value]="properties.top"
+          (onInputChange)="onYChange($event)"
+        ></app-input>
+      </div>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="font">
+      <app-select
+        [Items]="['Museo Slab']"
+        class="select"
+        (onSelectedItemChange)="onSelectedTypeLayerFontFamilyChange($event)"
+      ></app-select>
+      <app-input [Value]="1000" class="input" [hasVolume]="true"></app-input>
+    </div>
+    <div class="row">
+      <div class="small-input">
+        <img src="assets/tool-properties-icons/small-and-big-text.svg" />
+        <app-select
+          class="input"
+          [Items]="properties.textSize"
+          (onSelectedItemChange)="onTextSizeChange($event)"
+        ></app-select>
+      </div>
+      <div class="small-input">
+        <img src="assets/va.svg" />
+        <app-input
+          [Value]="0"
+          unit="pt"
+          [hasVolume]="true"
+          class="input"
+        ></app-input>
+      </div>
+    </div>
+    <div class="row">
+      <div class="small-input">
+        <img src="assets/two-as.svg" />
+        <app-select
+          [Items]="['(Auto)']"
+          class="input"
+          (onSelectedItemChange)="onLineHeightChange($event)"
+        ></app-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="text-align-buttons">
+        <img
+          src="assets/tool-properties-icons/text-align-left.svg"
+          [class.text-align-active]="properties.selectedTextAlignment == 'left'"
+          (click)="setTextAlignment('left')"
+        />
+        <img
+          src="assets/tool-properties-icons/text-align-center.svg"
+          [class.text-align-active]="
+            properties.selectedTextAlignment == 'center'
+          "
+          (click)="setTextAlignment('center')"
+        />
+        <img
+          src="assets/tool-properties-icons/text-align-right.svg"
+          [class.text-align-active]="
+            properties.selectedTextAlignment == 'right'
+          "
+          (click)="setTextAlignment('right')"
+        />
+      </div>
+      <div class="color">
+        <span>Color:</span>
+        <input type="color" (input)="onFillChange($event)" />
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="shape-layer"
+  *ngIf="selectedLayer && selectedLayer.Type == LayerType.Shape"
+>
+  <div class="description">
+    <img src="assets/rectangular-select.svg" class="icon" />
+    <img src="assets/middle-dark-icon.svg" class="icon" />
+    <p>Live Shape Properies</p>
+  </div>
+  <div class="grid">
+    <div class="row">
+      <div class="value">
+        <p>W:</p>
+        <app-input
+          class="input"
+          unit="px"
+          [Value]="properties.width"
+          [Disabled]="selectedLayer.Locked!"
+          (onInputChange)="onWidthChange($event)"
+        ></app-input>
+      </div>
+      <div class="value">
+        <p>H:</p>
+        <app-input
+          class="input"
+          unit="px"
+          [Disabled]="selectedLayer.Locked!"
+          [Value]="properties.height"
+          (onInputChange)="onHeightChange($event)"
+        ></app-input>
+      </div>
+    </div>
+    <div class="row">
+      <div class="value">
+        <p>X:</p>
+        <app-input
+          class="input"
+          [Disabled]="selectedLayer.Locked!"
+          unit="px"
+          [Value]="properties.left"
+          (onInputChange)="onXChange($event)"
+        ></app-input>
+      </div>
+      <div class="value">
+        <p>Y:</p>
+        <app-input
+          class="input"
+          unit="px"
+          [Disabled]="selectedLayer.Locked!"
+          [Value]="properties.top"
+          (onInputChange)="onYChange($event)"
+        ></app-input>
+      </div>
+    </div>
+  </div>
+  <div class="line"></div>
+  <div class="grid">
+    <div class="row">
+      <input type="color" name="" id="" (input)="onFillChange($event)" />
+      <input type="color" name="" id="" (input)="onStrokeChange($event)" />
+      <app-select
+        [Items]="['1px', '2px', '3px', '7px']"
+        class="border-select"
+        (onSelectedItemChange)="onStrokeWidthChange($event)"
+      ></app-select>
+      <app-select [Items]="['----']" class="border-select"></app-select>
+    </div>
+    <div class="row">
+      <app-select [Items]="['icon']" class="icon-select"></app-select>
+      <app-select [Items]="['icon']" class="icon-select"></app-select>
+      <app-select [Items]="['icon']" class="icon-select"></app-select>
+    </div>
+    <div class="line"></div>
+    <div class="grid">
+      <div class="row">
+        <div class="border-radius-all">0px0px0px0px</div>
+      </div>
+      <div class="row">
+        <div class="border-radius">
+          <div class="left-top-border-icon"></div>
+          <app-input
+            [Value]="0"
+            unit="px"
+            class="border-radius-input"
+          ></app-input>
+        </div>
+        <div class="border-radius">
+          <app-input
+            [Value]="0"
+            unit="px"
+            class="border-radius-input"
+          ></app-input>
+          <div class="right-top-border-icon"></div>
+        </div>
+      </div>
+      <div class="link-icon">
+        <img src="assets/tool-properties-icons/link-icon.svg" />
+      </div>
+      <div class="row">
+        <div class="border-radius">
+          <div class="left-bottom-border-icon"></div>
+          <app-input
+            [Value]="properties.shapeObj?.rx"
+            unit="px"
+            class="border-radius-input"
+          ></app-input>
+        </div>
+        <div class="border-radius">
+          <app-input
+            [Value]="0"
+            unit="px"
+            class="border-radius-input"
+          ></app-input>
+          <div class="right-bottom-border-icon"></div>
+        </div>
+      </div>
+    </div>
+    <div class="line"></div>
+    <div class="options">
+      <img src="assets/tool-properties-icons/rectangle.svg" />
+      <img src="assets/tool-properties-icons/double-rectangle.svg" />
+      <img
+        src="assets/tool-properties-icons/double-rectangle-white-black.svg"
+      />
+      <img
+        src="assets/tool-properties-icons/double-middle-white-rectangle.svg"
+      />
+    </div>
+  </div>
+</div>
+<div *ngIf="selectedAdjustmentLayer == ''" class="ad_layer_properity">
+  <div class="adj_type">
+    <img src="assets/middle-dark-icon.svg" />
+    <p>Masks</p>
+  </div>
+  <div class="layer-mask" *ngIf="false">
+    <div>
+      <div class="mask"></div>
+      <p>Layer Mask</p>
+    </div>
+    <div>
+      <img src="assets/middle-dark-icon.svg" />
+      <img src="assets/rec-select-with-small-rec.svg" />
+    </div>
+  </div>
+  <div class="color-preview">
+    <div>
+      <div class="color" [style.background]="properties.layer_color"></div>
+      <p>No mask selected</p>
+    </div>
+    <div>
+      <img src="assets/middle-dark-icon.svg" />
+      <img src="assets/rec-select-with-small-rec.svg" />
+    </div>
+  </div>
+  <app-volume [Disabled]="true" [text]="'Density'"></app-volume>
+  <app-volume [Disabled]="true" [text]="'Feather'"></app-volume>
+  <div class="refine">
+    <p class="disabled">Refine:</p>
+    <div>
+      <button class="button-disabled">Select and Mask...</button>
+      <button class="button-disabled">Color Range...</button>
+      <button class="button-disabled">Invert</button>
+    </div>
+  </div>
+</div>
+<div
+  *ngIf="selectedAdjustmentLayers[0]?.Type == AdjustmentLayer.Exposure"
+  class="ad_layer_properity"
+>
+  <div class="adj_type">
+    <img src="assets/adjustments-icons/exposure.svg" />
+    <img src="assets/middle-dark-icon.svg" />
+    <p>Exposure</p>
+  </div>
+  <div class="row">
+    <p>Presets:</p>
+    <app-select
+      [Items]="[
+        'Default',
+        'Minus 1.0',
+        'Minus 2.0',
+        'Plus 1.0',
+        'Plus 2.0',
+        'Custom'
+      ]"
+    ></app-select>
+  </div>
+  <app-volume [text]="'Exposure'"></app-volume>
+  <app-volume [text]="'Offset'"></app-volume>
+  <app-volume [text]="'Gamma Correction'"></app-volume>
+</div> -->
+<div
+  *ngIf="
+    selectedAdjustmentLayer &&
+    selectedAdjustmentLayer.type == 'brightnessContrast'
+  "
+  class="ad_layer_properity"
+>
+  <div class="adj_type">
+    <img src="assets/adjustments-icons/brightness-icon.svg" />
+    <img src="assets/middle-dark-icon.svg" />
+    <p>BrightnessContrast</p>
+  </div>
+  <div class="auto-btn">
+    <app-button [Text]="'Auto'"></app-button>
+  </div>
+  <app-volume
+    [text]="'Brightness'"
+    [Value]="selectedAdjustmentLayer.brightness"
+    (volumeChange)="onBrightnessChange($event)"
+  ></app-volume>
+  <app-volume
+    [text]="'Contrast'"
+    [Value]="selectedAdjustmentLayer.contrast"
+    (volumeChange)="onContrastChange($event)"
+  ></app-volume>
+  <div>
+    <app-checkbox [text]="'Use Legacy'"></app-checkbox>
+  </div>
+</div>
+<!-- <div
+  *ngIf="selectedAdjustmentLayers[0]?.Type == AdjustmentLayer.Vibrance"
+  class="ad_layer_properity"
+>
+  <div class="adj_type">
+    <img src="assets/adjustments-icons/vibrance.svg" />
+    <img src="assets/middle-dark-icon.svg" />
+    <p>Vibrance</p>
+  </div>
+  <app-volume [text]="'Vibrance'"></app-volume>
+  <app-volume [text]="'Saturation'"></app-volume>
+</div>
+
+
+<div
+  *ngIf="selectedAdjustmentLayers[0]?.Type == AdjustmentLayer.ColorBalance"
+  class="ad_layer_properity"
+>
+  <div class="adj_type">
+    <img src="assets/adjustments-icons/color-balance.svg" />
+    <img src="assets/middle-dark-icon.svg" />
+    <p>Color Balance</p>
+  </div>
+  <div class="row">
+    <p>Tone:</p>
+    <app-select [Items]="['Shadows', 'Midtones', 'Highlights']"></app-select>
+  </div>
+  <app-volume [text]="'Cyan'" [rightText]="'Red'"></app-volume>
+  <app-volume [text]="'Magenta'" [rightText]="'Green'"></app-volume>
+  <app-volume [text]="'Yellow'" [rightText]="'Blue'"></app-volume>
+  <app-checkbox [text]="'Preserve Luminosity'"></app-checkbox>
+</div>
+-->
+<!-- <div
+  *ngIf="selectedAdjustmentLayers[0]?.Type == AdjustmentLayer.BlackWhite"
+  class="ad_layer_properity"
+>
+  <div class="adj_type">
+    <img src="assets/adjustments-icons/black-white.svg" />
+    <img src="assets/middle-dark-icon.svg" />
+    <p>Black & White</p>
+  </div>
+  <div class="row">
+    <p>Presets:</p>
+    <app-select [Items]="['Default']"></app-select>
+  </div>
+  <div class="row">
+    <img src="assets/hand-width-arrows.svg" />
+    <app-checkbox [text]="'Tint'"></app-checkbox>
+    <div class="tint"></div>
+    <app-button [Text]="'Auto'"></app-button>
+  </div>
+  <app-volume [text]="'Reds'"></app-volume>
+  <app-volume [text]="'Yellows'"></app-volume>
+  <app-volume [text]="'Greens'"></app-volume>
+  <app-volume [text]="'Cyans'"></app-volume>
+  <app-volume [text]="'Blues'"></app-volume>
+  <app-volume [text]="'Magentas'"></app-volume>
+</div>
+<div
+  class="ad_layer_properity"
+  *ngIf="selectedAdjustmentLayers[0]?.Type == AdjustmentLayer.Levels"
+>
+  <div class="adj_type">
+    <img src="assets/adjustments-icons/levels.svg" />
+    <img src="assets/middle-dark-icon.svg" />
+    <p>Levels</p>
+  </div>
+  <div class="row">
+    <p>Presets:</p>
+    <app-select [Items]="['Custom']"></app-select>
+  </div>
+  <div class="row">
+    <app-select [Items]="['RGB']"></app-select>
+    <app-button [Text]="'Auto'" class="auto-btn"></app-button>
+  </div>
+
+  <canvas class="histogram"></canvas>
+  <div class="inputs">
+    <app-input class="level-input"></app-input>
+    <app-input class="level-input"></app-input>
+    <app-input class="level-input"></app-input>
+  </div>
+  <div class="output-levels">
+    <span>Output Levels:</span>
+    <div>
+      <app-input class="level-input"></app-input>
+      <app-input class="level-input"></app-input>
+    </div>
+  </div>
+</div>  -->
+
+<div
+  *ngIf="
+  selectedAdjustmentLayer &&
+    selectedAdjustmentLayer.type == 'hueSaturationLightnees'
+  "
+  class="ad_layer_properity"
+>
+  <div class="adj_type">
+    <img src="assets/adjustments-icons/hue-saturation.svg" />
+    <img src="assets/middle-dark-icon.svg" />
+    <p>Hue/Saturation</p>
+  </div>
+  <div class="row">
+    <p>Presets:</p>
+    <app-select [Items]="['Custom']"></app-select>
+  </div>
+  <div class="row">
+    <img src="assets/hand-width-arrows.svg" />
+    <app-select
+      [Items]="[
+        'Master',
+        'Reds',
+        'Yellows',
+        'Greens',
+        'Cyans',
+        'Blues',
+        'Magentas'
+      ]"
+    ></app-select>
+  </div>
+  <app-volume
+    [text]="'Hue'"
+    [Image]="'assets/hue.svg'"
+    (volumeChange)="onHueChange($event)"
+  ></app-volume>
+  <app-volume
+    [text]="'Saturation'"
+    (volumeChange)="onSaturationChange($event)"
+    [Image]="'assets/saturation.svg'"
+  ></app-volume>
+  <app-volume
+    (volumeChange)="onLightnessChange($event)"
+    [text]="'Lightness'"
+    [Image]="'assets/lightness.svg'"
+  ></app-volume>
+  <div class="row">
+    <img src="assets/eye-drop.svg" />
+    <img src="assets/eye-drop-plus.svg" />
+    <img src="assets/eye-drop-minus.svg" />
+    <app-checkbox [text]="'Colorize'"></app-checkbox>
+  </div>
+</div>

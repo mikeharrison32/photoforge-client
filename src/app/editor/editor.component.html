@@ -1,0 +1,53 @@
+<app-top-bar></app-top-bar>
+<div class="main" dropzone="">
+  <app-tool-box></app-tool-box>
+  <div class="image-display" id="image-display" #imgDisplay>
+    <div #cursor class="cursor" id="cursor"></div>
+    <div id="display" #display></div>
+    <div
+      class="rect-selection-context-menu"
+      *ngIf="false"
+      #rectSelectContextMenu
+      (contextmenu)="onRectSelectRightClick($event)"
+    >
+      <p (click)="clearSelection()">Deselect</p>
+      <p (click)="inverseSelection()">Select Inverse</p>
+      <p>Feather...</p>
+      <p (click)="maskCurrentSelection()">Select and Mask</p>
+      <hr />
+      <p (click)="saveCurrentSelection()">Save Selection...</p>
+      <p (click)="makeWorkPath()">Make Work Path...</p>
+      <hr />
+      <p (click)="createLayerFromASelectionViaCopy()">Layer Via Copy</p>
+      <p (click)="createLayerFromASelectionViaCut()">Layer Via Cut</p>
+      <p>New Layer...</p>
+      <hr />
+      <p>Free Transform</p>
+      <p>Transform Selection</p>
+      <hr />
+      <p (click)="fillSelection()">Fill...</p>
+      <p (click)="strokeSelection()">Stroke...</p>
+      <hr />
+      <p>Last Filter</p>
+      <p (click)="fadeSelection()">Fade...</p>
+    </div>
+  </div>
+  <div class="zoom-bar">
+    <div class="level">
+      <app-input
+        [Value]="100"
+        [Max]="100"
+        [Min]="0"
+        [Floor]="true"
+        unit="%"
+      ></app-input>
+    </div>
+  </div>
+
+  <app-inspector></app-inspector>
+</div>
+<app-new-document
+  *ngIf="newDocumentActive"
+  (closeBtnClicked)="onNewDocumentCloseClick()"
+  (createBtnClicked)="onNewDocumentCreateClick()"
+></app-new-document>

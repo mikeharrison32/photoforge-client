@@ -1,0 +1,30 @@
+:host {
+  .layer-context-menu {
+    overflow-y: scroll;
+    width: 12rem;
+    color: #000;
+    background: #e1e1e1;
+    border-radius: 2px;
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    right: 14rem;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    ul {
+      list-style: none;
+      font-size: 0.6rem;
+      padding: 0;
+      li {
+        padding-inline: 0.6rem;
+        padding-block: 0.2rem;
+        cursor: pointer;
+        &:hover {
+          color: #fff;
+          background: linear-gradient(45deg, #ff06a8, red);
+        }
+      }
+    }
+  }
+}

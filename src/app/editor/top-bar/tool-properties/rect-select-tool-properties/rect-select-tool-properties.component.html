@@ -1,0 +1,29 @@
+<div class="tool-propertie rectangular-marquee-tool">
+  <div class="options">
+    <img src="assets/tool-properties-icons/rectangle.svg" />
+    <img src="assets/tool-properties-icons/double-rectangle.svg" />
+    <img src="assets/tool-properties-icons/double-rectangle-white-black.svg" />
+    <img src="assets/tool-properties-icons/double-middle-white-rectangle.svg" />
+  </div>
+  <div class="feather">
+    <span>Feather:</span>
+    <app-input [Value]="0" unit="px"></app-input>
+  </div>
+  <app-checkbox [text]="'Anti-alias'"></app-checkbox>
+  <div class="style">
+    <span>Style:</span>
+    <app-select [Items]="['Normal']"></app-select>
+  </div>
+  <div class="width">
+    <span>Width:</span>
+    <app-input unit="px"></app-input>
+  </div>
+  <div class="swap-icon">
+    <img src="assets/tool-properties-icons/swap-values.svg" />
+  </div>
+  <div class="height">
+    <span>Height:</span>
+    <app-input unit="px"></app-input>
+  </div>
+  <app-button Text="Select and Mask"></app-button>
+</div>

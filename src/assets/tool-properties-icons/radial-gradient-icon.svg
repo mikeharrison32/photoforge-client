@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="229px" height="207px" viewBox="0 0 229 207" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB" id="filter_1">
+      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+      <feGaussianBlur stdDeviation="18" result="effect0_gaussianBlur" />
+    </filter>
+  </defs>
+  <g id="radial-gradient-icon">
+    <g id="Group-21" transform="translate(2.905932 6.497758)">
+      <path d="M0 0L221.432 0L221.432 192.148L0 192.148L0 0Z" id="Rectangle" fill="#262626" fill-rule="evenodd" stroke="#F2F2F2" stroke-width="2" />
+      <path d="M54.6317 94.3104C54.6317 71.7534 80.2186 53.4674 111.782 53.4674C143.345 53.4674 168.932 71.7534 168.932 94.3104C168.932 116.867 143.345 135.153 111.782 135.153C80.2186 135.153 54.6317 116.867 54.6317 94.3104Z" id="Ellipse" fill="#D3D3D3" fill-rule="evenodd" stroke="none" filter="url(#filter_1)" />
+    </g>
+  </g>
+</svg>

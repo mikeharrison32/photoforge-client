@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="94px" height="74px" viewBox="0 0 94 74" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 1 0" />
+    </filter>
+    <path d="M0 0L76.0952 0L76.0952 56.425L0 56.425L0 0Z" id="path_1" />
+    <clipPath id="mask_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <g id="file-streched">
+    <g id="Group-21" filter="url(#filter_1)">
+      <g id="File-icon" transform="translate(10.444445 10.174988)">
+        <path d="M0 0L76.0952 0L76.0952 56.425L0 56.425L0 0Z" id="Background" fill="none" fill-rule="evenodd" stroke="none" />
+        <g clip-path="url(#mask_1)">
+          <path d="M11.6101 0.231262C5.38432 0.231262 0.279762 3.40884 0.279762 7.28439L0.279762 49.6031C0.279762 53.4787 5.38432 56.6563 11.6101 56.6563L64.4851 56.6563C70.7109 56.6563 75.8155 53.4787 75.8155 49.6031L75.8155 15.7151L50.9418 0.231262L11.6101 0.231262ZM11.6101 4.93341L45.6012 4.93341L45.6012 19.0397L68.2619 19.0397L68.2619 49.6032C68.2619 50.9257 66.6096 51.9542 64.4851 51.9542L11.6101 51.9542C9.48568 51.9542 7.83333 50.9257 7.83333 49.6032L7.83333 7.28445C7.83333 5.96199 9.48568 4.93341 11.6101 4.93341L11.6101 4.93341ZM53.1548 8.25781L62.9213 14.3375L53.1548 14.3375L53.1548 8.25781Z" id="Shape" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+        </g>
+      </g>
+      <path d="M11.1905 0L11.1905 74" id="Line" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="6" stroke-linecap="square" />
+      <path d="M83.1825 35.15L82.4365 74" id="Line-2" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="6" stroke-linecap="square" />
+      <path d="M0 66.6L94 66.6" id="Line-3" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="5" stroke-linecap="square" />
+      <path d="M71.9921 6.01248C71.9921 3.71359 73.4951 1.84998 75.3492 1.84998C77.2033 1.84998 78.7064 3.71359 78.7064 6.01248C78.7064 8.31136 77.2033 10.175 75.3492 10.175C73.4951 10.175 71.9921 8.31136 71.9921 6.01248Z" id="Ellipse" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+      <path d="M79.8254 14.3375C79.8254 12.0386 81.3284 10.175 83.1825 10.175C85.0366 10.175 86.5397 12.0386 86.5397 14.3375C86.5397 16.6364 85.0366 18.5 83.1825 18.5C81.3284 18.5 79.8254 16.6364 79.8254 14.3375Z" id="Ellipse-2" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+    </g>
+  </g>
+</svg>

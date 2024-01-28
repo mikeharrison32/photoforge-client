@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="229px" height="207px" viewBox="0 0 229 207" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient gradientUnits="objectBoundingBox" cx="0%" cy="0%" fx="0%" fy="0%" r="147.23422%" gradientTransform="translate(0,0),scale(0.9253741,1),rotate(42.78041),translate(-0,-0)" id="gradient_1">
+      <stop offset="34.090908%" stop-color="#000000" />
+      <stop offset="100%" stop-color="#D3D3D3" />
+    </radialGradient>
+  </defs>
+  <g id="angle-gradient-icon">
+    <g id="angle-gradient" transform="translate(2.8936706 1.9714285)">
+      <g id="Group-21">
+        <path d="M0 0L220.498 0L220.498 204.043L0 204.043L0 0Z" id="Rectangle" fill="url(#gradient_1)" fill-rule="evenodd" stroke="#F2F2F2" stroke-width="2" />
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,31 @@
+<div class="tool-propertie">
+  <app-checkbox [text]="'Auto-Select'"></app-checkbox>
+  <app-select [Items]="['Layer']"></app-select>
+  <app-checkbox [text]="'Show Transform Controls'"></app-checkbox>
+  <div class="group">
+    <img
+      src="assets/tool-properties-icons/align-top.svg"
+      (click)="alignTop()"
+    />
+    <img
+      src="assets/tool-properties-icons/align-center-vertical.svg"
+      (click)="centerSelectedObjVertical()"
+    />
+    <img
+      src="assets/tool-properties-icons/align-bottom.svg"
+      (click)="alignBottom()"
+    />
+    <img
+      src="assets/tool-properties-icons/align-left.svg"
+      (click)="alignLeft()"
+    />
+    <img
+      src="assets/tool-properties-icons/align-center-horizontal.svg"
+      (click)="centerSelectedObjHorizontal()"
+    />
+    <img
+      src="assets/tool-properties-icons/align-right.svg"
+      (click)="alignRight()"
+    />
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="158px" height="134px" viewBox="0 0 158 134" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <path d="M0 28.5088C0 12.7638 11.1929 0 25 0C38.8071 0 50 12.7638 50 28.5088C50 44.2537 38.8071 57.0175 25 57.0175C11.1929 57.0175 0 44.2537 0 28.5088Z" id="path_1" />
+    <clipPath id="mask_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <g id="Group-20" transform="translate(2 2)">
+    <path d="M0 0L154 0L154 130L0 130L0 0Z" id="Rectangle" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="4" />
+    <path d="M154 0L154 130L0 130L154 0Z" id="Rectangle-2" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+    <g id="Rectangle-3-Mask" transform="translate(56.799988 35.92102)">
+      <path d="M0 28.5088C0 12.7638 11.1929 0 25 0C38.8071 0 50 12.7638 50 28.5088C50 44.2537 38.8071 57.0175 25 57.0175C11.1929 57.0175 0 44.2537 0 28.5088Z" id="Mask" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+      <g clip-path="url(#mask_1)">
+        <path d="M-4 48.523L76.0927 -17.8377L105.482 28.2925L25.3892 94.6532L-4 48.523Z" id="Rectangle-3" fill="#333333" fill-rule="evenodd" stroke="none" />
+      </g>
+    </g>
+  </g>
+</svg>

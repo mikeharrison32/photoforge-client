@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="72px" height="70px" viewBox="0 0 72 70" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 1 0" />
+    </filter>
+  </defs>
+  <g id="lasso-tool">
+    <g id="Group-8" filter="url(#filter_1)">
+      <path d="M3.32573 37.3765C1.4971 26.4556 14.6433 13.6554 32.6886 8.78637C50.7339 3.91731 66.8449 8.82325 68.6736 19.7441C70.5022 30.6649 57.356 43.4651 39.3107 48.3342C21.2654 53.2032 5.15435 48.2973 3.32573 37.3765Z" id="Ellipse" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="4" />
+      <path d="M3.4564 48.9902C3.02209 46.6022 5.72 43.7725 9.48234 42.6699C13.2447 41.5673 16.6467 42.6093 17.081 44.9973C17.5153 47.3853 14.8174 50.215 11.0551 51.3176C7.29275 52.4202 3.8907 51.3782 3.4564 48.9902Z" id="Ellipse-2" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="3" />
+      <path d="M6.99152 46.3337C6.99152 46.3337 19.4047 53.1171 17.7075 70" id="New-shape" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="2" />
+    </g>
+  </g>
+</svg>

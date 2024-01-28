@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="327px" height="327px" viewBox="0 0 327 327" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient x1="0" y1="0" x2="1" y2="1" id="gradient_1">
+      <stop offset="0" stop-color="#FF06A8" />
+      <stop offset="1" stop-color="#FF0000" />
+    </linearGradient>
+    <path d="M0 160C0 71.6344 71.6344 0 160 0C248.366 0 320 71.6344 320 160C320 248.366 248.366 320 160 320C71.6344 320 0 248.366 0 160Z" id="path_1" />
+    <clipPath id="mask_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <g id="auth-icon">
+    <g id="Triangle-Mask" transform="translate(2 4)">
+      <path d="M0 160C0 71.6344 71.6344 0 160 0C248.366 0 320 71.6344 320 160C320 248.366 248.366 320 160 320C71.6344 320 0 248.366 0 160Z" id="Mask" fill="url(#gradient_1)" fill-rule="evenodd" stroke="none" />
+      <g clip-path="url(#mask_1)">
+        <path d="M159.804 160.208L241.023 -54.1531L385.012 117.446L159.804 160.208Z" id="Triangle" fill="#E3042D" fill-rule="evenodd" stroke="none" />
+      </g>
+    </g>
+  </g>
+</svg>

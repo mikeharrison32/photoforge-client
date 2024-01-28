@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="72px" height="53px" viewBox="0 0 72 53" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB" id="filter_1">
+      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+      <feGaussianBlur stdDeviation="1" result="effect0_gaussianBlur" />
+    </filter>
+  </defs>
+  <g id="raster-tool">
+    <g id="Group-16">
+      <path d="M1.20599 41.2222L69.9497 41.2222L69.9497 52.9999L1.20599 52.9999L1.20599 41.2222Z" id="Rectangle-2" fill="#D3D3D3" fill-rule="evenodd" stroke="none" filter="url(#filter_1)" />
+      <path d="M0 35.9877L72 35.9877L72 47.7654L0 47.7654L0 35.9877Z" id="Rectangle" fill="#D3D3D3" fill-rule="evenodd" stroke="#5A5A5A" stroke-width="1" />
+      <path d="M35.5442 35.9876L35.5442 20.9382" id="Line" fill="none" fill-rule="evenodd" stroke="#D3D3D3" stroke-width="4" stroke-linecap="square" />
+      <path d="M23.8265 12.4321C23.8265 5.56604 29.0728 0 35.5444 0C42.016 0 47.2623 5.56604 47.2623 12.4321C47.2623 19.2982 42.016 24.8642 35.5444 24.8642C29.0728 24.8642 23.8265 19.2982 23.8265 12.4321Z" id="Ellipse" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+    </g>
+  </g>
+</svg>

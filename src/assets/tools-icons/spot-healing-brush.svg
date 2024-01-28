@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="72px" height="69px" viewBox="0 0 72 69" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB" id="filter_1">
+      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
+      <feOffset dx="0" dy="2" />
+      <feGaussianBlur stdDeviation="2" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0.05490196 0 0 0 0 0.05490196 0 0 0 0 0.05490196 0 0 0 0.49803922 0" />
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect0_dropShadow" />
+      <feBlend mode="normal" in="SourceGraphic" in2="effect0_dropShadow" result="shape" />
+    </filter>
+  </defs>
+  <g id="spot-healing-brush">
+    <g id="Group-15" transform="translate(1.2511016 -1.5603333)">
+      <path d="M7.41365 35.6122C2.62828 28.8411 5.78081 18.4738 14.455 12.4562C23.1292 6.43853 34.0404 7.04933 38.8258 13.8204C43.6111 20.5915 40.4586 30.9588 31.7844 36.9765C23.1102 42.9941 12.199 42.3833 7.41365 35.6122Z" id="Ellipse" fill="none" fill-rule="evenodd" stroke="#D3D3D3" stroke-width="4" stroke-dasharray="2 2" />
+      <g id="Group-14" transform="translate(3.1963248 4.27935)">
+        <path d="M0 44.3423L49.8494 4.34803L67.4004 25.8215L17.551 65.8157L0 44.3423Z" id="Rectangle" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+        <path d="M4.35677 40.2479L42.2857 9.8175L59.8367 31.2909L21.9078 61.7214L4.35677 40.2479Z" id="Rectangle-2" fill="#D3D3D3" fill-rule="evenodd" stroke="none" filter="url(#filter_1)" />
+        <path d="M10.4585 34.731L27.8896 57.757" id="New-shape" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="4" />
+        <path d="M22.3116 25.5206L39.7427 47.3953" id="New-shape-2" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="4" />
+        <path d="M35.0944 15.1588L52.5255 37.0336" id="New-shape-3" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="4" />
+      </g>
+    </g>
+  </g>
+</svg>

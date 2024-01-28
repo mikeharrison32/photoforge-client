@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="312px" height="318px" viewBox="0 0 312 318" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <g id="cancel-icon">
+    <g id="Cancel-icon" transform="translate(6 6)">
+      <path d="M150 0C67.2852 0 0 67.2852 0 150C0 232.715 67.2852 300 150 300C232.715 300 300 232.715 300 150C300 67.2852 232.715 0 150 0L150 0ZM150 25C219.19 25 275 80.8105 275 150C275 179.98 264.356 207.422 246.875 228.906L71.0939 53.125C92.5782 35.6445 120.02 25 150 25L150 25ZM53.125 71.0938L228.906 246.875C207.422 264.355 179.98 275 150 275C80.8105 275 25 219.189 25 150C25 120.02 35.6445 92.5781 53.125 71.0938L53.125 71.0938Z" id="Shape" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,106 @@
+%btn {
+  padding: 0.4rem;
+  width: 7rem;
+  border-radius: 5px;
+  color: rgb(170, 170, 170);
+  bottom: 1rem;
+  background: transparent;
+  border: solid 1px #fff;
+  box-shadow: #fff 0 0 1px;
+  border-radius: 50px;
+  color: #fff;
+  cursor: pointer;
+  margin-block: 0.4rem;
+}
+
+:host {
+  display: flex;
+  padding: 0.1rem;
+  width: 100%;
+  height: 100%;
+  background-color: #1d1d1d;
+  .top-nav {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    padding-block: 0.2rem;
+    background-color: #3a3a3a;
+    justify-content: space-between;
+    .logo {
+      display: flex;
+      img {
+        position: relative;
+        width: 2rem;
+        right: 0rem;
+        left: 1rem;
+      }
+    }
+    img {
+      width: 1.3rem;
+      cursor: pointer;
+      position: absolute;
+      right: 4rem;
+    }
+    .auth-icon {
+      right: 2rem;
+    }
+  }
+  .side-nav {
+    margin-top: 2rem;
+    padding: 1rem;
+
+    .tabs {
+      p {
+        cursor: pointer;
+        margin-block: 0;
+      }
+
+      .active-tab {
+        width: 12rem;
+        border-radius: 1px;
+        background-color: #323232;
+      }
+    }
+    p {
+      padding: 0.3rem;
+      font-size: 0.8rem;
+    }
+    .work-history {
+      padding: 0.3rem;
+      color: #a7a7a7;
+      margin-bottom: 1rem;
+      font-size: 0.8rem;
+      margin-top: 1rem;
+      .works {
+        p {
+          color: #fff;
+          padding: 0;
+        }
+      }
+    }
+    .create-new-btn {
+      @extend %btn;
+    }
+    .open-btn {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      input {
+        width: 5rem;
+        position: absolute;
+        opacity: 0;
+      }
+      button {
+        @extend %btn;
+        width: 5rem;
+      }
+    }
+  }
+  .content {
+    display: block;
+    width: 100%;
+    margin-top: 2rem;
+    margin-left: 1rem;
+  }
+}

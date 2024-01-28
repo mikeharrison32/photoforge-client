@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="229px" height="207px" viewBox="0 0 229 207" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB" id="filter_1">
+      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+      <feGaussianBlur stdDeviation="12" result="effect0_gaussianBlur" />
+    </filter>
+  </defs>
+  <g id="dimond-gradient-icon">
+    <g id="Group-22" transform="translate(4.2801933 4.7916665)">
+      <g id="Group-21">
+        <path d="M0 0L222.374 0L222.374 198.375L0 198.375L0 0Z" id="Rectangle" fill="#262626" fill-rule="evenodd" stroke="#F2F2F2" stroke-width="2" />
+        <path d="M27.2374 97.3668C27.2374 74.0788 104.002 32.2001 112.354 29.3251C120.707 26.4502 203.308 74.0788 203.308 97.3668C203.308 120.655 122.166 165.408 112.354 165.408C102.543 165.408 27.2374 120.655 27.2374 97.3668Z" id="Ellipse" fill="#D3D3D3" fill-rule="evenodd" stroke="none" filter="url(#filter_1)" />
+      </g>
+    </g>
+  </g>
+</svg>

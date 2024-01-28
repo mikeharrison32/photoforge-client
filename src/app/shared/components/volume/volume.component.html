@@ -1,0 +1,40 @@
+<div class="row">
+  <p [ngClass]="Disabled ? 'text-disabled' : ''">
+    {{ text }}<span *ngIf="!rightText && text">:</span>
+  </p>
+  <p
+    *ngIf="rightText"
+    [ngClass]="Disabled ? 'text-disabled' : ''"
+    class="rightText"
+  >
+    {{ rightText }}
+  </p>
+  <app-input
+    *ngIf="!rightText && text"
+    [Disabled]="Disabled"
+    [Floor]="false"
+    (onInputChange)="onInputChange($event)"
+    [Value]="volumeValue!"
+  />
+</div>
+<div class="row">
+  <div
+    [ngClass]="Image ? 'image' : rightText ? 'right-text-line' : 'line'"
+    #line
+  >
+    <img *ngIf="Image" [src]="Image" class="volume-image" />
+    <img
+      *ngIf="!Disabled"
+      src="assets/volume-cursor.svg"
+      draggable="false"
+      (mousedown)="onVolumeCursorMouseDown($event)"
+      #volumeCursor
+    />
+  </div>
+  <app-input
+    [Floor]="false"
+    *ngIf="rightText"
+    [Disabled]="Disabled"
+    [Value]="volumeValue!"
+  />
+</div>

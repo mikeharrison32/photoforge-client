@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="154px" height="97px" viewBox="0 0 154 97" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 1 0" />
+    </filter>
+  </defs>
+  <g id="curves">
+    <g id="Group-6" filter="url(#filter_1)">
+      <g id="Group-5" transform="translate(1 0)">
+        <path d="M0 0L153 0L153 97L0 97L0 0Z" id="Rectangle" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="5" />
+        <path d="M25.8 0.926758L25.8 96.0733L56.3 96.0733L56.3 0.926758L88.3001 0.926758L88.3001 96.0733L124.3 96.0733L124.3 0.926758L0.300049 0.926758L0.300049 20.0796L152.3 20.0796L152.3 39.8503L0.300049 39.8503L0.300049 60.8567L152.3 60.8567L152.3 80.6274L0.300049 80.6274" id="New-shape" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="2" />
+      </g>
+      <path d="M0 96.0001C0 96.0001 75.6172 101 80 53.0001C84.3828 5.00012 98.9504 10.6669 153 2.50012" id="New-shape" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="4" />
+    </g>
+  </g>
+</svg>

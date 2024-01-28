@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="50px" height="38px" viewBox="0 0 50 38" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <g id="polygon-shape-tool">
+    <path d="M0 17.0345L10.4193 0L39.0724 0L49.7 17.0345L39.0723 38L10.4193 38L0 17.0345Z" id="New-shape" fill="#595959" fill-rule="evenodd" stroke="#BBB8B8" stroke-width="1" />
+  </g>
+</svg>

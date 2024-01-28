@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="322px" height="219px" viewBox="0 0 322 219" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <g id="middle-dark-icon">
+    <g id="Group-21" transform="translate(2.8922157 5.615385)">
+      <path d="M0 0L310.431 0L310.431 204.962L0 204.962L0 0Z" id="Rectangle" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+      <path d="M92.619 102.775C92.619 69.1773 120.675 41.9413 155.284 41.9413C189.892 41.9413 217.948 69.1773 217.948 102.775C217.948 136.372 189.892 163.608 155.284 163.608C120.675 163.608 92.619 136.372 92.619 102.775Z" id="Ellipse" fill="#484848" fill-rule="evenodd" stroke="none" />
+    </g>
+  </g>
+</svg>

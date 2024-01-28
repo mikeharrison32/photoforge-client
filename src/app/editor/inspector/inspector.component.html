@@ -1,0 +1,202 @@
+<div class="mini-panels" [dndDropzone]>
+  <div class="mini-panel">
+    <img src="assets/history-icon.svg" />
+  </div>
+</div>
+<!-- <app-panel
+  [Tabs]="['Color', 'Swatches', 'Gradients', 'Patterns']"
+  [dndDraggable]
+>
+  <div panelBody-1>
+    <h4>Color</h4>
+  </div>
+  <div panelBody-2>
+    <h4>Swatches</h4>
+  </div>
+  <div panelBody-3>
+    <h4>Gradients</h4>
+  </div>
+  <div panelBody-4>
+    <h4>Patterns</h4>
+  </div>
+</app-panel> -->
+<app-panel [Tabs]="['Properties', 'Adjustments']">
+  <div class="properties" panelBody-1>
+    <app-layer-property></app-layer-property>
+  </div>
+  <div class="adjustments" panelBody-2>
+    <p>Add an adjustment</p>
+    <div class="icons">
+      <img
+        src="assets/adjustments-icons/brightness-icon.svg"
+        (click)="addAdjustmentLayer(AdjustmentLayer.BrightnessContrast)"
+      />
+      <img
+        src="assets/adjustments-icons/channel-mixer.svg"
+        (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
+      />
+      <img
+        src="assets/adjustments-icons/color-balance.svg"
+        (click)="addAdjustmentLayer(AdjustmentLayer.ColorBalance)"
+      />
+      <img
+        src="assets/adjustments-icons/color-lookup.svg"
+        (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
+      />
+      <img
+        src="assets/adjustments-icons/curves.svg"
+        (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
+      />
+      <img
+        (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
+        src="assets/adjustments-icons/exposure.svg"
+      />
+      <img
+        src="assets/adjustments-icons/gradient-map.svg"
+        (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
+      />
+      <img
+        src="assets/adjustments-icons/hue-saturation.svg"
+        (click)="addAdjustmentLayer(AdjustmentLayer.HueSaturation)"
+      />
+      <img
+        src="assets/adjustments-icons/levels.svg"
+        (click)="addAdjustmentLayer(AdjustmentLayer.Levels)"
+      />
+      <img
+        src="assets/adjustments-icons/photo-filter.svg"
+        (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
+      />
+      <img
+        src="assets/adjustments-icons/posterize.svg"
+        (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
+      />
+      <img
+        src="assets/adjustments-icons/selective-color.svg"
+        (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
+      />
+      <img
+        src="assets/adjustments-icons/threshold.svg"
+        (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
+      />
+      <img
+        src="assets/adjustments-icons/vibrance.svg"
+        (click)="addAdjustmentLayer(AdjustmentLayer.Vibrance)"
+      />
+      <img
+        src="assets/adjustments-icons/black-white.svg"
+        (click)="addAdjustmentLayer(AdjustmentLayer.BlackWhite)"
+      />
+    </div>
+  </div>
+</app-panel>
+<app-panel [Tabs]="['Layers', 'Channels', 'Paths']">
+  <div class="layers-panel" panelBody-1>
+    <div class="layer-properties">
+      <div class="layer-property">
+        <app-select [Items]="['Kind']" class="layer-kind"></app-select>
+        <img src="assets/image-icon.svg" />
+        <img src="assets/half-circle.svg" />
+        <img src="assets/tools-icons/text-tool.svg" />
+        <img src="assets/rectangular-select.svg" />
+        <img src="assets/file-icon.svg" />
+      </div>
+      <div class="layer-property">
+        <app-select
+          class="blendingMode"
+          [Items]="blendingMods"
+          (onSelectedItemChange)="onBlendingModeChange($event)"
+        ></app-select>
+        <div class="opacity">
+          <p>Opacity:</p>
+          <app-input
+            [Value]="100"
+            (onInputChange)="onOpacityChange($event)"
+            [unit]="'%'"
+            [hasVolume]="true"
+          ></app-input>
+        </div>
+      </div>
+      <div class="layer-property">
+        <p>Lock:</p>
+        <img src="assets/rec-net.svg" />
+        <img src="assets/tools-icons/brush-tool.svg" />
+        <img src="assets/tools-icons/move-tool.svg" />
+        <img src="assets/file-streched.svg" />
+        <img style="width: 0.5rem" src="assets/lock-fill.svg" />
+        <div class="fill">
+          <p>Fill:</p>
+          <app-input [Value]="100" [unit]="'%'" [hasVolume]="true"></app-input>
+        </div>
+      </div>
+    </div>
+    <app-layers></app-layers>
+    <div class="layer-options">
+      <div *ngIf="ad_choices_active">
+        <div class="ad_choices" #ad_choices>
+          <p (click)="addAdjustmentLayer(AdjustmentLayer.SolidColor)">
+            SolidColor
+          </p>
+          <p (click)="addAdjustmentLayer(AdjustmentLayer.Gradient)">Gradient</p>
+          <p (click)="addAdjustmentLayer(AdjustmentLayer.Pattern)">Pattern</p>
+          <p (click)="addAdjustmentLayer(AdjustmentLayer.BrightnessContrast)">
+            BrightnessContrast
+          </p>
+          <p (click)="addAdjustmentLayer(AdjustmentLayer.Levels)">Levels</p>
+          <p (click)="addAdjustmentLayer(AdjustmentLayer.Curves)">Curves</p>
+          <p (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)">Exposure</p>
+          <p (click)="addAdjustmentLayer(AdjustmentLayer.Vibrance)">Vibrance</p>
+          <p (click)="addAdjustmentLayer(AdjustmentLayer.HueSaturation)">
+            HueSaturation
+          </p>
+          <p (click)="addAdjustmentLayer(AdjustmentLayer.ColorBalance)">
+            ColorBalance
+          </p>
+          <p (click)="addAdjustmentLayer(AdjustmentLayer.BlackWhite)">
+            BlackWhite
+          </p>
+          <p (click)="addAdjustmentLayer(AdjustmentLayer.PhotoFilter)">
+            PhotoFilter
+          </p>
+          <p (click)="addAdjustmentLayer(AdjustmentLayer.ChannelMixer)">
+            ChannelMixer
+          </p>
+          <p (click)="addAdjustmentLayer(AdjustmentLayer.ColorLookup)">
+            ColorLookup
+          </p>
+          <p (click)="addAdjustmentLayer(AdjustmentLayer.Invert)">Invert</p>
+          <p (click)="addAdjustmentLayer(AdjustmentLayer.Posterize)">
+            Posterize
+          </p>
+          <p (click)="addAdjustmentLayer(AdjustmentLayer.Threshold)">
+            Threshold
+          </p>
+          <p (click)="addAdjustmentLayer(AdjustmentLayer.GradientMap)">
+            GradientMap
+          </p>
+          <p (click)="addAdjustmentLayer(AdjustmentLayer.SelectiveColor)">
+            SelectiveColor
+          </p>
+        </div>
+      </div>
+      <ul>
+        <img src="assets/tool-properties-icons/link-icon.svg" alt="" />
+        <img src="assets/fx-icon.svg" alt="" />
+        <img src="assets/middle-dark-icon.svg" (click)="addLayerMask()" />
+        <img
+          src="assets/half-dark-circle-icon.svg"
+          (click)="toggleAdChoices()"
+        />
+        <img src="assets/group-icon.svg" (click)="createNewGroup()" />
+        <img src="assets/rectangular-add-icon.svg" (click)="createNewLayer()" />
+        <img src="assets/trash-icon.svg" (click)="deleteLayer()" />
+      </ul>
+    </div>
+  </div>
+  <div class="channels" panelBody-2>
+    <h3>Channels</h3>
+  </div>
+  <div class="paths" panelBody-3>
+    <h3>Paths</h3>
+  </div>
+</app-panel>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="298px" height="311px" viewBox="0 0 298 311" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 1 0" />
+    </filter>
+  </defs>
+  <g id="rec-net-icon">
+    <g id="Group-22" filter="url(#filter_1)">
+      <g id="Group-21" transform="translate(3.2991943 0)">
+        <path d="M19.7029 17.0033L276.703 17.0033L276.703 293.003L19.7029 293.003L19.7029 17.0033Z" id="Rectangle" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="7" />
+        <path d="M100.103 0.0032959L100.103 310.003" id="New-shape" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="10" />
+        <path d="M185.603 0L185.603 310.006" id="New-shape-2" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="10" />
+        <path d="M0 123.503L294.206 123.503" id="New-shape-3" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="10" />
+      </g>
+      <path d="M0 211.753L297.404 211.753" id="New-shape-4" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="10" />
+    </g>
+  </g>
+</svg>

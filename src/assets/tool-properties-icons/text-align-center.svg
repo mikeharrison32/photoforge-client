@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="128px" height="108px" viewBox="0 0 128 108" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <g id="text-align-center">
+    <g id="Group-24">
+      <g id="Group-22">
+        <path d="M10 0L108 0L108 8L10 8L10 0Z" id="Rectangle" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+        <path d="M10 10L108 10L108 18L10 18L10 10Z" id="Rectangle-Copy" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+        <path d="M10 20L108 20L108 28L10 28L10 20Z" id="Rectangle-Copy-2" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+        <path d="M0 30L118 30L118 38L0 38L0 30Z" id="Rectangle-Copy-3" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+        <path d="M10 40L108 40L108 48L10 48L10 40Z" id="Rectangle-Copy-4" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+        <path d="M0 50L118 50L118 58L0 58L0 50Z" id="Rectangle-Copy-5" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+        <path d="M20 60L98 60L98 68L20 68L20 60Z" id="Rectangle-Copy-6" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+        <path d="M20 70L98 70L98 78L20 78L20 70Z" id="Rectangle-Copy-7" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+        <path d="M0 80L128 80L128 88L0 88L0 80Z" id="Rectangle-Copy-8" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+        <path d="M10 90L118 90L118 98L10 98L10 90Z" id="Rectangle-Copy-9" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+        <path d="M10 100L118 100L118 108L10 108L10 100Z" id="Rectangle-Copy-10" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+      </g>
+    </g>
+  </g>
+</svg>

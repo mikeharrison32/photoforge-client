@@ -1,0 +1,49 @@
+<div class="top-nav">
+  <div class="logo">
+    <img src="assets/phorge-logo.svg" alt="" />
+  </div>
+  <div>
+    <img src="assets/Search-icon.svg" alt="Search icon" />
+    <img class="auth-icon" src="assets/auth-icon.svg" alt="Auth icon" />
+  </div>
+</div>
+<div class="side-nav">
+  <div class="tabs">
+    <p
+      [ngClass]="activeTab == 'Home' ? 'active-tab' : ''"
+      (click)="setActiveElement('Home')"
+    >
+      Home
+    </p>
+    <p
+      [ngClass]="activeTab == 'Features' ? 'active-tab' : ''"
+      (click)="setActiveElement('Features')"
+    >
+      Learn
+    </p>
+  </div>
+  <div class="work-history">
+    Your work
+    <div class="works">
+      <p>Lightroom Photos</p>
+      <p>Cloud Doucuments</p>
+      <p>Deleted</p>
+    </div>
+  </div>
+  <!-- Buttons -->
+  <button class="create-new-btn" (click)="displayNewDocument()">
+    Create new</button
+  ><br />
+  <div class="open-btn">
+    <input type="file" #file multiple (change)="onOpenFileBtnChange($event)" />
+    <button>Open</button>
+  </div>
+</div>
+<div class="content" [ngSwitch]="selectedTab">
+  <app-home *ngSwitchCase="'Home'"></app-home>
+  <app-features *ngSwitchCase="'Features'"></app-features>
+</div>
+<app-new-document
+  (closeBtnClicked)="onCloseBtnClick($event)"
+  *ngIf="createNewBtnClicked"
+></app-new-document>

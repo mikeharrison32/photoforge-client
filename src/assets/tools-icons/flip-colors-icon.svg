@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="127px" height="118px" viewBox="0 0 127 118" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <g id="flip-colors-icon">
+    <g id="Group-22">
+      <path d="M43 39L126.4 39L126.4 118L43 118L43 39Z" id="Rectangle-2" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+      <path d="M0 0L83.8 0L83.8 79.3L0 79.3L0 0Z" id="Rectangle" fill="#000000" fill-rule="evenodd" stroke="#C1C1C1" stroke-width="5" />
+    </g>
+  </g>
+</svg>

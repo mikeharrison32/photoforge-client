@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="212px" height="18px" viewBox="0 0 212 18" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient x1="-4.824251E-07" y1="0.4999944" x2="1.000001" y2="0.4999944" id="gradient_1">
+      <stop offset="0" stop-color="#FF0000" />
+      <stop offset="0.1865" stop-color="#FFFF00" />
+      <stop offset="0.36439997" stop-color="#00FF00" />
+      <stop offset="0.521" stop-color="#00FFFF" />
+      <stop offset="0.6697" stop-color="#0000FF" />
+      <stop offset="0.8325" stop-color="#FF00FF" />
+      <stop offset="1" stop-color="#FF0000" />
+    </linearGradient>
+  </defs>
+  <g id="hue">
+    <g id="hue" transform="translate(0.30950943 1.0753784)">
+      <path d="M0 0L208.681 0L208.681 14.9624L0 14.9624L0 0Z" id="Rectangle" fill="url(#gradient_1)" fill-rule="evenodd" stroke="none" />
+    </g>
+  </g>
+</svg>

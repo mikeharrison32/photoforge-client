@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="70px" height="70px" viewBox="0 0 70 70" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <g id="pointer-tool">
+    <g id="Group-21" transform="translate(-17.68518 -5.780268)">
+      <path d="M21.395 18.5707L79.6451 34.3033L48.7138 43.3517L36.8547 71.4449L21.395 18.5707Z" id="Triangle" fill="#000000" fill-rule="evenodd" stroke="#D2D2D2" stroke-width="1" />
+      <path d="M50.3224 44.7972L71.223 63.5831" id="New-shape" fill="none" fill-rule="evenodd" stroke="#D3D3D3" stroke-width="5" />
+    </g>
+  </g>
+</svg>

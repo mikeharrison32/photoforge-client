@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="76px" height="76px" viewBox="0 0 76 76" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.56078434 0 0 0 0 0.56078434 0 0 0 0 0.56078434 0 0 0 1 0" />
+    </filter>
+    <path d="M0 0L76 0L76 76L0 76L0 0Z" id="path_1" />
+    <clipPath id="mask_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <g id="Search-icon" filter="url(#filter_1)">
+    <path d="M0 0L76 0L76 76L0 76L0 0Z" id="Background" fill="none" fill-rule="evenodd" stroke="none" />
+    <g clip-path="url(#mask_1)">
+      <path d="M31.92 4.56C17.6641 4.56 6.07999 16.1441 6.07999 30.4C6.07999 44.6559 17.6641 56.24 31.92 56.24C37.5606 56.24 42.7737 54.4231 47.025 51.3475L67.0225 71.2975L71.2975 67.0225L51.5375 47.215C55.4206 42.6906 57.76 36.8184 57.76 30.4C57.76 16.1441 46.1759 4.56 31.92 4.56L31.92 4.56ZM31.92 7.6C44.5312 7.6 54.72 17.7887 54.72 30.4C54.72 43.0112 44.5312 53.2 31.92 53.2C19.3087 53.2 9.11999 43.0112 9.11999 30.4C9.11999 17.7887 19.3087 7.6 31.92 7.6L31.92 7.6Z" id="Shape" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+    </g>
+  </g>
+</svg>

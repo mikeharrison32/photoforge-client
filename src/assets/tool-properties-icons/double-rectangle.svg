@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="280px" height="308px" viewBox="0 0 280 308" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB" id="filter_1">
+      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
+      <feMorphology radius="1" operator="dilate" in="SourceAlpha" result="effect0_dropShadow" />
+      <feOffset dx="0" dy="2" />
+      <feGaussianBlur stdDeviation="1" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0.39215687 0 0 0 0 0.39215687 0 0 0 0 0.39215687 0 0 0 1 0" />
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect0_dropShadow" />
+      <feBlend mode="normal" in="SourceGraphic" in2="effect0_dropShadow" result="shape" />
+    </filter>
+    <filter id="filter_2">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.94509804 0 0 0 0 0.94509804 0 0 0 0 0.94509804 0 0 0 1 0" />
+    </filter>
+  </defs>
+  <g id="double-rectangle-2" filter="url(#filter_2)">
+    <g id="Group-21">
+      <path d="M0 0L200 0L200 200L0 200L0 0Z" id="Rectangle" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+      <path d="M80 107.9L280 107.9L280 307.9L80 307.9L80 107.9Z" id="Rectangle-2" fill="#D3D3D3" fill-rule="evenodd" stroke="none" filter="url(#filter_1)" />
+    </g>
+  </g>
+</svg>

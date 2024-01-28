@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="167px" height="130px" viewBox="0 0 167 130" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <g id="selective-color">
+    <g id="Group-21">
+      <path d="M0 0L166 0L166 128.041L0 128.041L0 0Z" id="Rectangle" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="4" />
+      <path d="M166.005 129.005L4.57764e-05 129.005L81.6075 64.0246L166.005 129.005Z" id="Rectangle-3" fill="#777777" fill-rule="evenodd" stroke="none" />
+      <path d="M0 0L166 0L81.605 64.0204L0 0Z" id="Rectangle-2" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+    </g>
+  </g>
+</svg>

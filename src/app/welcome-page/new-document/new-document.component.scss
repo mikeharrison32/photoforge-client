@@ -1,0 +1,71 @@
+:host {
+  z-index: 1000000000000;
+  position: absolute;
+  left: 0;
+  width: 52rem;
+  border-radius: 3px;
+  height: 33rem;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background: #1d1d1d;
+  border: solid 1px #494848;
+  overflow: hidden;
+  .template-choices {
+    display: flex;
+    align-items: center;
+    border-bottom: solid 1px #565656;
+    background: #2f2f2f;
+    gap: 1rem;
+    font-weight: 400;
+    font-size: 0.8rem;
+    color: #bababa;
+    cursor: pointer;
+    padding-left: 1rem;
+    .recent-icon {
+      top: 0.25rem;
+      position: relative;
+      width: 1rem;
+    }
+
+    .active-template-tab {
+      margin: 0;
+      margin-top: 1rem;
+      color: #fff;
+
+      &::after {
+        display: block;
+        content: "";
+        width: auto;
+        height: 0.1rem;
+        background: #fff;
+        margin-top: 1rem;
+      }
+    }
+  }
+  .templates {
+    margin-right: 18rem;
+    .template-tab {
+      overflow-y: scroll;
+      width: auto;
+      height: 27.7rem;
+      display: flex;
+      flex-wrap: wrap;
+      margin-right: 0.3rem;
+      gap: 1rem;
+      padding: 1rem;
+      &::-webkit-scrollbar-corner {
+        background: transparent;
+      }
+      &::-webkit-scrollbar {
+        background: transparent;
+        width: 0.5rem;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #565656;
+        border-radius: 50px;
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="68px" height="68px" viewBox="0 0 68 68" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 1 0" />
+    </filter>
+    <path d="M0 0L68 0L68 68L0 68L0 0Z" id="path_1" />
+    <path d="M0 0L24 0L24 24L0 24L0 0Z" id="path_2" />
+    <clipPath id="mask_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+    <clipPath id="mask_2">
+      <use xlink:href="#path_2" />
+    </clipPath>
+  </defs>
+  <g id="zoom-in-icon">
+    <g id="Search-icon-2" filter="url(#filter_1)">
+      <path d="M0 0L68 0L68 68L0 68L0 0Z" id="Background" fill="none" fill-rule="evenodd" stroke="none" />
+      <g clip-path="url(#mask_1)">
+        <path d="M26.1538 0.490356C11.9735 0.490356 0.490356 11.9735 0.490356 26.1538C0.490356 40.3341 11.9735 51.8173 26.1538 51.8173C32.1406 51.8173 37.6472 49.7025 42.0096 46.2596L44.298 48.548C43.3377 50.3563 43.6749 52.6652 45.1971 54.1875L57.2115 66.2836C59.0811 68.1532 62.1256 68.1532 63.9952 66.2836L66.2836 63.9952C68.1532 62.1256 68.1532 59.0811 66.2836 57.2115L54.1875 45.1971C52.655 43.6646 50.3563 43.399 48.548 44.3798L46.2596 42.0913C49.7229 37.7187 51.8173 32.1712 51.8173 26.1538C51.8173 11.9735 40.3341 0.490356 26.1538 0.490356L26.1538 0.490356ZM26.1538 5.23071C37.7085 5.23071 47.0769 14.5991 47.0769 26.1538C47.0769 37.7085 37.7085 47.0769 26.1538 47.0769C14.5991 47.0769 5.23071 37.7085 5.23071 26.1538C5.23071 14.5991 14.5991 5.23071 26.1538 5.23071L26.1538 5.23071Z" id="Shape" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+      </g>
+    </g>
+    <g id="Plus-icon" transform="translate(13 14)" filter="url(#filter_1)">
+      <path d="M0 0L24 0L24 24L0 24L0 0Z" id="Background" fill="none" fill-rule="evenodd" stroke="none" />
+      <g clip-path="url(#mask_2)">
+        <path d="M11 2L11 11L2 11L2 13L11 13L11 22L13 22L13 13L22 13L22 11L13 11L13 2L11 2Z" id="Shape" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,4 @@
+<div [ngClass]="{ checked: checked, box: !checked }" (click)="checkBox()">
+  <img src="assets/tool-properties-icons/done-icon.svg" *ngIf="checked" />
+</div>
+<p>{{ text }}</p>

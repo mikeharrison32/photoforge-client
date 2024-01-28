@@ -1,0 +1,47 @@
+$dark_gray: #1d1d1d;
+$light_gray: #3a3a3a;
+:host {
+  width: 100%;
+  height: 1.7rem;
+  background: $light_gray;
+  position: relative;
+  display: flex;
+  gap: 0.2rem;
+  align-items: center;
+  border-block: solid 1px #282828;
+  .link-icon {
+    margin-inline: 0.4rem;
+  }
+  .icons {
+    display: flex;
+    align-items: center;
+    margin-inline: 0.3rem;
+    gap: 10px;
+  }
+  span {
+    display: flex;
+    align-items: center;
+    font-size: 0.6rem;
+  }
+
+  .input {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+  }
+  input {
+    position: relative;
+    top: 0.1rem;
+    background: transparent;
+    margin-left: 0.5rem;
+    border: none;
+    border-radius: 1px;
+    color: #fff;
+    font-size: 0.6rem;
+    width: 3rem;
+    height: 1.4rem;
+  }
+}
+img {
+  width: 0.8rem;
+}

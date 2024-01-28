@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="72px" height="69px" viewBox="0 0 72 69" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 1 0" />
+    </filter>
+  </defs>
+  <g id="resizer-tool">
+    <g id="Group-12" filter="url(#filter_1)">
+      <path d="M6.35297 5.175L67.3614 5.175L67.3614 62.675L6.35297 62.675L6.35297 5.175Z" id="Rectangle" fill="#A2A2A2" fill-opacity="0.14901961" fill-rule="evenodd" stroke="#808080" stroke-width="4" />
+      <path d="M0 69L72 0" id="Line" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="4" stroke-linecap="square" />
+      <path d="M0 0L72 69" id="Line-2" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="4" stroke-linecap="square" />
+    </g>
+  </g>
+</svg>

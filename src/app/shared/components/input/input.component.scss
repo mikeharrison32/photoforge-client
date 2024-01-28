@@ -1,0 +1,71 @@
+:host {
+.input {
+  display: flex;
+  align-items: center;
+  position: relative;
+  .value {
+    width: 100%;
+    border: solid 1px #6f6f6f;
+    overflow: hidden;
+    display: flex;
+    padding: 1px;
+    height: 0.8rem;
+    justify-content: space-between;
+    position: relative;
+    outline: none;
+    background: #242424;
+    border-radius: 1px;
+    color: #fff;
+    font-size: 0.6rem;
+    .volume-drop-down {
+      width: 1rem;
+      height: 100%;
+      border-left: solid 1px #6d6d6d;
+      margin-left: 0.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      img {
+        width: 0.5rem;
+        filter: brightness(1.3);
+      }
+    }
+  }
+  .volume {
+    width: 13rem;
+    position: absolute;
+    background: #242424;
+    height: 1rem;
+    left: 0;
+    top: 1rem;
+    z-index: 1000000;
+  }
+
+  .disabled-value {
+    border: none;
+    @extend .value;
+    background: none;
+  }
+  .edit-mode-input {
+    @extend .value;
+  }
+}
+.editMode-input {
+
+    input {
+         width: 100%;
+    border: solid 1px #6f6f6f;
+    overflow: hidden;
+    display: flex;
+    padding: 1px;
+    height: 0.8rem;
+    justify-content: space-between;
+    position: relative;
+    outline: none;
+    background: #242424;
+    border-radius: 1px;
+    color: #fff;
+    font-size: 0.6rem; 
+    }
+}
+}

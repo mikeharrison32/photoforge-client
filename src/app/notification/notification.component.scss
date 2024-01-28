@@ -1,0 +1,31 @@
+.notification {
+  width: 12rem;
+  height: 3.4rem;
+  background: #1d1d1d;
+  border: solid 1px #858585;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  border-radius: 5px;
+  z-index: 1000000000000;
+  right: 1rem;
+  bottom: 2rem;
+  padding-inline: 0.3rem;
+  animation-name: "pop-up";
+  animation-duration: 100ms;
+  animation-iteration-count: 1;
+  @keyframes pop-up {
+    from {
+      bottom: 0;
+    }
+    to {
+      bottom: 2rem;
+    }
+  }
+  span {
+    font-size: 0.7rem;
+    margin: 0;
+  }
+}

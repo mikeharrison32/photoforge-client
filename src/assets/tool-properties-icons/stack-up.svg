@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="138px" height="175px" viewBox="0 0 138 175" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <g id="stack-up">
+    <g id="Group-22" transform="translate(14.04213 0)">
+      <g id="Group-21" transform="translate(28.699068 0)">
+        <path d="M47.0079 20.0212L94.6208 52.3259L47.008 87.5213L0.0295677 53.033L47.0079 20.0212Z" id="Rectangle" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+        <path d="M46.9783 89.0427L94.5912 121.347L46.9784 156.543L-1.90735e-05 122.055L46.9783 89.0427Z" id="Rectangle-3" fill="#363636" fill-rule="evenodd" stroke="#FFFFFF" stroke-width="2" />
+        <path d="M46.9783 67.0427L94.5912 99.3474L46.9784 134.543L-2.28882e-05 100.055L46.9783 67.0427Z" id="Rectangle-4" fill="#363636" fill-rule="evenodd" stroke="#FFFFFF" stroke-width="2" />
+        <path d="M46.9783 42.0427L94.5912 74.3474L46.9784 109.543L-2.28882e-05 75.0545L46.9783 42.0427Z" id="Rectangle-5" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+        <path d="M46.9783 20.0427L94.5912 52.3474L46.9784 87.5428L-2.28882e-05 53.0545L46.9783 20.0427Z" id="Rectangle-2" fill="#363636" fill-rule="evenodd" stroke="#FFFFFF" stroke-width="2" />
+      </g>
+      <path d="M0.897771 110.021L0.897771 58.2214" id="Arrow" fill="none" fill-rule="evenodd" stroke="#D8D8D8" stroke-width="4" />
+    </g>
+  </g>
+</svg>

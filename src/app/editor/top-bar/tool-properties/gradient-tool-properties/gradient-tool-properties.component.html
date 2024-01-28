@@ -1,0 +1,25 @@
+<div class="tool-propertie gradient-tool">
+  <div class="gradient-preview">
+    <div class="arrow">
+      <img src="assets/ArrowDown.svg" />
+    </div>
+  </div>
+  <div class="gradient-options">
+    <img src="assets/tools-icons/gradient-tool.svg" />
+    <img src="assets/tool-properties-icons/radial-gradient-icon.svg" />
+    <img src="assets/tool-properties-icons/angle-gradient-icon.svg" />
+    <img src="assets/tool-properties-icons/reflected-gradient-icon.svg" />
+    <img src="assets/tool-properties-icons/dimond-gradient-icon.svg" />
+  </div>
+  <div class="mode">
+    <span>Mode:</span>
+    <app-select [Items]="['Brush']"></app-select>
+  </div>
+  <div class="opacity">
+    <span>Opacity:</span>
+    <app-input [Value]="100" unit="%" [hasVolume]="true"></app-input>
+  </div>
+  <app-checkbox [text]="'Reverse'"></app-checkbox>
+  <app-checkbox [text]="'Dither'"></app-checkbox>
+  <app-checkbox [text]="'Transparency'"></app-checkbox>
+</div>

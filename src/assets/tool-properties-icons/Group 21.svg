@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="196px" height="259px" viewBox="0 0 196 259" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 1 0" />
+    </filter>
+  </defs>
+  <g id="Group-21" transform="translate(2 2)" filter="url(#filter_1)">
+    <g id="T" fill="#FFFFFF">
+      <path d="M62.6655 221.041L62.6655 212.095L67.5645 212.095Q74.5935 212.095 79.812 209.645Q85.0305 207.196 85.0305 197.824L85.0305 79.609L64.5825 79.609Q55.2105 79.609 51.5895 84.8275Q47.9685 90.046 47.1165 97.075L46.0515 106.234L34.9755 106.234L36.0405 68.959L155.96 68.959L157.025 106.234L145.949 106.234L144.883 97.075Q144.031 90.046 140.411 84.8275Q136.789 79.609 127.204 79.609L106.544 79.609L106.544 196.759Q106.544 206.77 111.656 209.432Q116.768 212.095 124.01 212.095L128.909 212.095L128.909 221.041L62.6655 221.041Z" />
+    </g>
+    <path d="M26.9999 69.5002L26.9999 227.5" id="Arrow" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="4" />
+    <path d="M33.9988 236L172 236" id="Arrow-2" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="4" />
+  </g>
+</svg>

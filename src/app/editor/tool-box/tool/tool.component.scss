@@ -1,0 +1,55 @@
+$dark_gray: #1d1d1d;
+$light_gray: #3a3a3a;
+.tool {
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+  border-radius: 2px;
+  display: flex;
+
+  &:hover {
+    border-radius: 2px;
+    box-shadow: #b5b5b5 0 0 1px 0;
+    background: #484848;
+  }
+  &:after {
+    display: block;
+    content: "";
+    width: 0.6rem;
+    height: 1rem;
+    background: #a2a2a2;
+    position: absolute;
+    clip-path: polygon(24px 21px, -1px 23px, 35px -9px);
+    right: 0;
+    bottom: 0;
+  }
+  .tool-choices {
+    font-size: 0.6rem;
+    background: #3a3a3a;
+    box-sizing: border-box;
+    padding-block: 0.3rem;
+    /* border-radius: 3px; */
+    position: absolute;
+    left: 1.8rem;
+    width: 8rem;
+    border: solid 1px #1d1d1d;
+  }
+  .tool-icon {
+    width: 0.7rem;
+    margin-inline: 0.4rem;
+    margin-block: 0.21rem;
+  }
+}
+
+.active-tool {
+  @extend .tool;
+  box-shadow: $light_gray 0 0 1px 0;
+  background: $dark_gray;
+  border-radius: 2px;
+  &:hover {
+    border-radius: 2px;
+    box-shadow: #b5b5b5 0 0 1px 0;
+    background: $dark_gray;
+  }
+}

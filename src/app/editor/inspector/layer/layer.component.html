@@ -1,0 +1,56 @@
+<!-- <app-layer-context-menu
+  [Active]="contextMenuActive"
+  [layer]="layer"
+></app-layer-context-menu> -->
+<div
+  [ngClass]="selected ? 'active-layer' : 'layer'"
+  (contextmenu)="onLayerRightClick($event)"
+  (click)="onLayerClick($event)"
+>
+  <div class="eye-ball">
+    <img
+      [style.opacity]="layer?.visible ? '1' : '0'"
+      src="assets/eye-ball.svg"
+      (click)="toggleLayerHidden()"
+    />
+  </div>
+  <div class="layer-image" (click)="maskSelected = false">
+    <div class="image">
+      <img [src]="imgSrc" />
+      <div class="shape-icon" *ngIf="getInstanceOf(layer) == 'shape'">
+        <img src="assets/rectangular-select.svg" />
+      </div>
+    </div>
+    <div *ngIf="selected" class="active-layer-wrapper">
+      <img src="assets/img-wrapper.svg" />
+    </div>
+  </div>
+  <img
+    src="assets/tool-properties-icons/link-icon.svg"
+    class="link-icon"
+    *ngIf="false"
+  />
+  <div
+    class="layer-mask"
+    *ngIf="false"
+    (click)="maskSelected = true"
+    (contextmenu)="toggleMaskContextMenu()"
+  >
+    <!-- <div class="mask-context-menu" (click)="toggleMaskContextMenu()">
+      <p>Delete Layer Mask</p>
+      <p>Apply Layer Mask</p>
+      <hr />
+      <p>Add Mask Selection</p>
+    </div> -->
+    <div class="mask"></div>
+    <div *ngIf="maskSelected" class="active-layer-wrapper">
+      <img src="assets/img-wrapper.svg" />
+    </div>
+  </div>
+  <p class="layer-title">{{ layer?.name }}</p>
+  <img
+    [ngClass]="layer ? 'lock' : 'lock-icon-hidden'"
+    src="assets/lock-icon.svg"
+    (click)="toggleLayerLocked()"
+  />
+</div>

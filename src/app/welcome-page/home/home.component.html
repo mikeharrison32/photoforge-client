@@ -1,0 +1,56 @@
+<div class="top-bar">
+  <h4>
+    Build your skills
+    <img width="1rem" src="assets/Info-icon.svg" alt="info icon" />
+  </h4>
+  <p>Show suggestions</p>
+</div>
+<div class="recent-files-container">
+  <h4>Recent</h4>
+  <div
+    [ngClass]="
+      activeView == 'list' ? 'list-view-icon-active' : 'list-view-icon'
+    "
+    (click)="setActiveView('list')"
+  >
+    <img src="assets/List-view-icon.svg" alt="List View Icon" />
+  </div>
+  <div
+    [ngClass]="
+      activeView == 'window' ? 'window-view-icon-active' : 'window-view-icon'
+    "
+    (click)="setActiveView('window')"
+  >
+    <img src="assets/Window-view-icon.svg" alt="Window View Icon" />
+  </div>
+  <div class="display-options">
+    <div class="sort-container">
+      <p>Sort</p>
+      <select name="" id="">
+        <option value="">Last Modified</option>
+        <option value="">New Modified</option>
+      </select>
+    </div>
+    <div class="filter-container">
+      <p>Filter</p>
+      <input type="text" placeholder="Filter Recent Files" />
+    </div>
+  </div>
+  <div [ngClass]="activeView == 'window' ? 'recent-files' : 'recent-files-list-view'">
+    <div class="file">
+      <div class="file-image"></div>
+      <h4>Blending text into Clouds.psdc</h4>
+      <p>4 minutes ago</p>
+    </div>
+    <div class="file">
+      <div class="file-image"></div>
+      <h4>Blending text into Clouds.psdc</h4>
+      <p>8 minutes ago</p>
+    </div>
+    <div class="file">
+      <div class="file-image"></div>
+      <h4>Blending text into Clouds.psdc</h4>
+      <p>12 minutes ago</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+button {
+  font-size: 0.6rem;
+  border: none;
+  background: #2e2e2e;
+  color: #fff;
+  padding: 0.2rem;
+}
+.button-disabled {
+  @extend button;
+  color: #6e6e6e;
+}

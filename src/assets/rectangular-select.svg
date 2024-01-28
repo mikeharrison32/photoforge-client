@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="99px" height="74px" viewBox="0 0 99 74" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 1 0" />
+    </filter>
+  </defs>
+  <g id="rectangular-select">
+    <g id="Group-21" transform="translate(3.272849 2.508484)" filter="url(#filter_1)">
+      <path d="M8.34539 6.2085L85.0909 6.2085L85.0909 62.7119L8.34539 62.7119L8.34539 6.2085Z" id="Rectangle" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="4" />
+      <path d="M0 0L8.18182 0L8.18182 6.27119L0 6.27119L0 0Z" id="Rectangle-2" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="4" />
+      <path d="M85.0907 62.7119L93.2725 62.7119L93.2725 68.983L85.0907 68.983L85.0907 62.7119Z" id="Rectangle-3" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="4" />
+      <path d="M0 62.7119L8.18182 62.7119L8.18182 68.983L0 68.983L0 62.7119Z" id="Rectangle-4" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="4" />
+      <path d="M85.0907 0L93.2725 0L93.2725 6.27119L85.0907 6.27119L85.0907 0Z" id="Rectangle-5" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="4" />
+    </g>
+  </g>
+</svg>

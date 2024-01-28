@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="266px" height="200px" viewBox="0 0 266 200" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 1 0" />
+    </filter>
+    <path d="M0 81C0 36.2649 36.2649 0 81 0C125.735 0 162 36.2649 162 81C162 125.735 125.735 162 81 162C36.2649 162 0 125.735 0 81Z" id="path_1" />
+    <clipPath id="mask_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <g id="exposure-crossed-icon">
+    <g id="Group-22">
+      <g id="Rectangle-Mask" transform="translate(60.200073 28)">
+        <path d="M0 81C0 36.2649 36.2649 0 81 0C125.735 0 162 36.2649 162 81C162 125.735 125.735 162 81 162C36.2649 162 0 125.735 0 81Z" id="Mask" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="4" />
+        <g clip-path="url(#mask_1)">
+          <path d="M-5.87339e-05 151.988L136.834 0.000106812L242.159 94.8475L105.325 246.836L-5.87339e-05 151.988Z" id="Rectangle" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+        </g>
+      </g>
+      <g id="Group-21" filter="url(#filter_1)">
+        <path d="M0 0L265.4 200" id="Line" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="13" stroke-linecap="square" />
+      </g>
+    </g>
+  </g>
+</svg>

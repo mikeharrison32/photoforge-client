@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="154px" height="116px" viewBox="0 0 154 116" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient x1="0" y1="0" x2="1" y2="1" id="gradient_1">
+      <stop offset="0" stop-color="#FFFFFF" />
+      <stop offset="1" stop-color="#000000" />
+    </linearGradient>
+  </defs>
+  <g id="hue-saturation">
+    <g id="Group-11">
+      <g id="Group-10">
+        <g id="Group-9" transform="translate(0.4000244 0)">
+          <path d="M0 0L153 0L153 116L0 116L0 0Z" id="Rectangle" fill="#0E0E0E" fill-rule="evenodd" stroke="#808080" stroke-width="4" />
+        </g>
+        <path d="M0 53L154 53" id="New-shape" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="3" />
+        <path d="M36 3L36 54" id="New-shape-2" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="3" />
+        <path d="M71 3L71 54" id="New-shape-3" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="3" />
+        <path d="M116 0L116 53" id="New-shape-4" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="3" />
+      </g>
+      <path d="M0 54L154 54L154 116L0 116L0 54Z" id="Rectangle" fill="url(#gradient_1)" fill-rule="evenodd" stroke="none" />
+    </g>
+  </g>
+</svg>

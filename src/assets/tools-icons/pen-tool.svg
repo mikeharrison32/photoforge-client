@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="73px" height="71px" viewBox="0 0 73 71" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <g id="pen-tool">
+    <g id="Group-20">
+      <path d="M53.7436 7.92129C54.0306 8.36242 66.0948 19.3951 66.1219 19.1547C58.9285 22.2183 46.975 46.6072 46.975 46.6072L9.73211 58.1422L21.4225 25.763C21.4225 25.763 55.9785 15.851 53.7436 7.92129Z" id="Rectangle-2" fill="none" fill-rule="evenodd" stroke="#D3D3D3" stroke-width="2" />
+      <path d="M9.73275 58.1438L34.4895 35.6759" id="New-shape" fill="none" fill-rule="evenodd" stroke="#D3D3D3" stroke-width="2" />
+      <path d="M33.1141 34.3542C33.1141 32.8944 34.3457 31.7109 35.8649 31.7109C37.3841 31.7109 38.6156 32.8944 38.6156 34.3542C38.6156 35.8141 37.3841 36.9975 35.8649 36.9975C34.3457 36.9975 33.1141 35.8141 33.1141 34.3542Z" id="Ellipse-2" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+      <path d="M55.1201 7.92149L57.1831 1.97412L72.9999 16.5121L66.1231 19.1554L55.1201 7.92149Z" id="New-shape-2" fill="#D3D3D3" fill-rule="evenodd" stroke="#D3D3D3" stroke-width="2" />
+    </g>
+  </g>
+</svg>

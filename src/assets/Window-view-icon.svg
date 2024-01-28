@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="71px" height="67px" viewBox="0 0 71 67" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.93333334 0 0 0 0 0.93333334 0 0 0 0 0.93333334 0 0 0 1 0" />
+    </filter>
+  </defs>
+  <g id="Group-2" filter="url(#filter_1)">
+    <path d="M0 0L32.6 0L32.6 31L0 31L0 0Z" id="Rectangle" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+    <path d="M0.100006 36L32.7 36L32.7 67L0.100006 67L0.100006 36Z" id="Rectangle-Copy-2" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+    <path d="M37.2 36L69.8 36L69.8 67L37.2 67L37.2 36Z" id="Rectangle-Copy-3" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+    <path d="M38.1 0L70.7 0L70.7 31L38.1 31L38.1 0Z" id="Rectangle-Copy" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+  </g>
+</svg>

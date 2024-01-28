@@ -1,0 +1,30 @@
+<div
+  [class]="'preview'"
+  [style.background]="color"
+  (click)="Active = true"
+></div>
+<div *ngIf="Active" class="color-editor">
+  <div class="title">
+    <span>Color Picker</span>
+  </div>
+  <div class="color-picker-box">
+    <input
+      type="color"
+      class="color-input"
+      [(colorPicker)]="color"
+      (colorPickerChange)="onColorChange($event)"
+      style="z-index: 20000000000"
+      [cpToggle]="true"
+      [cpCloseClickOutside]="false"
+    />
+    <div class="colors">
+      <div class="foreground" [style.background]="fgColor"></div>
+      <div class="background" [style.background]="bgColor"></div>
+    </div>
+    <div class="buttons">
+      <button (click)="close()">Ok</button>
+      <button (click)="close()">Cancel</button>
+      <button>Add to Swatches</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="layer-context-menu" #layersContextMenu *ngIf="Active">
+  <ul>
+    <li>Blending Options...</li>
+    <li>Edit Adjustment...</li>
+    <hr />
+    <li (click)="copyCSS()">Copy CSS</li>
+    <li (click)="copySvg()">Copy SVG</li>
+    <li (click)="duplicateLayer()">Duplicate Layer...</li>
+    <li (click)="deleteLayer()">Delete Layer</li>
+    <li (click)="groupFromLayer()">Group from Layers...</li>
+    <hr />
+    <li>Quick Export As JPG</li>
+    <li>Export As...</li>
+    <hr />
+    <li>Mask All Objects</li>
+    <hr />
+    <li>Convert to Smart Object</li>
+    <hr />
+    <li>Rasterize Layer</li>
+    <li>Rasterize Layer Style</li>
+    <hr />
+    <li>Disable Layer Mask</li>
+    <li>Enable Vector Mask</li>
+    <li>Create Clipping Mask</li>
+    <hr />
+    <li>Link Layers</li>
+    <li>Select Linked Layers</li>
+    <hr />
+    <li (click)="copyLayerStyle()">Copy Layer Style</li>
+    <li (click)="pastLayerStyle()">Paste Layer Style</li>
+  </ul>
+</div>

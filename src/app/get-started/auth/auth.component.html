@@ -1,0 +1,53 @@
+<div class="form">
+  <img src="assets/auth-icon.svg" alt="auth-icon" />
+  <h2>{{ authStatus == AuthStatus.SignUp ? "Sign Up" : "Sign In" }}</h2>
+  <input
+  #username
+    type="text"
+    [formControl]="userNameControl"
+    placeholder="username..."
+  />
+  <input
+  #password
+
+    type="password"
+    [formControl]="passwordControl"
+    placeholder="password..."
+  />
+  <input
+  #confirmPassword
+
+    *ngIf="authStatus == AuthStatus.SignUp"
+    type="password"
+    [formControl]="confirmPasswordControl"
+    placeholder="confirm password..."
+  />
+  <div class="buttons">
+    <button
+      *ngIf="authStatus == AuthStatus.SignUp"
+      class="done"
+      (click)="signUp()"
+    >
+      Sign Up
+    </button>
+    <button
+      *ngIf="authStatus == AuthStatus.Login"
+      class="done"
+      (click)="login()"
+    >
+      Sign In
+    </button>
+  </div>
+  <p
+    *ngIf="authStatus == AuthStatus.SignUp"
+    (click)="authStatus = AuthStatus.Login"
+  >
+    Already have an account? Login in.
+  </p>
+  <p
+    *ngIf="authStatus == AuthStatus.Login"
+    (click)="authStatus = AuthStatus.SignUp"
+  >
+    don't have an account? sing up
+  </p>
+</div>

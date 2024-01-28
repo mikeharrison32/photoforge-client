@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="62px" height="13px" viewBox="0 0 62 13" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <g id="more-icon">
+    <g id="Group-22">
+      <path d="M0 6.5C0 2.91015 3.26832 0 7.3 0C11.3317 0 14.6 2.91015 14.6 6.5C14.6 10.0899 11.3317 13 7.3 13C3.26832 13 0 10.0899 0 6.5Z" id="Ellipse-2" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+      <path d="M47.1 6.5C47.1 2.91015 50.3683 0 54.4 0C58.4317 0 61.7 2.91015 61.7 6.5C61.7 10.0899 58.4317 13 54.4 13C50.3683 13 47.1 10.0899 47.1 6.5Z" id="Ellipse-3" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+      <path d="M23.6 6.5C23.6 2.91015 26.8683 0 30.9 0C34.9317 0 38.2 2.91015 38.2 6.5C38.2 10.0899 34.9317 13 30.9 13C26.8683 13 23.6 10.0899 23.6 6.5Z" id="Ellipse-4" fill="#D3D3D3" fill-rule="evenodd" stroke="none" />
+    </g>
+  </g>
+</svg>

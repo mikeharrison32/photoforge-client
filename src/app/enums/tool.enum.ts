@@ -1,0 +1,26 @@
+export enum Tool {
+  MoveTool,
+  LassoTool,
+  BrushTool,
+  ColorPickerTool,
+  CropTool,
+  EraserTool,
+  GradientTool,
+  CloneStampTool,
+  HistoryBrushTool,
+  BlurTool,
+  DodgeTool,
+  HandTool,
+  LolyPopTool,
+  ShapeTool,
+  PenTool,
+  QuickSelectionTool,
+  RectangularMarqueeTool,
+  ZoomTool,
+  WaterDropTool,
+  SpotHealingBrushTool,
+  TextTool,
+  PathSelectionTool,
+  ResizerTool
+
+}

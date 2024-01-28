@@ -1,0 +1,338 @@
+<ul #menus>
+  <li (click)="onMenuClick(Menus.File)">
+    File
+    <div *ngIf="selectedMenu == Menus.File">
+      <div class="options" [appDestroyable]="true">
+        <ul>
+          <li (click)="onNewMenuClick()">New</li>
+          <li>
+            <input
+              #open
+              type="file"
+              (change)="onOpenFileOptionChange($event)"
+              multiple
+            />
+            Open
+          </li>
+          <li class="open-recent-option">
+            Open Recent
+            <img src="assets/arrow-right.svg" />
+            <div class="recent-projects">
+              <p *ngFor="let rp of recentProjects" (click)="openProject(rp)">{{rp.Title}}</p>
+            </div>
+          </li>
+          <div class="line"></div>
+          <li (click)="closeSelectedProject()">Close</li>
+          <li>Save</li>
+          <li>Save As</li>
+          <li>Save for Web</li>
+          <li>Export As</li>
+          <div class="line"></div>
+          <li>
+            <input
+              #open
+              type="file"
+              (change)="placeEmbedded($event)"
+              multiple
+            />
+            Place Embedded
+          </li>
+          <li>Place Linked</li>
+          <div class="line"></div>
+          <li>Print</li>
+          <li>Exit</li>
+        </ul>
+      </div>
+    </div>
+  </li>
+  <li (click)="onMenuClick(Menus.Edit)">
+    Edit
+    <div class="options" *ngIf="selectedMenu == Menus.Edit" #menuOptions>
+      <ul>
+        <li (click)="undo()">Undo</li>
+        <li (click)="stepBackward()">Step Backward</li>
+        <li (click)="redo()">Redo</li>
+        <div class="line"></div>
+        <li (click)="cut()">Cut</li>
+        <li (click)="copySelectedObj()">Copy</li>
+        <li (click)="pasteObj()">Paste</li>
+        <li>Paste into</li>
+        <div class="line"></div>
+        <li (click)="clearProject()">Clear</li>
+        <div class="line"></div>
+        <li (click)="fill()">Fill</li>
+        <li (click)="stroke()">Stroke</li>
+        <div class="line"></div>
+        <li (click)="transform()" class="transform-menu">
+          Transform
+          <img src="assets/arrow-right.svg" />
+          <div class="transform-options">
+            <ul>
+              <li>Scale</li>
+              <li>Rotate</li>
+              <li>Skew</li>
+              <li>Distort</li>
+              <li>Perspective</li>
+              <li>Warp</li>
+              <div class="line"></div>
+              <li>Rotate 180&deg;</li>
+              <li>Rotate 90&deg; Clockwise</li>
+              <li>Rotate 90&deg; Counter Clockwise</li>
+              <div class="line"></div>
+              <li>Flip Horizontal</li>
+              <li>Flip Vertical</li>
+            </ul>
+          </div>
+        </li>
+        <li>Warp</li>
+        <li>Liquify</li>
+        <li>Puppet-Warp</li>
+        <li>Content-Aware</li>
+        <div class="line"></div>
+        <li>Color Range</li>
+        <li>Preferences</li>
+      </ul>
+    </div>
+  </li>
+  <li (click)="onMenuClick(Menus.Image)">
+    Image
+    <div class="options" *ngIf="selectedMenu == Menus.Image" #menuOptions>
+      <ul>
+        <li class="adjustments-menu">
+          Adjustments
+          <img src="assets/arrow-right.svg" /> 
+          <div class="adjustment-options">
+            <div class="ad_choices" #ad_choices>
+              <p (click)="addAdjustmentLayer(AdjustmentLayer.SolidColor)">
+                SolidColor
+              </p>
+              <p (click)="addAdjustmentLayer(AdjustmentLayer.Gradient)">Gradient</p>
+              <p (click)="addAdjustmentLayer(AdjustmentLayer.Pattern)">Pattern</p>
+              <p (click)="addAdjustmentLayer(AdjustmentLayer.BrightnessContrast)">
+                BrightnessContrast
+              </p>
+              <p (click)="addAdjustmentLayer(AdjustmentLayer.Levels)">Levels</p>
+              <p (click)="addAdjustmentLayer(AdjustmentLayer.Curves)">Curves</p>
+              <p (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)">Exposure</p>
+              <p (click)="addAdjustmentLayer(AdjustmentLayer.Vibrance)">Vibrance</p>
+              <p (click)="addAdjustmentLayer(AdjustmentLayer.HueSaturation)">
+                HueSaturation
+              </p>
+              <p (click)="addAdjustmentLayer(AdjustmentLayer.ColorBalance)">
+                ColorBalance
+              </p>
+              <p (click)="addAdjustmentLayer(AdjustmentLayer.BlackWhite)">
+                BlackWhite
+              </p>
+              <p (click)="addAdjustmentLayer(AdjustmentLayer.PhotoFilter)">
+                PhotoFilter
+              </p>
+              <p (click)="addAdjustmentLayer(AdjustmentLayer.ChannelMixer)">
+                ChannelMixer
+              </p>
+              <p (click)="addAdjustmentLayer(AdjustmentLayer.ColorLookup)">
+                ColorLookup
+              </p>
+              <p (click)="addAdjustmentLayer(AdjustmentLayer.Invert)">Invert</p>
+              <p (click)="addAdjustmentLayer(AdjustmentLayer.Posterize)">
+                Posterize
+              </p>
+              <p (click)="addAdjustmentLayer(AdjustmentLayer.Threshold)">
+                Threshold
+              </p>
+              <p (click)="addAdjustmentLayer(AdjustmentLayer.GradientMap)">
+                GradientMap
+              </p>
+              <p (click)="addAdjustmentLayer(AdjustmentLayer.SelectiveColor)">
+                SelectiveColor
+              </p>
+            </div>
+          </div>
+        </li>
+        <li>
+          Mode
+          <img src="assets/arrow-right.svg" />
+        </li>
+        <div class="line"></div>
+        <li>Image Size</li>
+        <li>Canvas Size</li>
+        <div class="line"></div>
+        <li>Crop</li>
+        <li>Rotate Canvas</li>
+        <div class="line"></div>
+        <li (click)="flipCanvas()">Flip Canvas</li>
+        <div class="line"></div>
+        <li (click)="autoTone()">Auto Tone</li>
+        <li (click)="autoContrast()">Auto Contrast</li>
+        <li (click)="autoColor()">Auto Color</li>
+        <div class="line"></div>
+        <li (click)="applyImage()">Apply Image</li>
+        <!-- <li>Calculations</li>
+        <li>HDR Toning</li>
+        <li>Variations</li> -->
+      </ul>
+    </div>
+  </li>
+  <li (click)="onMenuClick(Menus.Layer)">
+    Layer
+    <div class="options" *ngIf="selectedMenu == Menus.Layer" #menuOptions>
+      <ul>
+        <li (click)="createNewLayer()">New Layer</li>
+        <li (click)="duplicateLayer()">Duplicate Layer</li>
+        <li (click)="deleteLayer()">Delete Layer</li>
+        <div class="line"></div>
+        <li>Layer Properties</li>
+        <li>Layer Style</li>
+        <li>Layer Mask</li>
+        <div class="line"></div>
+        <li (click)="groupLayers()">Group Layers</li>
+        <li (click)="unGroupLayers()">Ungroup Layers</li>
+        <div class="line"></div>
+        <li (click)="mergeLayers()">Merge Layers</li>
+        <div class="line"></div>
+        <li (click)="flattenImage()">Flatten Image</li>
+        <div class="line"></div>
+        <li (click)="arrange()">Arrange</li>
+        <li (click)="align()">Align</li>
+        <li (click)="distribute()">Distribute</li>
+        <div class="line"></div>
+        <li (click)="lockLayers()">Lock Layers</li>
+        <li (click)="createClippingMask()">Create Clipping Mask</li>
+        <div class="line"></div>
+        <li (click)="layerViaCopy()">Layer via Copy</li>
+        <li (click)="layerViaCut()">Layer via Cut</li>
+      </ul>
+    </div>
+  </li>
+  <li (click)="onMenuClick(Menus.Type)">
+    Type
+    <div class="options" *ngIf="selectedMenu == Menus.Type" #menuOptions>
+      <ul>
+        <li (click)="newTypeLayer()">New Type Layer</li>
+        <li (click)="horizontalTypeTool()">Horizontal Type Tool</li>
+        <li (click)="verticalTypeTool()">Vertical Type Tool</li>
+        <div class="line"></div>
+        <li (click)="horizontalTypeMaskTool()">Horizontal Type Mask Tool</li>
+        <li (click)="verticalTypeMaskTool()">Vertical Type Mask Tool</li>
+        <div class="line"></div>
+        <li>Warp Text</li>
+        <li>Character</li>
+        <li>Paragraph</li>
+        <div class="line"></div>
+        <li (click)="createWorkPath()">Create Work Path</li>
+        <li (click)="convertToShape()">Convert To Shape</li>
+        <li (click)="simplifyText()">Simplify Text</li>
+        <li (click)="matchFont()">Match Font</li>
+        <li>Glyphs</li>
+        <li (click)="typeOnAPath()">Type on a Path</li>
+        <li (click)="typeOrientation()">Type Orientation</li>
+        <li (click)="fontPreview()">Font Preview</li>
+        <li>Rest Character</li>
+      </ul>
+    </div>
+  </li>
+  <li (click)="onMenuClick(Menus.Select)">
+    Select
+    <div class="options" *ngIf="selectedMenu == Menus.Select" #menuOptions>
+      <ul>
+        <li (click)="selectAll()">All</li>
+        <li (click)="deselect()">Deselect</li>
+        <li (click)="reselect()">Reselect</li>
+        <div class="line"></div>
+        <li (click)="inverse()">Inverse</li>
+        <li>All Layers</li>
+        <li (click)="deselectLayers()">Deselect Layers</li>
+        <div class="line"></div>
+        <li (click)="loadSelection()">Load Selection</li>
+        <li (click)="saveSelection()">Save Selection</li>
+        <div class="line"></div>
+        <li (click)="modify()">Modify</li>
+        <li>Feather</li>
+        <li>Border</li>
+        <li (click)="transformSelection()">Transform Selection</li>
+        <li>Color Range</li>
+        <li>Focus Area</li>
+        <li>Refine Edge</li>
+        <li>Similar</li>
+        <li>Grow</li>
+        <li>Contract</li>
+        <div class="line"></div>
+        <li (click)="loadSelectionChannel()">Load Selection Channel</li>
+        <li (click)="saveSlectionChannel()">Save Selection Channel</li>
+      </ul>
+    </div>
+  </li>
+  <li (click)="onMenuClick(Menus.Filter)">
+    Filter
+    <div class="options" *ngIf="selectedMenu == Menus.Filter" #menuOptions>
+      <ul>
+        <li (click)="addFilter(Filter.Blur)">Blur</li>
+        <li (click)="addFilter(Filter.Blur)">Distort</li>
+        <li (click)="addFilter(Filter.Noise)">Noise</li>
+        <li (click)="addFilter(Filter.Pixelate)">Pixelate</li>
+        <li (click)="addFilter(Filter.Blur)">Render</li>
+        <li (click)="addFilter(Filter.Blur)">Sharpen</li>
+        <li (click)="addFilter(Filter.Blur)">Stylize</li>
+        <div class="line"></div>
+        <li>Other Filters</li>
+        <li>Convert for Smart Filters</li>
+        <li>Camera Raw Filter</li>
+        <li>Filter Gallery</li>
+        <div class="line"></div>
+        <li>Adaptive Wide Angle</li>
+        <li>Lighting Effects</li>
+        <li>Lens Correction</li>
+        <li>Vanishing Point</li>
+      </ul>
+    </div>
+  </li>
+  <li (click)="onMenuClick(Menus.View)">
+    View
+    <div class="options" *ngIf="selectedMenu == Menus.View" #menuOptions>
+      <ul>
+        <li (click)="zoomIn()">Zoom In</li>
+        <li (click)="zoomOut()">Zoom Out</li>
+        <div class="line"></div>
+        <li (click)="fitOnScreen()">Fit on Screen</li>
+        <li (click)="actualPixels()">Actual Pixels</li>
+        <li (click)="printSize()">Print Size</li>
+        <li (click)="show()">Show</li>
+        <li>Extras</li>
+        <!-- <li>3D</li> -->
+        <div class="line"></div>
+        <li>Proof Setup</li>
+        <li>Proof Colors</li>
+        <div class="line"></div>
+        <li>Gamut Warning</li>
+        <li>Pixel Aspect Ratio</li>
+        <div class="line"></div>
+        <li>New Guide</li>
+        <li>Clear Guides</li>
+        <li>Lock Guides</li>
+        <div class="line"></div>
+        <li>Snap</li>
+        <li (click)="rotateView()">Rotate View</li>
+        <li (click)="flipHorizontal()">Flip Horizontal</li>
+        <li (click)="flipVertical()">Flip Vertical</li>
+        <li (click)="revealAll()">Reveal All</li>
+      </ul>
+    </div>
+  </li>
+  <li (click)="onMenuClick(Menus.Window)">
+    Window
+    <div class="options" *ngIf="selectedMenu == Menus.Window" #menuOptions>
+      <ul>
+        <li>Actions</li>
+        <li (click)="adjustmentsPanel()">Adjustments</li>
+        <li (click)="brushesPanel()">Brushes</li>
+        <li (click)="characterPanel()">Character</li>
+        <li (click)="colorPanel()">Color</li>
+        <!-- <li >History</li> -->
+        <li (click)="layersPanel()">Layers</li>
+        <!-- <li (click)="librariesPanel()">Libraries</li> -->
+        <li (click)="propertiesPanel()">Properies</li>
+        <li (click)="swatchesPanel()">Swatches</li>
+      </ul>
+    </div>
+  </li>
+</ul>

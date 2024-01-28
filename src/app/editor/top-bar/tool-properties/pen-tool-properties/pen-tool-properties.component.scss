@@ -1,0 +1,124 @@
+$dark_gray: #1d1d1d;
+$light_gray: #3a3a3a;
+:host {
+  width: 100%;
+  height: 1.7rem;
+  background: $light_gray;
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-block: solid 1px #282828;
+
+  .tool-propertie {
+    .layer-chkbox {
+      width: 10rem;
+    }
+    span {
+      display: flex;
+      align-items: center;
+      font-size: 0.6rem;
+    }
+    display: flex;
+    font-size: 0.7rem;
+    gap: 0.3rem;
+    align-items: center;
+    button {
+      font-size: 0.6rem;
+      border: none;
+      background: #212121;
+      color: #fff;
+      border-radius: 0.2rem;
+    }
+
+    .make {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .checkbox {
+      width: max-content;
+      input {
+        width: auto;
+      }
+    }
+    .group {
+      display: flex;
+      gap: 1rem;
+      margin-inline: 0.6rem;
+    }
+    .gradient-options {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding-left: 0.4rem;
+      border-left: solid 2px #272727;
+      height: 1rem;
+      img {
+        width: 0.7rem;
+      }
+    }
+    .checkboxs {
+      border-left: solid 2px #272727;
+      display: flex;
+    }
+    div {
+      display: flex;
+      align-items: center;
+    }
+    .feather {
+      input {
+        width: 2rem;
+      }
+    }
+    .anti-alias {
+      width: 4.6rem;
+    }
+    .width,
+    .height {
+      input {
+        width: 3rem;
+      }
+    }
+    .style {
+      select {
+        width: 4rem;
+        height: 1rem;
+      }
+    }
+    .feather {
+      position: relative;
+      .unit {
+        position: absolute;
+        right: 0;
+      }
+    }
+    .options {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+  img {
+    width: 0.8rem;
+  }
+  ul {
+    margin-left: 2.3rem;
+    display: flex;
+    align-items: center;
+
+    li {
+      .home-icon {
+        cursor: pointer;
+        width: 0.9rem;
+        margin-left: 1rem;
+        background: #3a3a3a;
+        width: 11rem;
+        font-size: 0.5rem;
+        padding: 0.2rem;
+      }
+      img {
+        @extend .home-icon;
+      }
+    }
+  }
+}

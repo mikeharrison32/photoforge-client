@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="971px" height="1218px" viewBox="0 0 971 1218" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 1 0" />
+    </filter>
+  </defs>
+  <g id="history-icon">
+    <g id="Group-2" transform="translate(74.208984 0.019699097)" filter="url(#filter_1)">
+      <g id="Group" transform="matrix(1.2675908E-06 1 -1 1.2675908E-06 300.13354 101.419815)">
+        <path d="M665 0.133545L665 300.134L365 300.134L365 0.133925L665 0.133545Z" id="Rectangle" fill="none" fill-rule="evenodd" stroke="#FFFFFF" stroke-width="45" />
+        <path d="M300 0L300 300L0.000366211 300L0 0.000380277L300 0Z" id="Rectangle-3" fill="none" fill-rule="evenodd" stroke="#FFFFFF" stroke-width="45" />
+        <path d="M1030 0.12793L1030 300.128L730.001 300.128L730 0.12831L1030 0.12793Z" id="Rectangle-3-Copy" fill="#FFFFFF" fill-rule="evenodd" stroke="#FFFFFF" stroke-width="45" />
+      </g>
+      <path d="M626.753 79.8123C613.511 73.3016 598.069 72.5275 583.698 77.654L433.644 128.766C415.748 132.238 400.02 144.129 391.159 160.888C382.297 177.648 381.326 197.336 388.536 214.074L429.987 366.742C435.142 387.376 450.823 402.921 470.983 407.383C491.142 411.845 512.63 404.526 527.158 388.249C541.687 371.972 546.987 349.28 541.013 328.925L538.784 320.716C673.57 441.875 710.292 650.596 615.902 828.118C553.188 946.066 424.85 973.691 429.987 1005.9C435.123 1038.11 635.745 1032.64 716.151 881.422C844.298 640.411 782.547 351.26 583.07 201.528L614.43 190.846C637.417 183.378 654.355 162.277 657.081 137.71C659.808 113.143 647.764 90.1512 626.753 79.8123L626.753 79.8123Z" id="Shape" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+    </g>
+  </g>
+</svg>

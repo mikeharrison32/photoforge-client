@@ -1,0 +1,15 @@
+<div class="panel-tabs">
+  <div
+    *ngFor="let tab of Tabs"
+    [ngClass]="Tabs.indexOf(tab) == selectedTab ? 'active' : 'tab'"
+    (click)="setSelectedTab(Tabs.indexOf(tab))"
+  >
+    {{ tab }}
+  </div>
+</div>
+<div class="body">
+  <ng-content select="[panelBody-1]" *ngIf="selectedTab == 0"></ng-content>
+  <ng-content select="[panelBody-2]" *ngIf="selectedTab == 1"></ng-content>
+  <ng-content select="[panelBody-3]" *ngIf="selectedTab == 2"></ng-content>
+  <ng-content select="[panelBody-4]" *ngIf="selectedTab == 3"></ng-content>
+</div>

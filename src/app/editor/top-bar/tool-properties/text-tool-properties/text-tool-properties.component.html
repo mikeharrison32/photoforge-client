@@ -1,0 +1,36 @@
+<div class="tool-propertie text-tool">
+  <img src="assets/tool-properties-icons/text-with-arrows.svg" />
+  <app-select
+    [Items]="[
+      'Dk Drop Dead Gorgeous',
+      'Gotham Black',
+      'Courier New, Courier, monospace',
+      'Franklin Gothic Medium, Arial Narrow, Arial, sans-serif',
+      'Times New Roman, Times, serif'
+    ]"
+    [selectedItem]="properties?.fontFamily"
+    (onSelectedItemChange)="selectFontFamiliy($event)"
+  ></app-select>
+  <app-select
+    [selectedItem]="properties?.fontStyle"
+    [Items]="['Regular', 'Italic']"
+    (onSelectedItemChange)="selectFontStyle($event)"
+  >
+  </app-select>
+  <img src="assets/tool-properties-icons/small-and-big-text.svg" />
+  <app-input
+    [Value]="properties?.size"
+    unit="px"
+    (onInputChange)="setTextSize($event)"
+  ></app-input>
+  <img src="assets/tool-properties-icons/double-a.svg" />
+  <app-select [Items]="['Sharp', 'Smooth']"></app-select>
+  <div class="group">
+    <img src="assets/tool-properties-icons/text-align-left.svg" />
+    <img src="assets/tool-properties-icons/text-align-center.svg" />
+    <img src="assets/tool-properties-icons/text-align-right.svg" />
+  </div>
+  <input type="color" name="" id="" (change)="setTextColor($event)" />
+  <img src="assets/tool-properties-icons/text-with-curved-arrow.svg" />
+  <img src="assets/tool-properties-icons/list-folder.svg" />
+</div>

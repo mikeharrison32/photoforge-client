@@ -1,0 +1,70 @@
+<div class="brush" (click)="toggleBrushAdjustments()">
+  <div class="brush-text">
+    <div class="brush-icon"></div>
+    <span>{{ brushSize }}</span>
+  </div>
+  <img src="assets/ArrowDown.svg" />
+</div>
+<div class="brush-adjustments" *ngIf="brushAdjustmentsActive">
+  <div class="top">
+    <div class="box">
+      <div class="circle">
+        <div class="line-1"></div>
+        <div class="line-2"></div>
+        <div class="small-circle-top"></div>
+        <div class="small-circle-bottom"></div>
+        <div class="small-triangle"></div>
+      </div>
+    </div>
+    <div>
+      <app-volume
+        [text]="'Size'"
+        class="volume"
+        [ZeroBased]="false"
+        [Value]="10"
+        (volumeChange)="onBrushSizeChange($event)"
+      ></app-volume>
+      <app-volume [text]="'Hardness'" class="volume"></app-volume>
+    </div>
+  </div>
+  <div class="bottom">
+    <div class="brush-blur-options">
+      <div [ngClass]="true ? 'brush-blur-active' : 'brush-blur'">
+        <div class="brush-blur-1"></div>
+      </div>
+      <div [ngClass]="false ? 'brush-blur-active' : 'brush-blur'">
+        <div class="brush-blur-2"></div>
+      </div>
+      <div [ngClass]="false ? 'brush-blur-active' : 'brush-blur'">
+        <div class="brush-blur-3"></div>
+      </div>
+      <div [ngClass]="false ? 'brush-blur-active' : 'brush-blur'">
+        <div class="brush-blur-4"></div>
+      </div>
+      <div [ngClass]="false ? 'brush-blur-active' : 'brush-blur'">
+        <div class="brush-blur-5"></div>
+      </div>
+      <div [ngClass]="false ? 'brush-blur-active' : 'brush-blur'">
+        <div class="brush-blur-6"></div>
+      </div>
+      <div [ngClass]="false ? 'brush-blur-active' : 'brush-blur'">
+        <div class="brush-blur-7"></div>
+      </div>
+    </div>
+    <div class="brush-choices">
+      <app-group-folder [title]="'General Brushes'"
+        ><div class="brushes">
+          <div class="brush-type">
+            <img src="assets/brush.svg" class="soft-round-brush" />
+            <span>Soft Round</span>
+          </div>
+          <div class="brush-type">
+            <img src="assets/brush.svg" class="hard-round-brush" />
+            <span>Hard Round</span>
+          </div>
+        </div>
+      </app-group-folder>
+    </div>
+  </div>
+  <app-volume class="bottom-volume"></app-volume>
+</div>

@@ -1,0 +1,22 @@
+<div class="tool-propertie brush-tool">
+  <app-brush (brushSizeChange)="onBrushSizeChange($event)"></app-brush>
+  <div class="brush-folder-icon">
+    <img src="assets/tool-properties-icons/brush-folder-icon.svg" />
+  </div>
+  <div class="mode">
+    <span>Mode:</span>
+    <app-select [Items]="['Normal']"></app-select>
+  </div>
+  <div class="opacity">
+    <span>Opacity:</span>
+    <app-input [Value]="100" [hasVolume]="true" unit="%"></app-input>
+  </div>
+  <img src="assets/tool-properties-icons/bow-hit-icon.svg" />
+  <div class="smoothing">
+    <span>Smoothing:</span>
+    <app-input [Value]="10" [hasVolume]="true" unit="%"></app-input>
+  </div>
+  <img src="assets/tool-properties-icons/setting-icon.svg" />
+  <app-checkbox [text]="'Auto Erase'"></app-checkbox>
+  <img src="assets/tool-properties-icons/bow-hit-icon.svg" />
+</div>

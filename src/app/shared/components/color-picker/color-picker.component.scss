@@ -1,0 +1,99 @@
+:host {
+  .preview {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    border: solid 1px #6b6b6b;
+  }
+  .color-input {
+    display: none;
+  }
+  .color-editor {
+    background: #3a3a3a;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    z-index: 10000000;
+    border-radius: 3px;
+    position: absolute;
+    bottom: 1rem;
+    .title {
+      box-sizing: border-box;
+      padding: 0.1rem;
+      width: 100%;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #d4d4d4;
+      color: #000;
+      font-size: 0.8rem;
+      border-top-left-radius: 3px;
+      border-top-right-radius: 3px;
+    }
+    .color-picker-box {
+      display: flex;
+
+      .color-picker {
+        display: block !important;
+        position: relative;
+        left: 0.5rem;
+        background: transparent;
+        border: none;
+        .cursor {
+          border: #fff solid 1px;
+        }
+        .saturation-lightness {
+          overflow: hidden;
+        }
+        .type-policy {
+          filter: brightness(6.5);
+        }
+        input {
+          background: #1d1d1d;
+          color: #c7c7c7;
+          border: solid 1px #535353;
+        }
+        .box {
+          div {
+            color: #fff;
+          }
+        }
+      }
+      .color-picker.open {
+      }
+      .buttons {
+        gap: 0.4rem;
+        width: 8rem;
+        display: flex;
+        flex-direction: column;
+        button {
+          padding: 0.4rem;
+          background: transparent;
+          border: solid 1px;
+          font-size: 0.7rem;
+          color: #fff;
+          outline: none;
+          border-radius: 50px;
+        }
+      }
+      .colors {
+        height: 100%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .foreground,
+        .background {
+          margin-inline: 0.8rem;
+          background: #000;
+          width: 3rem;
+          height: 1.5rem;
+        }
+        .background {
+          background: red;
+        }
+      }
+    }
+  }
+}

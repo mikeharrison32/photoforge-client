@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="72px" height="54px" viewBox="0 0 72 54" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 1 0" />
+    </filter>
+  </defs>
+  <g id="quick-selection-minus" filter="url(#filter_1)">
+    <g id="Group-22">
+      <g id="Group-21" filter="url(#filter_1)">
+        <path d="M2.44461 27.7157C1.04987 19.165 5.95963 11.3043 13.4108 10.1584C20.8621 9.01246 28.0331 15.0152 29.4279 23.5659C30.8226 32.1166 25.9128 39.9773 18.4616 41.1232C11.0104 42.2692 3.83934 36.2664 2.44461 27.7157Z" id="Ellipse" fill="none" fill-rule="evenodd" stroke="#808080" stroke-width="3" stroke-dasharray="2 2" />
+        <g id="Group-9" transform="matrix(0.9781476 0.2079117 -0.2079117 0.9781476 25.980774 0)">
+          <path d="M39.4359 0.228692L39.1981 14.4314L30.8357 21.8672L23.5035 13.677L39.4359 0.228692Z" id="Rectangle" fill="#808080" fill-rule="evenodd" stroke="none" />
+          <path d="M5.58356 38.3215C5.4748 38.2294 4.02564 28.6052 9.26628 23.3357C14.5069 18.0662 21.3548 16.232 24.5616 19.239C27.7683 22.2459 27.8787 32.2712 20.8789 34.2248C13.879 36.1783 5.69232 38.4137 5.58356 38.3215Z" id="Ellipse" fill="#808080" fill-rule="evenodd" stroke="none" />
+        </g>
+      </g>
+      <path d="M31.914 10.1L42.914 10.1" id="Line" fill="none" fill-rule="evenodd" stroke="#D3D3D3" stroke-width="2" stroke-linecap="square" />
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="76px" height="76px" viewBox="0 0 76 76" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter_1">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 0 0.827451 0 0 0 1 0" />
+    </filter>
+    <path d="M0 0L76 0L76 76L0 76L0 0Z" id="path_1" />
+    <clipPath id="mask_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <g id="home-icon">
+    <g id="Home-icon" filter="url(#filter_1)">
+      <path d="M0 0L76 0L76 76L0 76L0 0Z" id="Background" fill="none" fill-rule="evenodd" stroke="none" />
+      <g clip-path="url(#mask_1)">
+        <path d="M38 1.5972C37.6694 1.5972 37.3401 1.70205 37.0589 1.91485L2.09895 29.2006C1.44535 29.7174 1.32386 30.6723 1.84066 31.3411C2.35746 31.9947 3.31233 32.1162 3.98113 31.5994L6.08004 29.9606L6.08004 69.92C6.08004 70.756 6.76404 71.44 7.60004 71.44L28.88 71.44L28.88 44.08L47.12 44.08L47.12 71.44L68.4 71.44C69.236 71.44 69.92 70.756 69.92 69.92L69.92 29.9606L72.0189 31.5994C72.3077 31.8122 72.6256 31.92 72.96 31.92C73.416 31.92 73.8554 31.7211 74.1594 31.3411C74.6762 30.6723 74.5547 29.7174 73.9011 29.2006L38.9411 1.91485C38.6599 1.70205 38.3306 1.5972 38 1.5972L38 1.5972ZM53.2 7.60001L53.2 9.1972L62.32 16.3103L62.32 7.60001L53.2 7.60001L53.2 7.60001Z" id="Shape" fill="#FFFFFF" fill-rule="evenodd" stroke="none" />
+      </g>
+    </g>
+  </g>
+</svg>
