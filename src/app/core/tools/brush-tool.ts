@@ -1,32 +1,35 @@
+import { Brush } from '../brush';
 import { MouseDragEvent } from '../event';
 import { Layer } from '../layers/layer';
+import { DataService } from '../services/data.service';
+import { NotificationService } from '../services/notification.service';
 
 export class BrushTool {
   type: string = 'brushTool';
-  configure(layer: Layer) {
-    console.log('layer', layer);
-    if (layer) {
-      // const ctx = layer.ctx;
-      // ctx!.lineWidth = 100;
-      // ctx?.beginPath();
-      // ctx?.moveTo(10, 10);
-      console.log('path begun.');
-      layer.locked = true;
-      const display = document.getElementById('display');
-      const displayScale = parseFloat(display?.style.scale || '1');
-      const rect = layer.canvas?.getBoundingClientRect();
-      // new MouseDragEvent(
-      //   document.getElementById('image-display')!,
-      //   (e: any) => {
-      //     // ctx?.clearRect(
-      //     //   ((e.x - rect!.left) * layer.scale) / displayScale,
-      //     //   ((e.y - rect!.top) * layer.scale) / displayScale,
-      //     //   100 * layer.scale,
-      //     //   100 * layer.scale
-      //     // );
-      //   }
-      // );
-    }
+  brush?: Brush;
+
+  configure(
+    display: HTMLElement,
+    data: DataService,
+    notification: NotificationService
+  ) {
+    let layer: Layer;
+    this.brush = new Brush({ size: 30 });
+    display.parentElement?.appendChild(this.brush.elem!);
+    display.parentElement!.style.cursor = 'none';
+    const rect = display.parentElement?.getBoundingClientRect();
+    document.addEventListener('mousemove', (e) => {
+      this.brush?.moveTo(e.x - rect!.left, e.y - rect!.top);
+    });
+    display.addEventListener('mousedown', (e) => {
+      layer = data.selectedLayers.getValue()[0];
+      if (!layer) {
+        notification.createNotification({
+          title: 'Please select a layer to draw on.',
+          mainTextColor: 'red',
+        });
+      }
+    });
   }
   disconfigure(): void {}
 }

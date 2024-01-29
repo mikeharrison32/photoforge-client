@@ -1,46 +1,45 @@
-export function createProgram(gl: WebGL2RenderingContext | WebGLRenderingContext, vertexShaderSource: string, fragmentShaderSource: string){
+export function createProgram(
+  gl: WebGL2RenderingContext | WebGLRenderingContext,
+  vertexShaderSource: string,
+  fragmentShaderSource: string
+) {
+  const vertexShader = gl.createShader(gl.VERTEX_SHADER);
+  if (!vertexShader) {
+    console.error('No vertext shader');
+    return;
+  }
+  gl.shaderSource(vertexShader, vertexShaderSource);
+  gl.compileShader(vertexShader);
 
+  const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
 
-    
-    const vertexShader = gl.createShader(gl.VERTEX_SHADER);
-    if(!vertexShader){
-        console.error("No vertext shader")
-        return
-    }
-    gl.shaderSource(vertexShader, vertexShaderSource);
-    gl.compileShader(vertexShader);
-    
-    const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+  if (!fragmentShader) {
+    console.error('No fragment shader');
+    return;
+  }
+  gl.shaderSource(fragmentShader, fragmentShaderSource);
+  gl.compileShader(fragmentShader);
 
-    if(!fragmentShader){
-        console.error("No fragment shader")
-        return
-    }
-    gl.shaderSource(fragmentShader, fragmentShaderSource);
-    gl.compileShader(fragmentShader);
-    
-    // Create a shader program
-    const shaderProgram = gl.createProgram();
+  // Create a shader program
+  const shaderProgram = gl.createProgram();
 
-    if(!shaderProgram){
-        console.error("No shader program")
-        return
-    }
-    gl.attachShader(shaderProgram, vertexShader);
-    gl.attachShader(shaderProgram, fragmentShader);
-    // gl.linkProgram(shaderProgram);
-    // gl.useProgram(shaderProgram);
-    
+  if (!shaderProgram) {
+    console.error('No shader program');
+    return;
+  }
+  gl.attachShader(shaderProgram, vertexShader);
+  gl.attachShader(shaderProgram, fragmentShader);
+  // gl.linkProgram(shaderProgram);
+  // gl.useProgram(shaderProgram);
 
-    return shaderProgram
+  return shaderProgram;
 }
 
-
-
-
-
-export function drawImage(gl: WebGLRenderingContext | WebGL2RenderingContext, image: any){
-    const BASE_VERTEX_SHADER = `
+export function drawImage(
+  gl: WebGLRenderingContext | WebGL2RenderingContext,
+  image: any
+) {
+  const BASE_VERTEX_SHADER = `
   attribute vec2 position;
   varying vec2 texCoords;
 
@@ -53,7 +52,7 @@ export function drawImage(gl: WebGLRenderingContext | WebGL2RenderingContext, im
   }
 `;
 
-const fragmentShaderSource = `
+  const fragmentShaderSource = `
 precision highp float;
 varying vec2 texCoords;
 uniform sampler2D textureSampler;
@@ -79,8 +78,8 @@ void main() {
 
     
   gl_FragColor = color;
-}`
-const BASE_FRAGMENT_SHADER = `
+}`;
+  const BASE_FRAGMENT_SHADER = `
   precision highp float;
   
   varying vec2 texCoords;
@@ -92,37 +91,36 @@ const BASE_FRAGMENT_SHADER = `
   }
 `;
 
-gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
-    // Create a texture
+  gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
+  // Create a texture
 
-const program = createProgram(gl, BASE_VERTEX_SHADER, fragmentShaderSource)
-gl.linkProgram(program!);
+  const program = createProgram(gl, BASE_VERTEX_SHADER, fragmentShaderSource);
+  gl.linkProgram(program!);
 
-// Enable the program
-gl.useProgram(program!);
-const VERTICES = new Float32Array([-1, -1, -1, 1, 1, 1, -1, -1, 1, 1, 1, -1]);
+  // Enable the program
+  gl.useProgram(program!);
+  const VERTICES = new Float32Array([-1, -1, -1, 1, 1, 1, -1, -1, 1, 1, 1, -1]);
 
-const vertexBuffer = gl.createBuffer();
+  const vertexBuffer = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
   gl.bufferData(gl.ARRAY_BUFFER, VERTICES, gl.STATIC_DRAW);
 
-const positionLocation = gl.getAttribLocation(program!, "position");
-gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+  const positionLocation = gl.getAttribLocation(program!, 'position');
+  gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
 
-gl.enableVertexAttribArray(positionLocation);
+  gl.enableVertexAttribArray(positionLocation);
 
-const texture = gl.createTexture();
-gl.activeTexture(gl.TEXTURE0);
-gl.bindTexture(gl.TEXTURE_2D, texture);
-gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
-gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  const texture = gl.createTexture();
+  gl.activeTexture(gl.TEXTURE0);
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
- // Draw our 6 VERTICES as 2 triangles
- gl.clearColor(1.0, 1.0, 1.0, 1.0);
- gl.clear(gl.COLOR_BUFFER_BIT);
- gl.drawArrays(gl.TRIANGLES, 0, 6);
+  // Draw our 6 VERTICES as 2 triangles
+  gl.clearColor(1.0, 1.0, 1.0, 1.0);
+  gl.clear(gl.COLOR_BUFFER_BIT);
+  gl.drawArrays(gl.TRIANGLES, 0, 6);
 }
-

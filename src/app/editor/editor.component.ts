@@ -15,7 +15,7 @@ import {
   cropTool,
   lassoTool,
   rectangularSelect,
-  shapeTool
+  shapeTool,
 } from '../core/tools/';
 import { Project } from '../types/project';
 import { StateService } from '../core/services/state.service';
@@ -42,16 +42,17 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   tools: any[] = [
     brushTool,
     shapeTool,
-    cropTool, 
+    cropTool,
     rectangularSelect,
     lassoTool,
-    cloneStampTool
+    cloneStampTool,
   ];
   @ViewChild('display') display?: ElementRef;
   constructor(
     private data: DataService,
     private render: Renderer2,
-    private clipboard: ClipboardService
+    private clipboard: ClipboardService,
+    private notification: NotificationService
   ) {}
   ngOnInit() {
     this.data.projects.subscribe((projects) => {
@@ -74,15 +75,15 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.data.newMenuClick.subscribe((clicked) => {
       this.newDocumentActive = clicked;
     });
-    this.data.selectedLayers.subscribe(sl => {
-      this.selectedLayers =sl
-    })
+    this.data.selectedLayers.subscribe((sl) => {
+      this.selectedLayers = sl;
+    });
   }
 
   ngAfterViewInit() {
     this.data.displayElem.next(this.display?.nativeElement as HTMLElement);
     this.addShortcuts();
-    this.data.selectedTool.next("moveTool")
+    this.data.selectedTool.next('moveTool');
     this.data.selectedTool.subscribe((selectedTool) => {
       this.tools.forEach((tool) => {
         if (tool.type == selectedTool) {
@@ -90,22 +91,33 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           this.disconfigureTools();
           switch (tool.type) {
             case 'brushTool':
-              tool.configure(this.selectedLayers[0]);
+              tool.configure(
+                this.display?.nativeElement,
+                this.data,
+                this.notification
+              );
               break;
-            case "shapeTool":
-              tool.configure(this.display?.nativeElement, this.selectedLayers[0]) 
+            case 'shapeTool':
+              tool.configure(
+                this.display?.nativeElement,
+                this.selectedLayers[0]
+              );
               break;
-            case "cropTool":
-              tool.configure(this.display?.nativeElement) 
+            case 'cropTool':
+              tool.configure(this.display?.nativeElement);
               break;
-            case "lassoTool":
-              tool.configure(this.display?.nativeElement, this.layers[0]) 
+            case 'lassoTool':
+              tool.configure(this.display?.nativeElement, this.layers[0]);
               break;
-            case "rectangularSelectTool":
-              tool.configure(this.display?.nativeElement, this.layers[0], this.data) 
+            case 'rectangularSelectTool':
+              tool.configure(
+                this.display?.nativeElement,
+                this.layers[0],
+                this.data
+              );
               break;
-            case "cloneStampTool":
-              tool.configure(this.display?.nativeElement, this.layers[0]) 
+            case 'cloneStampTool':
+              tool.configure(this.display?.nativeElement, this.layers[0]);
               break;
             default:
               tool.configure();
@@ -119,14 +131,20 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       UserId: 'dss',
       Title: 'dsrfre',
       Width: 720,
-      Height:1080
-    }
-    this.data.projects.next([project])
+      Height: 1080,
+    };
+    this.data.projects.next([project]);
 
-    this.data.selectedProject.next(project)
-    this.display!.nativeElement.style.scale = "0.6"
-    const layer = new PixelLayer(this.display?.nativeElement, "dasd", "dasd", "ae", null)
-    this.data.layers.next([layer])
+    this.data.selectedProject.next(project);
+    this.display!.nativeElement.style.scale = '0.6';
+    const layer = new PixelLayer(
+      this.display?.nativeElement,
+      'dasd',
+      'dasd',
+      'ae',
+      null
+    );
+    this.data.layers.next([layer]);
   }
 
   loadLayers() {}

@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { NotificationService } from '../core/services/notification.service';
 
 @Component({
@@ -6,16 +12,21 @@ import { NotificationService } from '../core/services/notification.service';
   templateUrl: 'notification.component.html',
   styleUrls: ['notification.component.scss'],
 })
-export class NotificationComponent implements OnInit {
+export class NotificationComponent implements AfterViewInit {
   constructor(private notification: NotificationService) {}
   title: string = '';
   isVisible: boolean = false;
-  ngOnInit() {
-    this.notification.title.subscribe((title) => {
-      this.title = title;
-    });
-    this.notification.isVisible.subscribe((value) => {
-      this.isVisible = value;
+  @ViewChild('notification') notificationElem?: ElementRef;
+  ngAfterViewInit() {
+    this.notification.options.subscribe((options) => {
+      this.title = options.title;
+      this.isVisible = options.isVisible || false;
+      if (options.mainTextColor) {
+        console.log(this.notificationElem);
+        this.notificationElem!.nativeElement.style.color =
+          options.mainTextColor;
+      }
     });
   }
+  onOkBtnClick(e: any) {}
 }

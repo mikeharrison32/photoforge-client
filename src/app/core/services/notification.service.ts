@@ -4,18 +4,28 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
   constructor() {}
-  title = new BehaviorSubject<string>('');
-  isVisible = new BehaviorSubject<boolean>(false);
-  createNotification(title: string, quitAfter?: number) {
-    this.isVisible.next(true);
-    this.title.next(title);
-    if (quitAfter) {
+  // title = new BehaviorSubject<string>('');
+  // isVisible = new BehaviorSubject<boolean>(false);
+  options = new BehaviorSubject<INotificationOptions>({ title: '' });
+
+  createNotification(options: INotificationOptions) {
+    this.options.next({ ...options, isVisible: true });
+    if (options?.quitAfter) {
       setTimeout(() => {
         this.hideNotification();
-      }, quitAfter);
+      }, options.quitAfter);
     }
   }
   hideNotification() {
-    this.isVisible.next(false);
+    this.options.next({ title: '', isVisible: false });
   }
+}
+
+interface INotificationOptions {
+  title: string;
+  isVisible?: boolean;
+  quitAfter?: number;
+  icon?: string;
+  mainTextColor?: string;
+  details?: string;
 }

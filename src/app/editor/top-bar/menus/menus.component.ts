@@ -31,7 +31,7 @@ export class MenusComponent implements OnInit, OnDestroy {
   @ViewChild('open') open!: ElementRef;
   @ViewChild('menus') menus!: ElementRef;
   selectedMenu: Menus = Menus.None;
-  recentProjects: Project[] = []
+  recentProjects: Project[] = [];
   constructor(
     private data: DataService,
     private layer: LayerService,
@@ -42,9 +42,9 @@ export class MenusComponent implements OnInit, OnDestroy {
   ) {}
   ngOnInit(): void {
     //TODO:
-    //sort the projects based on their modiyed date 
+    //sort the projects based on their modiyed date
     //reverse the array
-    //then get the first few project and display  
+    //then get the first few project and display
   }
   get Menus() {
     return Menus;
@@ -52,8 +52,8 @@ export class MenusComponent implements OnInit, OnDestroy {
   get Filter() {
     return Filter;
   }
-  get AdjustmentLayer(){
-    return AdjustmentLayer
+  get AdjustmentLayer() {
+    return AdjustmentLayer;
   }
   onMenuClick(menu: Menus) {
     this.selectedMenu = menu;
@@ -65,9 +65,9 @@ export class MenusComponent implements OnInit, OnDestroy {
   closeMenu() {
     this.selectedMenu = Menus.None;
   }
-  openProject(project: Project){
-    this.data.projects.next([...this.data.projects.getValue(), project])
-    this.data.selectedProject.next(project)
+  openProject(project: Project) {
+    this.data.projects.next([...this.data.projects.getValue(), project]);
+    this.data.selectedProject.next(project);
   }
   onOpenFileOptionChange(e: any) {
     for (let file of e.target.files) {
@@ -75,7 +75,9 @@ export class MenusComponent implements OnInit, OnDestroy {
       reader.onload = (event: any) => {
         const imgObj = new Image();
         imgObj.src = event.target.result;
-        this.notification.createNotification('opening image...');
+        this.notification.createNotification({
+          title: 'Opening image ' + file.name,
+        });
         imgObj.onload = () => {
           this.notification.hideNotification();
           const project: Project = {
@@ -114,15 +116,15 @@ export class MenusComponent implements OnInit, OnDestroy {
   }
   clearProject() {
     const selectedProject = this.data.selectedProject.getValue();
-    const updatedLayers: Layer[] = []
-    this.data.layers.getValue().forEach(l => {
-      if(l.projectId != selectedProject?.Id){
-        updatedLayers.push(l)
-      }else {
-        l.canvas?.remove()
+    const updatedLayers: Layer[] = [];
+    this.data.layers.getValue().forEach((l) => {
+      if (l.projectId != selectedProject?.Id) {
+        updatedLayers.push(l);
+      } else {
+        l.canvas?.remove();
       }
-    })
-    this.data.layers.next(updatedLayers)
+    });
+    this.data.layers.next(updatedLayers);
   }
   pasteObj() {
     this.clipboard.pasteLayer();
@@ -131,38 +133,51 @@ export class MenusComponent implements OnInit, OnDestroy {
     this.clipboard.copyLayer(this.data.selectedLayers.value[0]);
   }
   deleteLayer() {
-    const updatedLayers: Layer[] = []
-    const selectedLayers = this.data.selectedLayers.getValue()
-    this.data.layers.getValue().forEach(l => {
-      if(!selectedLayers.includes(l)){
-        updatedLayers.push(l)
+    const updatedLayers: Layer[] = [];
+    const selectedLayers = this.data.selectedLayers.getValue();
+    this.data.layers.getValue().forEach((l) => {
+      if (!selectedLayers.includes(l)) {
+        updatedLayers.push(l);
       }
-    })
-    this.data.layers.next(updatedLayers)
+    });
+    this.data.layers.next(updatedLayers);
   }
   duplicateLayer() {
-    const selectedLayers = this.data.selectedLayers.getValue()
-    const selectedProject = this.data.selectedProject.getValue()
-    const displayElem = this.data.displayElem.getValue()
+    const selectedLayers = this.data.selectedLayers.getValue();
+    const selectedProject = this.data.selectedProject.getValue();
+    const displayElem = this.data.displayElem.getValue();
     selectedLayers.forEach((sl: Layer) => {
-      if(sl instanceof PixelLayer){
-        const duplicateLayer = new PixelLayer(displayElem, `${Math.random()}`, sl.name + "Copy", selectedProject!.Title, null)
-        this.data.layers.next([...this.data.layers.getValue(), duplicateLayer])      
-      } 
+      if (sl instanceof PixelLayer) {
+        const duplicateLayer = new PixelLayer(
+          displayElem,
+          `${Math.random()}`,
+          sl.name + 'Copy',
+          selectedProject!.Title,
+          null
+        );
+        this.data.layers.next([...this.data.layers.getValue(), duplicateLayer]);
+      }
     });
   }
   createNewLayer() {
-    const displayElem = this.data.displayElem.getValue()
-    const layer = new PixelLayer(displayElem,`${Math.random()}`, "Layer 1", "aaa", new ImageData(displayElem!.clientWidth, displayElem!.clientHeight))
-    this.data.layers.next([...this.data.layers.getValue(), layer])
-    this.data.selectedLayers.next([...this.data.selectedLayers.getValue(), layer])
+    const displayElem = this.data.displayElem.getValue();
+    const layer = new PixelLayer(
+      displayElem,
+      `${Math.random()}`,
+      'Layer 1',
+      'aaa',
+      new ImageData(displayElem!.clientWidth, displayElem!.clientHeight)
+    );
+    this.data.layers.next([...this.data.layers.getValue(), layer]);
+    this.data.selectedLayers.next([
+      ...this.data.selectedLayers.getValue(),
+      layer,
+    ]);
   }
   addFilter(filter: Filter) {
     // this.layer.addFilter(filter);
   }
-  flipCanvas() {
-
-  }
+  flipCanvas() {}
   closeSelectedProject() {
     const currentProjectsValue = this.data.projects.getValue();
     const updatedProjectsValue: Project[] = [];
@@ -371,11 +386,11 @@ export class MenusComponent implements OnInit, OnDestroy {
   stroke() {
     throw new Error('Method not implemented.');
   }
-  autoTone(){}
-  autoContrast(){}
-  autoColor(){}
-  applyImage(){}
-  addAdjustmentLayer(aj: any){}
+  autoTone() {}
+  autoContrast() {}
+  autoColor() {}
+  applyImage() {}
+  addAdjustmentLayer(aj: any) {}
   ngOnDestroy(): void {
     this.data.canvas.unsubscribe();
   }

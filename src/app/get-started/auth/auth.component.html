@@ -37,6 +37,14 @@
     >
       Sign In
     </button>
+    <div class="line"></div>
+    <button class="google-btn">
+
+      <span *ngIf="authStatus == AuthStatus.SignUp">
+        Sign up
+      </span>
+      <span *ngIf="authStatus == AuthStatus.Login">Sign in</span> with Google
+    </button>
   </div>
   <p
     *ngIf="authStatus == AuthStatus.SignUp"

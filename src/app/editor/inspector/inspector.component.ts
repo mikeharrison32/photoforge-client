@@ -9,9 +9,7 @@ import {
 } from '@angular/core';
 import { DataService } from 'src/app/core/services/data.service';
 import { fabric } from 'fabric';
-import {
-  AdjustmentLayer,
-} from 'src/app/types/layer';
+import { AdjustmentLayer } from 'src/app/types/layer';
 import { LayerService } from 'src/app/core/services/layer.service';
 import { Project } from 'src/app/types/project';
 import { Mask } from 'src/app/core/layers/mask';
@@ -72,12 +70,11 @@ export class InspectorComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.data.selectedLayers.subscribe(sl => {
-      this.selectedLayers = sl
-     })
+    this.data.selectedLayers.subscribe((sl) => {
+      this.selectedLayers = sl;
+    });
   }
   createNewGroup() {
-  
     // this.layerService.groupLayers(...this.selectedLayers);
   }
   toggleAdChoices() {
@@ -85,31 +82,37 @@ export class InspectorComponent implements OnInit, OnDestroy {
   }
 
   addAdjustmentLayer(ad_type: AdjustmentLayer) {
-    switch(ad_type){
+    switch (ad_type) {
       case AdjustmentLayer.BrightnessContrast:
-        if(this.selectedLayers[0] instanceof PixelLayer){
-          let bc_count = 1
-          this.selectedLayers[0].adjustmentLayers.forEach(aj => {
-            if(aj instanceof BrightnessContrastAdjustmentLayer){
-              bc_count += 1
+        if (this.selectedLayers[0] instanceof PixelLayer) {
+          let bc_count = 1;
+          this.selectedLayers[0].adjustmentLayers.forEach((aj) => {
+            if (aj instanceof BrightnessContrastAdjustmentLayer) {
+              bc_count += 1;
             }
-          })
-          const aj = new BrightnessContrastAdjustmentLayer(this.selectedLayers[0], "BrightneesContrast " + bc_count)
-          this.selectedLayers[0].adjustmentLayers.push(aj)
+          });
+          const aj = new BrightnessContrastAdjustmentLayer(
+            this.selectedLayers[0],
+            'BrightneesContrast ' + bc_count
+          );
+          this.selectedLayers[0].adjustmentLayers.push(aj);
         }
-        break
-        case AdjustmentLayer.HueSaturation:
-          if(this.selectedLayers[0] instanceof PixelLayer){
-            let hsl_count = 1
-            this.selectedLayers[0].adjustmentLayers.forEach(aj => {
-              if(aj instanceof HueSaturationLightnees){
-                hsl_count += 1
-              }
-            })
-            const aj = new HueSaturationLightnees(this.selectedLayers[0], "HueSaturationLightnees " + hsl_count)
-            this.selectedLayers[0].adjustmentLayers.push(aj)
-          }
-          break
+        break;
+      case AdjustmentLayer.HueSaturation:
+        if (this.selectedLayers[0] instanceof PixelLayer) {
+          let hsl_count = 1;
+          this.selectedLayers[0].adjustmentLayers.forEach((aj) => {
+            if (aj instanceof HueSaturationLightnees) {
+              hsl_count += 1;
+            }
+          });
+          const aj = new HueSaturationLightnees(
+            this.selectedLayers[0],
+            'HueSaturationLightnees ' + hsl_count
+          );
+          this.selectedLayers[0].adjustmentLayers.push(aj);
+        }
+        break;
     }
   }
 
@@ -128,15 +131,21 @@ export class InspectorComponent implements OnInit, OnDestroy {
     // });
   }
   createNewLayer() {
-    this.notification.createNotification('Createing a blank layer...');
+    this.notification.createNotification({
+      title: 'Createing a blank layer...',
+    });
     this.api
       .createBlankLayer(this.data.selectedProject.value?.Id!)
       .then((res) => {
         console.log(res);
-        this.notification.createNotification('layer successfully created.');
+        this.notification.createNotification({
+          title: 'layer successfully created.',
+        });
       })
       .catch((err) => {
-        this.notification.createNotification("Couldn't create blank layer.");
+        this.notification.createNotification({
+          title: "Couldn't create blank layer.",
+        });
         console.log(err);
       });
     // this.layerService.createNewLayer('Layer', LayerType.Pixel);
@@ -146,7 +155,7 @@ export class InspectorComponent implements OnInit, OnDestroy {
   onOpacityChange(value: any) {
     for (let sl of this.selectedLayers) {
       // this.layerService.getObjByLayerId(sl.Id)!.opacity = value / 100;
-      (sl as any).canvas.style.opacity = `${value}`
+      (sl as any).canvas.style.opacity = `${value}`;
     }
     this.canvas?.renderAll();
   }
