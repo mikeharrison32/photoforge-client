@@ -16,20 +16,34 @@ color: #fff;
     box-shadow: #b3b3b3 0 0 1px 0;
     align-items: center;
     background: #252525;
+    position: absolute;
+    height: 100%;
+    left: 0;
+    width: 44%;
+
+    align-items: center;
+    justify-content: center;
+    .err {
+      color: #ff4626;
+    font-size: .7rem;
+    }
     img {
       width: 4rem;
     }
     input {
-      box-shadow: #000 0 0 2px 0;
+      box-shadow: #3f3f3f 0 0 2px 0;
       border: none;
-      width: 100%;
+      width: 15rem;
       box-sizing: border-box;
       margin-block: 0.2rem;
       padding: 0.6rem;
       outline: none;
+      background: #1e1e1e;
+    border-radius: 20px;
+    margin-top: .5rem;
+    color: #fff;
     }
     .buttons {
-      width: 100%;
       display: flex;
       align-items: center;
       gap: 1rem;
@@ -40,8 +54,9 @@ color: #fff;
       }
       .done {
         border: none;
-        background: linear-gradient(red, rgb(226, 6, 127));
- 
+        background: linear-gradient(45deg,red, rgb(226, 6, 127));
+        border-radius: 38px;
+        margin-top: 1rem;
         cursor: pointer;
         color: #fff;
         &:hover {

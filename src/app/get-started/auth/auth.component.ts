@@ -18,20 +18,24 @@ export class AuthComponent {
   passwordControl = new FormControl('');
   confirmPasswordControl = new FormControl('');
   authStatus: AuthStatus = AuthStatus.SignUp;
-  @ViewChild("username") usernameElem?: ElementRef
-  @ViewChild("password") passwordElem?: ElementRef
+  @ViewChild('username') usernameElem?: ElementRef;
+  @ViewChild('password') passwordElem?: ElementRef;
 
   get AuthStatus() {
     return AuthStatus;
   }
   signUp() {
-    if(this.userNameControl.value?.trim() == ""){
-      this.usernameElem!.nativeElement.style.border = "solid 1px red"
-      return
+    const err = document.createElement('span');
+    err.classList.add('err');
+    if (this.userNameControl.value?.trim() == '') {
+      this.usernameElem!.nativeElement.style.border = 'solid 1px #ff4626';
+      err.textContent = 'username should not be empty.';
+      this.usernameElem?.nativeElement.appendChild(err);
+      return;
     }
-    if(this.passwordControl.value?.trim() == ""){
-      this.passwordElem!.nativeElement.style.border = "solid 1px red"
-      return
+    if (this.passwordControl.value?.trim() == '') {
+      this.passwordElem!.nativeElement.style.border = 'solid 1px #ff4626';
+      return;
     }
 
     this.authService.signup(
@@ -44,13 +48,13 @@ export class AuthComponent {
     );
   }
   login() {
-    if(this.userNameControl.value?.trim() == ""){
-      this.usernameElem!.nativeElement.style.border = "solid 1px red"
-      return
+    if (this.userNameControl.value?.trim() == '') {
+      this.usernameElem!.nativeElement.style.border = 'solid 1px red';
+      return;
     }
-    if(this.passwordControl.value?.trim() == ""){
-      this.passwordElem!.nativeElement.style.border = "solid 1px red"
-      return
+    if (this.passwordControl.value?.trim() == '') {
+      this.passwordElem!.nativeElement.style.border = 'solid 1px red';
+      return;
     }
     this.authService.login(
       this.userNameControl.value,
