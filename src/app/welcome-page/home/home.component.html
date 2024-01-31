@@ -37,20 +37,14 @@
     </div>
   </div>
   <div [ngClass]="activeView == 'window' ? 'recent-files' : 'recent-files-list-view'">
-    <div class="file">
+    <div class="file" *ngFor="let project of projects">
       <div class="file-image"></div>
-      <h4>Blending text into Clouds.psdc</h4>
-      <p>4 minutes ago</p>
+      <h4>{{ project.name }}</h4>
+      <p>{{ project.modifyedAt | date}}</p>
     </div>
-    <div class="file">
-      <div class="file-image"></div>
-      <h4>Blending text into Clouds.psdc</h4>
-      <p>8 minutes ago</p>
-    </div>
-    <div class="file">
-      <div class="file-image"></div>
-      <h4>Blending text into Clouds.psdc</h4>
-      <p>12 minutes ago</p>
+    <div>
+      Login or Signup to see your recent projects.
+      <button>Continue</button>
     </div>
   </div>
 </div>

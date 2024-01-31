@@ -11,7 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     RouterModule.forChild([
       {
-        path: 'get-started',
+        path: '',
         component: GetStartedComponent,
       },
       {

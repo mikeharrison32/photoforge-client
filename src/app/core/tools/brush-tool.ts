@@ -31,7 +31,10 @@ export class BrushTool {
       }
     });
   }
-  disconfigure(): void {}
+  disconfigure(): void {
+    this.brush?.elem?.remove();
+    delete this.brush;
+  }
 }
 
 export const brushTool = new BrushTool();

@@ -5,13 +5,18 @@ import { IColorRGBA } from 'src/app/types/color';
 import { vibrance } from '../filters/vibrance';
 import { AdjustmentLayer } from './adjustment/adjustment_layer';
 import { BrightnessContrastAdjustmentLayer } from './adjustment/brightness_contrast';
-import { drawImage } from 'src/app/utils/webglUtils';
+import {
+  drawImage,
+  drawRectangle,
+  getPixels,
+  insertPixels,
+} from 'src/app/utils/webglUtils';
 export class PixelLayer extends Layer {
   pixels: IColorRGBA[] = [];
   src?: string;
   adjustmentLayers: AdjustmentLayer[] = [];
   img: any;
-  gl?: WebGLRenderingContext | WebGL2RenderingContext | null 
+  gl?: WebGLRenderingContext | WebGL2RenderingContext | null;
   constructor(
     containerElem: HTMLElement | null,
     id: string,
@@ -28,17 +33,20 @@ export class PixelLayer extends Layer {
     } else {
       this.src = img.src;
       this.img = img;
-      this.gl = (this.canvas as HTMLCanvasElement).getContext("webgl") || (this.canvas as HTMLCanvasElement).getContext("webgl2")
-      if(!this.gl){
-        console.error("couldn't get webGL context at pixel-layer")
-        return
+      this.gl =
+        (this.canvas as HTMLCanvasElement).getContext('webgl') ||
+        (this.canvas as HTMLCanvasElement).getContext('webgl2');
+      if (!this.gl) {
+        console.error("couldn't get webGL context at pixel-layer");
+        return;
       }
 
-
       // const program = createProgram(gl, )
-      drawImage(this.gl, img)
+      drawImage(this.gl, img);
+      // const pixels = getPixels(this.gl, 0, 0, 200, 200);
+      // insertPixels(this.gl, pixels, 0, 0)
+      // console.log(pixels);
+      drawRectangle(this.gl, 0, 0, 100 * 2, 100 * 2);
     }
   }
 }
-
-

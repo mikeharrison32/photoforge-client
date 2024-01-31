@@ -9,6 +9,7 @@ import { NotificationService } from '../core/services/notification.service';
 export class GetStartedComponent implements AfterViewInit {
   constructor(private notification: NotificationService) {}
   ngAfterViewInit(): void {
+    document.title = 'Get started with Photoforge - Photoforge';
     this.notification.createNotification({ title: 'Welcome to photoforge' });
   }
 }

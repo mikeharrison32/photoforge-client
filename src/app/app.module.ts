@@ -22,7 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'start',
     component: WelcomePageComponent,
     // canActivate: [authGuard],
   },

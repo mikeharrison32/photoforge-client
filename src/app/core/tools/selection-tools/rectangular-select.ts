@@ -23,8 +23,14 @@ class ReactangularSelect {
       y: 0,
     });
     const ctx = this.rectCanvas.getContext('2d') as CanvasRenderingContext2D;
-    new MouseDragEvent(this.rectCanvas.elem!, true, (e: any) => {
-      ctx.strokeRect(e.x * 2, e.y * 2, 300, 400);
+    ctx.lineWidth = 10;
+    new MouseDragEvent(this.rectCanvas.elem!, false, (e: any) => {
+      ctx.fillStyle = data.selectedColors.getValue().fg;
+      const displayScale = parseFloat(display.style.scale || '1');
+      const rect = this.rectCanvas?.elem?.getBoundingClientRect();
+      const x = ((e.x - rect!.left) * 2) / displayScale;
+      const y = ((e.y - rect!.top) * 2) / displayScale;
+      ctx.fillRect(x, y, 300, 400);
     });
 
     // this.setUpContextMenu(display, 0, 0, )

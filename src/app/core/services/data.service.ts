@@ -1,29 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Tool } from '../../enums/tool.enum';
 import { Orientaion } from 'src/app/welcome-page/new-document/enums/Orientaion';
 import { Layer } from '../layers/layer';
-import {
-  BlurToolProperties,
-  BrushToolProperties,
-  CloneStampToolProperties,
-  ColorPickerToolProperties,
-  CropToolProperties,
-  EraserToolProperties,
-  GradientToolProperties,
-  HandToolProperties,
-  LassoToolProperties,
-  MoveToolProperties,
-  PenToolProperties,
-  QuickSelectToolProperties,
-  RectSelectToolProperties,
-  ShapeToolProperties,
-  SpotHealingBrushToolProperties,
-  TextToolProperties,
-  ZoomToolProperties,
-} from 'src/app/types/tool';
-import { Shape } from 'src/app/enums/shapes';
-import { GradientStyle } from 'src/app/enums/color';
+
 import { Project } from 'src/app/types/project';
 import { Cursor } from '../Cursor';
 import { Selection } from '../selection';

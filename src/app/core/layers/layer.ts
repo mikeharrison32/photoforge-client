@@ -1,4 +1,3 @@
-
 import { MouseDragEvent } from '../event';
 import { Resizer } from '../resizer';
 export class Layer {
@@ -31,16 +30,17 @@ export class Layer {
     this.canvas.style.position = 'absolute';
     this.canvas.style.left = '0';
     this.canvas.style.top = '0';
-    if(!useWebGL){
+    if (!useWebGL) {
       this.ctx = (this.canvas as HTMLCanvasElement).getContext('2d');
     }
     containerElem?.appendChild(this.canvas);
     this.resizer = new Resizer(this.canvas);
-    new MouseDragEvent(this.canvas!,true ,(e: any) => {
-      this.canvas!.style.left = e.x / parseFloat(containerElem!.style.scale || "1") + "px";
-      this.canvas!.style.top = e.y / parseFloat(containerElem!.style.scale || "1") + "px";
-
-    })
+    new MouseDragEvent(this.canvas!, true, (e: any) => {
+      this.canvas!.style.left =
+        e.x / parseFloat(containerElem!.style.scale || '1') + 'px';
+      this.canvas!.style.top =
+        e.y / parseFloat(containerElem!.style.scale || '1') + 'px';
+    });
   }
   hide() {
     this.visible = false;

@@ -81,6 +81,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
+    document.title = 'Editor - Photoforge';
     this.data.displayElem.next(this.display?.nativeElement as HTMLElement);
     this.addShortcuts();
     this.data.selectedTool.next('moveTool');

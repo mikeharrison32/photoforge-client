@@ -1,14 +1,13 @@
 .notification {
-  width: 12rem;
-  height: 3.4rem;
-  background: #1d1d1d;
-  border: solid 1px #858585;
+  width: 20rem;
+  height: 9.4rem;
+  background: #ff205c;
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
-  border-radius: 5px;
+  border-radius: 2px;
   z-index: 1000000000000;
   right: 1rem;
   bottom: 2rem;
@@ -16,6 +15,9 @@
   animation-name: "pop-up";
   animation-duration: 100ms;
   animation-iteration-count: 1;
+  display: flex;
+  flex-direction: column;
+
   @keyframes pop-up {
     from {
       bottom: 0;
@@ -27,5 +29,30 @@
   span {
     font-size: 0.7rem;
     margin: 0;
+  }
+  .closeBtn {
+    border: none;
+    background: none;
+    color: #fff;
+  }
+  .okBtn {
+    background: transparent;
+    border: solid #fff 1px;
+    color: #fff;
+    border-radius: 3px;
+    padding: 0.3rem;
+    padding-inline: 1rem;
+  }
+  .mainText {
+    position: relative;
+    top: -2rem;
+    left: -3rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .buttons {
+    position: relative;
+    top: 2rem;
+    left: 6rem;
   }
 }

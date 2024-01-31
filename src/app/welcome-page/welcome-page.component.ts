@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { TokenService } from '../core/services/token.service';
@@ -13,11 +13,11 @@ import { StateService } from '../core/services/state.service';
   templateUrl: './welcome-page.component.html',
   styleUrls: ['./welcome-page.component.scss'],
 })
-export class WelcomePageComponent {
+export class WelcomePageComponent implements OnInit {
   selectedTab: string = 'Home';
   activeTab: string = 'Home';
   createNewBtnClicked: boolean = false;
-  projects: string[] = [];
+  projects: any[] = [];
 
   constructor(
     private router: Router,
@@ -28,6 +28,9 @@ export class WelcomePageComponent {
     private data: DataService,
     private stateService: StateService
   ) {}
+  ngOnInit() {
+    document.title = 'Setup - Photoforge';
+  }
   setActiveElement(el: string) {
     this.selectedTab = el;
     this.activeTab = el;
@@ -52,7 +55,6 @@ export class WelcomePageComponent {
             Width: imgObj.width,
             Height: imgObj.height,
           };
-
 
           this.data.projects.next([...this.data.projects.getValue(), project]);
           this.data.canvas.value?.setWidth(project.Width!);

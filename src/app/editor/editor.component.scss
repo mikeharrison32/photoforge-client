@@ -35,6 +35,8 @@ $light_gray: #3a3a3a;
       }
       .crop-tool-corner {
         background: gray;
+        position: absolute;
+        z-index: 100000000000;
         &::after {
           content: '';
           display: block;

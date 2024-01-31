@@ -3,6 +3,9 @@
   </div>
   <span class="mainText">{{ title }}</span>
   <div class="details"></div>
-  <button class="closeBtn" (click)="isVisible = false">Cancel</button>
-  <button class="okBtn" (click)="onOkBtnClick($event)">Ok</button>
+  <div class="buttons">
+
+    <button class="closeBtn" (click)="isVisible = false">Cancel</button>
+    <button class="okBtn" (click)="onOkBtnClick($event)">Ok</button>
+  </div>
 </div>
