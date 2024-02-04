@@ -1,4 +1,5 @@
 import { Canvas } from '../canvas';
+import { DraggableBehaviour } from '../draggable-behavior';
 import { MouseDragEvent } from '../event';
 
 export class CropTool {
@@ -6,6 +7,8 @@ export class CropTool {
   properties?: ICropToolProperties;
   cropCanvas?: Canvas;
   corners: Corner[] = [];
+  border?: HTMLDivElement;
+
   configure(display: HTMLElement) {
     if (this.cropCanvas) {
       return;
@@ -18,66 +21,129 @@ export class CropTool {
     });
 
     const ctx = this.cropCanvas.getContext('2d') as CanvasRenderingContext2D;
-    ctx!.fillStyle = '#000000b0';
+    ctx!.fillStyle = '#000000b2';
 
-    const trCorner = new Corner(display, 10, 3, 0, 0);
+    ctx.fillRect(0, 0, display.clientWidth * 2, display.clientHeight * 2);
+    ctx.clearRect(
+      50 * 2,
+      50 * 2,
+      (display.clientWidth - 100) * 2,
+      (display.clientHeight - 100) * 2
+    );
+    this.border = document.createElement('div');
+    this.border.style.left = 50 + 'px';
+    this.border.style.top = 50 + 'px';
+    this.border.style.width = display.clientWidth - 100 + 'px';
+    this.border.style.height = display.clientHeight - 100 + 'px';
+    this.border.classList.add('crop-tool-border');
+    display.appendChild(this.border);
+
+    const trCorner = new Corner(display, 7, 1, 50, 50);
     trCorner.elem?.classList.add('crop-tool-corner');
-
-    new MouseDragEvent(trCorner.elem!, false, (e: any) => {
-      const rect = trCorner.elem?.getBoundingClientRect();
-      const displayScale = parseFloat(display.style.scale || '1');
-      trCorner.moveTo(
-        (e.x - rect!.left) / displayScale,
-        (e.y - rect!.top) / displayScale
-      );
+    const displayScale = parseFloat(display.style.scale || '1');
+    new DraggableBehaviour(trCorner.elem!, displayScale, (e: any) => {
+      // this.border!.style.left = e.x / displayScale + 'px';
+      // this.border!.style.top = e.y / displayScale + 'px';
+      // this.border!.style.width = 500 - e.x / displayScale + 'px';
+      // this.border!.style.height = 500 - e.y / displayScale + 'px';
+      // brCorner.elem!.style.left = e.x / displayScale + 'px';
     });
 
-    const tlCorner = new Corner(display, 10, 3, display.clientWidth - 200, 0);
+    const tlCorner = new Corner(display, 7, 1, display.clientWidth - 100, 50);
+    new DraggableBehaviour(tlCorner.elem!, displayScale, (e: any) => {
+      // this.border!.style.width = 500 - e.x / displayScale + 'px';
+      // this.border!.style.height = e.y / displayScale + 'px';
+      // this.border!.style.left = e.x / displayScale + 'px';
+      // this.border!.style.top = startY + 'px';
+    });
     tlCorner.elem?.classList.add('crop-tool-corner');
     tlCorner.elem!.style.transform = 'rotate(90deg)';
-    new MouseDragEvent(tlCorner.elem!, true, (e: any) => {
-      tlCorner.moveTo(
-        e.x / parseFloat(display.style.scale || '1'),
-        e.y / parseFloat(display.style.scale || '1')
-      );
-    });
 
-    const brCorner = new Corner(display, 10, 3, 0, display.clientHeight - 100);
+    const brCorner = new Corner(display, 7, 1, 50, display.clientHeight - 100);
     brCorner.elem?.classList.add('crop-tool-corner');
     brCorner.elem!.style.transform = 'rotate(270deg)';
-    new MouseDragEvent(brCorner.elem!, true, (e: any) => {
-      brCorner.moveTo(
-        e.x / parseFloat(display.style.scale || '1'),
-        e.y / parseFloat(display.style.scale || '1')
-      );
+    let startY = 100;
+    new DraggableBehaviour(brCorner.elem!, displayScale, (e: any) => {
+      // this.border!.style.width = 500 - e.x / displayScale + 'px';
+      // this.border!.style.height = e.y / displayScale + 'px';
+      // this.border!.style.left = e.x / displayScale + 'px';
+      // this.border!.style.top = startY + 'px';
+      // trCorner.elem!.style.left = e.x / displayScale + 'px';
+      // trCorner.elem!.style.top = startY + 'px';
     });
 
     const blCorner = new Corner(
       display,
-      10,
-      3,
-      display.clientWidth - 200,
-      display.clientHeight - 200
+      5,
+      0.8,
+      display.clientWidth - 100,
+      display.clientHeight - 100
     );
     blCorner.elem?.classList.add('crop-tool-corner');
     blCorner.elem!.style.transform = 'rotate(180deg)';
-    new MouseDragEvent(blCorner.elem!, true, (e: any) => {
-      blCorner.moveTo(
-        e.x / parseFloat(display.style.scale || '1'),
-        e.y / parseFloat(display.style.scale || '1')
-      );
-    });
+    new DraggableBehaviour(blCorner.elem!, displayScale);
 
-    this.corners.push(trCorner, tlCorner, brCorner, blCorner);
+    const mtCorner = new Corner(
+      display,
+      5,
+      0.8,
+      (display.clientWidth - 100) / 2,
+      50
+    );
+    new DraggableBehaviour(mtCorner.elem!, displayScale);
+    const mlCorner = new Corner(
+      display,
+      5,
+      0.8,
+      50,
+      (display.clientHeight - 100) / 2
+    );
+    mlCorner.elem!.style.transform = 'rotate(90deg)';
+    new DraggableBehaviour(mlCorner.elem!, displayScale);
+    const mrCorner = new Corner(
+      display,
+      5,
+      0.8,
+      display.clientWidth - 100,
+      (display.clientHeight - 100) / 2
+    );
+    mrCorner.elem!.style.transform = 'rotate(90deg)';
+    new DraggableBehaviour(mrCorner.elem!, displayScale);
+    const mbCorner = new Corner(
+      display,
+      5,
+      0.8,
+      (display.clientWidth - 100) / 2,
+      display.clientHeight - 100
+    );
+    new DraggableBehaviour(mbCorner.elem!, displayScale);
+
+    this.corners.push(
+      trCorner,
+      tlCorner,
+      brCorner,
+      blCorner,
+      mtCorner,
+      mlCorner,
+      mrCorner,
+      mbCorner
+    );
     display.appendChild(this.cropCanvas.elem!);
   }
 
   disconfigure(display: HTMLElement): void {
     this.cropCanvas?.elem?.remove();
+    delete this.cropCanvas;
+    this.border?.remove();
     this.corners.forEach((corner) => {
       corner.elem?.remove();
     });
   }
+  straiten() {}
+  clear() {}
+  complite() {}
+  cancel() {}
+  rearrange() {}
   renderCropCanvas(cropCanvasCtx: CanvasRenderingContext2D) {
     cropCanvasCtx.clearRect(
       0,
@@ -101,7 +167,6 @@ interface ICropToolProperties {
   resolution?: number;
   unit?: string;
   deleteCropedPixels?: boolean;
-  contentAware?: boolean;
 }
 
 class Corner {

@@ -71,6 +71,12 @@ $light_gray: #3a3a3a;
       display: flex;
       gap: 1rem;
       margin-inline: 0.6rem;
+      .done-icon {
+        background: linear-gradient(45deg, red, #ff08be);
+        padding: 0.1rem;
+        padding-inline: 1rem;
+        cursor: pointer;
+      }
     }
     .gradient-options {
       display: flex;

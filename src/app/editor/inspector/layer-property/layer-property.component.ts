@@ -1,6 +1,8 @@
 import {
   AfterViewInit,
   Component,
+  NgZone,
+  OnDestroy,
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
@@ -12,11 +14,11 @@ import { DataService } from 'src/app/core/services/data.service';
   templateUrl: './layer-property.component.html',
   styleUrls: ['./layer-property.component.scss'],
 })
-export class LayerPropertyComponent implements OnInit {
+export class LayerPropertyComponent implements OnInit, OnDestroy {
   selectedLayer?: any;
   selectedAdjustmentLayer?: any;
 
-  constructor(private data: DataService) {}
+  constructor(private data: DataService, private ngZone: NgZone) {}
   ngOnInit() {
     this.data.selectedLayers.subscribe((sl_layers) => {
       this.selectedLayer = sl_layers[0];
@@ -26,47 +28,45 @@ export class LayerPropertyComponent implements OnInit {
     });
   }
   onXChange(x: any) {
-    this.selectedLayer.canvas.style.left = x + "px"
+    this.selectedLayer.canvas.style.left = x + 'px';
   }
   onBrightnessChange(value: any) {
     if (
       this.selectedAdjustmentLayer instanceof BrightnessContrastAdjustmentLayer
     ) {
-      this.selectedAdjustmentLayer.set({
-        brightness: value,
-        contrast: this.selectedAdjustmentLayer.contrast,
-      });
+      this.selectedAdjustmentLayer.set(
+        {
+          brightness: value,
+          contrast: this.selectedAdjustmentLayer.contrast,
+        },
+        this.ngZone
+      );
     }
   }
   onContrastChange(value: any) {
     if (
       this.selectedAdjustmentLayer instanceof BrightnessContrastAdjustmentLayer
     ) {
-      this.selectedAdjustmentLayer.set({
-        brightness: this.selectedAdjustmentLayer.contrast,
-        contrast: value,
-      });
+      this.selectedAdjustmentLayer.set(
+        {
+          brightness: this.selectedAdjustmentLayer.brightness,
+          contrast: value,
+        },
+        this.ngZone
+      );
     }
   }
-  onHueChange(value: any) {
-  }
-  onSaturationChange(value: any) {
-
-  }
-  onLightnessChange(value: any) {
-
-  }
+  onHueChange(value: any) {}
+  onSaturationChange(value: any) {}
+  onLightnessChange(value: any) {}
   onYChange(y: any) {
-    this.selectedLayer.canvas.style.top = y+ "px"
-
+    this.selectedLayer.canvas.style.top = y + 'px';
   }
   onWidthChange(width: any) {
-    this.selectedLayer.canvas.style.width = width + "px"
-
+    this.selectedLayer.canvas.style.width = width + 'px';
   }
   onHeightChange(height: any) {
-    this.selectedLayer.canvas.style.height = height + "px"
-
+    this.selectedLayer.canvas.style.height = height + 'px';
   }
   onLineHeightChange($event: string) {
     throw new Error('Method not implemented.');
@@ -79,4 +79,8 @@ export class LayerPropertyComponent implements OnInit {
   onFillChange(e: any) {}
   onStrokeChange(e: any) {}
   onStrokeWidthChange(width: string) {}
+  ngOnDestroy(): void {
+    this.data.selectedAjLayers.unsubscribe();
+    this.data.selectedLayers.unsubscribe();
+  }
 }

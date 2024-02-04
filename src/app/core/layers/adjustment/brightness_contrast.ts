@@ -1,12 +1,15 @@
-import {  drawImage } from 'src/app/utils/webglUtils';
+import { drawImage } from 'src/app/utils/webglUtils';
 import { PixelLayer } from '../pixel-layer';
 import { AdjustmentLayer } from './adjustment_layer';
 import { applyBrightnees, applyContrast } from '../../filters';
-
+import * as PIXI from 'pixi.js-legacy';
+import { NgZone } from '@angular/core';
 export class BrightnessContrastAdjustmentLayer extends AdjustmentLayer {
   brightness: number = 0;
-  id!: string
+  id!: string;
   contrast: number = 0;
+  brightnessFilter?: PIXI.ColorMatrixFilter;
+  contrastFilter?: PIXI.ColorMatrixFilter;
 
   constructor(
     pl: PixelLayer,
@@ -15,39 +18,47 @@ export class BrightnessContrastAdjustmentLayer extends AdjustmentLayer {
   ) {
     super(pl);
     this.name = name;
-    this.id = `${Math.random()}`    
+    this.id = `${Math.random()}`;
     this.type = 'brightnessContrast';
     if (options) {
       this.brightness = options.brightness;
       this.contrast = options.contrast;
-      const gl = this.pl?.gl
-      if(!gl){return}
-      applyBrightnees(gl, this.pl?.img,options.brightness)
-      applyContrast(gl, this.pl?.img,options.contrast)
-
+      this.brightnessFilter = new PIXI.ColorMatrixFilter();
+      this.contrastFilter = new PIXI.ColorMatrixFilter();
+      this.brightnessFilter.brightness(0.8, false);
+      this.contrastFilter.contrast(0.9, false);
+      const img = pl.app?.stage.getChildByName('image');
+      if (img?.filters) {
+        img!.filters.push(this.brightnessFilter);
+        img!.filters.push(this.contrastFilter);
+      } else {
+        img!.filters = [this.brightnessFilter, this.contrastFilter];
+      }
+      pl.app?.render();
     }
   }
 
-  hide() {
-    const gl = this.pl?.gl
-    if(!gl){return}
-    drawImage(gl,this.pl?.img)
+  hide() {}
+  set(options: IBrightnessContrastAdjustmentLayerOptions, ngZone: NgZone) {
+    ngZone.runOutsideAngular(() => {
+      const img = this.pl?.app?.stage.getChildByName('image');
+      if (img?.filters) {
+        const index = img.filters.indexOf(this.brightnessFilter!);
+        img.filters.splice(index, 1);
+        this.brightnessFilter?.brightness(options.brightness, false);
+        this.contrastFilter?.contrast(options.contrast, false);
+        this.brightness = options.brightness;
+        this.contrast = options.contrast;
+        img.filters.push(this.brightnessFilter!);
+        img.filters.push(this.contrastFilter!);
+        // img!.filters.push(brightnessContrast);
+      } else {
+        img!.filters = [this.brightnessFilter!, this.contrastFilter!];
+      }
+      this.pl?.app?.render();
+    });
   }
-  set(options: IBrightnessContrastAdjustmentLayerOptions) {
-    const gl = this.pl?.gl
-    if(!gl){return}
-    applyBrightnees(gl, this.pl?.img,options.brightness)
-    applyContrast(gl, this.pl?.img,options.contrast)
-
-  }
-  override show() {
-    const gl = this.pl?.gl
-    if(!gl){return}
-    applyBrightnees(gl, this.pl?.img,this.brightness)
-    applyBrightnees(gl, this.pl?.img,this.contrast)
-
-
-  }
+  override show() {}
   clear() {}
 }
 

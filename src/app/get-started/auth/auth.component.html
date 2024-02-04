@@ -60,3 +60,8 @@
   </p>
   <a href="/start">Skip</a>
 </div>
+
+<div class="loading" *ngIf="isLoading">
+  <img src="assets/auth-icon.svg" alt="auth icon loading" [@rotate]="true">
+  
+</div>

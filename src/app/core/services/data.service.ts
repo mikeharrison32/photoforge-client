@@ -18,7 +18,7 @@ export class DataService {
   selectedLayers = new BehaviorSubject<Layer[]>([]);
   projects = new BehaviorSubject<Project[]>([]);
   selectedProject = new BehaviorSubject<Project | null>(null);
-
+  showNav = new BehaviorSubject<boolean>(true);
   orientaion = new BehaviorSubject<Orientaion>(Orientaion.Landscape);
   layers = new BehaviorSubject<Layer[]>([]);
   canvas = new BehaviorSubject<fabric.Canvas | null>(null);
@@ -30,6 +30,8 @@ export class DataService {
   cursor = new BehaviorSubject<Cursor | null>(null);
   currentSelection = new BehaviorSubject<Selection | null>(null);
   selectedAjLayers = new BehaviorSubject<AdjustmentLayer[]>([]);
+
+  zoom = new BehaviorSubject<number>(1);
 }
 
 type Color = {

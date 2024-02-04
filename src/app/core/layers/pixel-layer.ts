@@ -6,17 +6,21 @@ import { vibrance } from '../filters/vibrance';
 import { AdjustmentLayer } from './adjustment/adjustment_layer';
 import { BrightnessContrastAdjustmentLayer } from './adjustment/brightness_contrast';
 import {
+  createProgram,
   drawImage,
   drawRectangle,
   getPixels,
   insertPixels,
 } from 'src/app/utils/webglUtils';
+import * as PIXI from 'pixi.js-legacy';
+import { applyBrightneesFromProgram } from '../filters';
 export class PixelLayer extends Layer {
   pixels: IColorRGBA[] = [];
   src?: string;
   adjustmentLayers: AdjustmentLayer[] = [];
   img: any;
   gl?: WebGLRenderingContext | WebGL2RenderingContext | null;
+  app?: PIXI.Application;
   constructor(
     containerElem: HTMLElement | null,
     id: string,
@@ -33,20 +37,16 @@ export class PixelLayer extends Layer {
     } else {
       this.src = img.src;
       this.img = img;
-      this.gl =
-        (this.canvas as HTMLCanvasElement).getContext('webgl') ||
-        (this.canvas as HTMLCanvasElement).getContext('webgl2');
-      if (!this.gl) {
-        console.error("couldn't get webGL context at pixel-layer");
-        return;
-      }
+      this.app = new PIXI.Application({
+        view: this.canvas as any,
+      });
+      const sprite = PIXI.Sprite.from(this.src || '');
+      sprite.name = 'image';
+      sprite.width = this.app.screen.width;
+      sprite.height = this.app.screen.height;
 
-      // const program = createProgram(gl, )
-      drawImage(this.gl, img);
-      // const pixels = getPixels(this.gl, 0, 0, 200, 200);
-      // insertPixels(this.gl, pixels, 0, 0)
-      // console.log(pixels);
-      drawRectangle(this.gl, 0, 0, 100 * 2, 100 * 2);
+      // sprite.scale = new PIXI.Point(0.3, 0.4);
+      this.app.stage.addChild(sprite);
     }
   }
 }

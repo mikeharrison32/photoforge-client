@@ -4,39 +4,84 @@ import { MouseDragEvent } from '../../event';
 import { Layer } from '../../layers/layer';
 import { PixelLayer } from '../../layers/pixel-layer';
 import { DataService } from '../../services/data.service';
-
+import { fabric } from 'fabric';
+import * as PIXI from 'pixi.js-legacy';
+import { AdjustmentFilter } from '@pixi/filter-adjustment';
 class ReactangularSelect {
   properites?: IRectangularProperties;
   contextMenu?: ContextMenu;
   type: string = 'rectangularSelectTool';
-  rectCanvas?: Canvas;
+  canvas?: fabric.Canvas;
+  selectionRect?: PIXI.Rectangle;
   configure(
     display: HTMLElement,
     selectedLayer: PixelLayer,
     data: DataService
   ): void {
-    this.rectCanvas = new Canvas({
+    const app = new PIXI.Application({
       width: display.clientWidth,
       height: display.clientHeight,
-      position: 'absolute',
+      background: 'transparent',
+      backgroundColor: 'transparent',
+      backgroundAlpha: 0,
+    });
+    let selectionRectStart = {
       x: 0,
       y: 0,
-    });
-    const ctx = this.rectCanvas.getContext('2d') as CanvasRenderingContext2D;
-    ctx.lineWidth = 10;
-    new MouseDragEvent(this.rectCanvas.elem!, false, (e: any) => {
-      ctx.fillStyle = data.selectedColors.getValue().fg;
+    };
+
+    display.addEventListener('mousedown', (e) => {
       const displayScale = parseFloat(display.style.scale || '1');
-      const rect = this.rectCanvas?.elem?.getBoundingClientRect();
-      const x = ((e.x - rect!.left) * 2) / displayScale;
-      const y = ((e.y - rect!.top) * 2) / displayScale;
-      ctx.fillRect(x, y, 300, 400);
+      if (this.selectionRect) {
+      }
+      const graphics = new PIXI.Graphics();
+      graphics.beginFill(0xff0000, 1);
+      graphics.drawRect(0, 0, 200, 100);
+      graphics.endFill();
+      app.stage.addChild(graphics);
+      // selectionRectStart = {
+      //   x: (e.clientX - canvasRect.left) / displayScale,
+      //   y: (e.clientY - canvasRect.top) / displayScale,
+      // };
     });
 
-    // this.setUpContextMenu(display, 0, 0, )
-    display.appendChild(this.rectCanvas.elem as any);
+    display.appendChild(app.view as any);
+    new MouseDragEvent(display, false, (e: any) => {
+      const displayScale = parseFloat(display.style.scale || '1');
+
+      const canvasRect = this.canvas!.getElement().getBoundingClientRect();
+      if (!this.selectionRect) {
+        return;
+      }
+      // this.selectionRect.left = selectionRectStart.x;
+      // this.selectionRect.top = selectionRectStart.y;
+
+      this.selectionRect.width = (e.x - canvasRect.left) / displayScale;
+      this.selectionRect.height = (e.y - canvasRect.top) / displayScale;
+      this.canvas?.renderAll();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.code == 'Enter') {
+        this.applySelection();
+      }
+    });
   }
-  applySelection() {}
+  applySelection() {
+    // // const rect = this.selectionRect?.getBoundingRect();
+    // if (!rect) {
+    //   return;
+    // }
+    // const line = new fabric.Line(
+    //   [rect.left, rect.top, rect.left, rect.height],
+    //   {
+    //     stroke: 'red',
+    //     strokeWidth: 10,
+    //   }
+    // );
+    // this.canvas?.add(line);
+    // this.canvas?.remove(this.selectionRect!);
+  }
   setUpContextMenu(
     display: HTMLElement,
     x: number,
@@ -93,9 +138,8 @@ class ReactangularSelect {
     this.contextMenu.addMenus(layerViaCopy, layerViaCut);
   }
   disconfigure(display: HTMLElement): void {
-    this.rectCanvas?.elem?.remove();
-    delete this.rectCanvas;
-    delete this.contextMenu;
+    this.canvas?.getElement()?.remove();
+    delete this.canvas;
   }
 }
 

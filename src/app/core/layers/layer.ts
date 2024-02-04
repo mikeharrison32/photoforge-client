@@ -54,12 +54,12 @@ export class Layer {
   showControles() {}
   setWidth(width: number) {
     this.canvas!.style.width = width + 'px';
-    (this.canvas as HTMLCanvasElement).width = width * this.scale;
+    // (this.canvas as HTMLCanvasElement).width = width * this.scale;
     this.displayWidth = width;
   }
   setHeight(height: number) {
     this.canvas!.style.height = height + 'px';
-    (this.canvas as HTMLCanvasElement).height = height * this.scale;
+    // (this.canvas as HTMLCanvasElement).height = height * this.scale;
     this.displayHeight = height;
   }
 

@@ -29,7 +29,7 @@ export class WelcomePageComponent implements OnInit {
     private stateService: StateService
   ) {}
   ngOnInit() {
-    document.title = 'Setup - Photoforge';
+    this.data.showNav.next(false);
   }
   setActiveElement(el: string) {
     this.selectedTab = el;

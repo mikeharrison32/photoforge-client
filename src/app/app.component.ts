@@ -1,4 +1,10 @@
-import { Component, OnInit, HostListener, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  HostListener,
+  AfterViewInit,
+  OnDestroy,
+} from '@angular/core';
 import { DataService } from './core/services/data.service';
 import { Layer, AdjustmentLayer, LayerType } from './types/layer';
 import { ApiService } from './core/services/api.service';
@@ -10,52 +16,21 @@ import { PixelLayer } from './core/layers/pixel-layer';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
+  showNav: boolean = false;
   constructor(
     private data: DataService,
     private api: ApiService,
     private router: Router
   ) {}
   ngOnInit() {
-    this.api
-      .getProjects()
-      .then((res: any) => {
-        console.log('projects: ', res);
-        res.forEach((proj: GetProjectResponse) => {
-          const project: Project = {
-            Id: proj.id,
-            UserId: proj.userId,
-            Title: proj.title,
-            Width: proj.width,
-            Height: proj.height,
-            CreatedAt: proj.createdAt,
-            ModifiedAt: proj.modifiedAt,
-          };
-          this.data.projects.value.push(project);
-        });
-      })
-      .catch((err) => console.log('error: ', err));
-
-    this.api
-      .getLayers()
-      .then((res: any) => {
-        res.forEach((lr: GetLayersResponse) => {
-          const layer: Layer = {
-            Type: LayerType.Pixel,
-            Id: lr.id,
-            ProjectId: lr.projectId,
-            Title: lr.title,
-            Url: lr.url,
-            X: 0,
-            Y: 0,
-            stackIndex: 0,
-          };
-        });
-      })
-      .catch((err: any) => console.log('err: ', err));
+    this.data.showNav.subscribe((showNav) => {
+      this.showNav = showNav;
+    });
   }
-  ngAfterViewInit(): void {
-
+  ngAfterViewInit(): void {}
+  ngOnDestroy(): void {
+    this.data.showNav.unsubscribe();
   }
   @HostListener('document:drop', ['$event'])
   createLayerByDroping(e: any) {

@@ -1,5 +1,6 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { NotificationService } from '../core/services/notification.service';
+import { DataService } from '../core/services/data.service';
 
 @Component({
   selector: 'app-get-started',
@@ -7,9 +8,11 @@ import { NotificationService } from '../core/services/notification.service';
   styleUrls: ['./get-started.component.scss'],
 })
 export class GetStartedComponent implements AfterViewInit {
-  constructor(private notification: NotificationService) {}
+  constructor(
+    private notification: NotificationService,
+    private data: DataService
+  ) {}
   ngAfterViewInit(): void {
-    document.title = 'Get started with Photoforge - Photoforge';
-    this.notification.createNotification({ title: 'Welcome to photoforge' });
+    this.data.showNav.next(true);
   }
 }

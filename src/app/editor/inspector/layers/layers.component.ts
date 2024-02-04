@@ -23,7 +23,6 @@ export class LayersComponent implements OnInit, OnDestroy {
       this.layers = layers.filter(
         (layer) => layer.projectId == this.selectedProject?.Id
       );
-      console.log(this.layers);
     });
     this.data.selectedProject.subscribe((project) => {
       this.layers = this.data.layers

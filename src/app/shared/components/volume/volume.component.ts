@@ -43,7 +43,7 @@ export class VolumeComponent implements AfterViewInit {
     this.volumeCursor!.nativeElement.style.transform = `translate(${
       this.maxValue / 2
     }px)`;
-    this.volumeValue = this.Value || 0;
+    this.volumeValue = parseFloat(this.Value?.toFixed(2) || '0');
 
     this.render.listen('document', 'mouseup', (e) => {
       this.mousedown = false;
@@ -55,13 +55,14 @@ export class VolumeComponent implements AfterViewInit {
       let rect = this.line?.nativeElement.getBoundingClientRect();
       let x = e.clientX - rect.left;
       if (!(x < 0) && !(x > rect.width - 1)) {
-        console.log(Math.floor(x));
         this.volumeCursor!.nativeElement.style.transform = `translate(${x}px)`;
         let mid = this.maxValue / 2;
         let min = -80;
         let max = 101;
         let xMid = x - mid;
-        this.volumeValue = this.scaleNumber(xMid, min, max);
+        this.volumeValue = parseFloat(
+          this.scaleNumber(xMid, min, max).toFixed(2) || '0'
+        );
         this.onVolumeChange();
       }
     });

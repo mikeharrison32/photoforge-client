@@ -84,6 +84,12 @@ $light_gray: #3a3a3a;
         position: relative;
         // padding-right: 1rem;
         box-sizing: border-box;
+        img.active {
+          background: #252525;
+        }
+        img {
+          padding: 0.1rem;
+        }
         p {
           font-size: 0.6rem;
           margin-right: 0.3rem;

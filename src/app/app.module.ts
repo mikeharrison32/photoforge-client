@@ -19,21 +19,57 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { WelcomePageModule } from './welcome-page/welcome-page.module';
 import { NotificationModule } from './notification/notification.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
+import { HelpPageComponent } from './help-page/help-page.component';
+import { PricingComponent } from './pricing/pricing.component';
+import { ContactComponent } from './contact/contact.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 const routes: Routes = [
   {
     path: 'start',
     component: WelcomePageComponent,
+    title: 'Setup - Photoforge',
     // canActivate: [authGuard],
   },
   {
     path: 'editor',
     component: EditorComponent,
+    title: 'Editor - Photoforge',
     // canActivate: [authGuard],
+  },
+  {
+    path: 'help',
+    component: HelpPageComponent,
+    title: 'Help - Photoforge',
+  },
+  {
+    path: 'contact',
+    component: ContactComponent,
+    title: 'Contact - Photoforge',
+  },
+  {
+    path: 'privacy-policy',
+    component: PrivacyPolicyComponent,
+    title: 'Privacy Policy - Photoforge',
+  },
+  {
+    path: 'terms-of-service',
+    component: TermsOfServiceComponent,
+    title: 'Terms of Sercvice',
   },
 ];
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    PrivacyPolicyComponent,
+    TermsOfServiceComponent,
+    HelpPageComponent,
+    PricingComponent,
+    ContactComponent,
+    NavBarComponent,
+  ],
   imports: [
     JwtModule.forRoot({
       config: {

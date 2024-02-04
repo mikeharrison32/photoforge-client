@@ -45,5 +45,6 @@ export class TopBarComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.data.selectedProject.unsubscribe();
+    this.data.projects.unsubscribe();
   }
 }

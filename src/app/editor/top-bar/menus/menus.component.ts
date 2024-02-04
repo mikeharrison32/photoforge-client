@@ -161,12 +161,13 @@ export class MenusComponent implements OnInit, OnDestroy {
   }
   createNewLayer() {
     const displayElem = this.data.displayElem.getValue();
+    const selectedProject = this.data.selectedProject.getValue();
     const layer = new PixelLayer(
       displayElem,
       `${Math.random()}`,
       'Layer 1',
-      'aaa',
-      new ImageData(displayElem!.clientWidth, displayElem!.clientHeight)
+      selectedProject?.Id || 'aaa',
+      null
     );
     this.data.layers.next([...this.data.layers.getValue(), layer]);
     this.data.selectedLayers.next([
@@ -391,7 +392,5 @@ export class MenusComponent implements OnInit, OnDestroy {
   autoColor() {}
   applyImage() {}
   addAdjustmentLayer(aj: any) {}
-  ngOnDestroy(): void {
-    this.data.canvas.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 }

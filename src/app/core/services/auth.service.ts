@@ -16,16 +16,9 @@ export class AuthService {
     const headers = {
       'Content-Type': 'application/json',
     };
-    this.http
-      .post('http://localhost:5072/api/signup/', JSON.stringify(body), {
-        headers,
-      })
-      .subscribe(
-        (res) => {
-          console.log(res);
-        },
-        (err) => console.log(err)
-      );
+    this.http.post('http://localhost:5072/api/signup/', JSON.stringify(body), {
+      headers,
+    });
   }
   login(Username: string | null, Password: string | null) {
     const body = `client_id=photo-forge&client_name=PhotoForge&grant_type=password&scopes=projects%20offline_access&userName=${Username}&password=${Password}`;

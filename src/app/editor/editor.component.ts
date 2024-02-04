@@ -16,6 +16,7 @@ import {
   lassoTool,
   rectangularSelect,
   shapeTool,
+  textTool,
 } from '../core/tools/';
 import { Project } from '../types/project';
 import { StateService } from '../core/services/state.service';
@@ -35,6 +36,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedProject?: Project | null;
   layers: Layer[] = [];
   projects: Project[] = [];
+  zoom: number = 1;
   newDocumentActive?: boolean;
   @ViewChild('cursor') cursor?: ElementRef;
   shortcutsRenderFunc = (): void => {};
@@ -46,6 +48,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     rectangularSelect,
     lassoTool,
     cloneStampTool,
+    textTool,
   ];
   @ViewChild('display') display?: ElementRef;
   constructor(
@@ -55,6 +58,10 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     private notification: NotificationService
   ) {}
   ngOnInit() {
+    this.data.showNav.next(false);
+    this.data.zoom.subscribe((zoom) => {
+      this.zoom = zoom;
+    });
     this.data.projects.subscribe((projects) => {
       this.projects = projects;
     });
@@ -97,6 +104,9 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.data,
                 this.notification
               );
+              break;
+            case 'textTool':
+              tool.configure(this.display?.nativeElement);
               break;
             case 'shapeTool':
               tool.configure(
@@ -245,6 +255,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.display!.nativeElement.style.scale || '1'
               );
               this.display!.nativeElement.style.scale = `${zoom + 0.02}`;
+              this.data.zoom.next(zoom * 100);
             }
             break;
           case 'Minus':
@@ -254,6 +265,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.display!.nativeElement.style.scale || '1'
               );
               this.display!.nativeElement.style.scale = `${zoom - 0.02}`;
+              this.data.zoom.next(zoom * 100);
             }
             break;
           case 'KeyF':
@@ -339,5 +351,9 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.data.selectedLayers.unsubscribe();
     this.data.newMenuClick.unsubscribe();
     this.shortcutsRenderFunc();
+    this.data.zoom.unsubscribe();
+    this.data.projects.unsubscribe();
+    this.data.selectedProject.unsubscribe();
+    this.data.selectedLayers.unsubscribe();
   }
 }

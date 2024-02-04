@@ -3,7 +3,10 @@
   <app-tool-box></app-tool-box>
   <div class="image-display" id="image-display" #imgDisplay>
     <div #cursor class="cursor" id="cursor"></div>
-    <div id="display" #display></div>
+    <div id="display" #display>
+      <!-- <textarea class="textarea" name="" id=""  autocomplete="additional-name"  ></textarea> -->
+    </div>
+
     <div
       class="rect-selection-context-menu"
       *ngIf="false"
@@ -35,7 +38,7 @@
   <div class="zoom-bar">
     <div class="level">
       <app-input
-        [Value]="100"
+        [Value]="zoom"
         [Max]="100"
         [Min]="0"
         [Floor]="true"

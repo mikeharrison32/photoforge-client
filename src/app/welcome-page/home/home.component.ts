@@ -18,4 +18,8 @@ export class HomeComponent implements OnInit {
     const projects = (await this.api.getProjects()) as any;
     this.projects = projects;
   }
+  async loadRecentProjects() {
+    const projects = (await this.api.getProjects()) as any;
+    this.projects = projects;
+  }
 }

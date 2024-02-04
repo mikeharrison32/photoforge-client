@@ -1,0 +1,43 @@
+:host {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  .nav {
+    background: #313131;
+    box-shadow: #777777d9 0 0 3px 0;
+    padding-block: 0.7rem;
+    ul {
+      display: flex;
+      list-style: none;
+      gap: 3rem;
+      margin: 0;
+      a {
+        color: #b1b1b1;
+        text-decoration: none;
+        cursor: pointer;
+        position: relative;
+        &::after {
+          position: absolute;
+          display: block;
+          content: "";
+          width: 0rem;
+          height: 0rem;
+          background: #d8d8d8;
+          transition: 200ms;
+        }
+        &:hover {
+          color: #fff;
+          &::after {
+            transition: 200ms;
+            display: block;
+            content: "";
+            width: 100%;
+            height: 0.1rem;
+          }
+        }
+      }
+    }
+  }
+}

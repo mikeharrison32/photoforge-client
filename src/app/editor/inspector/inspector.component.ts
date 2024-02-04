@@ -19,16 +19,17 @@ import { BrightnessContrastAdjustmentLayer } from 'src/app/core/layers/adjustmen
 import { PixelLayer } from 'src/app/core/layers/pixel-layer';
 import { Layer } from 'src/app/core/layers/layer';
 import { HueSaturationLightnees } from 'src/app/core/layers/adjustment/hue_saturation_lightnees';
+
 @Component({
   selector: 'app-inspector',
   templateUrl: './inspector.component.html',
   styleUrls: ['./inspector.component.scss'],
 })
 export class InspectorComponent implements OnInit, OnDestroy {
-  canvas?: fabric.Canvas;
   @ViewChild('ad_choices') ad_choices?: ElementRef;
   ad_choices_active: boolean = false;
   selectedLayers: Layer[] = [];
+  movingLocked: boolean = false;
   blendingMods: string[] = [
     'Normal',
     'Dissolve',
@@ -58,6 +59,7 @@ export class InspectorComponent implements OnInit, OnDestroy {
     'Color',
     'Luminosity',
   ];
+  brushLocked: boolean = false;
   get AdjustmentLayer() {
     return AdjustmentLayer;
   }
@@ -80,7 +82,12 @@ export class InspectorComponent implements OnInit, OnDestroy {
   toggleAdChoices() {
     this.ad_choices_active = this.ad_choices_active ? false : true;
   }
-
+  toggleMovingLocked() {
+    this.movingLocked = this.movingLocked ? false : true;
+  }
+  toggleBrushLocked() {
+    this.brushLocked = this.brushLocked ? false : true;
+  }
   addAdjustmentLayer(ad_type: AdjustmentLayer) {
     switch (ad_type) {
       case AdjustmentLayer.BrightnessContrast:
@@ -93,7 +100,11 @@ export class InspectorComponent implements OnInit, OnDestroy {
           });
           const aj = new BrightnessContrastAdjustmentLayer(
             this.selectedLayers[0],
-            'BrightneesContrast ' + bc_count
+            'BrightneesContrast ' + bc_count,
+            {
+              brightness: 1,
+              contrast: 1,
+            }
           );
           this.selectedLayers[0].adjustmentLayers.push(aj);
         }
@@ -108,7 +119,8 @@ export class InspectorComponent implements OnInit, OnDestroy {
           });
           const aj = new HueSaturationLightnees(
             this.selectedLayers[0],
-            'HueSaturationLightnees ' + hsl_count
+            'HueSaturationLightnees ' + hsl_count,
+            { hue: 10, saturation: 10, lightnees: 10 }
           );
           this.selectedLayers[0].adjustmentLayers.push(aj);
         }
@@ -157,7 +169,6 @@ export class InspectorComponent implements OnInit, OnDestroy {
       // this.layerService.getObjByLayerId(sl.Id)!.opacity = value / 100;
       (sl as any).canvas.style.opacity = `${value}`;
     }
-    this.canvas?.renderAll();
   }
   onDrag(e: any) {
     console.log(e.clientY);
@@ -172,10 +183,8 @@ export class InspectorComponent implements OnInit, OnDestroy {
     // img.filters?.push(new fabric.Image.filters.Grayscale());
     // img.applyFilters();
     // }
-    this.canvas?.renderAll();
   }
   ngOnDestroy() {
     this.data.selectedLayers.unsubscribe();
-    this.data.canvas.unsubscribe();
   }
 }
