@@ -8,20 +8,23 @@ import {
 import { DataService } from './core/services/data.service';
 import { Layer, AdjustmentLayer, LayerType } from './types/layer';
 import { ApiService } from './core/services/api.service';
-import { Router } from '@angular/router';
+import { ChildrenOutletContexts, Router } from '@angular/router';
 import { Project } from './types/project';
 import { PixelLayer } from './core/layers/pixel-layer';
+import { routeAnimations } from './animations';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  animations: [routeAnimations],
 })
 export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   showNav: boolean = false;
   constructor(
     private data: DataService,
     private api: ApiService,
-    private router: Router
+    private router: Router,
+    private context: ChildrenOutletContexts
   ) {}
   ngOnInit() {
     this.data.showNav.subscribe((showNav) => {
@@ -31,6 +34,11 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {}
   ngOnDestroy(): void {
     this.data.showNav.unsubscribe();
+  }
+  getRouteAnimationData() {
+    return this.context.getContext('primary')?.route?.snapshot.data?.[
+      'animation'
+    ];
   }
   @HostListener('document:drop', ['$event'])
   createLayerByDroping(e: any) {

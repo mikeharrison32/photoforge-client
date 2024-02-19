@@ -21,11 +21,13 @@ export class NotificationService {
   }
 }
 
-interface INotificationOptions {
+export interface INotificationOptions {
   title: string;
   isVisible?: boolean;
   quitAfter?: number;
   icon?: string;
   mainTextColor?: string;
   details?: string;
+  hasOkBtn?: boolean;
+  hasCancelBtn?: boolean;
 }

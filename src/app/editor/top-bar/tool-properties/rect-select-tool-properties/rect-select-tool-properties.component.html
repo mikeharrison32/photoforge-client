@@ -12,7 +12,18 @@
   <app-checkbox [text]="'Anti-alias'"></app-checkbox>
   <div class="style">
     <span>Style:</span>
-    <app-select [Items]="['Normal']"></app-select>
+    <app-select
+      [Items]="[
+        'Normal',
+        'Fixed Ratio',
+        'Fixed Size',
+        'Fixed Position',
+        'Masked',
+        'Intersect with Selection',
+        'Add to Selection',
+        'Subtract from Selection'
+      ]"
+    ></app-select>
   </div>
   <div class="width">
     <span>Width:</span>

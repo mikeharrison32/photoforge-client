@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { AdjustmentLayer } from 'src/app/core/layers/adjustment/adjustment_layer';
 import { BrightnessContrastAdjustmentLayer } from 'src/app/core/layers/adjustment/brightness_contrast';
+import { HueSaturationLightnees } from 'src/app/core/layers/adjustment/hue_saturation_lightnees';
 import { DataService } from 'src/app/core/services/data.service';
 @Component({
   selector: 'app-layer-property',
@@ -56,9 +57,42 @@ export class LayerPropertyComponent implements OnInit, OnDestroy {
       );
     }
   }
-  onHueChange(value: any) {}
-  onSaturationChange(value: any) {}
-  onLightnessChange(value: any) {}
+  onHueChange(value: any) {
+    if (this.selectedAdjustmentLayer instanceof HueSaturationLightnees) {
+      this.selectedAdjustmentLayer.set(
+        {
+          hue: value * 255,
+          saturation: this.selectedAdjustmentLayer.saturation,
+          lightnees: this.selectedAdjustmentLayer.lightnees,
+        },
+        this.ngZone
+      );
+    }
+  }
+  onSaturationChange(value: any) {
+    if (this.selectedAdjustmentLayer instanceof HueSaturationLightnees) {
+      this.selectedAdjustmentLayer.set(
+        {
+          hue: this.selectedAdjustmentLayer.hue,
+          saturation: value,
+          lightnees: this.selectedAdjustmentLayer.lightnees,
+        },
+        this.ngZone
+      );
+    }
+  }
+  onLightnessChange(value: any) {
+    if (this.selectedAdjustmentLayer instanceof HueSaturationLightnees) {
+      this.selectedAdjustmentLayer.set(
+        {
+          hue: this.selectedAdjustmentLayer.hue,
+          saturation: this.selectedAdjustmentLayer.saturation,
+          lightnees: value,
+        },
+        this.ngZone
+      );
+    }
+  }
   onYChange(y: any) {
     this.selectedLayer.canvas.style.top = y + 'px';
   }

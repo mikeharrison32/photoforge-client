@@ -1,4 +1,4 @@
-import { drawImage } from 'src/app/utils/webglUtils';
+import { drawImage } from 'src/app/core/utils/webglUtils';
 import { PixelLayer } from '../pixel-layer';
 import { AdjustmentLayer } from './adjustment_layer';
 import { applyBrightnees, applyContrast } from '../../filters';
@@ -43,8 +43,10 @@ export class BrightnessContrastAdjustmentLayer extends AdjustmentLayer {
     ngZone.runOutsideAngular(() => {
       const img = this.pl?.app?.stage.getChildByName('image');
       if (img?.filters) {
-        const index = img.filters.indexOf(this.brightnessFilter!);
-        img.filters.splice(index, 1);
+        const brightnessIndex = img.filters.indexOf(this.brightnessFilter!);
+        const contrastIndex = img.filters.indexOf(this.contrastFilter!);
+        img.filters.splice(brightnessIndex, 1);
+        img.filters.splice(contrastIndex, 1);
         this.brightnessFilter?.brightness(options.brightness, false);
         this.contrastFilter?.contrast(options.contrast, false);
         this.brightness = options.brightness;

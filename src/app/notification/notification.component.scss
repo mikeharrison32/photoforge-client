@@ -1,7 +1,6 @@
 .notification {
   width: 20rem;
-  height: 9.4rem;
-  background: #ff205c;
+  background: #7091db;
   color: #fff;
   display: flex;
   align-items: center;
@@ -26,9 +25,16 @@
       bottom: 2rem;
     }
   }
-  span {
+  .close-icon {
     font-size: 0.7rem;
     margin: 0;
+    font-size: 2rem;
+    padding: 0;
+    position: absolute;
+    top: -0.8rem;
+    right: 0;
+    cursor: pointer;
+    font-weight: 100;
   }
   .closeBtn {
     border: none;
@@ -44,15 +50,18 @@
     padding-inline: 1rem;
   }
   .mainText {
-    position: relative;
+    // position: relative;
     top: -2rem;
+    padding: 1rem;
     left: -3rem;
     font-size: 0.9rem;
     font-weight: 500;
   }
   .buttons {
-    position: relative;
-    top: 2rem;
-    left: 6rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin-bottom: 1rem;
   }
 }

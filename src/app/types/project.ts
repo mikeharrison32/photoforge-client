@@ -12,6 +12,7 @@ export type Project = {
   BackgroundContent?: string;
   CreatedAt?: string;
   ModifiedAt?: string;
+  Zoom?: number;
 };
 
 export type ProjectPreset = {

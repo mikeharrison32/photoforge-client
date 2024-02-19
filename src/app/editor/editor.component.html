@@ -3,7 +3,9 @@
   <app-tool-box></app-tool-box>
   <div class="image-display" id="image-display" #imgDisplay>
     <div #cursor class="cursor" id="cursor"></div>
-    <div id="display" #display>
+    <div class="displayContainer">
+      <div id="display" #display></div>
+      <div id="helperCanvas"></div>
       <!-- <textarea class="textarea" name="" id=""  autocomplete="additional-name"  ></textarea> -->
     </div>
 
@@ -43,6 +45,7 @@
         [Min]="0"
         [Floor]="true"
         unit="%"
+        (onInputChange)="setZoom($event)"
       ></app-input>
     </div>
   </div>

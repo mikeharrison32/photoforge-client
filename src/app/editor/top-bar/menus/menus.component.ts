@@ -42,9 +42,21 @@ export class MenusComponent implements OnInit, OnDestroy {
   ) {}
   ngOnInit(): void {
     //TODO:
-    //sort the projects based on their modiyed date
+    //sort the projects based on their modifyed date
     //reverse the array
     //then get the first few project and display
+  }
+  async saveProject() {
+    if ('showDirectoryPicker' in window) {
+      const folder = await (window as any).showDirectoryPicker();
+      console.log(folder);
+    } else {
+      //download
+      const a = document.createElement('a');
+      a.href = 'localhost:2423/image';
+      a.download = 'true';
+      a.click();
+    }
   }
   get Menus() {
     return Menus;
@@ -167,7 +179,7 @@ export class MenusComponent implements OnInit, OnDestroy {
       `${Math.random()}`,
       'Layer 1',
       selectedProject?.Id || 'aaa',
-      null
+      new ImageData(displayElem!.clientWidth, displayElem!.clientHeight)
     );
     this.data.layers.next([...this.data.layers.getValue(), layer]);
     this.data.selectedLayers.next([

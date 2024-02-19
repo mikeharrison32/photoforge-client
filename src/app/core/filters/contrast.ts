@@ -1,4 +1,4 @@
-import { createProgram } from 'src/app/utils/webglUtils';
+import { createProgram } from 'src/app/core/utils/webglUtils';
 
 export function applyContrast(
   gl: WebGLRenderingContext | WebGL2RenderingContext,
@@ -13,7 +13,7 @@ void main() {
   texCoords = (position + 1.0) / 2.0;
 
   texCoords.y = 1.0 - texCoords.y;
-  
+
   gl_Position = vec4(position, 0, 1.0);
 }
 `;
@@ -33,7 +33,7 @@ return 0.5 + (contrast + 1.0) * (color.rgb - 0.5);
 void main() {
 vec4 color = texture2D(textureSampler, texCoords);
 color.rgb = adjustContrast(color.rgb, ${contrast});
-  
+
 gl_FragColor = color;
 }`;
 

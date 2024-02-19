@@ -1,27 +1,49 @@
-# Clinet
+# LassoTool, TextTool, RectSelectTool
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.0.
+# BrushTool, EraserTool, CropTool
 
-## Development server
+# CloneStampTool, ShapeTool
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+# BrightnessContast(Fix), HueSaturationLightness(Fix)
 
-## Code scaffolding
+# Exposure, Vibrance
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+# Undo/Redo
 
-## Build
+# Masks, Appying/Removing Mask
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+# LassoTool
 
-## Running unit tests
+- allow drawing and listen for enter
+- then when enter remove the drawing and insert a selection
+  - a selection should be movable
+- the listen for context menu clicks and display the context menu
+- make the menus functional
+  - layer via copy/cut
+  - fill
+  - others...
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+# TextTool
 
-## Running end-to-end tests
+- listen for clickes
+- then create a text layer containg word lorem ipsum at the clicked postion
+- listen for double clickes on a textlayer the display a text editor
+- when done and enter rewrite the text inside the type layer
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+# EraserTool
 
-## Further help
+- listen for mouse drage events
+- convert the pixels to circle
+- then clear the pixels of the selected areas with the speacified size of brush
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+# RectSelectTool
+
+- then when enter remove the rect and insert a selection
+- a selection should be movable
+- rest is like the lasso
+
+# CropTool
+
+# Selection
+
+-

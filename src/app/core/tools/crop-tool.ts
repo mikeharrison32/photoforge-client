@@ -1,200 +1,174 @@
 import { Canvas } from '../canvas';
+import { Corner } from '../corner';
 import { DraggableBehaviour } from '../draggable-behavior';
 import { MouseDragEvent } from '../event';
-
+import { fabric } from 'fabric';
+import * as PIXI from 'pixi.js-legacy';
 export class CropTool {
   type: string = 'cropTool';
   properties?: ICropToolProperties;
-  cropCanvas?: Canvas;
+  cropCanvas?: PIXI.Application;
   corners: Corner[] = [];
-  border?: HTMLDivElement;
+  border!: PIXI.Graphics;
+  trCorner!: Corner;
+  mbCorner!: Corner;
+  mrCorner!: Corner;
+  mlCorner!: Corner;
+  mtCorner!: Corner;
+  blCorner!: Corner;
+  brCorner!: Corner;
+  tlCorner!: Corner;
+  drawingSurface?: PIXI.Sprite;
+  texture!: PIXI.RenderTexture;
 
   configure(display: HTMLElement) {
     if (this.cropCanvas) {
       return;
     }
-    this.cropCanvas = new Canvas({
-      width: display.clientWidth,
-      height: display.clientHeight,
-      x: 0,
-      y: 0,
+    this.cropCanvas = new PIXI.Application({
+      resizeTo: display.parentElement!,
+      background: 'transparent',
+      backgroundAlpha: 0,
+      antialias: true,
+      resolution: 1,
     });
+    this.createCropBorder();
+    (this.cropCanvas.view as any).classList.add('crop-canvas');
+    display.parentElement?.appendChild(this.cropCanvas.view as any);
 
-    const ctx = this.cropCanvas.getContext('2d') as CanvasRenderingContext2D;
-    ctx!.fillStyle = '#000000b2';
-
-    ctx.fillRect(0, 0, display.clientWidth * 2, display.clientHeight * 2);
-    ctx.clearRect(
-      50 * 2,
-      50 * 2,
-      (display.clientWidth - 100) * 2,
-      (display.clientHeight - 100) * 2
-    );
-    this.border = document.createElement('div');
-    this.border.style.left = 50 + 'px';
-    this.border.style.top = 50 + 'px';
-    this.border.style.width = display.clientWidth - 100 + 'px';
-    this.border.style.height = display.clientHeight - 100 + 'px';
-    this.border.classList.add('crop-tool-border');
-    display.appendChild(this.border);
-
-    const trCorner = new Corner(display, 7, 1, 50, 50);
-    trCorner.elem?.classList.add('crop-tool-corner');
-    const displayScale = parseFloat(display.style.scale || '1');
-    new DraggableBehaviour(trCorner.elem!, displayScale, (e: any) => {
-      // this.border!.style.left = e.x / displayScale + 'px';
-      // this.border!.style.top = e.y / displayScale + 'px';
-      // this.border!.style.width = 500 - e.x / displayScale + 'px';
-      // this.border!.style.height = 500 - e.y / displayScale + 'px';
-      // brCorner.elem!.style.left = e.x / displayScale + 'px';
+    this.texture = PIXI.RenderTexture.create({
+      width: this.cropCanvas?.view.width,
+      height: this.cropCanvas?.view.height,
     });
+    this.drawingSurface = new PIXI.Sprite(this.texture);
+    this.cropCanvas.stage.addChild(this.drawingSurface);
+    this.drawingSurface.eventMode = 'static';
+    this.createTopLeftCorner();
+    this.createTopRightCorner();
+    // this.corners.push(
+    //   this.trCorner,
+    //   this.tlCorner,
+    //   this.brCorner,
+    //   this.blCorner,
+    //   this.mtCorner,
+    //   this.mlCorner,
+    //   this.mrCorner,
+    //   this.mbCorner
+    // );
 
-    const tlCorner = new Corner(display, 7, 1, display.clientWidth - 100, 50);
-    new DraggableBehaviour(tlCorner.elem!, displayScale, (e: any) => {
-      // this.border!.style.width = 500 - e.x / displayScale + 'px';
-      // this.border!.style.height = e.y / displayScale + 'px';
-      // this.border!.style.left = e.x / displayScale + 'px';
-      // this.border!.style.top = startY + 'px';
+    // display.parentElement.appendChild(this.cropCanvas.elem!);
+  }
+
+  private createCropBorder() {
+    this.border = new PIXI.Graphics();
+    // this.border.beginFill('red', 1);
+    this.border.eventMode = 'static';
+    this.border.on('pointerover', (e) => {
+      console.log('popop');
     });
-    tlCorner.elem?.classList.add('crop-tool-corner');
-    tlCorner.elem!.style.transform = 'rotate(90deg)';
+    this.border.lineStyle(3, '#fff');
+    this.border.drawRoundedRect(
+      20,
+      20,
+      this.cropCanvas!.screen.width - 50,
+      this.cropCanvas!.screen.height - 50,
+      4
+    );
+    this.cropCanvas?.stage.addChild(this.border);
+  }
 
-    const brCorner = new Corner(display, 7, 1, 50, display.clientHeight - 100);
-    brCorner.elem?.classList.add('crop-tool-corner');
-    brCorner.elem!.style.transform = 'rotate(270deg)';
-    let startY = 100;
-    new DraggableBehaviour(brCorner.elem!, displayScale, (e: any) => {
-      // this.border!.style.width = 500 - e.x / displayScale + 'px';
-      // this.border!.style.height = e.y / displayScale + 'px';
-      // this.border!.style.left = e.x / displayScale + 'px';
-      // this.border!.style.top = startY + 'px';
-      // trCorner.elem!.style.left = e.x / displayScale + 'px';
-      // trCorner.elem!.style.top = startY + 'px';
+  private createMiddleBottomCorner() {}
+
+  private createMiddleRightCorner() {}
+
+  private createMiddleLeftCorner() {}
+
+  private createMiddleTopCorner() {}
+
+  private createBottomLeftCorner() {}
+
+  private createBottomRightCorner() {}
+
+  private createTopLeftCorner() {
+    const tlCorner = new PIXI.Graphics();
+    tlCorner.beginFill('#fff', 1);
+    tlCorner.drawRoundedRect(15, 15, 30, 8, 5);
+    tlCorner.drawRoundedRect(15, 15, 8, 30, 5);
+    tlCorner.endFill();
+
+    tlCorner.on('pointerdown', (e) => {
+      console.log(e);
     });
+    tlCorner.eventMode = 'static';
+    this.cropCanvas?.stage.addChild(tlCorner);
+    let mousedown = false;
+    this.drawingSurface?.addEventListener('mousedown', (e) => {
+      mousedown = true;
+      console.log('drawing');
+      tlCorner.position.set(e.data.global.x, e.data.global.y);
+    });
+    this.drawingSurface?.addEventListener('mousemove', (e) => {
+      tlCorner.position.set(e.data.global.x, e.data.global.y);
+      this.border.position.set(e.global.x, e.global.y);
+      this.cropCanvas?.renderer.render(tlCorner, {
+        renderTexture: this.texture,
+        clear: true,
+      });
+    });
+  }
 
-    const blCorner = new Corner(
-      display,
-      5,
-      0.8,
-      display.clientWidth - 100,
-      display.clientHeight - 100
+  private createTopRightCorner() {
+    const trCorner = new PIXI.Graphics();
+    trCorner.beginFill('#fff', 1);
+    trCorner.drawRoundedRect(this.cropCanvas!.screen.width - 100, 15, 30, 8, 5);
+    trCorner.drawRoundedRect(
+      this.cropCanvas!.screen.width - 100 + 25,
+      15,
+      8,
+      30,
+      5
     );
-    blCorner.elem?.classList.add('crop-tool-corner');
-    blCorner.elem!.style.transform = 'rotate(180deg)';
-    new DraggableBehaviour(blCorner.elem!, displayScale);
+    trCorner.endFill();
 
-    const mtCorner = new Corner(
-      display,
-      5,
-      0.8,
-      (display.clientWidth - 100) / 2,
-      50
-    );
-    new DraggableBehaviour(mtCorner.elem!, displayScale);
-    const mlCorner = new Corner(
-      display,
-      5,
-      0.8,
-      50,
-      (display.clientHeight - 100) / 2
-    );
-    mlCorner.elem!.style.transform = 'rotate(90deg)';
-    new DraggableBehaviour(mlCorner.elem!, displayScale);
-    const mrCorner = new Corner(
-      display,
-      5,
-      0.8,
-      display.clientWidth - 100,
-      (display.clientHeight - 100) / 2
-    );
-    mrCorner.elem!.style.transform = 'rotate(90deg)';
-    new DraggableBehaviour(mrCorner.elem!, displayScale);
-    const mbCorner = new Corner(
-      display,
-      5,
-      0.8,
-      (display.clientWidth - 100) / 2,
-      display.clientHeight - 100
-    );
-    new DraggableBehaviour(mbCorner.elem!, displayScale);
+    trCorner.on('mousedown', (e) => {
+      console.log(e);
+      // trCorner.moveTo(10, e.data.global.y);
+      // this.cropCanvas?.renderer.render(trCorner, {
+      //   renderTexture: texture,
+      //   clear: false,
+      // });
+    });
+    // this.drawingSurface!.eventMode = 'static';
 
-    this.corners.push(
-      trCorner,
-      tlCorner,
-      brCorner,
-      blCorner,
-      mtCorner,
-      mlCorner,
-      mrCorner,
-      mbCorner
-    );
-    display.appendChild(this.cropCanvas.elem!);
+    this.drawingSurface?.on('mousedown', (e) => {
+      console.log('drawing');
+      // trCorner.position.set(e.data.global.x, e.data.global.y);
+    });
+    this.cropCanvas?.renderer.render(trCorner, {
+      renderTexture: this.texture,
+      clear: false,
+    });
+    this.cropCanvas?.stage.addChild(trCorner);
   }
 
   disconfigure(display: HTMLElement): void {
-    this.cropCanvas?.elem?.remove();
+    this.cropCanvas?.destroy(true);
     delete this.cropCanvas;
-    this.border?.remove();
-    this.corners.forEach((corner) => {
-      corner.elem?.remove();
-    });
   }
   straiten() {}
   clear() {}
   complite() {}
   cancel() {}
   rearrange() {}
-  renderCropCanvas(cropCanvasCtx: CanvasRenderingContext2D) {
-    cropCanvasCtx.clearRect(
-      0,
-      0,
-      cropCanvasCtx.canvas.clientWidth,
-      cropCanvasCtx.canvas.clientHeight
-    );
-    cropCanvasCtx.fillStyle = '#000000b0';
-    cropCanvasCtx.fillRect(
-      0,
-      0,
-      cropCanvasCtx.canvas.clientWidth,
-      cropCanvasCtx.canvas.clientHeight
-    );
-  }
+  render(display: HTMLElement) {}
+  placeCorners() {}
 }
 
 export const cropTool = new CropTool();
+
 interface ICropToolProperties {
   height?: number;
   resolution?: number;
   unit?: string;
   deleteCropedPixels?: boolean;
-}
-
-class Corner {
-  elem?: HTMLElement;
-  parent?: HTMLElement;
-  constructor(
-    parent: HTMLElement,
-    width: number,
-    height: number,
-    x: number,
-    y: number
-  ) {
-    this.elem = document.createElement('div');
-    this.elem.style.background = '#fff';
-    this.elem.style.width = width + 'rem';
-    this.elem.style.height = height + 'rem';
-    this.elem.style.position = 'absolute';
-    this.elem.style.left = x + 'px';
-    this.elem.style.top = y + 'px';
-    this.elem.style.borderRadius = '5px';
-    this.elem.style.zIndex = '100000000';
-    this.parent = parent;
-    parent.appendChild(this.elem);
-  }
-
-  moveTo(x: number, y: number) {
-    const rect = this.parent!.getBoundingClientRect();
-    this.elem!.style.left = x + 'px';
-    this.elem!.style.top = y + 'px';
-  }
 }

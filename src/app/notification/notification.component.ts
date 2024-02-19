@@ -5,7 +5,10 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { NotificationService } from '../core/services/notification.service';
+import {
+  INotificationOptions,
+  NotificationService,
+} from '../core/services/notification.service';
 
 @Component({
   selector: 'app-notification',
@@ -13,12 +16,14 @@ import { NotificationService } from '../core/services/notification.service';
   styleUrls: ['notification.component.scss'],
 })
 export class NotificationComponent implements AfterViewInit {
+  options?: INotificationOptions;
   constructor(private notification: NotificationService) {}
   title: string = '';
   isVisible: boolean = false;
   @ViewChild('notification') notificationElem?: ElementRef;
   ngAfterViewInit() {
     this.notification.options.subscribe((options) => {
+      this.options = options;
       this.title = options.title;
       this.isVisible = options.isVisible || false;
       if (options.mainTextColor) {
@@ -27,6 +32,9 @@ export class NotificationComponent implements AfterViewInit {
           options.mainTextColor;
       }
     });
+  }
+  onRemoveIconClick(e: any) {
+    this.isVisible = false;
   }
   onOkBtnClick(e: any) {}
 }

@@ -18,12 +18,19 @@
             Open Recent
             <img src="assets/arrow-right.svg" />
             <div class="recent-projects">
-              <p *ngFor="let rp of recentProjects" (click)="openProject(rp)">{{rp.Title}}</p>
+              <a href="ewfrwefewf" download> derr.jpg</a>
+              <p>derr.jpg</p>
+              <p>derr.jpg`vef ergr g35gt3f4r 43fr3r</p>
+              <p>derr.jpg</p>
+              <p>derr.jpg</p>
+              <p *ngFor="let rp of recentProjects" (click)="openProject(rp)">
+                {{ rp.Title }}
+              </p>
             </div>
           </li>
           <div class="line"></div>
           <li (click)="closeSelectedProject()">Close</li>
-          <li>Save</li>
+          <li (click)="saveProject()">Save</li>
           <li>Save As</li>
           <li>Save for Web</li>
           <li>Export As</li>
@@ -100,21 +107,31 @@
       <ul>
         <li class="adjustments-menu">
           Adjustments
-          <img src="assets/arrow-right.svg" /> 
+          <img src="assets/arrow-right.svg" />
           <div class="adjustment-options">
             <div class="ad_choices" #ad_choices>
               <p (click)="addAdjustmentLayer(AdjustmentLayer.SolidColor)">
                 SolidColor
               </p>
-              <p (click)="addAdjustmentLayer(AdjustmentLayer.Gradient)">Gradient</p>
-              <p (click)="addAdjustmentLayer(AdjustmentLayer.Pattern)">Pattern</p>
-              <p (click)="addAdjustmentLayer(AdjustmentLayer.BrightnessContrast)">
+              <p (click)="addAdjustmentLayer(AdjustmentLayer.Gradient)">
+                Gradient
+              </p>
+              <p (click)="addAdjustmentLayer(AdjustmentLayer.Pattern)">
+                Pattern
+              </p>
+              <p
+                (click)="addAdjustmentLayer(AdjustmentLayer.BrightnessContrast)"
+              >
                 BrightnessContrast
               </p>
               <p (click)="addAdjustmentLayer(AdjustmentLayer.Levels)">Levels</p>
               <p (click)="addAdjustmentLayer(AdjustmentLayer.Curves)">Curves</p>
-              <p (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)">Exposure</p>
-              <p (click)="addAdjustmentLayer(AdjustmentLayer.Vibrance)">Vibrance</p>
+              <p (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)">
+                Exposure
+              </p>
+              <p (click)="addAdjustmentLayer(AdjustmentLayer.Vibrance)">
+                Vibrance
+              </p>
               <p (click)="addAdjustmentLayer(AdjustmentLayer.HueSaturation)">
                 HueSaturation
               </p>

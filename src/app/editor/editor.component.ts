@@ -59,8 +59,9 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
   ngOnInit() {
     this.data.showNav.next(false);
-    this.data.zoom.subscribe((zoom) => {
-      this.zoom = zoom;
+
+    this.data.shortcutsEnabled.subscribe((se) => {
+      this.shortcutsEnabled = se;
     });
     this.data.projects.subscribe((projects) => {
       this.projects = projects;
@@ -71,6 +72,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       );
     });
     this.data.selectedProject.subscribe((project) => {
+      this.selectedProject = project;
+      this.data.zoom.next(project?.Zoom || 50);
       this.data.layers.getValue().forEach((layer) => {
         if (layer.projectId != project?.Id) {
           layer.hide();
@@ -85,12 +88,47 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.data.selectedLayers.subscribe((sl) => {
       this.selectedLayers = sl;
     });
+    this.data.zoom.subscribe((zoom) => {
+      this.zoom = zoom;
+      this.display!.nativeElement.style.scale = (zoom / 100).toString();
+      const displayScale = parseFloat(
+        this.display?.nativeElement.style.scale || '1'
+      );
+      this.display!.nativeElement.parentElement.style.width =
+        this.display?.nativeElement.clientWidth * displayScale + 'px';
+      this.display!.nativeElement.parentElement.style.height =
+        this.display?.nativeElement.clientHeight * displayScale + 'px';
+      if (this.selectedProject) {
+        this.selectedProject.Zoom = zoom;
+      }
+    });
   }
-
+  setZoom(e: any) {
+    this.data.zoom.next(e);
+  }
   ngAfterViewInit() {
-    document.title = 'Editor - Photoforge';
+    const p: Project = {
+      Id: 'bbb',
+      UserId: 'fg',
+      Title: 'testproj',
+      Width: 500,
+      Height: 700,
+    };
+    const img = new Image();
+    img.src = 'assets/fixtures/deer.jpg';
+    const layer = new PixelLayer(
+      this.display!.nativeElement,
+      'eew',
+      'Deer png',
+      'bbb',
+      img
+    );
+    this.data.projects.next([p]);
+    this.data.layers.next([layer]);
     this.data.displayElem.next(this.display?.nativeElement as HTMLElement);
+    this.data.selectedProject.next(p);
     this.addShortcuts();
+
     this.data.selectedTool.next('moveTool');
     this.data.selectedTool.subscribe((selectedTool) => {
       this.tools.forEach((tool) => {
@@ -98,6 +136,9 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log('selectedTool', selectedTool);
           this.disconfigureTools();
           switch (tool.type) {
+            case 'moveTool':
+              this.disconfigureTools();
+              break;
             case 'brushTool':
               tool.configure(
                 this.display?.nativeElement,
@@ -106,7 +147,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
               );
               break;
             case 'textTool':
-              tool.configure(this.display?.nativeElement);
+              tool.configure(this.display?.nativeElement, this.data);
               break;
             case 'shapeTool':
               tool.configure(
@@ -137,165 +178,142 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       });
     });
-    const project: Project = {
-      Id: 'ae',
-      UserId: 'dss',
-      Title: 'dsrfre',
-      Width: 720,
-      Height: 1080,
-    };
-    this.data.projects.next([project]);
+    // const project: Project = {
+    //   Id: 'ae',
+    //   UserId: 'dss',
+    //   Title: 'dsrfre',
+    //   Width: 720,
+    //   Height: 1080,
+    // };
+    // this.data.projects.next([project]);
 
-    this.data.selectedProject.next(project);
-    this.display!.nativeElement.style.scale = '0.6';
-    const layer = new PixelLayer(
-      this.display?.nativeElement,
-      'dasd',
-      'dasd',
-      'ae',
-      null
-    );
-    this.data.layers.next([layer]);
+    // this.data.selectedProject.next(project);
+    // this.display!.nativeElement.style.scale = '0.5';
+    // const layer = new PixelLayer(
+    //   this.display?.nativeElement,
+    //   'dasd',
+    //   'dasd',
+    //   'ae',
+    //   null
+    // );
+    // this.data.layers.next([layer]);
   }
 
   loadLayers() {}
-  registerTools() {
-    this.tools.forEach((tool) => {
-      switch (tool.type) {
-        case 'brushTool':
-          tool.configure(this.selectedLayers[0]);
+
+  addShortcuts() {
+    this.render.listen('document', 'keydown', (e) => {
+      if (!this.shortcutsEnabled) {
+        return;
+      }
+      switch (e.code) {
+        case 'KeyM':
+          this.data.selectedTool.next('moveTool');
           break;
-        default:
-          tool.configure();
+        case 'KeyA':
+          if (e.ctrlKey) {
+          }
+          break;
+        case 'KeyL':
+          this.data.selectedTool.next('lassoTool');
+          break;
+        case 'KeyD':
+          if (e.ctrlKey) {
+            e.preventDefault();
+          }
+          break;
+        case 'KeyR':
+          if (e.ctrlKey) {
+            return;
+          }
+          e.preventDefault();
+          this.data.selectedTool.next('rectangularSelectTool');
+          break;
+        case 'KeyS':
+          this.data.selectedTool.next('shapeTool');
+          break;
+        case 'KeyB':
+          this.data.selectedTool.next('brushTool');
+          break;
+        case 'KeyC':
+          if (e.ctrlKey) {
+            // this.clipboard.copyLayer(this.selectedLayers![0]);
+          } else {
+            this.data.selectedTool.next('cropTool');
+          }
+          break;
+        case 'KeyX':
+          if (e.ctrlKey) {
+            // this.clipboard.cutLayer(this.selectedLayers![0]);
+          }
+          break;
+        case 'KeyT':
+          this.data.selectedTool.next('textTool');
+          break;
+        case 'KeyP':
+          this.data.selectedTool.next('penTool');
+          break;
+        case 'KeyV':
+          if (e.ctrlKey) {
+            this.clipboard.pasteLayer();
+          }
+          break;
+        case 'KeyE':
+          this.data.selectedTool.next('eraserTool');
+          break;
+        case 'KeyH':
+          this.data.selectedTool.next('handTool');
+          break;
+        case 'KeyG':
+          if (e.ctrlKey) {
+          } else {
+            this.data.selectedTool.next('gradientTool');
+          }
+          break;
+        case 'Delete':
+          this.selectedLayers?.forEach((layer) => {
+            // this.layerService.deleteLayer(layer.Id);
+          });
+          break;
+        case 'Equal':
+          if (e.ctrlKey) {
+            e.preventDefault();
+            this.data.zoom.next(this.data.zoom.getValue() + 2);
+          }
+          break;
+        case 'Minus':
+          if (e.ctrlKey) {
+            e.preventDefault();
+            this.data.zoom.next(this.data.zoom.getValue() - 2);
+          }
+          break;
+        case 'KeyF':
+          if (e.ctrlKey) {
+            e.preventDefault();
+          }
+          break;
+        case 'KeyJ':
+          if (e.ctrlKey) {
+            e.preventDefault();
+            // this.layerService.duplicateLayer(this.selectedLayers![0]);
+          }
+          break;
+        case 'KeyZ':
+          if (e.ctrlKey) {
+            e.preventDefault();
+            // this.stateService.undo();
+          } else {
+            this.data.selectedTool.next('zoomTool');
+          }
+          break;
+        case 'KeyY':
+          if (e.ctrlKey) {
+            e.preventDefault();
+            // this.stateService.redo();
+          }
+          break;
       }
     });
-  }
-  addShortcuts() {
-    this.shortcutsRenderFunc = this.render.listen(
-      'document',
-      'keydown',
-      (e) => {
-        if (!this.shortcutsEnabled) {
-          return;
-        }
-        switch (e.code) {
-          case 'KeyM':
-            this.data.selectedTool.next('moveTool');
-            break;
-          case 'KeyA':
-            if (e.ctrlKey) {
-            }
-            break;
-          case 'KeyL':
-            this.data.selectedTool.next('lassoTool');
-            break;
-          case 'KeyD':
-            if (e.ctrlKey) {
-              e.preventDefault();
-            }
-            break;
-          case 'KeyR':
-            if (e.ctrlKey) {
-              return;
-            }
-            e.preventDefault();
-            this.data.selectedTool.next('rectangularSelectTool');
-            break;
-          case 'KeyS':
-            this.data.selectedTool.next('shapeTool');
-            break;
-          case 'KeyB':
-            this.data.selectedTool.next('brushTool');
-            break;
-          case 'KeyC':
-            if (e.ctrlKey) {
-              // this.clipboard.copyLayer(this.selectedLayers![0]);
-            } else {
-              this.data.selectedTool.next('cropTool');
-            }
-            break;
-          case 'KeyX':
-            if (e.ctrlKey) {
-              // this.clipboard.cutLayer(this.selectedLayers![0]);
-            }
-            break;
-          case 'KeyT':
-            this.data.selectedTool.next('textTool');
-            break;
-          case 'KeyP':
-            this.data.selectedTool.next('penTool');
-            break;
-          case 'KeyV':
-            if (e.ctrlKey) {
-              this.clipboard.pasteLayer();
-            }
-            break;
-          case 'KeyE':
-            this.data.selectedTool.next('eraserTool');
-            break;
-          case 'KeyH':
-            this.data.selectedTool.next('handTool');
-            break;
-          case 'KeyG':
-            if (e.ctrlKey) {
-            } else {
-              this.data.selectedTool.next('gradientTool');
-            }
-            break;
-          case 'Delete':
-            this.selectedLayers?.forEach((layer) => {
-              // this.layerService.deleteLayer(layer.Id);
-            });
-            break;
-          case 'Equal':
-            if (e.ctrlKey) {
-              console.log(e.code);
-              e.preventDefault();
-              let zoom = parseFloat(
-                this.display!.nativeElement.style.scale || '1'
-              );
-              this.display!.nativeElement.style.scale = `${zoom + 0.02}`;
-              this.data.zoom.next(zoom * 100);
-            }
-            break;
-          case 'Minus':
-            if (e.ctrlKey) {
-              e.preventDefault();
-              let zoom = parseFloat(
-                this.display!.nativeElement.style.scale || '1'
-              );
-              this.display!.nativeElement.style.scale = `${zoom - 0.02}`;
-              this.data.zoom.next(zoom * 100);
-            }
-            break;
-          case 'KeyF':
-            if (e.ctrlKey) {
-              e.preventDefault();
-            }
-            break;
-          case 'KeyJ':
-            if (e.ctrlKey) {
-              e.preventDefault();
-              // this.layerService.duplicateLayer(this.selectedLayers![0]);
-            }
-            break;
-          case 'KeyZ':
-            if (e.ctrlKey) {
-              e.preventDefault();
-              // this.stateService.undo();
-            } else {
-              this.data.selectedTool.next('zoomTool');
-            }
-            break;
-          case 'KeyY':
-            if (e.ctrlKey) {
-              e.preventDefault();
-              // this.stateService.redo();
-            }
-            break;
-        }
-      }
-    );
   }
   stopShortCuts() {
     this.shortcutsRenderFunc();
@@ -347,13 +365,12 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     const selectedLayer = this.selectedLayers[0];
   }
   ngOnDestroy() {
-    this.data.layers.unsubscribe();
-    this.data.selectedLayers.unsubscribe();
+    // this.data.layers.unsubscribe();
+    // this.data.selectedLayers.unsubscribe();
     this.data.newMenuClick.unsubscribe();
     this.shortcutsRenderFunc();
     this.data.zoom.unsubscribe();
     this.data.projects.unsubscribe();
     this.data.selectedProject.unsubscribe();
-    this.data.selectedLayers.unsubscribe();
   }
 }

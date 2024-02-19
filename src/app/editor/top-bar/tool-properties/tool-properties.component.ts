@@ -17,7 +17,7 @@ export class ToolPropertiesComponent
   ngAfterViewInit(): void {}
   ngOnDestroy(): void {
     this.data.selectedTool.unsubscribe();
-    this.data.selectedLayers.unsubscribe();
+    // this.data.selectedLayers.unsubscribe();
     this.data.canvas.unsubscribe();
   }
 }

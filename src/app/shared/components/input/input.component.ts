@@ -12,6 +12,7 @@ import {
   Renderer2,
   SimpleChanges,
   ViewChild,
+  ViewEncapsulation,
 } from '@angular/core';
 
 @Component({
@@ -46,8 +47,12 @@ export class InputComponent implements AfterViewInit, OnDestroy {
     this.mousedown = true;
     this.editMode = true;
     const listener = this.render.listen('document', 'click', (e) => {
-      if (this.input?.nativeElement.contains(e.target) == false) {
-        this.editMode = false;
+      if (
+        !this.input?.nativeElement.contains(e.target) &&
+        this.input?.nativeElement != e.target
+      ) {
+        console.log(this.input?.nativeElement, e.target);
+        // this.editMode = false;
         listener();
       }
     });
@@ -57,7 +62,6 @@ export class InputComponent implements AfterViewInit, OnDestroy {
       e.target.value = this.Value;
       return;
     }
-    console.log('no');
     this.Value! = e.target.value;
   }
   ngAfterViewInit() {

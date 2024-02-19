@@ -4,142 +4,111 @@ import { MouseDragEvent } from '../../event';
 import { Layer } from '../../layers/layer';
 import { PixelLayer } from '../../layers/pixel-layer';
 import { DataService } from '../../services/data.service';
-import { fabric } from 'fabric';
 import * as PIXI from 'pixi.js-legacy';
 import { AdjustmentFilter } from '@pixi/filter-adjustment';
+import { SelectionContextMenu } from './selection-context-menu';
+import { Selection } from '../../selection';
 class ReactangularSelect {
   properites?: IRectangularProperties;
   contextMenu?: ContextMenu;
   type: string = 'rectangularSelectTool';
-  canvas?: fabric.Canvas;
-  selectionRect?: PIXI.Rectangle;
+  selectionCanvas?: PIXI.Application;
+  selectionRect?: PIXI.Graphics;
+  selection?: Selection;
+  selectionRectPos!: { x: number; y: number; width: number; height: number };
+  texture!: PIXI.RenderTexture;
+  drawingSurface!: PIXI.Sprite;
   configure(
     display: HTMLElement,
     selectedLayer: PixelLayer,
     data: DataService
   ): void {
-    const app = new PIXI.Application({
-      width: display.clientWidth,
-      height: display.clientHeight,
-      background: 'transparent',
-      backgroundColor: 'transparent',
-      backgroundAlpha: 0,
-    });
-    let selectionRectStart = {
+    this.selectionRectPos = {
       x: 0,
       y: 0,
+      width: 0,
+      height: 0,
     };
-
-    display.addEventListener('mousedown', (e) => {
-      const displayScale = parseFloat(display.style.scale || '1');
-      if (this.selectionRect) {
-      }
-      const graphics = new PIXI.Graphics();
-      graphics.beginFill(0xff0000, 1);
-      graphics.drawRect(0, 0, 200, 100);
-      graphics.endFill();
-      app.stage.addChild(graphics);
-      // selectionRectStart = {
-      //   x: (e.clientX - canvasRect.left) / displayScale,
-      //   y: (e.clientY - canvasRect.top) / displayScale,
-      // };
+    this.selectionCanvas = new PIXI.Application({
+      resizeTo: display.parentElement!,
+      antialias: true,
+      resolution: 1,
+      background: 'transparent',
+      backgroundAlpha: 0,
     });
+    this.texture = PIXI.RenderTexture.create({
+      width: this.selectionCanvas.screen.width,
+      height: this.selectionCanvas.screen.height,
+    });
+    this.drawingSurface = new PIXI.Sprite(this.texture);
+    this.selectionCanvas.stage.addChild(this.drawingSurface);
 
-    display.appendChild(app.view as any);
-    new MouseDragEvent(display, false, (e: any) => {
-      const displayScale = parseFloat(display.style.scale || '1');
-
-      const canvasRect = this.canvas!.getElement().getBoundingClientRect();
-      if (!this.selectionRect) {
+    this.drawingSurface.eventMode = 'static';
+    let mousedown = false;
+    this.selectionRect = new PIXI.Graphics();
+    this.drawingSurface.on('mousedown', (e) => {
+      delete this.selectionRect;
+      this.selectionRect = new PIXI.Graphics();
+      // this.clearCanvas();
+      mousedown = true;
+      this.selectionRectPos.x = e.global.x;
+      this.selectionRectPos.y = e.global.y;
+    });
+    this.drawingSurface.on('mousemove', (e) => {
+      if (!mousedown) {
         return;
       }
-      // this.selectionRect.left = selectionRectStart.x;
-      // this.selectionRect.top = selectionRectStart.y;
+      delete this.selectionRect;
+      this.selectionRect = new PIXI.Graphics();
+      this.selectionRect?.lineStyle({ color: '#fff', width: 2 });
+      this.selectionRect?.drawRect(
+        this.selectionRectPos.x,
+        this.selectionRectPos.y,
+        e.global.x - 100,
+        e.global.y - 50
+      );
 
-      this.selectionRect.width = (e.x - canvasRect.left) / displayScale;
-      this.selectionRect.height = (e.y - canvasRect.top) / displayScale;
-      this.canvas?.renderAll();
+      this.selectionCanvas?.renderer.render(this.selectionRect!, {
+        renderTexture: this.texture,
+        clear: true,
+      });
     });
-
+    this.drawingSurface.on('mouseup', () => {
+      mousedown = false;
+    });
+    (this.selectionCanvas.view as any).classList.add('crop-canvas');
+    display.parentElement?.appendChild(this.selectionCanvas.view as any);
+  }
+  private listenForKeydownEvents() {
     document.addEventListener('keydown', (e) => {
-      if (e.code == 'Enter') {
-        this.applySelection();
+      switch (e.code) {
+        case 'Enter':
+          if (!this.selectionRect) {
+            return;
+          }
+          this.selection = new Selection(this.selectionCanvas!, [
+            this.selectionRectPos.x,
+            this.selectionRectPos.y,
+          ]);
+          this.selection.show();
+          break;
       }
     });
   }
-  applySelection() {
-    // // const rect = this.selectionRect?.getBoundingRect();
-    // if (!rect) {
-    //   return;
-    // }
-    // const line = new fabric.Line(
-    //   [rect.left, rect.top, rect.left, rect.height],
-    //   {
-    //     stroke: 'red',
-    //     strokeWidth: 10,
-    //   }
-    // );
-    // this.canvas?.add(line);
-    // this.canvas?.remove(this.selectionRect!);
+  private clearCanvas() {
+    const emptyTexture = PIXI.Sprite.from(PIXI.Texture.EMPTY);
+    this.selectionCanvas?.renderer.render(emptyTexture, {
+      renderTexture: this.texture,
+      clear: true,
+    });
   }
-  setUpContextMenu(
-    display: HTMLElement,
-    x: number,
-    y: number,
-    rect: HTMLElement,
-    selectedLayer: Layer,
-    data: DataService
-  ) {
-    this.contextMenu = new ContextMenu(
-      display,
-      x - rect.getBoundingClientRect().left,
-      y - rect.getBoundingClientRect().top
-    );
-    const layerViaCopy = new Menu('Layer Via Copy');
-    layerViaCopy.onClick(() => {
-      const new_layer_imgdata = selectedLayer.ctx?.getImageData(
-        rect.clientLeft,
-        rect.clientTop,
-        rect.clientWidth,
-        rect.clientHeight
-      );
-      const layer = new PixelLayer(
-        display,
-        `${Math.random()}`,
-        'Layer 1',
-        'aaa',
-        new_layer_imgdata
-      );
-      data.layers.next([...data.layers.getValue(), layer]);
-    });
-    const layerViaCut = new Menu('Layer Via Cut');
-    layerViaCut.onClick(() => {
-      const new_layer_imgdata = selectedLayer.ctx?.getImageData(
-        rect.clientLeft,
-        rect.clientTop,
-        rect.clientWidth,
-        rect.clientHeight
-      );
-      const layer = new PixelLayer(
-        display,
-        `${Math.random()}`,
-        'Layer 1',
-        'aaa',
-        new_layer_imgdata
-      );
-      data.layers.next([...data.layers.getValue(), layer]);
 
-      selectedLayer.ctx?.putImageData(
-        new ImageData(rect.clientWidth, rect.clientHeight),
-        rect.clientLeft,
-        rect.clientTop
-      );
-    });
-    this.contextMenu.addMenus(layerViaCopy, layerViaCut);
+  setUpContextMenu(display: HTMLElement, x: number, y: number) {
+    this.contextMenu = new SelectionContextMenu(display.parentElement!, x, y);
   }
   disconfigure(display: HTMLElement): void {
-    this.canvas?.getElement()?.remove();
-    delete this.canvas;
+    this.selectionCanvas?.destroy(true);
+    delete this.selectionCanvas;
   }
 }
 

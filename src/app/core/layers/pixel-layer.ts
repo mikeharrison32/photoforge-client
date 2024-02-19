@@ -11,7 +11,7 @@ import {
   drawRectangle,
   getPixels,
   insertPixels,
-} from 'src/app/utils/webglUtils';
+} from 'src/app/core/utils/webglUtils';
 import * as PIXI from 'pixi.js-legacy';
 import { applyBrightneesFromProgram } from '../filters';
 export class PixelLayer extends Layer {
@@ -40,13 +40,32 @@ export class PixelLayer extends Layer {
       this.app = new PIXI.Application({
         view: this.canvas as any,
       });
-      const sprite = PIXI.Sprite.from(this.src || '');
-      sprite.name = 'image';
-      sprite.width = this.app.screen.width;
-      sprite.height = this.app.screen.height;
+      this.insertImage();
 
-      // sprite.scale = new PIXI.Point(0.3, 0.4);
-      this.app.stage.addChild(sprite);
+      // const graphics = new PIXI.Graphics();
+      // graphics.beginFill(0xffffff); // White color for the rectangle
+      // graphics.drawRect(100, 100, 200, 200); // Define the rectangle's position and size
+      // graphics.endFill();
+
+      // Apply the mask to the image sprite
+      // sprite.mask = graphics;
     }
+  }
+
+  private async insertImage() {
+    const sprite = PIXI.Sprite.from(this.src || '');
+    sprite.name = 'image';
+    sprite.width = this.app!.screen.width;
+    sprite.height = this.app!.screen.height;
+    const data = await this.app?.renderer.extract.pixels(
+      sprite,
+      new PIXI.Rectangle(100, 100, 300, 300)
+    );
+
+    // const t = PIXI.Texture.fromBuffer(data!, 400, 400);
+    // console.log(data);
+    // const sp = PIXI.Sprite.from(t)
+    // sprite.scale = new PIXI.Point(0.3, 0.4);
+    this.app!.stage.addChild(sprite);
   }
 }

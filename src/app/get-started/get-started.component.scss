@@ -26,7 +26,9 @@
     .showcase-img {
       width: 30rem;
       height: 20rem;
-      background: #000;
+      img {
+        width: 32rem;
+      }
     }
     .content {
       width: 22rem;
@@ -47,32 +49,38 @@
       h1,
       p {
         margin: 0;
+        color: #919191;
+        margin-top: 1rem;
       }
       a {
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 0.4rem;
+        padding: 1rem;
+        font-weight: 500;
+        padding-inline: 5rem;
         color: #fff;
         text-decoration: none;
         margin-top: 1rem;
         background: linear-gradient(45deg, red, rgb(226, 6, 127));
         border-radius: 2px;
         transition: 200ms;
-        border-radius: 50px;
-        padding-inline: 1rem;
+        border-radius: 5px;
         &:hover {
-          scale: 1.1;
+          background: linear-gradient(45deg, rgb(212, 0, 0), rgb(168, 4, 94));
         }
       }
     }
   }
   .adjustments {
+    display: flex;
+    flex-direction: column;
     padding: 1rem;
     box-sizing: border-box;
     width: 100%;
     height: 100%;
-    background: #000;
+    background: #1f1f1f;
+    justify-content: center;
   }
   .tools {
     @extend .adjustments;

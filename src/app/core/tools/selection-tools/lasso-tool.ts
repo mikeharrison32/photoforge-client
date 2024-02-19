@@ -1,74 +1,305 @@
 import { PixelLayer } from 'src/app/core/layers/pixel-layer';
 import { MouseDragEvent } from '../../event';
 import { Canvas } from '../../canvas';
-
+import { Selection } from '../../selection';
+import { getPixelsWithinCustomSelection, replacePixels } from '../../utils';
+import * as PIXI from 'pixi.js-legacy';
 export class LassoTool {
-  lassoCanvas?: Canvas;
+  lassoCanvas?: PIXI.Application;
   type: string = 'lassoTool';
   points: number[] = [];
+  texture!: PIXI.RenderTexture;
+  drawingSurface!: PIXI.Sprite;
   configure(display: HTMLElement, layer: PixelLayer) {
     console.log('lasso tool configured.');
-    this.lassoCanvas = new Canvas({
-      width: display.clientWidth,
-      height: display.clientHeight,
-      x: 0,
-      y: 0,
-      position: 'absolute',
+    this.lassoCanvas = new PIXI.Application({
+      width: display.parentElement?.clientWidth,
+      height: display.parentElement?.clientHeight,
+      background: 'transparent',
+      backgroundAlpha: 0,
+      antialias: true,
     });
-    display.appendChild(this.lassoCanvas.elem!);
-    const ctx = this.lassoCanvas.getContext('2d') as CanvasRenderingContext2D;
+    (this.lassoCanvas.view as any).classList.add('lasso-canvas');
+    this.addlassoCanvas(display.parentElement!);
 
-    this.lassoCanvas.elem?.addEventListener('mousedown', (e) => {
-      ctx.clearRect(
-        0,
-        0,
-        this.lassoCanvas!.elem!.clientWidth * 2,
-        this.lassoCanvas!.elem!.clientHeight * 2
-      );
-      ctx.beginPath();
-      // ctx.moveTo(e.x - lassoRect!.left, e.y - lassoRect!.top);
+    this.setupDrawingFeature();
+    this.registerListeners();
+  }
+
+  private addlassoCanvas(display: HTMLElement) {
+    display.appendChild(this.lassoCanvas?.view as any);
+  }
+
+  private setupDrawingFeature() {
+    this.texture = PIXI.RenderTexture.create({
+      width: this.lassoCanvas?.view.width,
+      height: this.lassoCanvas?.view.height,
     });
-    new MouseDragEvent(this.lassoCanvas.elem!, true, (e: any) => {
-      ctx.lineWidth = 7;
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'miter';
-      ctx.strokeStyle = 'rgb(255, 255, 155)';
-      let scale = parseFloat(display.style.scale || '1');
-      this.points.push(e.x, e.y);
-      ctx.lineTo((e.x * 2) / scale, (e.y * 2) / scale);
-      ctx.stroke();
+    this.drawingSurface = new PIXI.Sprite(this.texture);
+
+    const brush = new PIXI.Graphics().beginFill('black');
+    const lineFill = new PIXI.Graphics();
+    const prevPosition = new PIXI.Point();
+
+    this.clearCanvas(this.texture);
+    let color = 'black';
+    const redraw = (event: any) => {
+      color = color == 'black' ? 'white' : 'black';
+      brush.position.set(event.data.global.x, event.data.global.y);
+
+      this.lassoCanvas?.renderer.render(brush, {
+        renderTexture: this.texture,
+        clear: false,
+      });
+      lineFill
+        .clear()
+        .lineStyle(2, color)
+        .moveTo(prevPosition.x, prevPosition.y)
+        .lineTo(brush.x, brush.y);
+      this.points.push(prevPosition.x, prevPosition.y);
+      this.points.push(brush.x, brush.y);
+      this.lassoCanvas?.renderer.render(lineFill, {
+        renderTexture: this.texture,
+        clear: false,
+      });
+      prevPosition.copyFrom(brush.position);
+    };
+
+    // const redrawLess = _.throttle(redraw, 50);
+
+    // drawingSurface.interactive = true;
+    this.drawingSurface.eventMode = 'static';
+    let mousedown = false;
+    this.drawingSurface.on('mousedown', (e) => {
+      prevPosition.set(e.data.global.x, e.data.global.y);
+      this.points.push(prevPosition.x, prevPosition.y);
+      mousedown = true;
+    });
+    this.drawingSurface.on('mousemove', (c) => {
+      if (!mousedown) {
+        return;
+      }
+      redraw(c);
+    });
+    this.drawingSurface.on('mouseup', () => {
+      mousedown = false;
     });
 
+    this.lassoCanvas?.stage.addChild(this.drawingSurface);
+  }
+
+  private clearCanvas(texture: PIXI.RenderTexture) {
+    const emptyTexture = PIXI.Sprite.from(PIXI.Texture.EMPTY);
+
+    this.lassoCanvas?.renderer.render(emptyTexture, {
+      renderTexture: texture,
+      clear: true,
+    });
+  }
+
+  private clearLassoCanvas(ctx: CanvasRenderingContext2D) {}
+
+  private registerListeners() {
     document.addEventListener('keydown', (e) => {
       if (e.code == 'Enter') {
-        this.applySelection(ctx);
+        let color = 'black';
+        const poly = new PIXI.Graphics().beginFill('black');
+        poly.drawPolygon(this.points);
+        this.lassoCanvas?.stage.addChild(poly);
+
+        setInterval(() => {
+          this.insertSelection(color);
+          color = color == 'black' ? 'white' : 'black';
+        }, 200);
+      } else if (e.code == 'Delete') {
       }
     });
   }
-  applySelection(ctx: CanvasRenderingContext2D) {
-    ctx.closePath();
-    ctx.clearRect(
-      0,
-      0,
-      this.lassoCanvas!.elem!.clientWidth * 2,
-      this.lassoCanvas!.elem!.clientHeight * 2
-    );
-    ctx.lineWidth = 4;
-    ctx.strokeStyle = '#fff';
 
-    ctx.beginPath();
+  private insertSelection(color: string) {
+    const brush = new PIXI.Graphics().beginFill('black');
+    const lineFill = new PIXI.Graphics();
+    const prevPosition = new PIXI.Point(this.points[0], this.points[1]);
+    this.clearCanvas(this.texture);
     for (let i = 0; i < this.points.length; i += 2) {
-      const x = this.points[i];
-      const y = this.points[i + 1];
-      ctx.lineTo(x * 2, y * 2);
+      let x = this.points[i];
+      let y = this.points[i + 1];
+      brush.position.set(x, y);
+      this.lassoCanvas?.renderer.render(brush, {
+        renderTexture: this.texture,
+        clear: false,
+      });
+      lineFill
+        .clear()
+        .lineStyle(2, color)
+        .moveTo(prevPosition.x, prevPosition.y)
+        .lineTo(brush.x, brush.y);
+      this.lassoCanvas?.renderer.render(lineFill, {
+        renderTexture: this.texture,
+        clear: false,
+      });
+      prevPosition.copyFrom(brush.position);
     }
-    ctx.closePath();
-    ctx.stroke();
+  }
+  adjustPoints(pts: number[], len: number) {
+    let prevPoint = new PIXI.Point(pts[0], pts[1]);
+    let curPoint = new PIXI.Point(pts[0], pts[1]);
+    for (let i = 0; i < pts.length; i += 2) {
+      let x1 = pts[i];
+      let y1 = pts[i];
+      let x2 = pts[i];
+      let y2 = pts[i + 1];
+      let current_length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+      if (current_length != len) {
+        let ratio = length / current_length;
+        let x2_new = x1 + (x2 - x1) * ratio;
+        let y2_new = y1 + (y2 - y1) * ratio;
+        pts[i + 1] = x2_new;
+        pts[i + 1] = x2_new;
+      }
+    }
+    return pts;
+  }
+  applySelection(ctx: CanvasRenderingContext2D) {
+    this.clearLassoCanvas(ctx);
+    const selection = new Selection(ctx.canvas, this.points);
+    selection.show();
   }
   disconfigure(): void {
-    this.lassoCanvas?.elem?.remove();
+    this.lassoCanvas?.destroy(true);
     delete this.lassoCanvas;
   }
 }
 
 export const lassoTool = new LassoTool();
+
+const points = [
+  [0, 0],
+  [1, 0],
+  [0.5, 1],
+  [2, 0],
+  [2, 2],
+  [1, 1],
+  [3, 0],
+  [3, 1],
+  [3, 3],
+];
+
+// Function to find the convex hull
+function convexHull(points: number[][]) {
+  // Function to check the orientation of 3 points
+  function orientation(p1: number[], p2: number[], p3: number[]) {
+    return (
+      (p2[1] - p1[1]) * (p3[0] - p2[0]) - (p2[0] - p1[0]) * (p3[1] - p2[1])
+    );
+  }
+
+  // Sort the points based on x-coordinate
+  points.sort((p1, p2) => p1[0] - p2[0]);
+
+  // Initialize two arrays for the upper and lower hulls
+  const upper = [];
+  const lower = [];
+
+  // Compute the upper hull
+  for (let i = 0; i < points.length; i++) {
+    while (
+      upper.length >= 2 &&
+      orientation(
+        upper[upper.length - 2],
+        upper[upper.length - 1],
+        points[i]
+      ) >= 0
+    ) {
+      upper.pop();
+    }
+    upper.push(points[i]);
+  }
+
+  // Compute the lower hull
+  for (let i = points.length - 1; i >= 0; i--) {
+    while (
+      lower.length >= 2 &&
+      orientation(
+        lower[lower.length - 2],
+        lower[lower.length - 1],
+        points[i]
+      ) >= 0
+    ) {
+      lower.pop();
+    }
+    lower.push(points[i]);
+  }
+
+  // Remove the first and last points from the lower hull to avoid duplicate points
+  lower.shift();
+  lower.pop();
+
+  // Combine the upper and lower hulls
+  const hull = upper.concat(lower);
+
+  // Return the convex hull
+  return hull;
+}
+
+// Compute the convex hull
+const convexHullPoints = convexHull(points);
+
+console.log(convexHullPoints);
+
+// JavaScript program with the same function and variable names as the C++ code
+
+class Point {
+  x: number;
+  y: number;
+  constructor(x: number, y: number) {
+    this.x = x;
+    this.y = y;
+  }
+}
+
+function point_in_polygon(point: Point, polygon: Point[]) {
+  const num_vertices = polygon.length;
+  const x = point.x;
+  const y = point.y;
+  let inside = false;
+
+  let p1 = polygon[0];
+  let p2;
+
+  for (let i = 1; i <= num_vertices; i++) {
+    p2 = polygon[i % num_vertices];
+
+    if (y > Math.min(p1.y, p2.y)) {
+      if (y <= Math.max(p1.y, p2.y)) {
+        if (x <= Math.max(p1.x, p2.x)) {
+          const x_intersection =
+            ((y - p1.y) * (p2.x - p1.x)) / (p2.y - p1.y) + p1.x;
+
+          if (p1.x === p2.x || x <= x_intersection) {
+            inside = !inside;
+          }
+        }
+      }
+    }
+
+    p1 = p2;
+  }
+
+  return inside;
+}
+
+const point = new Point(150, 85);
+
+const polygon = [
+  new Point(186, 14),
+  new Point(186, 44),
+  new Point(175, 115),
+  new Point(175, 85),
+];
+
+if (point_in_polygon(point, polygon)) {
+  console.log('Point is inside the polygon');
+} else {
+  console.log('Point is outside the polygon');
+}

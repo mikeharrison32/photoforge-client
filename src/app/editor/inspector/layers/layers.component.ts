@@ -63,7 +63,7 @@ export class LayersComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.data.layers.unsubscribe();
-    this.data.selectedLayers.unsubscribe();
+    // this.data.selectedLayers.unsubscribe();
     this.data.displayElem.unsubscribe();
     this.data.selectedAjLayers.unsubscribe();
     // this.data.adustmentLayers.unsubscribe();

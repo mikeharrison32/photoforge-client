@@ -4,7 +4,7 @@
 export class MouseDragEvent {
   constructor(elem: HTMLElement, calcRect: boolean, cb: Function) {
     let mousedown = false;
-    const rect = elem.getBoundingClientRect();
+    const rect = elem.parentElement!.getBoundingClientRect();
     elem.addEventListener('mousedown', () => {
       mousedown = true;
     });

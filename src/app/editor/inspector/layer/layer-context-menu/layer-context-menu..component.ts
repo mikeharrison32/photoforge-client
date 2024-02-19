@@ -8,10 +8,10 @@ import {
   EventEmitter,
   OnInit,
 } from '@angular/core';
+import { Layer } from 'src/app/core/layers/layer';
 
 import { DataService } from 'src/app/core/services/data.service';
 import { LayerService } from 'src/app/core/services/layer.service';
-import { Layer, LayerType } from 'src/app/types/layer';
 @Component({
   selector: 'app-layer-context-menu',
   templateUrl: './layer-context-menu.component.html',

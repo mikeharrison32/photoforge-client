@@ -45,10 +45,11 @@ $light_gray: #3a3a3a;
             padding-inline: 0.6rem;
             padding-block: 0.2rem;
             display: flex;
-            align-items: center;  
+            align-items: center;
             justify-content: space-between;
             &:hover {
-              background: #f73041;
+              background: #ff06a8;
+
               color: #fff;
             }
             img {
@@ -56,7 +57,7 @@ $light_gray: #3a3a3a;
             }
 
             input {
-               position: absolute;
+              position: absolute;
               opacity: 0;
             }
             .adjustment-options {
@@ -70,7 +71,7 @@ $light_gray: #3a3a3a;
               .adjustment-options {
                 position: absolute;
                 display: flex;
-                 right: -6rem;
+                right: -6rem;
                 top: 0;
                 background: #2d2d2d;
                 border: solid 1px #656565;
@@ -78,7 +79,7 @@ $light_gray: #3a3a3a;
             }
           }
           .open-recent-option {
-            .recnet-projects {
+            .recent-projects {
               display: none;
               p {
                 padding-inline: 0.6rem;
@@ -93,11 +94,24 @@ $light_gray: #3a3a3a;
               }
             }
             &:hover {
-              .recnet-projects {
+              .recent-projects {
                 display: flex;
                 flex-direction: column;
                 justify-content: start;
                 gap: 0;
+                position: absolute;
+                right: -3.7rem;
+                top: 0;
+
+                border-radius: 2px;
+                color: #d6d6d6;
+                background: #2d2d2d;
+                border: solid 1px #656565;
+                z-index: 1000;
+                padding-block: 0.5rem;
+                p {
+                  margin: 0;
+                }
               }
             }
           }

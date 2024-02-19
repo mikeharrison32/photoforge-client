@@ -8,6 +8,9 @@ $light_gray: #3a3a3a;
   display: flex;
   align-items: center;
   border-block: solid 1px #282828;
+  .selectedSelectionOption {
+    background: #000;
+  }
   .selected-tool {
     width: 2rem;
     height: 1rem;

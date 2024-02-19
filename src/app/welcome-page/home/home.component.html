@@ -36,13 +36,17 @@
       <input type="text" placeholder="Filter Recent Files" />
     </div>
   </div>
-  <div [ngClass]="activeView == 'window' ? 'recent-files' : 'recent-files-list-view'">
+  <div
+    [ngClass]="
+      activeView == 'window' ? 'recent-files' : 'recent-files-list-view'
+    "
+  >
     <div class="file" *ngFor="let project of projects">
       <div class="file-image"></div>
       <h4>{{ project.name }}</h4>
-      <p>{{ project.modifyedAt | date}}</p>
+      <p>{{ project.modifyedAt | date }}</p>
     </div>
-    <div>
+    <div class="not-logged-in">
       Login or Signup to see your recent projects.
       <button (click)="loadRecentProjects()">Continue</button>
     </div>

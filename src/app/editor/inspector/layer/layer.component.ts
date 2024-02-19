@@ -7,9 +7,11 @@ import {
   Output,
   EventEmitter,
   OnInit,
+  OnDestroy,
 } from '@angular/core';
 import { Layer } from 'src/app/core/layers/layer';
 import { PixelLayer } from 'src/app/core/layers/pixel-layer';
+import { TypeLayer } from 'src/app/core/layers/type-layer';
 
 import { DataService } from 'src/app/core/services/data.service';
 import { LayerService } from 'src/app/core/services/layer.service';
@@ -19,7 +21,7 @@ import { LayerType } from 'src/app/types/layer';
   templateUrl: './layer.component.html',
   styleUrls: ['./layer.component.scss'],
 })
-export class LayerComponent implements OnInit {
+export class LayerComponent implements OnInit, OnDestroy {
   @ViewChild('layersContextMenu')
   layersContextMenu?: ElementRef;
   contextMenuActive: boolean = false;
@@ -38,16 +40,22 @@ export class LayerComponent implements OnInit {
   ngOnInit(): void {
     if (this.layer instanceof PixelLayer) {
       this.imgSrc = this.layer.src;
+    } else if (this.layer instanceof TypeLayer) {
+      this.imgSrc = 'assets/tools-icons/text-tool.svg';
     }
     this.data.selectedLayers.subscribe((layers) => {
       this.selected = layers.includes(this.layer!);
       if (this.selected) {
-        this.layer!.canvas!.style.border = 'solid blue  ';
+        this.layer!.canvas!.style.border = 'solid rgb(0, 192, 255) ';
       } else {
         this.layer!.canvas!.style.border = 'none';
       }
       // this.data.selectedAjLayers.next([]);
     });
+  }
+  ngOnDestroy(): void {
+    // this.data.selectedLayers.unsubscribe();
+    // this.data.selectedAjLayers.unsubscribe();
   }
 
   @HostListener('document:click', ['$event'])
@@ -64,11 +72,12 @@ export class LayerComponent implements OnInit {
         this.layer!,
       ]);
     } else {
-      this.data.selectedAjLayers.next([])
+      this.data.selectedAjLayers.next([]);
       this.data.selectedLayers.next([this.layer!]);
     }
   }
   toggleLayerLocked() {
+    this.layer!.locked = this.layer?.locked ? false : true;
     this.onLockClick.emit(true);
   }
   toggleLayerHidden() {
@@ -81,7 +90,6 @@ export class LayerComponent implements OnInit {
   onLayerRightClick(e: MouseEvent) {
     e.preventDefault();
     this.contextMenuActive = true;
-    console.log(this.layersContextMenu?.nativeElement);
   }
   groupFromLayer() {
     // const layer = this.data.layers.value.find((l) => l.Id == this.layer?.Id!);

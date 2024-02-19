@@ -18,7 +18,10 @@ import { EditorModule } from './editor/editor.module';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { WelcomePageModule } from './welcome-page/welcome-page.module';
 import { NotificationModule } from './notification/notification.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  BrowserAnimationsModule,
+  NoopAnimationsModule,
+} from '@angular/platform-browser/animations';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
 import { HelpPageComponent } from './help-page/help-page.component';
@@ -37,6 +40,8 @@ const routes: Routes = [
     path: 'editor',
     component: EditorComponent,
     title: 'Editor - Photoforge',
+    data: { animation: 'EditorPage' },
+
     // canActivate: [authGuard],
   },
   {

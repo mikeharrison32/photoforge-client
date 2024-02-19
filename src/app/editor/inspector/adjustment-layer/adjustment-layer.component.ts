@@ -35,13 +35,7 @@ export class AdjustmentLayerComponent implements OnInit {
       this.contextMenuActive = false;
     }
   }
-  toggleLayerHidden() {
-    // if (this.adjustment?.Hidden) {
-    //   this.layer.unHideAdjustment(this.adjustment);
-    // } else {
-    //   this.layer.hideAdjustment(this.adjustment!);
-    // }
-  }
+  toggleLayerHidden() {}
   onLayerRightClick(e: MouseEvent) {
     e.preventDefault();
     this.contextMenuActive = true;

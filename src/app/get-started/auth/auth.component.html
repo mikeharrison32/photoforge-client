@@ -1,22 +1,25 @@
+<div class="back">
+  <span>
+    <a routerLink="/"> &LeftArrow; </a>
+  </span>
+</div>
 <div class="form">
   <img src="assets/auth-icon.svg" alt="auth-icon" />
   <h2>{{ authStatus == AuthStatus.SignUp ? "Sign Up" : "Sign In" }}</h2>
   <input
-  #username
+    #username
     type="text"
     [formControl]="userNameControl"
     placeholder="username..."
   />
   <input
-  #password
-
+    #password
     type="password"
     [formControl]="passwordControl"
     placeholder="password..."
   />
   <input
-  #confirmPassword
-
+    #confirmPassword
     *ngIf="authStatus == AuthStatus.SignUp"
     type="password"
     [formControl]="confirmPasswordControl"
@@ -39,10 +42,7 @@
     </button>
     <div class="line"></div>
     <button class="google-btn">
-
-      <span *ngIf="authStatus == AuthStatus.SignUp">
-        Sign up
-      </span>
+      <span *ngIf="authStatus == AuthStatus.SignUp"> Sign up </span>
       <span *ngIf="authStatus == AuthStatus.Login">Sign in</span> with Google
     </button>
   </div>
@@ -62,6 +62,6 @@
 </div>
 
 <div class="loading" *ngIf="isLoading">
-  <img src="assets/auth-icon.svg" alt="auth icon loading" [@rotate]="true">
-  
+  <img src="assets/auth-icon.svg" alt="auth icon loading" [@rotate]="true" />
+  <p>Signing you in...</p>
 </div>

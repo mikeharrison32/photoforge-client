@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Layer } from 'src/app/core/layers/layer';
 import { DataService } from 'src/app/core/services/data.service';
 
 @Component({
@@ -6,46 +7,57 @@ import { DataService } from 'src/app/core/services/data.service';
   templateUrl: './move-tool-properties.component.html',
   styleUrls: ['./move-tool-properties.component.scss'],
 })
-export class MoveToolPropertiesComponent implements OnInit {
+export class MoveToolPropertiesComponent implements OnInit, OnDestroy {
   canvas?: fabric.Canvas | null;
+  selectedLayers?: Layer[];
   constructor(private data: DataService) {}
   ngOnInit(): void {
-    this.data.canvas.subscribe((canvas) => {
-      this.canvas = canvas;
+    this.data.selectedLayers.subscribe((sl) => {
+      this.selectedLayers = sl;
     });
   }
+  ngOnDestroy(): void {
+    // this.data.selectedLayers.unsubscribe();
+  }
   centerSelectedObjVertical() {
-    this.canvas?.getActiveObjects().forEach((obj) => {
-      this.canvas?.centerObjectV(obj);
+    this.selectedLayers?.forEach((layer) => {
+      const display = this.data.displayElem.getValue();
+
+      layer.canvas!.style.top =
+        display!.clientHeight / 2 - layer.canvas!.clientHeight / 2 + 'px';
     });
   }
   centerSelectedObjHorizontal() {
-    this.canvas?.getActiveObjects().forEach((obj) => {
-      this.canvas?.centerObjectH(obj);
+    this.selectedLayers?.forEach((layer) => {
+      const display = this.data.displayElem.getValue();
+
+      layer.canvas!.style.left =
+        display!.clientWidth / 2 - layer.canvas!.clientWidth / 2 + 'px';
     });
   }
   alignTop() {
-    this.canvas?.getActiveObjects().forEach((obj) => {
-      obj.top = 0;
-      this.canvas?.requestRenderAll();
+    this.selectedLayers?.forEach((layer) => {
+      layer.canvas!.style.top = '0px';
     });
   }
   alignLeft() {
-    this.canvas?.getActiveObjects().forEach((obj) => {
-      obj.left = 0;
-      this.canvas?.requestRenderAll();
+    this.selectedLayers?.forEach((layer) => {
+      layer.canvas!.style.left = '0px';
     });
   }
   alignRight() {
-    this.canvas?.getActiveObjects().forEach((obj) => {
-      obj.left = 267;
-      this.canvas?.requestRenderAll();
+    this.selectedLayers?.forEach((layer) => {
+      const display = this.data.displayElem.getValue();
+      layer.canvas!.style.left =
+        display!.clientWidth - layer.canvas!.clientWidth + 'px';
     });
   }
   alignBottom() {
-    this.canvas?.getActiveObjects().forEach((obj) => {
-      obj.top = this.canvas!.width! - obj.width!;
-      this.canvas?.requestRenderAll();
+    const display = this.data.displayElem.getValue();
+
+    this.selectedLayers?.forEach((layer) => {
+      layer.canvas!.style.top =
+        display!.clientHeight - layer.canvas!.clientHeight + 'px';
     });
   }
 }

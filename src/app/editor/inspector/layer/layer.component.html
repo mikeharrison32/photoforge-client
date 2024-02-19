@@ -1,7 +1,7 @@
-<!-- <app-layer-context-menu
+<app-layer-context-menu
   [Active]="contextMenuActive"
   [layer]="layer"
-></app-layer-context-menu> -->
+></app-layer-context-menu>
 <div
   [ngClass]="selected ? 'active-layer' : 'layer'"
   (contextmenu)="onLayerRightClick($event)"
@@ -16,7 +16,11 @@
   </div>
   <div class="layer-image" (click)="maskSelected = false">
     <div class="image">
-      <img [src]="imgSrc" />
+      <img [src]="imgSrc" *ngIf="imgSrc && imgSrc.length > 0" />
+      <canvas
+        style="width: 100%; height: 100%; background: #fff"
+        *ngIf="!imgSrc || imgSrc.length < 1"
+      ></canvas>
       <div class="shape-icon" *ngIf="getInstanceOf(layer) == 'shape'">
         <img src="assets/rectangular-select.svg" />
       </div>
@@ -49,7 +53,7 @@
   </div>
   <p class="layer-title">{{ layer?.name }}</p>
   <img
-    [ngClass]="layer ? 'lock' : 'lock-icon-hidden'"
+    [ngClass]="layer?.locked ? 'lock' : 'lock-icon-hidden'"
     src="assets/lock-icon.svg"
     (click)="toggleLayerLocked()"
   />

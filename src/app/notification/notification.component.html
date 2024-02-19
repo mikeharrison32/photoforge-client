@@ -1,11 +1,26 @@
 <div *ngIf="isVisible" class="notification" #notification>
-  <div class="icon">
+  <div class="icon"></div>
+  <div class="mainText">
+    <span>
+      {{ title }}
+    </span>
+    <span (click)="onRemoveIconClick($event)" class="close-icon">&times;</span>
   </div>
-  <span class="mainText">{{ title }}</span>
   <div class="details"></div>
   <div class="buttons">
-
-    <button class="closeBtn" (click)="isVisible = false">Cancel</button>
-    <button class="okBtn" (click)="onOkBtnClick($event)">Ok</button>
+    <button
+      class="closeBtn"
+      (click)="isVisible = false"
+      *ngIf="options?.hasCancelBtn"
+    >
+      Cancel
+    </button>
+    <button
+      class="okBtn"
+      (click)="onOkBtnClick($event)"
+      *ngIf="options?.hasOkBtn"
+    >
+      Ok
+    </button>
   </div>
 </div>
