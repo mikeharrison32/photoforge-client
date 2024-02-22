@@ -44,6 +44,7 @@ class ReactangularSelect {
     this.selectionCanvas.stage.addChild(this.drawingSurface);
 
     this.drawingSurface.eventMode = 'static';
+    this.selectionCanvas.stage.eventMode = 'static';
     let mousedown = false;
     this.selectionRect = new PIXI.Graphics();
     this.drawingSurface.on('mousedown', (e) => {
@@ -54,7 +55,7 @@ class ReactangularSelect {
       this.selectionRectPos.x = e.global.x;
       this.selectionRectPos.y = e.global.y;
     });
-    this.drawingSurface.on('mousemove', (e) => {
+    this.selectionCanvas.stage.on('mousemove', (e) => {
       if (!mousedown) {
         return;
       }
@@ -64,8 +65,8 @@ class ReactangularSelect {
       this.selectionRect?.drawRect(
         this.selectionRectPos.x,
         this.selectionRectPos.y,
-        e.global.x - 100,
-        e.global.y - 50
+        e.global.x - this.selectionRectPos.x,
+        e.global.y - this.selectionRectPos.y
       );
 
       this.selectionCanvas?.renderer.render(this.selectionRect!, {
@@ -76,10 +77,21 @@ class ReactangularSelect {
     this.drawingSurface.on('mouseup', () => {
       mousedown = false;
     });
+    this.drawingSurface.on('rightclick', (e) => {
+      e.preventDefault();
+      if (this.selection) {
+        console.log('right clicked');
+      }
+    });
+
     (this.selectionCanvas.view as any).classList.add('crop-canvas');
     display.parentElement?.appendChild(this.selectionCanvas.view as any);
+    this.registerListeners();
   }
-  private listenForKeydownEvents() {
+
+  layerViaCopy() {}
+
+  private registerListeners() {
     document.addEventListener('keydown', (e) => {
       switch (e.code) {
         case 'Enter':

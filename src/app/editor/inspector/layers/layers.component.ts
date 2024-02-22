@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { AdjustmentLayer } from 'src/app/core/layers/adjustment/adjustment_layer';
 import { Layer } from 'src/app/core/layers/layer';
 import { DataService } from 'src/app/core/services/data.service';
@@ -9,7 +9,7 @@ import { Project } from 'src/app/types/project';
   templateUrl: './layers.component.html',
   styleUrls: ['./layers.component.scss'],
 })
-export class LayersComponent implements OnInit, OnDestroy {
+export class LayersComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedLayers: Layer[] = [];
   selectedAjLayers: AdjustmentLayer[] = [];
   // groups: Group[] = [];
@@ -18,13 +18,17 @@ export class LayersComponent implements OnInit, OnDestroy {
 
   constructor(private data: DataService) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+  ngAfterViewInit(): void {
     this.data.layers.subscribe((layers) => {
-      this.layers = layers.filter(
-        (layer) => layer.projectId == this.selectedProject?.Id
-      );
+      this.layers = this.data.layers
+        .getValue()
+        .filter(
+          (layer) => layer.projectId == this.selectedProject?.Id || 'aaa'
+        );
     });
     this.data.selectedProject.subscribe((project) => {
+      this.selectedProject = project;
       this.layers = this.data.layers
         .getValue()
         .filter((layer) => layer.projectId == project?.Id);

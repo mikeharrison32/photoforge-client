@@ -26,29 +26,37 @@ export class PixelLayer extends Layer {
     id: string,
     name: string,
     projectId: string,
-    img: any | ImageData
+    img: any | PIXI.Texture,
+    width?: number,
+    height?: number
   ) {
     super(containerElem, id, name, projectId, true);
     this.type = 'pixel';
-    this.setWidth(img.width);
-    this.setHeight(img.height);
-    if (img instanceof ImageData) {
-      // this.ctx?.putImageData(img, 0, 0);
-    } else {
-      this.src = img.src;
-      this.img = img;
+
+    if (img instanceof PIXI.Texture) {
+      this.setWidth(containerElem!.clientWidth);
+      this.setHeight(containerElem!.clientHeight);
       this.app = new PIXI.Application({
         view: this.canvas as any,
+        backgroundColor: 'transparent',
+        backgroundAlpha: 0,
       });
+      const sprite = new PIXI.Sprite(img);
+      sprite.width = this.app.screen.width;
+      sprite.height = this.app.screen.height;
+      sprite.name = 'image';
+      this.app.stage.addChild(sprite);
+    } else {
+      this.setWidth(img.width);
+      this.setHeight(img.height);
+      this.app = new PIXI.Application({
+        view: this.canvas as any,
+        backgroundColor: 'transparent',
+        backgroundAlpha: 0,
+      });
+      this.src = img.src;
+      this.img = img;
       this.insertImage();
-
-      // const graphics = new PIXI.Graphics();
-      // graphics.beginFill(0xffffff); // White color for the rectangle
-      // graphics.drawRect(100, 100, 200, 200); // Define the rectangle's position and size
-      // graphics.endFill();
-
-      // Apply the mask to the image sprite
-      // sprite.mask = graphics;
     }
   }
 
@@ -57,15 +65,17 @@ export class PixelLayer extends Layer {
     sprite.name = 'image';
     sprite.width = this.app!.screen.width;
     sprite.height = this.app!.screen.height;
-    const data = await this.app?.renderer.extract.pixels(
-      sprite,
-      new PIXI.Rectangle(100, 100, 300, 300)
-    );
+    // const data = await this.app?.renderer.extract.pixels(
+    //   sprite,
+    //   new PIXI.Rectangle(100, 100, 300, 300)
+    // );
 
-    // const t = PIXI.Texture.fromBuffer(data!, 400, 400);
     // console.log(data);
     // const sp = PIXI.Sprite.from(t)
     // sprite.scale = new PIXI.Point(0.3, 0.4);
     this.app!.stage.addChild(sprite);
+  }
+  getSprite() {
+    return this.app?.stage.getChildByName('image');
   }
 }

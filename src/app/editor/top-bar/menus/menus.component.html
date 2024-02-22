@@ -1,57 +1,49 @@
 <ul #menus>
-  <li (click)="onMenuClick(Menus.File)">
-    File
-    <div *ngIf="selectedMenu == Menus.File">
-      <div class="options" [appDestroyable]="true">
-        <ul>
-          <li (click)="onNewMenuClick()">New</li>
-          <li>
-            <input
-              #open
-              type="file"
-              (change)="onOpenFileOptionChange($event)"
-              multiple
-            />
-            Open
-          </li>
-          <li class="open-recent-option">
-            Open Recent
-            <img src="assets/arrow-right.svg" />
-            <div class="recent-projects">
-              <a href="ewfrwefewf" download> derr.jpg</a>
-              <p>derr.jpg</p>
-              <p>derr.jpg`vef ergr g35gt3f4r 43fr3r</p>
-              <p>derr.jpg</p>
-              <p>derr.jpg</p>
-              <p *ngFor="let rp of recentProjects" (click)="openProject(rp)">
-                {{ rp.Title }}
-              </p>
-            </div>
-          </li>
-          <div class="line"></div>
-          <li (click)="closeSelectedProject()">Close</li>
-          <li (click)="saveProject()">Save</li>
-          <li>Save As</li>
-          <li>Save for Web</li>
-          <li>Export As</li>
-          <div class="line"></div>
-          <li>
-            <input
-              #open
-              type="file"
-              (change)="placeEmbedded($event)"
-              multiple
-            />
-            Place Embedded
-          </li>
-          <li>Place Linked</li>
-          <div class="line"></div>
-          <li>Print</li>
-          <li>Exit</li>
-        </ul>
-      </div>
+  <app-menu menuName="File">
+    <div class="options">
+      <ul>
+        <li (click)="onNewMenuClick()">New</li>
+        <li>
+          <input
+            #open
+            type="file"
+            (change)="onOpenFileOptionChange($event)"
+            multiple
+          />
+          Open
+        </li>
+        <li class="open-recent-option">
+          Open Recent
+          <img src="assets/arrow-right.svg" />
+          <div class="recent-projects">
+            <a href="ewfrwefewf" download> derr.jpg</a>
+            <p>derr.jpg</p>
+            <p>derr.jpg`vef ergr g35gt3f4r 43fr3r</p>
+            <p>derr.jpg</p>
+            <p>derr.jpg</p>
+            <p *ngFor="let rp of recentProjects" (click)="openProject(rp)">
+              {{ rp.Title }}
+            </p>
+          </div>
+        </li>
+        <div class="line"></div>
+        <li (click)="closeSelectedProject()">Close</li>
+        <li (click)="saveProject()">Save</li>
+        <li>Save As</li>
+        <li>Save for Web</li>
+        <li>Export As</li>
+        <div class="line"></div>
+        <li>
+          <input #open type="file" (change)="placeEmbedded($event)" multiple />
+          Place Embedded
+        </li>
+        <li>Place Linked</li>
+        <div class="line"></div>
+        <li>Print</li>
+        <li>Exit</li>
+      </ul>
     </div>
-  </li>
+  </app-menu>
   <li (click)="onMenuClick(Menus.Edit)">
     Edit
     <div class="options" *ngIf="selectedMenu == Menus.Edit" #menuOptions>
@@ -63,14 +55,14 @@
         <li (click)="cut()">Cut</li>
         <li (click)="copySelectedObj()">Copy</li>
         <li (click)="pasteObj()">Paste</li>
-        <li>Paste into</li>
+        <!-- <li>Paste into</li> -->
         <div class="line"></div>
         <li (click)="clearProject()">Clear</li>
         <div class="line"></div>
         <li (click)="fill()">Fill</li>
         <li (click)="stroke()">Stroke</li>
-        <div class="line"></div>
-        <li (click)="transform()" class="transform-menu">
+        <!-- <div class="line"></div> -->
+        <!-- <li (click)="transform()" class="transform-menu">
           Transform
           <img src="assets/arrow-right.svg" />
           <div class="transform-options">
@@ -90,13 +82,13 @@
               <li>Flip Vertical</li>
             </ul>
           </div>
-        </li>
-        <li>Warp</li>
-        <li>Liquify</li>
-        <li>Puppet-Warp</li>
-        <li>Content-Aware</li>
-        <div class="line"></div>
-        <li>Color Range</li>
+        </li> -->
+        <!-- <li>Warp</li> -->
+        <!-- <li>Liquify</li> -->
+        <!-- <li>Puppet-Warp</li> -->
+        <!-- <li>Content-Aware</li> -->
+        <!-- <div class="line"></div> -->
+        <!-- <li>Color Range</li> -->
         <li>Preferences</li>
       </ul>
     </div>
@@ -174,8 +166,8 @@
         <li>Image Size</li>
         <li>Canvas Size</li>
         <div class="line"></div>
-        <li>Crop</li>
-        <li>Rotate Canvas</li>
+        <li (click)="crop()">Crop</li>
+        <li (click)="rotateCanvas()">Rotate Canvas</li>
         <div class="line"></div>
         <li (click)="flipCanvas()">Flip Canvas</li>
         <div class="line"></div>
@@ -202,9 +194,9 @@
         <li>Layer Style</li>
         <li>Layer Mask</li>
         <div class="line"></div>
-        <li (click)="groupLayers()">Group Layers</li>
-        <li (click)="unGroupLayers()">Ungroup Layers</li>
-        <div class="line"></div>
+        <!-- <li (click)="groupLayers()">Group Layers</li> -->
+        <!-- <li (click)="unGroupLayers()">Ungroup Layers</li> -->
+        <!-- <div class="line"></div> -->
         <li (click)="mergeLayers()">Merge Layers</li>
         <div class="line"></div>
         <li (click)="flattenImage()">Flatten Image</li>
@@ -228,23 +220,23 @@
         <li (click)="newTypeLayer()">New Type Layer</li>
         <li (click)="horizontalTypeTool()">Horizontal Type Tool</li>
         <li (click)="verticalTypeTool()">Vertical Type Tool</li>
-        <div class="line"></div>
-        <li (click)="horizontalTypeMaskTool()">Horizontal Type Mask Tool</li>
-        <li (click)="verticalTypeMaskTool()">Vertical Type Mask Tool</li>
-        <div class="line"></div>
-        <li>Warp Text</li>
-        <li>Character</li>
-        <li>Paragraph</li>
-        <div class="line"></div>
-        <li (click)="createWorkPath()">Create Work Path</li>
-        <li (click)="convertToShape()">Convert To Shape</li>
-        <li (click)="simplifyText()">Simplify Text</li>
-        <li (click)="matchFont()">Match Font</li>
-        <li>Glyphs</li>
-        <li (click)="typeOnAPath()">Type on a Path</li>
-        <li (click)="typeOrientation()">Type Orientation</li>
-        <li (click)="fontPreview()">Font Preview</li>
-        <li>Rest Character</li>
+        <!-- <div class="line"></div> -->
+        <!-- <li (click)="horizontalTypeMaskTool()">Horizontal Type Mask Tool</li> -->
+        <!-- <li (click)="verticalTypeMaskTool()">Vertical Type Mask Tool</li> -->
+        <!-- <div class="line"></div> -->
+        <!-- <li>Warp Text</li> -->
+        <!-- <li>Character</li> -->
+        <!-- <li>Paragraph</li> -->
+        <!-- <div class="line"></div> -->
+        <!-- <li (click)="createWorkPath()">Create Work Path</li> -->
+        <!-- <li (click)="convertToShape()">Convert To Shape</li> -->
+        <!-- <li (click)="simplifyText()">Simplify Text</li> -->
+        <!-- <li (click)="matchFont()">Match Font</li> -->
+        <!-- <li>Glyphs</li> -->
+        <!-- <li (click)="typeOnAPath()">Type on a Path</li> -->
+        <!-- <li (click)="typeOrientation()">Type Orientation</li> -->
+        <!-- <li (click)="fontPreview()">Font Preview</li> -->
+        <!-- <li>Rest Character</li> -->
       </ul>
     </div>
   </li>
@@ -259,27 +251,27 @@
         <li (click)="inverse()">Inverse</li>
         <li>All Layers</li>
         <li (click)="deselectLayers()">Deselect Layers</li>
-        <div class="line"></div>
-        <li (click)="loadSelection()">Load Selection</li>
-        <li (click)="saveSelection()">Save Selection</li>
-        <div class="line"></div>
-        <li (click)="modify()">Modify</li>
-        <li>Feather</li>
-        <li>Border</li>
-        <li (click)="transformSelection()">Transform Selection</li>
-        <li>Color Range</li>
-        <li>Focus Area</li>
-        <li>Refine Edge</li>
-        <li>Similar</li>
-        <li>Grow</li>
-        <li>Contract</li>
-        <div class="line"></div>
-        <li (click)="loadSelectionChannel()">Load Selection Channel</li>
-        <li (click)="saveSlectionChannel()">Save Selection Channel</li>
+        <!-- <div class="line"></div> -->
+        <!-- <li (click)="loadSelection()">Load Selection</li> -->
+        <!-- <li (click)="saveSelection()">Save Selection</li> -->
+        <!-- <div class="line"></div> -->
+        <!-- <li (click)="modify()">Modify</li> -->
+        <!-- <li>Feather</li> -->
+        <!-- <li>Border</li> -->
+        <!-- <li (click)="transformSelection()">Transform Selection</li> -->
+        <!-- <li>Color Range</li> -->
+        <!-- <li>Focus Area</li> -->
+        <!-- <li>Refine Edge</li> -->
+        <!-- <li>Similar</li> -->
+        <!-- <li>Grow</li> -->
+        <!-- <li>Contract</li> -->
+        <!-- <div class="line"></div> -->
+        <!-- <li (click)="loadSelectionChannel()">Load Selection Channel</li> -->
+        <!-- <li (click)="saveSlectionChannel()">Save Selection Channel</li> -->
       </ul>
     </div>
   </li>
-  <li (click)="onMenuClick(Menus.Filter)">
+  <!-- <li (click)="onMenuClick(Menus.Filter)">
     Filter
     <div class="options" *ngIf="selectedMenu == Menus.Filter" #menuOptions>
       <ul>
@@ -302,7 +294,7 @@
         <li>Vanishing Point</li>
       </ul>
     </div>
-  </li>
+  </li> -->
   <li (click)="onMenuClick(Menus.View)">
     View
     <div class="options" *ngIf="selectedMenu == Menus.View" #menuOptions>
@@ -311,22 +303,22 @@
         <li (click)="zoomOut()">Zoom Out</li>
         <div class="line"></div>
         <li (click)="fitOnScreen()">Fit on Screen</li>
-        <li (click)="actualPixels()">Actual Pixels</li>
+        <!-- <li (click)="actualPixels()">Actual Pixels</li> -->
         <li (click)="printSize()">Print Size</li>
-        <li (click)="show()">Show</li>
-        <li>Extras</li>
+        <!-- <li (click)="show()">Show</li> -->
+        <!-- <li>Extras</li> -->
         <!-- <li>3D</li> -->
         <div class="line"></div>
-        <li>Proof Setup</li>
-        <li>Proof Colors</li>
-        <div class="line"></div>
-        <li>Gamut Warning</li>
-        <li>Pixel Aspect Ratio</li>
-        <div class="line"></div>
-        <li>New Guide</li>
-        <li>Clear Guides</li>
-        <li>Lock Guides</li>
-        <div class="line"></div>
+        <!-- <li>Proof Setup</li> -->
+        <!-- <li>Proof Colors</li> -->
+        <!-- <div class="line"></div> -->
+        <!-- <li>Gamut Warning</li> -->
+        <!-- <li>Pixel Aspect Ratio</li> -->
+        <!-- <div class="line"></div> -->
+        <!-- <li>New Guide</li> -->
+        <!-- <li>Clear Guides</li> -->
+        <!-- <li>Lock Guides</li> -->
+        <!-- <div class="line"></div> -->
         <li>Snap</li>
         <li (click)="rotateView()">Rotate View</li>
         <li (click)="flipHorizontal()">Flip Horizontal</li>
@@ -339,15 +331,15 @@
     Window
     <div class="options" *ngIf="selectedMenu == Menus.Window" #menuOptions>
       <ul>
-        <li>Actions</li>
+        <!-- <li>Actions</li> -->
         <li (click)="adjustmentsPanel()">Adjustments</li>
-        <li (click)="brushesPanel()">Brushes</li>
-        <li (click)="characterPanel()">Character</li>
-        <li (click)="colorPanel()">Color</li>
+        <!-- <li (click)="brushesPanel()">Brushes</li> -->
+        <!-- <li (click)="characterPanel()">Character</li> -->
+        <!-- <li (click)="colorPanel()">Color</li> -->
         <!-- <li >History</li> -->
         <li (click)="layersPanel()">Layers</li>
         <!-- <li (click)="librariesPanel()">Libraries</li> -->
-        <li (click)="propertiesPanel()">Properies</li>
+        <li (click)="propertiesPanel()">Properties</li>
         <li (click)="swatchesPanel()">Swatches</li>
       </ul>
     </div>

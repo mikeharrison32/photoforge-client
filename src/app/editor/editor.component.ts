@@ -13,6 +13,7 @@ import {
   brushTool,
   cloneStampTool,
   cropTool,
+  eraserTool,
   lassoTool,
   rectangularSelect,
   shapeTool,
@@ -49,6 +50,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     lassoTool,
     cloneStampTool,
     textTool,
+    eraserTool,
   ];
   @ViewChild('display') display?: ElementRef;
   constructor(
@@ -58,6 +60,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     private notification: NotificationService
   ) {}
   ngOnInit() {
+    //create new layer
+    //undeo(): layer.remve()
     this.data.showNav.next(false);
 
     this.data.shortcutsEnabled.subscribe((se) => {
@@ -159,7 +163,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
               tool.configure(this.display?.nativeElement);
               break;
             case 'lassoTool':
-              tool.configure(this.display?.nativeElement, this.layers[0]);
+              tool.configure(this.display?.nativeElement, this.data);
               break;
             case 'rectangularSelectTool':
               tool.configure(
@@ -170,6 +174,9 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
               break;
             case 'cloneStampTool':
               tool.configure(this.display?.nativeElement, this.layers[0]);
+              break;
+            case 'eraserTool':
+              tool.configure(this.display?.nativeElement, this.data);
               break;
             default:
               tool.configure();
@@ -272,7 +279,11 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           break;
         case 'Delete':
           this.selectedLayers?.forEach((layer) => {
-            // this.layerService.deleteLayer(layer.Id);
+            layer.canvas?.remove();
+            const index = this.data.layers.getValue().indexOf(layer);
+            this.data.layers.next([
+              ...this.data.layers.getValue().splice(index),
+            ]);
           });
           break;
         case 'Equal':

@@ -1,9 +1,25 @@
 <div class="tool-propertie rectangular-marquee-tool">
   <div class="options">
-    <img src="assets/tool-properties-icons/rectangle.svg" />
-    <img src="assets/tool-properties-icons/double-rectangle.svg" />
-    <img src="assets/tool-properties-icons/double-rectangle-white-black.svg" />
-    <img src="assets/tool-properties-icons/double-middle-white-rectangle.svg" />
+    <img
+      src="assets/tool-properties-icons/rectangle.svg"
+      [class.selectedSelectionOption]="selectedSelectionOption == 'normal'"
+      (click)="setSelectionOption('normal')"
+    />
+    <img
+      src="assets/tool-properties-icons/double-rectangle.svg"
+      [class.selectedSelectionOption]="selectedSelectionOption == 'add'"
+      (click)="setSelectionOption('add')"
+    />
+    <img
+      src="assets/tool-properties-icons/double-rectangle-white-black.svg"
+      [class.selectedSelectionOption]="selectedSelectionOption == 'subtract'"
+      (click)="setSelectionOption('subtract')"
+    />
+    <img
+      src="assets/tool-properties-icons/double-middle-white-rectangle.svg"
+      [class.selectedSelectionOption]="selectedSelectionOption == 'intersect'"
+      (click)="setSelectionOption('intersect')"
+    />
   </div>
   <div class="feather">
     <span>Feather:</span>

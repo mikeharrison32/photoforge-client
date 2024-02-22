@@ -1,4 +1,9 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpContext,
+  HttpContextToken,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TokenService } from './token.service';
 import { Project, ProjectPreset } from 'src/app/types/project';
@@ -17,7 +22,11 @@ export class ApiService {
     //   'Authorization',
     //   `Bearer ${this.tokenService.getAccessToken()}`
     // );
-    const result = this.http.get(`${environments.development.apiUrl}/projects`);
+    const RETRY_COUNT = new HttpContextToken(() => 3);
+    const result = this.http.get(
+      `${environments.development.apiUrl}/projects`,
+      { context: new HttpContext().set(RETRY_COUNT, 5) }
+    );
     return firstValueFrom(result);
   }
   createBlankProject(presets: ProjectPreset): Observable<any> {
@@ -55,19 +64,15 @@ export class ApiService {
     projectId: string,
     pixels: IPixel[]
   ) {
-    const headers = new HttpHeaders().set(
-	    'Content-Type',
-	    'application/json'
-    )
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const result = this.http.post<any>(
       `${environments.development.apiUrl}/layers/${projectId}/${layerId}/selection/layer-via-copy`,
-      JSON.stringify(
-      {
+      JSON.stringify({
         Pixels: pixels,
       }),
-      {headers}
+      { headers }
     );
-    console.log({Pixels: pixels})
+    console.log({ Pixels: pixels });
     return firstValueFrom(result);
   }
   layerFromSelectionViaCut(
@@ -85,9 +90,12 @@ export class ApiService {
     );
     return firstValueFrom(result);
   }
-  createBlankLayer(projectId: string){
-	const result =  this.http.post<any>(`${environments.development.apiUrl}/layers/${projectId}/create-blank`, {})
-         return firstValueFrom(result);
+  createBlankLayer(projectId: string) {
+    const result = this.http.post<any>(
+      `${environments.development.apiUrl}/layers/${projectId}/create-blank`,
+      {}
+    );
+    return firstValueFrom(result);
   }
   deleteProject() {}
 }

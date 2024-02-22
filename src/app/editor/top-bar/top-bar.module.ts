@@ -7,9 +7,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ToolPropertiesModule } from './tool-properties/tool-properties.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { MenuComponent } from './menus/menu/menu.component';
 
 @NgModule({
-  declarations: [TopBarComponent, MenusComponent],
+  declarations: [TopBarComponent, MenusComponent, MenuComponent],
   imports: [CommonModule, FormsModule, ToolPropertiesModule, SharedModule],
   exports: [TopBarComponent, MenusComponent],
   providers: [],

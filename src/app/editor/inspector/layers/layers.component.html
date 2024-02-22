@@ -1,5 +1,5 @@
 <div class="layers">
-  <div *ngFor="let layer of layers" [dndDropzone]="" (dndDrop)="onDrop($event)">
+  <div *ngFor="let layer of layers">
     <app-adjustment-layer
       *ngFor="let aj_layer of layer.adjustmentLayers"
       [adjustment]="aj_layer"
@@ -10,7 +10,6 @@
     <app-layer
       [selected]="selectedLayers.includes(layer)"
       [layer]="layer"
-      (dndMoved)="onDrag($event)"
       (onLockClick)="onLockClick($event, layer)"
       (onHideClick)="onHideClick($event, layer)"
     ></app-layer>

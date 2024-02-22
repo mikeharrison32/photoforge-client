@@ -24,11 +24,28 @@ export class BrushTool {
     display.parentElement!.style.cursor = 'none';
     display.style.cursor = 'none';
     const rect = display.parentElement?.parentElement?.getBoundingClientRect();
+    let mousedown = false;
+    document.addEventListener('mouseup', (e) => {
+      mousedown = false;
+    });
+    display.parentElement!.addEventListener('mousedown', (e) => {
+      mousedown = true;
+    });
     document.addEventListener('mousemove', (e) => {
       this.brush?.moveTo(
         e.x - rect!.left - this.brush.elem!.clientWidth / 2,
         e.y - rect!.top - this.brush.elem!.clientHeight / 2
       );
+      if (mousedown) {
+        const layer = data.selectedLayers.getValue()[0];
+        if (layer && layer instanceof PixelLayer) {
+          const gr = new PIXI.Graphics().beginFill('blue');
+
+          gr.drawRect(0, 0, 200, 200);
+
+          layer.app?.stage.addChild(gr);
+        }
+      }
     });
 
     // data.selectedLayers.subscribe((lr) => {

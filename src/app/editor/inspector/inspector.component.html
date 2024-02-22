@@ -99,7 +99,6 @@
         <img src="assets/half-circle.svg" />
         <img src="assets/tools-icons/text-tool.svg" />
         <img src="assets/rectangular-select.svg" />
-        <img src="assets/file-icon.svg" />
       </div>
       <div class="layer-property">
         <app-select
@@ -120,8 +119,16 @@
       <div class="layer-property">
         <p>Lock:</p>
         <img src="assets/rec-net.svg" />
-        <img src="assets/tools-icons/brush-tool.svg" [class.active]="brushLocked" (click)="toggleBrushLocked()" />
-        <img src="assets/tools-icons/move-tool.svg" [class.active]="movingLocked" (click)="toggleMovingLocked()"/>
+        <img
+          src="assets/tools-icons/brush-tool.svg"
+          [class.active]="brushLocked"
+          (click)="toggleBrushLocked()"
+        />
+        <img
+          src="assets/tools-icons/move-tool.svg"
+          [class.active]="movingLocked"
+          (click)="toggleMovingLocked()"
+        />
         <img src="assets/file-streched.svg" />
         <img style="width: 0.5rem" src="assets/lock-fill.svg" />
         <div class="fill">

@@ -4,13 +4,16 @@ import { Canvas } from '../../canvas';
 import { Selection } from '../../selection';
 import { getPixelsWithinCustomSelection, replacePixels } from '../../utils';
 import * as PIXI from 'pixi.js-legacy';
+import { DataService } from '../../services/data.service';
 export class LassoTool {
   lassoCanvas?: PIXI.Application;
   type: string = 'lassoTool';
   points: number[] = [];
   texture!: PIXI.RenderTexture;
   drawingSurface!: PIXI.Sprite;
-  configure(display: HTMLElement, layer: PixelLayer) {
+  data?: DataService;
+  configure(display: HTMLElement, data: DataService) {
+    this.data = data;
     console.log('lasso tool configured.');
     this.lassoCanvas = new PIXI.Application({
       width: display.parentElement?.clientWidth,
@@ -31,55 +34,18 @@ export class LassoTool {
   }
 
   private setupDrawingFeature() {
-    this.texture = PIXI.RenderTexture.create({
-      width: this.lassoCanvas?.view.width,
-      height: this.lassoCanvas?.view.height,
-    });
-    this.drawingSurface = new PIXI.Sprite(this.texture);
-
-    const brush = new PIXI.Graphics().beginFill('black');
-    const lineFill = new PIXI.Graphics();
-    const prevPosition = new PIXI.Point();
-
-    this.clearCanvas(this.texture);
-    let color = 'black';
-    const redraw = (event: any) => {
-      color = color == 'black' ? 'white' : 'black';
-      brush.position.set(event.data.global.x, event.data.global.y);
-
-      this.lassoCanvas?.renderer.render(brush, {
-        renderTexture: this.texture,
-        clear: false,
-      });
-      lineFill
-        .clear()
-        .lineStyle(2, color)
-        .moveTo(prevPosition.x, prevPosition.y)
-        .lineTo(brush.x, brush.y);
-      this.points.push(prevPosition.x, prevPosition.y);
-      this.points.push(brush.x, brush.y);
-      this.lassoCanvas?.renderer.render(lineFill, {
-        renderTexture: this.texture,
-        clear: false,
-      });
-      prevPosition.copyFrom(brush.position);
-    };
-
     // const redrawLess = _.throttle(redraw, 50);
 
     // drawingSurface.interactive = true;
     this.drawingSurface.eventMode = 'static';
     let mousedown = false;
     this.drawingSurface.on('mousedown', (e) => {
-      prevPosition.set(e.data.global.x, e.data.global.y);
-      this.points.push(prevPosition.x, prevPosition.y);
       mousedown = true;
     });
     this.drawingSurface.on('mousemove', (c) => {
       if (!mousedown) {
         return;
       }
-      redraw(c);
     });
     this.drawingSurface.on('mouseup', () => {
       mousedown = false;
@@ -102,16 +68,24 @@ export class LassoTool {
   private registerListeners() {
     document.addEventListener('keydown', (e) => {
       if (e.code == 'Enter') {
-        let color = 'black';
-        const poly = new PIXI.Graphics().beginFill('black');
-        poly.drawPolygon(this.points);
-        this.lassoCanvas?.stage.addChild(poly);
+        const selection = new Selection(this.lassoCanvas!, this.points);
 
-        setInterval(() => {
-          this.insertSelection(color);
-          color = color == 'black' ? 'white' : 'black';
-        }, 200);
-      } else if (e.code == 'Delete') {
+        const layer = this.data?.selectedLayers.getValue()[0];
+        console.log(layer);
+        if (layer && layer instanceof PixelLayer) {
+          // const selection = new Selection(layer.app!, this.points);
+        }
+        //   let color = 'black';
+        //   const poly = new PIXI.Graphics().beginFill('black');
+        //   poly.drawPolygon(this.points);
+
+        //   this.lassoCanvas?.stage.addChild(poly);
+
+        //   setInterval(() => {
+        //     this.insertSelection(color);
+        //     color = color == 'black' ? 'white' : 'black';
+        //   }, 200);
+        // } else if (e.code == 'Delete') {
       }
     });
   }

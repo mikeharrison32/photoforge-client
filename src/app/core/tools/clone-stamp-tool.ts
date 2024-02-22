@@ -10,12 +10,21 @@ export class CloneStampTool {
     this.firstBrush = new Brush({ size: 30 });
     display.parentElement?.appendChild(this.firstBrush.elem!);
     display.parentElement!.style.cursor = 'none';
-    const rect = display.parentElement?.getBoundingClientRect();
+    const rect = display.parentElement?.parentElement!.getBoundingClientRect();
+    this.secondBrush = new Brush({ size: 30 });
+    display.parentElement?.appendChild(this.secondBrush.elem!);
     document.addEventListener('mousemove', (e) => {
-      this.firstBrush?.moveTo(e.x - rect!.left, e.y - rect!.top);
-      if (this.secondBrush) {
-        this.secondBrush.moveTo(e.x - rect!.left - 40, e.y - rect!.top);
+      if (e.ctrlKey) {
+        this.secondBrush?.moveTo(
+          e.x - rect!.left - this.secondBrush.elem!.clientWidth / 2,
+          e.y - rect!.top - this.secondBrush.elem!.clientHeight / 2
+        );
+        return;
       }
+      this.firstBrush?.moveTo(
+        e.x - rect!.left - this.firstBrush.elem!.clientWidth / 2,
+        e.y - rect!.top - this.firstBrush.elem!.clientHeight / 2
+      );
     });
 
     display.addEventListener('mousedown', (e) => {

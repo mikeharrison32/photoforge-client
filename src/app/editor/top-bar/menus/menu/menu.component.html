@@ -1,0 +1,6 @@
+<div #menu>
+  <span (click)="open = open ? false : true">{{ menuName }}</span>
+  <div *ngIf="open">
+    <ng-content></ng-content>
+  </div>
+</div>

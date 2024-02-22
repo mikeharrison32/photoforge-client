@@ -1,0 +1,129 @@
+:host {
+  ul {
+    font-size: 0.7rem;
+    display: flex;
+    gap: 1rem;
+    padding-left: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+      cursor: pointer;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      .options {
+        width: 14rem;
+        z-index: 100;
+        top: 1rem;
+        border-radius: 2px;
+        position: absolute;
+        color: #d6d6d6;
+        background: #2d2d2d;
+        border: solid 1px #656565;
+        z-index: 1000;
+        padding-block: 0.5rem;
+        ul {
+          display: flex;
+          flex-direction: column;
+          justify-content: start;
+          gap: 0;
+          li {
+            padding-inline: 0.6rem;
+            padding-block: 0.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            &:hover {
+              background: #ff06a8;
+
+              color: #fff;
+            }
+            img {
+              width: 0.5rem;
+            }
+
+            input {
+              position: absolute;
+              opacity: 0;
+            }
+            .adjustment-options {
+              display: none;
+            }
+          }
+          .adjustments-menu {
+            position: relative;
+
+            &:hover {
+              .adjustment-options {
+                position: absolute;
+                display: flex;
+                right: -6rem;
+                top: 0;
+                background: #2d2d2d;
+                border: solid 1px #656565;
+              }
+            }
+          }
+          .open-recent-option {
+            .recent-projects {
+              display: none;
+              p {
+                padding-inline: 0.6rem;
+                padding-block: 0.2rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                &:hover {
+                  background: #ff06a8;
+                  color: #fff;
+                }
+              }
+            }
+            &:hover {
+              .recent-projects {
+                display: flex;
+                flex-direction: column;
+                justify-content: start;
+                gap: 0;
+                position: absolute;
+                right: -3.7rem;
+                top: 0;
+
+                border-radius: 2px;
+                color: #d6d6d6;
+                background: #2d2d2d;
+                border: solid 1px #656565;
+                z-index: 1000;
+                padding-block: 0.5rem;
+                p {
+                  margin: 0;
+                }
+              }
+            }
+          }
+          .transform-menu {
+            position: relative;
+            .transform-options {
+              display: none;
+              position: absolute;
+              left: 14rem;
+              top: 0;
+              width: 11rem;
+              background: #e1e1e1;
+              border-radius: 2px;
+              color: #000;
+              box-shadow: #000 0px 0px 2px 0px;
+            }
+            &:hover {
+              .transform-options {
+                display: block;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

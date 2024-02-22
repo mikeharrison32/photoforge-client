@@ -24,13 +24,16 @@ export class TextTool {
           display,
           `${Math.random()}`,
           'Type layer 1',
-          'aaa'
+          data.selectedProject.getValue()?.Id || 'aaa'
         );
 
         const textLayerRect = textLayer.canvas?.getBoundingClientRect()!;
+        const displayScale = parseFloat(display.style.scale || '1');
         textLayer.moveTo(
-          e.clientX - textLayerRect.left - textLayerRect.width / 2,
-          e.clientY - textLayerRect.top - textLayerRect.height / 2
+          (e.clientX - textLayerRect.left - textLayerRect.width / 2) /
+            displayScale,
+          (e.clientY - textLayerRect.top - textLayerRect.height / 2) /
+            displayScale
         );
 
         textLayer.setColor(this.properties?.color || '#000');

@@ -9,7 +9,9 @@ $light_gray: #3a3a3a;
   align-items: center;
   border-block: solid 1px #282828;
   .selectedSelectionOption {
-    background: #000;
+    background: #212121;
+    padding: 0.2rem;
+    border-radius: 2px;
   }
   .selected-tool {
     width: 2rem;

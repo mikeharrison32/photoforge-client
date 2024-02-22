@@ -5,6 +5,7 @@ import {
   HostListener,
   OnInit,
   OnDestroy,
+  ViewEncapsulation,
 } from '@angular/core';
 import { DataService } from 'src/app/core/services/data.service';
 import { Menus } from 'src/app/enums/menu.enum';
@@ -20,7 +21,9 @@ import { rgbaFormatter } from 'src/app/core/rgba-formater';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { Layer } from 'src/app/core/layers/layer';
 import { AdjustmentLayer } from 'src/app/types/layer';
-
+import * as PIXI from 'pixi.js-legacy';
+import { TypeLayer } from 'src/app/core/layers/type-layer';
+import { filter } from 'rxjs';
 @Component({
   selector: 'app-menus',
   templateUrl: './menus.component.html',
@@ -47,16 +50,13 @@ export class MenusComponent implements OnInit, OnDestroy {
     //then get the first few project and display
   }
   async saveProject() {
-    if ('showDirectoryPicker' in window) {
-      const folder = await (window as any).showDirectoryPicker();
-      console.log(folder);
-    } else {
-      //download
-      const a = document.createElement('a');
-      a.href = 'localhost:2423/image';
-      a.download = 'true';
-      a.click();
-    }
+    // project.pfd
+    //send a save project req
+    //the server takes the info
+    //create a [projectname].pfd file
+    //convert the data to binary the append it to the file
+    //sends the file back to the client to download it
+    //then whenever the user uploades a pfd file the it gets send to the server and the server converts the binary into json and send it back...
   }
   get Menus() {
     return Menus;
@@ -128,6 +128,15 @@ export class MenusComponent implements OnInit, OnDestroy {
   }
   clearProject() {
     const selectedProject = this.data.selectedProject.getValue();
+
+    const undoAction = () => {
+      const layers = this.data.layers.getValue();
+      this.data.layers.next(layers);
+    };
+    const redoAction = () => {
+      this.clearProject();
+    };
+    this.stateService.setState(undoAction, redoAction);
     const updatedLayers: Layer[] = [];
     this.data.layers.getValue().forEach((l) => {
       if (l.projectId != selectedProject?.Id) {
@@ -179,7 +188,7 @@ export class MenusComponent implements OnInit, OnDestroy {
       `${Math.random()}`,
       'Layer 1',
       selectedProject?.Id || 'aaa',
-      new ImageData(displayElem!.clientWidth, displayElem!.clientHeight)
+      PIXI.Texture.EMPTY
     );
     this.data.layers.next([...this.data.layers.getValue(), layer]);
     this.data.selectedLayers.next([
@@ -190,7 +199,13 @@ export class MenusComponent implements OnInit, OnDestroy {
   addFilter(filter: Filter) {
     // this.layer.addFilter(filter);
   }
-  flipCanvas() {}
+  flipCanvas() {
+    this.data.layers.subscribe((layers) => {
+      layers.forEach((lr) => {
+        lr.canvas!.style.scale = '-1 1';
+      });
+    });
+  }
   closeSelectedProject() {
     const currentProjectsValue = this.data.projects.getValue();
     const updatedProjectsValue: Project[] = [];
@@ -238,7 +253,9 @@ export class MenusComponent implements OnInit, OnDestroy {
   }
   redo() {}
   stepBackward() {}
-  undo() {}
+  undo() {
+    this.stateService.undo();
+  }
   swatchesPanel() {
     throw new Error('Method not implemented.');
   }
@@ -262,6 +279,16 @@ export class MenusComponent implements OnInit, OnDestroy {
   }
   revealAll() {
     throw new Error('Method not implemented.');
+  }
+  rotateCanvas() {
+    this.data.layers.subscribe((layers) => {
+      layers.forEach((lr) => {
+        lr.canvas!.style.transform = 'rotate(180deg)';
+      });
+    });
+  }
+  crop() {
+    this.data.selectedTool.next('cropTool');
   }
   flipVertical() {}
   flipHorizontal() {
@@ -307,7 +334,15 @@ export class MenusComponent implements OnInit, OnDestroy {
     throw new Error('Method not implemented.');
   }
   inverse() {
-    throw new Error('Method not implemented.');
+    const selectedLayers = this.data.selectedLayers.getValue();
+    const allLayers = this.data.layers.getValue();
+    const unselectedLayers: Layer[] = [];
+    allLayers.forEach((lr) => {
+      if (!selectedLayers.includes(lr)) {
+        unselectedLayers.push(lr);
+      }
+    });
+    this.data.selectedLayers.next(unselectedLayers);
   }
   reselect() {
     throw new Error('Method not implemented.');

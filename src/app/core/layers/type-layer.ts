@@ -38,24 +38,24 @@ export class TypeLayer extends Layer {
         this.textarea.classList.add('textarea');
         containerElem.appendChild(this.textarea);
         const canvasRect = this.canvas?.getBoundingClientRect()!;
-        this.textarea.style.left = canvasRect.left + 'px';
+        this.textarea.style.left =
+          this.canvas!.clientLeft + this.canvas!.offsetLeft + 'px';
         this.textarea.style.top = canvasRect.top + 'px';
         this.textarea.focus();
         this.canvas!.style.display = 'none';
 
         let text = '';
-        this.textarea.oninput = (e: any) => {
+        this.textarea.addEventListener('input', (e: any) => {
           text = text.concat(e.data);
-        };
+        });
 
-        this.textarea.onkeydown = (e) => {
+        this.textarea.addEventListener('keydown', (e) => {
           if (e.code == 'Enter') {
             this.setText(text);
-            console.log(this.textarea);
             this.canvas!.style.display = 'block';
             this.textarea?.remove();
           }
-        };
+        });
       }
     });
   }
