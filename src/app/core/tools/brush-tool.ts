@@ -107,7 +107,6 @@ export class BrushTool {
   disconfigure(): void {
     this.brush?.elem?.remove();
     this.brush?.destroy();
-    this.display.parentElement!.parentElement!.style.cursor = 'defalut';
 
     document.removeEventListener('mousemove', () => {});
     delete this.brush;
