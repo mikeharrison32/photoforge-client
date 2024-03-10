@@ -1,3 +1,4 @@
+import { NgZone } from '@angular/core';
 import { PixelLayer } from '../pixel-layer';
 
 export class AdjustmentLayer {
@@ -24,9 +25,10 @@ export class AdjustmentLayer {
     // );
   }
   showAllFilters() {
-    this.pl?.adjustmentLayers.forEach((aj_layer) => {
-      aj_layer.show();
-    });
+    // this.pl?.adjustmentLayers.forEach((aj_layer) => {
+    //   aj_layer.show();
+    // });
   }
-  show() {}
+  show(ngZone?: NgZone) {}
+  hide(ngZone?: NgZone) {}
 }

@@ -26,11 +26,15 @@ import { ApiService } from '../core/services/api.service';
 import { NotificationService } from '../core/services/notification.service';
 import { Layer } from '../core/layers/layer';
 import { PixelLayer } from '../core/layers/pixel-layer';
+import { Selection } from '../core/selection';
+import * as PIXI from 'pixi.js-legacy';
+import { fabric } from 'fabric';
+import { Command } from '../core';
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.scss'],
-  encapsulation: ViewEncapsulation.ShadowDom,
+  // encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedLayers: Layer[] = [];
@@ -39,7 +43,9 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   projects: Project[] = [];
   zoom: number = 1;
   newDocumentActive?: boolean;
+  contextMenu: any;
   @ViewChild('cursor') cursor?: ElementRef;
+  @ViewChild('rectSelectContextMenu') rectSelectContextMenu?: ElementRef;
   shortcutsRenderFunc = (): void => {};
   shortcutsEnabled?: boolean = true;
   tools: any[] = [
@@ -53,9 +59,12 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     eraserTool,
   ];
   @ViewChild('display') display?: ElementRef;
+  @ViewChild('container') container?: ElementRef;
+  selectionContextMenu!: { isActive: boolean; x: number; y: number };
+  currentSelection?: Selection | null;
   constructor(
     private data: DataService,
-    private render: Renderer2,
+    private renderer: Renderer2,
     private clipboard: ClipboardService,
     private notification: NotificationService
   ) {}
@@ -64,6 +73,9 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     //undeo(): layer.remve()
     this.data.showNav.next(false);
 
+    this.data.contextMenu.subscribe((cm) => {
+      this.contextMenu = cm;
+    });
     this.data.shortcutsEnabled.subscribe((se) => {
       this.shortcutsEnabled = se;
     });
@@ -75,22 +87,44 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         (layer) => layer.projectId == this.selectedProject?.Id
       );
     });
+    this.data.currentSelection.subscribe((cs) => {
+      this.currentSelection = cs;
+    });
+    this.data.selectionContextMenu.subscribe((cm) => {
+      this.selectionContextMenu = cm;
+      if (cm.isActive) {
+        document.addEventListener('mousedown', (e) => {
+          if (!this.rectSelectContextMenu?.nativeElement.contains(e.target)) {
+            this.data.selectionContextMenu.next({
+              isActive: false,
+              x: 0,
+              y: 0,
+            });
+
+            document.removeEventListener('mousedown', (e) => {});
+          }
+        });
+      }
+    });
     this.data.selectedProject.subscribe((project) => {
       this.selectedProject = project;
       this.data.zoom.next(project?.Zoom || 50);
-      this.data.layers.getValue().forEach((layer) => {
-        if (layer.projectId != project?.Id) {
-          layer.hide();
-        } else {
-          layer.show();
-        }
-      });
+      this.filterLayers(project);
     });
     this.data.newMenuClick.subscribe((clicked) => {
       this.newDocumentActive = clicked;
     });
     this.data.selectedLayers.subscribe((sl) => {
       this.selectedLayers = sl;
+      this.data.layers.getValue().forEach((layer) => {
+        layer.resizer.disable();
+      });
+      sl.forEach((sl_layer) => {
+        sl_layer.resizer.enable();
+      });
+    });
+    this.data.shortcutsEnabled.subscribe((en) => {
+      this.addShortcuts();
     });
     this.data.zoom.subscribe((zoom) => {
       this.zoom = zoom;
@@ -105,8 +139,21 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.selectedProject) {
         this.selectedProject.Zoom = zoom;
       }
+      this.data.selectedLayers.getValue().forEach((lr) => {
+        lr.resizer.update();
+      });
     });
   }
+  private filterLayers(project: Project | null) {
+    this.data.layers.getValue().forEach((layer) => {
+      if (layer.projectId != project?.Id) {
+        layer.hide();
+      } else {
+        layer.show();
+      }
+    });
+  }
+
   setZoom(e: any) {
     this.data.zoom.next(e);
   }
@@ -120,20 +167,66 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     };
     const img = new Image();
     img.src = 'assets/fixtures/deer.jpg';
+
     const layer = new PixelLayer(
+      this.data,
+      this.renderer,
       this.display!.nativeElement,
       'eew',
       'Deer png',
       'bbb',
       img
     );
+
+    (this.container?.nativeElement as HTMLElement).addEventListener(
+      'mousedown',
+      (e) => {
+        // console.log('md');
+        const selectedLayer = this.data.selectedLayers.getValue()[0];
+        if (selectedLayer) {
+          // console.log('selectedLayer: ', selectedLayer.name);
+        }
+        this.data.layers.getValue().forEach((layer) => {
+          if (
+            layer.elem.contains(e.target as HTMLElement) ||
+            layer.resizer.elem.contains(e.target as HTMLElement)
+          ) {
+            // console.log('bb containes', layer.name);
+            // selectedLayer.resizer.disable();
+            this.data.selectedLayers.next([layer]);
+            layer.resizer.enable();
+          } else {
+            // console.log(layer.elem, ' does not contain ', e.target);
+            // console.log(selectedLayer);
+            if (selectedLayer) {
+              // console.log(selectedLayer);
+              selectedLayer.resizer.disable();
+              // this.data.selectedLayers.next([]);
+            }
+          }
+        });
+      }
+    );
+    // layer.getPixels();
     this.data.projects.next([p]);
     this.data.layers.next([layer]);
     this.data.displayElem.next(this.display?.nativeElement as HTMLElement);
     this.data.selectedProject.next(p);
+    this.data.selectedLayers.next([layer]);
+    // this.createLayerFromASelectionViaCopy();
     this.addShortcuts();
+    const displayScale = parseFloat(
+      this.display?.nativeElement.style.scale || '1'
+    );
 
+    this.display!.nativeElement.parentElement.style.width =
+      this.display?.nativeElement.clientWidth * displayScale + 'px';
+    this.display!.nativeElement.parentElement.style.height =
+      this.display?.nativeElement.clientHeight * displayScale + 'px';
     this.data.selectedTool.next('moveTool');
+
+    // this.drawSVG();
+
     this.data.selectedTool.subscribe((selectedTool) => {
       this.tools.forEach((tool) => {
         if (tool.type == selectedTool) {
@@ -147,11 +240,16 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
               tool.configure(
                 this.display?.nativeElement,
                 this.data,
-                this.notification
+                this.notification,
+                this.renderer
               );
               break;
             case 'textTool':
-              tool.configure(this.display?.nativeElement, this.data);
+              tool.configure(
+                this.display?.nativeElement,
+                this.data,
+                this.renderer
+              );
               break;
             case 'shapeTool':
               tool.configure(
@@ -166,11 +264,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
               tool.configure(this.display?.nativeElement, this.data);
               break;
             case 'rectangularSelectTool':
-              tool.configure(
-                this.display?.nativeElement,
-                this.layers[0],
-                this.data
-              );
+              tool.configure(this.display?.nativeElement, this.data);
               break;
             case 'cloneStampTool':
               tool.configure(this.display?.nativeElement, this.layers[0]);
@@ -206,16 +300,43 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     // this.data.layers.next([layer]);
   }
 
+  private drawSVG() {
+    const path = document.createElement('path');
+    const svg = document.createElement('svg');
+    const defs = document.createElement('defs');
+    let d = 'M 0 0';
+    this.display?.nativeElement.addEventListener('mousemove', (e: any) => {
+      console.log('moveing');
+      console.clear();
+      const rect = this.display?.nativeElement.getBoundingClientRect();
+      console.log(e.clientX - rect.left, e.clientY - rect.top);
+      let x = e.clientX - rect.left;
+      let y = e.clientY - rect.top;
+      d = d.concat(` L ${x} ${y} `);
+      console.log(d);
+      path.remove();
+      defs.remove();
+      svg.remove();
+      path.setAttribute('d', d);
+      defs.appendChild(path);
+      svg.appendChild(defs);
+      console.log(svg);
+      this.display?.nativeElement.appendChild(svg);
+    });
+  }
+
   loadLayers() {}
 
   addShortcuts() {
-    this.render.listen('document', 'keydown', (e) => {
+    this.renderer.listen('document', 'keydown', (e) => {
       if (!this.shortcutsEnabled) {
         return;
       }
       switch (e.code) {
         case 'KeyM':
           this.data.selectedTool.next('moveTool');
+          this.disconfigureTools();
+
           break;
         case 'KeyA':
           if (e.ctrlKey) {
@@ -278,13 +399,45 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           }
           break;
         case 'Delete':
-          this.selectedLayers?.forEach((layer) => {
-            layer.canvas?.remove();
-            const index = this.data.layers.getValue().indexOf(layer);
+          const undoLayerDeletion = new Command();
+          undoLayerDeletion.execute = () => {
+            const selectedLayers = this.data.selectedLayers.getValue();
+            console.log('restoring deleted files', selectedLayers);
             this.data.layers.next([
-              ...this.data.layers.getValue().splice(index),
+              ...this.data.layers.getValue(),
+              ...selectedLayers,
             ]);
+            selectedLayers.forEach((lr) => {
+              // this.display?.nativeElement.appendChild(lr.canvas);
+            });
+          };
+          const redoLayerDeletion = new Command();
+          redoLayerDeletion.execute = () => {
+            console.log('redo layer deletion');
+
+            const newLayersArray: Layer[] = [];
+            this.data.layers.getValue().forEach((layer) => {
+              if (this.selectedLayers.includes(layer)) {
+                // layer.canvas?.remove();
+              } else {
+                newLayersArray.push(layer);
+              }
+            });
+            this.data.layers.next(newLayersArray);
+          };
+
+          this.data.history.getValue().undoStack.push(undoLayerDeletion);
+          this.data.history.getValue().redoStack.push(redoLayerDeletion);
+
+          const newLayersArray: Layer[] = [];
+          this.data.layers.getValue().forEach((layer) => {
+            if (this.selectedLayers.includes(layer)) {
+              // layer.canvas?.remove();
+            } else {
+              newLayersArray.push(layer);
+            }
           });
+          this.data.layers.next(newLayersArray);
           break;
         case 'Equal':
           if (e.ctrlKey) {
@@ -311,6 +464,11 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           break;
         case 'KeyZ':
           if (e.ctrlKey) {
+            const cm = this.data.history.getValue().undoStack.pop();
+            if (cm) {
+              cm.execute();
+              this.data.history.getValue().redoStack.push(cm);
+            }
             e.preventDefault();
             // this.stateService.undo();
           } else {
@@ -319,6 +477,11 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           break;
         case 'KeyY':
           if (e.ctrlKey) {
+            const cm = this.data.history.getValue().redoStack.pop();
+            if (cm) {
+              cm.execute();
+              this.data.history.getValue().undoStack.push(cm);
+            }
             e.preventDefault();
             // this.stateService.redo();
           }
@@ -374,6 +537,62 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   createLayerFromASelectionViaCopy() {
     const selectedLayer = this.selectedLayers[0];
+    if (selectedLayer instanceof PixelLayer) {
+      const sprite = selectedLayer.getSprite() as PIXI.Sprite;
+      // const buffer = selectedLayer.app?.renderer.extract.pixels(sprite);
+      // const data = new Uint8Array(buffer!.length * 2);
+
+      const r = new PIXI.Renderer({
+        context: (selectedLayer.canvas as HTMLCanvasElement).getContext(
+          'webgl2'
+        ),
+        view: selectedLayer.canvas as HTMLCanvasElement,
+      });
+
+      r.render(sprite, {
+        clear: true,
+      });
+
+      r.clear();
+      console.log(r);
+      // data.set(data, 3);
+      // this.insertArrayBuffer(
+      //   selectedLayer.app!,
+      //   data,
+      //   sprite.width,
+      //   sprite.height
+      // );
+    }
+  }
+  insertArrayBuffer(
+    app: PIXI.Application,
+    buffer: Uint8Array | Uint8ClampedArray,
+    width: number,
+    height: number
+  ) {
+    const whiteTexture = PIXI.Sprite.from(
+      PIXI.Texture.fromBuffer(buffer, width, height, {
+        wrapMode: PIXI.WRAP_MODES.REPEAT,
+      })
+    );
+
+    whiteTexture.width = app.screen.width;
+    whiteTexture.height = app.screen.height;
+    const texture = PIXI.RenderTexture.create({
+      width: app.screen.width,
+      height: app.screen.height,
+    });
+    const drawingSurface = new PIXI.Sprite(texture);
+
+    whiteTexture.width = app.screen.width;
+    whiteTexture.height = app.screen.height;
+    drawingSurface.width = app.screen.width;
+    drawingSurface.height = app.screen.height;
+    app.stage.addChild(drawingSurface);
+    app.renderer.render(whiteTexture, {
+      renderTexture: texture,
+      clear: true,
+    });
   }
   ngOnDestroy() {
     // this.data.layers.unsubscribe();
@@ -384,4 +603,28 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.data.projects.unsubscribe();
     this.data.selectedProject.unsubscribe();
   }
+}
+
+function insertImageData(bufferData: Uint8ClampedArray, gl: any) {
+  var canvas = document.getElementById('webgl-canvas');
+
+  // Create a new texture
+  var texture = gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+
+  // Set the texture parameters
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+
+  // Insert the image data
+  gl.texImage2D(
+    gl.TEXTURE_2D,
+    0,
+    gl.RGBA,
+    gl.RGBA,
+    gl.UNSIGNED_BYTE,
+    bufferData
+  );
 }

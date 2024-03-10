@@ -46,9 +46,9 @@ export class LayerComponent implements OnInit, OnDestroy {
     this.data.selectedLayers.subscribe((layers) => {
       this.selected = layers.includes(this.layer!);
       if (this.selected) {
-        this.layer!.canvas!.style.border = 'solid rgb(0, 192, 255) ';
+        // this.layer!.canvas!.style.border = 'solid rgb(0, 192, 255) ';
       } else {
-        this.layer!.canvas!.style.border = 'none';
+        // this.layer!.canvas!.style.border = 'none';
       }
       // this.data.selectedAjLayers.next([]);
     });

@@ -45,13 +45,7 @@ export class HueSaturationLightnees extends AdjustmentLayer {
     }
   }
 
-  hide() {
-    const gl = this.pl?.gl;
-    if (!gl) {
-      return;
-    }
-    drawImage(gl, this.pl?.img);
-  }
+  override hide(ngZone: NgZone) {}
   set(options: IHueSaturationLightneesOptions, ngZone: NgZone) {
     ngZone.runOutsideAngular(() => {
       const img = this.pl?.app?.stage.getChildByName('image');

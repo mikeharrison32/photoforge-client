@@ -98,4 +98,10 @@ export class ApiService {
     return firstValueFrom(result);
   }
   deleteProject() {}
+
+  saveProject(){
+
+  }
+
+  
 }

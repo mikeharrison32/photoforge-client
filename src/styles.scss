@@ -8,6 +8,96 @@ body {
   overflow: hidden;
   width: 100vw;
 }
+.crop-canvas,
+.lasso-canvas {
+  position: absolute;
+}
+
+.brush {
+  border-radius: 50px;
+  border: solid 1px #bdbdbd;
+  position: absolute;
+  z-index: 1000000000;
+}
 * {
   user-select: none;
+}
+
+.resizer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  outline: solid 2px rgb(255 43 121);
+}
+.rs-corner {
+  width: 1rem;
+  height: 1rem;
+  background-color: #fff;
+  border-radius: 50px;
+  box-shadow: #000 0 0 3px 0;
+  position: absolute;
+  &:hover {
+    background-color: rgb(255 43 121);
+  }
+}
+
+.context-menu {
+  width: 13rem;
+  z-index: 1000;
+  position: absolute;
+  background: rgb(255 255 255);
+  box-shadow: #000 0 0 1px 0;
+  border-radius: 3px;
+  p {
+    padding: 0.5rem;
+    transition: 180ms;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &:hover {
+      background: rgba(109, 109, 109, 0.849);
+      color: #fff;
+    }
+    cursor: pointer;
+    width: 100%;
+    margin: 0;
+    font-size: 0.8rem;
+    color: #000;
+  }
+}
+
+.mrt_corner {
+  width: 0.4rem;
+  border-radius: 3px;
+  height: 2rem;
+}
+.mtt_corner {
+  height: 0.4rem;
+  border-radius: 3px;
+  width: 2rem;
+}
+.drawing {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #ff0045;
+}
+.selection-canvas {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+.layer {
+  width: 100%;
+  height: 100%;
+}
+
+.pf-object {
+  position: absolute;
+  p {
+    margin: 0;
+  }
 }

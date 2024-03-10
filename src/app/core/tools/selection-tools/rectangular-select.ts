@@ -8,6 +8,7 @@ import * as PIXI from 'pixi.js-legacy';
 import { AdjustmentFilter } from '@pixi/filter-adjustment';
 import { SelectionContextMenu } from './selection-context-menu';
 import { Selection } from '../../selection';
+import { Mask } from '../..';
 class ReactangularSelect {
   properites?: IRectangularProperties;
   contextMenu?: ContextMenu;
@@ -18,11 +19,7 @@ class ReactangularSelect {
   selectionRectPos!: { x: number; y: number; width: number; height: number };
   texture!: PIXI.RenderTexture;
   drawingSurface!: PIXI.Sprite;
-  configure(
-    display: HTMLElement,
-    selectedLayer: PixelLayer,
-    data: DataService
-  ): void {
+  configure(display: HTMLElement, data: DataService): void {
     this.selectionRectPos = {
       x: 0,
       y: 0,
@@ -30,7 +27,7 @@ class ReactangularSelect {
       height: 0,
     };
     this.selectionCanvas = new PIXI.Application({
-      resizeTo: display.parentElement!,
+      resizeTo: display.parentElement?.parentElement!,
       antialias: true,
       resolution: 1,
       background: 'transparent',
@@ -47,8 +44,12 @@ class ReactangularSelect {
     this.selectionCanvas.stage.eventMode = 'static';
     let mousedown = false;
     this.selectionRect = new PIXI.Graphics();
+
     this.drawingSurface.on('mousedown', (e) => {
       delete this.selectionRect;
+      delete this.selection;
+      data.contextMenu.next({});
+
       this.selectionRect = new PIXI.Graphics();
       // this.clearCanvas();
       mousedown = true;
@@ -59,9 +60,10 @@ class ReactangularSelect {
       if (!mousedown) {
         return;
       }
+      this.selectionRect?.destroy();
       delete this.selectionRect;
       this.selectionRect = new PIXI.Graphics();
-      this.selectionRect?.lineStyle({ color: '#fff', width: 2 });
+      this.selectionRect?.lineStyle({ color: 'rgb(255 43 121)', width: 2 });
       this.selectionRect?.drawRect(
         this.selectionRectPos.x,
         this.selectionRectPos.y,
@@ -74,18 +76,110 @@ class ReactangularSelect {
         clear: true,
       });
     });
-    this.drawingSurface.on('mouseup', () => {
+    this.drawingSurface.on('mouseup', (e) => {
       mousedown = false;
+      this.selectionRectPos = {
+        x: this.selectionRectPos.x,
+        y: this.selectionRectPos.y,
+        width: e.global.x - this.selectionRectPos.x,
+        height: e.global.y - this.selectionRectPos.y,
+      };
     });
+    document.addEventListener('contextmenu', (e) => e.preventDefault());
     this.drawingSurface.on('rightclick', (e) => {
       e.preventDefault();
-      if (this.selection) {
-        console.log('right clicked');
+      if (
+        this.selection &&
+        this.selection.isPointInsideSelection(e.global.x, e.global.y)
+      ) {
+        const selectedLayer = data.selectedLayers.getValue()[0];
+
+        console.log('point is in poly');
+        const containerRect = (
+          this.selectionCanvas?.view as any
+        )?.getBoundingClientRect();
+        const c = {
+          x: e.clientX - containerRect!.left,
+          y: e.clientY - containerRect!.top,
+          menus: [
+            {
+              name: 'Layer via Copy',
+              click: () => {
+                const mask = new Mask(selectedLayer, [
+                  this.selectionRectPos.x,
+                  this.selectionRectPos.y,
+                  this.selectionRectPos.width,
+                  this.selectionRectPos.y,
+                  this.selectionRectPos.width,
+                  this.selectionRectPos.height,
+                  this.selectionRectPos.x,
+                  this.selectionRectPos.height,
+                  this.selectionRectPos.x,
+                  this.selectionRectPos.y,
+                ]);
+                console.log(mask.path);
+              },
+            },
+            {
+              name: 'Layer via Cut',
+              click: () => {
+                console.log('layer via cut');
+              },
+            },
+            {
+              name: 'Deselect',
+              click: () => {
+                console.log('fill fill');
+              },
+            },
+            {
+              name: 'Select Inverse',
+              click: () => {
+                console.log('fill fill');
+              },
+            },
+            {
+              name: 'Select and Mask',
+              click: () => {
+                console.log('fill fill');
+              },
+            },
+            {
+              name: 'New Layer...',
+              click: () => {
+                console.log('fill fill');
+              },
+            },
+            {
+              name: 'Fill',
+              click: () => {
+                console.log('fill fill');
+              },
+            },
+            {
+              name: 'Stroke...',
+              click: () => {
+                console.log('fill fill');
+              },
+            },
+            {
+              name: 'Fade...',
+              click: () => {
+                console.log('fill fill');
+              },
+            },
+          ],
+        };
+        data.contextMenu.next(c);
+        // this.selection = new Selection(this.selectionCanvas!)
+        // this.selection.addFromRect(this.selectionRect)
+        //   console.log('right clicked');
       }
     });
-
-    (this.selectionCanvas.view as any).classList.add('crop-canvas');
-    display.parentElement?.appendChild(this.selectionCanvas.view as any);
+    (this.selectionCanvas.view as any).classList.add('selection-canvas');
+    display.parentElement?.parentElement?.appendChild(
+      this.selectionCanvas.view as any
+    );
     this.registerListeners();
   }
 
@@ -95,14 +189,39 @@ class ReactangularSelect {
     document.addEventListener('keydown', (e) => {
       switch (e.code) {
         case 'Enter':
-          if (!this.selectionRect) {
-            return;
-          }
-          this.selection = new Selection(this.selectionCanvas!, [
+          this.clearCanvas();
+
+          const points: number[] = [
+            // first corner
+            ...splitLineIntoSegments(
+              this.selectionRectPos.x,
+              this.selectionRectPos.y,
+              this.selectionRectPos.x + this.selectionRectPos.width,
+              this.selectionRectPos.y,
+              3
+            ),
+
+            //second corner
+            //third corner
+            ...splitLineIntoSegments(
+              this.selectionRectPos.x + this.selectionRectPos.width,
+              this.selectionRectPos.y + this.selectionRectPos.height,
+              //fourth corner
+              this.selectionRectPos.x,
+              this.selectionRectPos.y + this.selectionRectPos.height,
+              3
+            ),
+            //last and fifth corner
             this.selectionRectPos.x,
             this.selectionRectPos.y,
-          ]);
-          this.selection.show();
+          ];
+          if (this.selection) {
+            this.selection.clearSelection(this.texture);
+            this.selection.addFromPoints(points, this.texture);
+          } else {
+            this.selection = new Selection(this.selectionCanvas!);
+            this.selection.addFromPoints(points, this.texture);
+          }
           break;
       }
     });
@@ -122,6 +241,51 @@ class ReactangularSelect {
     this.selectionCanvas?.destroy(true);
     delete this.selectionCanvas;
   }
+}
+
+function splitLineIntoSegments(
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number,
+  len: number
+) {
+  // Calculate the length of the line using the Pythagorean theorem
+  const dx = x2 - x1;
+  const dy = y2 - y1;
+  const lineLength = Math.sqrt(dx * dx + dy * dy);
+
+  // Calculate the number of segments needed
+  const numSegments = Math.ceil(lineLength / len);
+
+  // Calculate the angle of the line
+  const angle = Math.atan2(dy, dx);
+
+  // Create an array to hold the segments
+  const segments = [];
+
+  // Calculate the position of each segment
+  for (let i = 0; i < numSegments; i++) {
+    const t = i / (numSegments - 1);
+    const x = x1 + t * dx;
+    const y = y1 + t * dy;
+    segments.push(x, y);
+  }
+
+  return segments;
+}
+
+function sp(ps: number[]) {
+  const ar = [];
+  for (let i = 0; i < ps.length; i += 4) {
+    const x1 = ps[i];
+    const y1 = ps[i + 1];
+    const x2 = ps[i + 3];
+    const y2 = ps[i + 4];
+    const sp = splitLineIntoSegments(x1, y1, x2, y2, 3);
+    ar.push(...sp);
+  }
+  return ar;
 }
 
 interface IRectangularProperties {

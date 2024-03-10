@@ -7,9 +7,14 @@ import { NgOptimizedImage } from '@angular/common';
       [ngClass]="Active ? 'active-tool' : 'tool'"
       (click)="toggleToolChoices()"
     >
-      <img class="tool-icon" [src]="ImgSrc" />
+      <img width="30" class="tool-icon" [src]="ImgSrc" />
       <div class="tool-choices" *ngIf="hasChoices && toolChoicesActive">
         <ng-content select="[tool-choices]"></ng-content>
+      </div>
+      <div class="desc" *ngIf="Desc">
+        <div class="small-triangle"></div>
+        <p>{{ Desc }}</p>
+        <kbd *ngIf="Shortcut">{{ Shortcut }}</kbd>
       </div>
     </div>
   `,
@@ -18,6 +23,8 @@ import { NgOptimizedImage } from '@angular/common';
 export class ToolComponent {
   @Input() ImgSrc?: string;
   @Input() Active?: boolean;
+  @Input() Desc?: string;
+  @Input() Shortcut?: string;
   @Input() hasChoices: boolean = false;
   toolChoicesActive: boolean = false;
   toggleToolChoices() {

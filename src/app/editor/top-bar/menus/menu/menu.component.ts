@@ -18,7 +18,7 @@ export class MenuComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     document.addEventListener('click', (e) => {
       if (!this.menu?.nativeElement.contains(e.target)) {
-        // this.open = false;
+        this.open = false;
       }
     });
   }

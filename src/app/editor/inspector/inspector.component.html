@@ -28,62 +28,77 @@
     <p>Add an adjustment</p>
     <div class="icons">
       <img
+        width="20"
         src="assets/adjustments-icons/brightness-icon.svg"
         (click)="addAdjustmentLayer(AdjustmentLayer.BrightnessContrast)"
       />
       <img
+        width="20"
         src="assets/adjustments-icons/channel-mixer.svg"
         (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
       />
       <img
+        width="20"
         src="assets/adjustments-icons/color-balance.svg"
         (click)="addAdjustmentLayer(AdjustmentLayer.ColorBalance)"
       />
       <img
+        width="20"
         src="assets/adjustments-icons/color-lookup.svg"
         (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
       />
       <img
+        width="20"
         src="assets/adjustments-icons/curves.svg"
         (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
       />
       <img
+        width="20"
         (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
         src="assets/adjustments-icons/exposure.svg"
       />
       <img
+        width="20"
         src="assets/adjustments-icons/gradient-map.svg"
         (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
       />
       <img
+        width="20"
         src="assets/adjustments-icons/hue-saturation.svg"
         (click)="addAdjustmentLayer(AdjustmentLayer.HueSaturation)"
       />
       <img
+        width="20"
         src="assets/adjustments-icons/levels.svg"
         (click)="addAdjustmentLayer(AdjustmentLayer.Levels)"
       />
       <img
+        width="20"
         src="assets/adjustments-icons/photo-filter.svg"
         (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
       />
       <img
+        width="20"
         src="assets/adjustments-icons/posterize.svg"
         (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
       />
       <img
+        width="20"
         src="assets/adjustments-icons/selective-color.svg"
         (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
       />
       <img
+        width="20"
         src="assets/adjustments-icons/threshold.svg"
         (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
       />
       <img
+        width="20"
         src="assets/adjustments-icons/vibrance.svg"
         (click)="addAdjustmentLayer(AdjustmentLayer.Vibrance)"
       />
       <img
+        width="20"
         src="assets/adjustments-icons/black-white.svg"
         (click)="addAdjustmentLayer(AdjustmentLayer.BlackWhite)"
       />
@@ -95,10 +110,11 @@
     <div class="layer-properties">
       <div class="layer-property">
         <app-select [Items]="['Kind']" class="layer-kind"></app-select>
-        <img src="assets/image-icon.svg" />
-        <img src="assets/half-circle.svg" />
-        <img src="assets/tools-icons/text-tool.svg" />
-        <img src="assets/rectangular-select.svg" />
+
+        <img width="20" src="assets/image-icon.svg" />
+        <img width="20" src="assets/half-circle.svg" />
+        <img width="20" src="assets/tools-icons/text-tool.svg" />
+        <img width="20" src="assets/rectangular-select.svg" />
       </div>
       <div class="layer-property">
         <app-select
@@ -118,19 +134,21 @@
       </div>
       <div class="layer-property">
         <p>Lock:</p>
-        <img src="assets/rec-net.svg" />
+        <img width="20" src="assets/rec-net.svg" />
         <img
+          width="20"
           src="assets/tools-icons/brush-tool.svg"
           [class.active]="brushLocked"
           (click)="toggleBrushLocked()"
         />
         <img
+          width="20"
           src="assets/tools-icons/move-tool.svg"
           [class.active]="movingLocked"
           (click)="toggleMovingLocked()"
         />
-        <img src="assets/file-streched.svg" />
-        <img style="width: 0.5rem" src="assets/lock-fill.svg" />
+        <img width="20" src="assets/file-streched.svg" />
+        <img width="20" style="width: 0.5rem" src="assets/lock-fill.svg" />
         <div class="fill">
           <p>Fill:</p>
           <app-input [Value]="100" [unit]="'%'" [hasVolume]="true"></app-input>
@@ -187,16 +205,33 @@
         </div>
       </div>
       <ul>
-        <img src="assets/tool-properties-icons/link-icon.svg" alt="" />
-        <img src="assets/fx-icon.svg" alt="" />
-        <img src="assets/middle-dark-icon.svg" (click)="addLayerMask()" />
         <img
+          width="20"
+          src="assets/tool-properties-icons/link-icon.svg"
+          alt=""
+        />
+        <img width="20" src="assets/fx-icon.svg" alt="" />
+        <img
+          width="20"
+          src="assets/middle-dark-icon.svg"
+          (click)="addLayerMask()"
+        />
+        <img
+          width="20"
           src="assets/half-dark-circle-icon.svg"
           (click)="toggleAdChoices()"
         />
-        <img src="assets/group-icon.svg" (click)="createNewGroup()" />
-        <img src="assets/rectangular-add-icon.svg" (click)="createNewLayer()" />
-        <img src="assets/trash-icon.svg" (click)="deleteLayer()" />
+        <img
+          width="20"
+          src="assets/group-icon.svg"
+          (click)="createNewGroup()"
+        />
+        <img
+          width="20"
+          src="assets/rectangular-add-icon.svg"
+          (click)="createNewLayer()"
+        />
+        <img width="20" src="assets/trash-icon.svg" (click)="deleteLayer()" />
       </ul>
     </div>
   </div>

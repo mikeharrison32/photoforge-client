@@ -1,7 +1,9 @@
 import { ContextMenu, Menu } from '../../context-menu';
 
 const layerViaCopy = new Menu('Layer Via Copy');
-layerViaCopy.onClick(() => {});
+layerViaCopy.onClick(() => {
+  console.log('clicked');
+});
 const layerViaCut = new Menu('Layer Via Cut');
 layerViaCut.onClick(() => {});
 

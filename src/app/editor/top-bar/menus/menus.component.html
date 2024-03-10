@@ -1,4 +1,4 @@
-<ul #menus>
+<header #menus>
   <app-menu menuName="File">
     <div class="options">
       <ul>
@@ -44,9 +44,8 @@
       </ul>
     </div>
   </app-menu>
-  <li (click)="onMenuClick(Menus.Edit)">
-    Edit
-    <div class="options" *ngIf="selectedMenu == Menus.Edit" #menuOptions>
+  <app-menu menuName="Edit">
+    <div class="options">
       <ul>
         <li (click)="undo()">Undo</li>
         <li (click)="stepBackward()">Step Backward</li>
@@ -92,10 +91,9 @@
         <li>Preferences</li>
       </ul>
     </div>
-  </li>
-  <li (click)="onMenuClick(Menus.Image)">
-    Image
-    <div class="options" *ngIf="selectedMenu == Menus.Image" #menuOptions>
+  </app-menu>
+  <app-menu menuName="Image">
+    <div class="options">
       <ul>
         <li class="adjustments-menu">
           Adjustments
@@ -158,12 +156,8 @@
             </div>
           </div>
         </li>
-        <li>
-          Mode
-          <img src="assets/arrow-right.svg" />
-        </li>
         <div class="line"></div>
-        <li>Image Size</li>
+        <!-- <li>Image Size</li> -->
         <li>Canvas Size</li>
         <div class="line"></div>
         <li (click)="crop()">Crop</li>
@@ -181,17 +175,17 @@
         <li>Variations</li> -->
       </ul>
     </div>
-  </li>
-  <li (click)="onMenuClick(Menus.Layer)">
-    Layer
-    <div class="options" *ngIf="selectedMenu == Menus.Layer" #menuOptions>
+  </app-menu>
+  <app-menu menuName="Layer">
+    <div class="options">
       <ul>
         <li (click)="createNewLayer()">New Layer</li>
+        <li (click)="newTypeLayer()">New Type Layer</li>
         <li (click)="duplicateLayer()">Duplicate Layer</li>
         <li (click)="deleteLayer()">Delete Layer</li>
         <div class="line"></div>
         <li>Layer Properties</li>
-        <li>Layer Style</li>
+        <!-- <li>Layer Style</li> -->
         <li>Layer Mask</li>
         <div class="line"></div>
         <!-- <li (click)="groupLayers()">Group Layers</li> -->
@@ -212,37 +206,10 @@
         <li (click)="layerViaCut()">Layer via Cut</li>
       </ul>
     </div>
-  </li>
-  <li (click)="onMenuClick(Menus.Type)">
-    Type
-    <div class="options" *ngIf="selectedMenu == Menus.Type" #menuOptions>
-      <ul>
-        <li (click)="newTypeLayer()">New Type Layer</li>
-        <li (click)="horizontalTypeTool()">Horizontal Type Tool</li>
-        <li (click)="verticalTypeTool()">Vertical Type Tool</li>
-        <!-- <div class="line"></div> -->
-        <!-- <li (click)="horizontalTypeMaskTool()">Horizontal Type Mask Tool</li> -->
-        <!-- <li (click)="verticalTypeMaskTool()">Vertical Type Mask Tool</li> -->
-        <!-- <div class="line"></div> -->
-        <!-- <li>Warp Text</li> -->
-        <!-- <li>Character</li> -->
-        <!-- <li>Paragraph</li> -->
-        <!-- <div class="line"></div> -->
-        <!-- <li (click)="createWorkPath()">Create Work Path</li> -->
-        <!-- <li (click)="convertToShape()">Convert To Shape</li> -->
-        <!-- <li (click)="simplifyText()">Simplify Text</li> -->
-        <!-- <li (click)="matchFont()">Match Font</li> -->
-        <!-- <li>Glyphs</li> -->
-        <!-- <li (click)="typeOnAPath()">Type on a Path</li> -->
-        <!-- <li (click)="typeOrientation()">Type Orientation</li> -->
-        <!-- <li (click)="fontPreview()">Font Preview</li> -->
-        <!-- <li>Rest Character</li> -->
-      </ul>
-    </div>
-  </li>
-  <li (click)="onMenuClick(Menus.Select)">
-    Select
-    <div class="options" *ngIf="selectedMenu == Menus.Select" #menuOptions>
+  </app-menu>
+
+  <app-menu menuName="Select">
+    <div class="options">
       <ul>
         <li (click)="selectAll()">All</li>
         <li (click)="deselect()">Deselect</li>
@@ -270,7 +237,7 @@
         <!-- <li (click)="saveSlectionChannel()">Save Selection Channel</li> -->
       </ul>
     </div>
-  </li>
+  </app-menu>
   <!-- <li (click)="onMenuClick(Menus.Filter)">
     Filter
     <div class="options" *ngIf="selectedMenu == Menus.Filter" #menuOptions>
@@ -295,9 +262,8 @@
       </ul>
     </div>
   </li> -->
-  <li (click)="onMenuClick(Menus.View)">
-    View
-    <div class="options" *ngIf="selectedMenu == Menus.View" #menuOptions>
+  <app-menu menuName="View">
+    <div class="options">
       <ul>
         <li (click)="zoomIn()">Zoom In</li>
         <li (click)="zoomOut()">Zoom Out</li>
@@ -326,10 +292,9 @@
         <li (click)="revealAll()">Reveal All</li>
       </ul>
     </div>
-  </li>
-  <li (click)="onMenuClick(Menus.Window)">
-    Window
-    <div class="options" *ngIf="selectedMenu == Menus.Window" #menuOptions>
+  </app-menu>
+  <app-menu menuName="Window">
+    <div class="options">
       <ul>
         <!-- <li>Actions</li> -->
         <li (click)="adjustmentsPanel()">Adjustments</li>
@@ -343,5 +308,5 @@
         <li (click)="swatchesPanel()">Swatches</li>
       </ul>
     </div>
-  </li>
-</ul>
+  </app-menu>
+</header>

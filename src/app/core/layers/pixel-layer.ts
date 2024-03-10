@@ -14,6 +14,8 @@ import {
 } from 'src/app/core/utils/webglUtils';
 import * as PIXI from 'pixi.js-legacy';
 import { applyBrightneesFromProgram } from '../filters';
+import { Renderer2 } from '@angular/core';
+import { DataService } from '../services/data.service';
 export class PixelLayer extends Layer {
   pixels: IColorRGBA[] = [];
   src?: string;
@@ -21,7 +23,10 @@ export class PixelLayer extends Layer {
   img: any;
   gl?: WebGLRenderingContext | WebGL2RenderingContext | null;
   app?: PIXI.Application;
+  canvas!: HTMLCanvasElement;
   constructor(
+    data: DataService,
+    renderer: Renderer2,
     containerElem: HTMLElement | null,
     id: string,
     name: string,
@@ -30,9 +35,19 @@ export class PixelLayer extends Layer {
     width?: number,
     height?: number
   ) {
-    super(containerElem, id, name, projectId, true);
+    super(renderer, containerElem, data, id, name, projectId);
+    this.canvas = document.createElement('canvas');
+    this.canvas.classList.add('layer');
     this.type = 'pixel';
+    this.renderer.appendChild(this.elem, this.canvas);
 
+    this.renderer.listen(this.canvas, 'mousedown', (e) => {
+      data.selectedLayers.getValue()[0].resizer.disable();
+      data.selectedLayers.next([...data.selectedLayers.getValue(), this]);
+      this.resizer.enable();
+    });
+
+    // this.canvas!.style.clipPath = 'url(#bob)';
     if (img instanceof PIXI.Texture) {
       this.setWidth(containerElem!.clientWidth);
       this.setHeight(containerElem!.clientHeight);
@@ -47,8 +62,14 @@ export class PixelLayer extends Layer {
       sprite.name = 'image';
       this.app.stage.addChild(sprite);
     } else {
-      this.setWidth(img.width);
-      this.setHeight(img.height);
+      this.elem.style.width = img.width + 'px';
+      this.elem.style.height = img.height + 'px';
+      // this.canvas.style.width = img.width + 'px';
+      // this.canvas.style.height = img.height + 'px';
+
+      const displayScale = data.zoom.getValue() / 100;
+      this.resizer.setWidth(img.width * displayScale);
+      this.resizer.setHeight(img.height * displayScale);
       this.app = new PIXI.Application({
         view: this.canvas as any,
         backgroundColor: 'transparent',
@@ -65,16 +86,11 @@ export class PixelLayer extends Layer {
     sprite.name = 'image';
     sprite.width = this.app!.screen.width;
     sprite.height = this.app!.screen.height;
-    // const data = await this.app?.renderer.extract.pixels(
-    //   sprite,
-    //   new PIXI.Rectangle(100, 100, 300, 300)
-    // );
 
-    // console.log(data);
-    // const sp = PIXI.Sprite.from(t)
-    // sprite.scale = new PIXI.Point(0.3, 0.4);
     this.app!.stage.addChild(sprite);
+    this.getPixels();
   }
+  getPixels() {}
   getSprite() {
     return this.app?.stage.getChildByName('image');
   }

@@ -9,14 +9,23 @@ import { ApiService } from 'src/app/core/services/api.service';
 export class HomeComponent implements OnInit {
   activeView: string = 'window';
   projects: any[] = [];
+  loading: boolean = false;
 
   constructor(private api: ApiService) {}
   setActiveView(vi: string) {
     this.activeView = vi;
   }
-  async ngOnInit() {
-    const projects = (await this.api.getProjects()) as any;
-    this.projects = projects;
+  ngOnInit() {
+    this.loading = true;
+    const projects = this.api
+      .getProjects()
+      .then((data: any) => {
+        this.projects = data;
+        this.loading = false;
+      })
+      .catch((err) => {
+        this.loading = false;
+      });
   }
   async loadRecentProjects() {
     const projects = (await this.api.getProjects()) as any;

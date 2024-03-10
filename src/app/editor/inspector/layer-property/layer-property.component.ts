@@ -8,7 +8,9 @@ import {
 } from '@angular/core';
 import { AdjustmentLayer } from 'src/app/core/layers/adjustment/adjustment_layer';
 import { BrightnessContrastAdjustmentLayer } from 'src/app/core/layers/adjustment/brightness_contrast';
+import { Exposure } from 'src/app/core/layers/adjustment/exposure';
 import { HueSaturationLightnees } from 'src/app/core/layers/adjustment/hue_saturation_lightnees';
+import { Vibrance } from 'src/app/core/layers/adjustment/vibrance';
 import { DataService } from 'src/app/core/services/data.service';
 @Component({
   selector: 'app-layer-property',
@@ -30,6 +32,42 @@ export class LayerPropertyComponent implements OnInit, OnDestroy {
   }
   onXChange(x: any) {
     this.selectedLayer.canvas.style.left = x + 'px';
+  }
+  onExposureChange(value: any) {
+    if (this.selectedAdjustmentLayer instanceof Exposure) {
+      this.selectedAdjustmentLayer.set(
+        {
+          exposure: value,
+          offset: this.selectedAdjustmentLayer.offset,
+          gammaCorrection: this.selectedAdjustmentLayer.gammaCorrection,
+        },
+        this.ngZone
+      );
+    }
+  }
+  onExposureOffsetChange(value: any) {
+    if (this.selectedAdjustmentLayer instanceof Exposure) {
+      this.selectedAdjustmentLayer.set(
+        {
+          offset: value,
+          exposure: this.selectedAdjustmentLayer.exposure,
+          gammaCorrection: this.selectedAdjustmentLayer.gammaCorrection,
+        },
+        this.ngZone
+      );
+    }
+  }
+  onExposureGammaCorrectionChange(value: any) {
+    if (this.selectedAdjustmentLayer instanceof Exposure) {
+      this.selectedAdjustmentLayer.set(
+        {
+          gammaCorrection: value,
+          exposure: this.selectedAdjustmentLayer.exposure,
+          offset: this.selectedAdjustmentLayer.offset,
+        },
+        this.ngZone
+      );
+    }
   }
   onBrightnessChange(value: any) {
     if (
@@ -79,6 +117,25 @@ export class LayerPropertyComponent implements OnInit, OnDestroy {
         },
         this.ngZone
       );
+    } else if (this.selectedAdjustmentLayer instanceof Vibrance) {
+      this.selectedAdjustmentLayer.set(
+        {
+          vibrance: this.selectedAdjustmentLayer.vibrance,
+          saturation: value,
+        },
+        this.ngZone
+      );
+    }
+  }
+  onVibranceChange(value: any) {
+    if (this.selectedAdjustmentLayer instanceof Vibrance) {
+      this.selectedAdjustmentLayer.set(
+        {
+          saturation: this.selectedAdjustmentLayer.saturation,
+          vibrance: value,
+        },
+        this.ngZone
+      );
     }
   }
   onLightnessChange(value: any) {
@@ -108,7 +165,7 @@ export class LayerPropertyComponent implements OnInit, OnDestroy {
   onSelectedTypeLayerFontFamilyChange($event: string) {
     throw new Error('Method not implemented.');
   }
-  onTextSizeChange(size: string) {}
+  onTextSizeChange(size: number) {}
   setTextAlignment(align: string) {}
   onFillChange(e: any) {}
   onStrokeChange(e: any) {}

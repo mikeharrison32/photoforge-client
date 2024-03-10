@@ -19,6 +19,8 @@ import { BrightnessContrastAdjustmentLayer } from 'src/app/core/layers/adjustmen
 import { PixelLayer } from 'src/app/core/layers/pixel-layer';
 import { Layer } from 'src/app/core/layers/layer';
 import { HueSaturationLightnees } from 'src/app/core/layers/adjustment/hue_saturation_lightnees';
+import { Vibrance } from 'src/app/core/layers/adjustment/vibrance';
+import { Exposure } from 'src/app/core/layers/adjustment/exposure';
 
 @Component({
   selector: 'app-inspector',
@@ -121,6 +123,38 @@ export class InspectorComponent implements OnInit, OnDestroy {
             this.selectedLayers[0],
             'HueSaturationLightnees ' + hsl_count,
             { hue: 10, saturation: 10, lightnees: 10 }
+          );
+          this.selectedLayers[0].adjustmentLayers.push(aj);
+        }
+        break;
+      case AdjustmentLayer.Vibrance:
+        if (this.selectedLayers[0] instanceof PixelLayer) {
+          let vibranceLayersCout = 1;
+          this.selectedLayers[0].adjustmentLayers.forEach((aj) => {
+            if (aj instanceof Vibrance) {
+              vibranceLayersCout += 1;
+            }
+          });
+          const aj = new Vibrance(
+            this.selectedLayers[0],
+            'Vibrance ' + vibranceLayersCout,
+            { saturation: 0, vibrance: 0 }
+          );
+          this.selectedLayers[0].adjustmentLayers.push(aj);
+        }
+        break;
+      case AdjustmentLayer.Exposure:
+        if (this.selectedLayers[0] instanceof PixelLayer) {
+          let exposureLayersCout = 1;
+          this.selectedLayers[0].adjustmentLayers.forEach((aj) => {
+            if (aj instanceof Exposure) {
+              exposureLayersCout += 1;
+            }
+          });
+          const aj = new Exposure(
+            this.selectedLayers[0],
+            'Exposure ' + exposureLayersCout,
+            { exposure: 0, offset: 0, gammaCorrection: 0 }
           );
           this.selectedLayers[0].adjustmentLayers.push(aj);
         }

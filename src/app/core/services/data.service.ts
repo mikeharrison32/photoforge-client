@@ -5,9 +5,10 @@ import { Layer } from '../layers/layer';
 
 import { Project } from 'src/app/types/project';
 import { Cursor } from '../Cursor';
-import { Selection } from '../selection';
 import { Path } from '../path';
 import { AdjustmentLayer } from '../layers/adjustment/adjustment_layer';
+import { Selection } from '../../core/selection';
+import { History } from '..';
 
 @Injectable({
   providedIn: 'root',
@@ -30,10 +31,21 @@ export class DataService {
   cursor = new BehaviorSubject<Cursor | null>(null);
   currentSelection = new BehaviorSubject<Selection | null>(null);
   selectedAjLayers = new BehaviorSubject<AdjustmentLayer[]>([]);
-
   zoom = new BehaviorSubject<number>(1);
-}
+  contextMenu = new BehaviorSubject<any>({});
+  selectionContextMenu = new BehaviorSubject<SelectionContextMenu>({
+    isActive: false,
+    x: 0,
+    y: 0,
+  });
 
+  history = new BehaviorSubject<History>(new History());
+}
+interface SelectionContextMenu {
+  isActive: boolean;
+  x: number;
+  y: number;
+}
 type Color = {
   fg: string;
   bg: string;

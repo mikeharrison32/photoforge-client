@@ -38,8 +38,11 @@ export class BrightnessContrastAdjustmentLayer extends AdjustmentLayer {
     }
   }
 
-  hide() {}
-  set(options: IBrightnessContrastAdjustmentLayerOptions, ngZone: NgZone) {
+  set(
+    options: IBrightnessContrastAdjustmentLayerOptions,
+    ngZone: NgZone,
+    save?: boolean
+  ) {
     ngZone.runOutsideAngular(() => {
       const img = this.pl?.app?.stage.getChildByName('image');
       if (img?.filters) {
@@ -49,8 +52,10 @@ export class BrightnessContrastAdjustmentLayer extends AdjustmentLayer {
         img.filters.splice(contrastIndex, 1);
         this.brightnessFilter?.brightness(options.brightness, false);
         this.contrastFilter?.contrast(options.contrast, false);
-        this.brightness = options.brightness;
-        this.contrast = options.contrast;
+        if (save) {
+          this.brightness = options.brightness;
+          this.contrast = options.contrast;
+        }
         img.filters.push(this.brightnessFilter!);
         img.filters.push(this.contrastFilter!);
         // img!.filters.push(brightnessContrast);
@@ -60,7 +65,15 @@ export class BrightnessContrastAdjustmentLayer extends AdjustmentLayer {
       this.pl?.app?.render();
     });
   }
-  override show() {}
+  override show(ngZone: NgZone) {
+    this.visible = true;
+    this.set({ brightness: this.brightness, contrast: this.contrast }, ngZone);
+  }
+
+  override hide(ngZone: NgZone) {
+    this.visible = false;
+    this.set({ brightness: 1, contrast: 0 }, ngZone);
+  }
   clear() {}
 }
 

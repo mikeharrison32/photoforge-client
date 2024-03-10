@@ -1,40 +1,26 @@
 <app-top-bar></app-top-bar>
 <div class="main" dropzone="">
   <app-tool-box></app-tool-box>
-  <div class="image-display" id="image-display" #imgDisplay>
+  <div class="image-display" id="image-display" #container>
     <div #cursor class="cursor" id="cursor"></div>
     <div class="displayContainer">
-      <div id="display" #display></div>
-      <div id="helperCanvas"></div>
-      <!-- <textarea class="textarea" name="" id=""  autocomplete="additional-name"  ></textarea> -->
+      <div
+        id="display"
+        #display
+        [style.opacity]="projects.length < 1 ? '0' : '1'"
+      >
+        <div class="pf-object"></div>
+      </div>
+      <div id="resizers"></div>
     </div>
-
     <div
-      class="rect-selection-context-menu"
-      *ngIf="false"
-      #rectSelectContextMenu
-      (contextmenu)="onRectSelectRightClick($event)"
+      class="context-menu"
+      [style.left]="contextMenu.x + 'px'"
+      [style.top]="contextMenu.y + 'px'"
     >
-      <p (click)="clearSelection()">Deselect</p>
-      <p (click)="inverseSelection()">Select Inverse</p>
-      <p>Feather...</p>
-      <p (click)="maskCurrentSelection()">Select and Mask</p>
-      <hr />
-      <p (click)="saveCurrentSelection()">Save Selection...</p>
-      <p (click)="makeWorkPath()">Make Work Path...</p>
-      <hr />
-      <p (click)="createLayerFromASelectionViaCopy()">Layer Via Copy</p>
-      <p (click)="createLayerFromASelectionViaCut()">Layer Via Cut</p>
-      <p>New Layer...</p>
-      <hr />
-      <p>Free Transform</p>
-      <p>Transform Selection</p>
-      <hr />
-      <p (click)="fillSelection()">Fill...</p>
-      <p (click)="strokeSelection()">Stroke...</p>
-      <hr />
-      <p>Last Filter</p>
-      <p (click)="fadeSelection()">Fade...</p>
+      <p *ngFor="let c of contextMenu.menus" (click)="c.click()">
+        {{ c.name }}
+      </p>
     </div>
   </div>
   <div class="zoom-bar">

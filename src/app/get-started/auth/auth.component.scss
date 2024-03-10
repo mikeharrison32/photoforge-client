@@ -4,7 +4,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #161616;
+  background: #252525;
+  box-shadow: #b3b3b3 0 0 1px 0;
   .back {
     position: absolute;
     top: 0;
@@ -37,10 +38,13 @@
 
     @keyframes infRotate {
       0% {
-        transform: rotate(360deg);
+        transform: rotate(0deg);
+      }
+      25% {
+        transform: rotate(120deg);
       }
       50% {
-        transform: rotate(0deg);
+        transform: rotate(180deg);
       }
       100% {
         transform: rotate(360deg);
@@ -55,6 +59,7 @@
       left: calc(50% - 6rem / 2);
       margin: auto;
       width: 6rem;
+      transform: rotate(0deg);
       animation-name: infRotate;
       animation-duration: 500ms;
       animation-iteration-count: infinite;
@@ -67,11 +72,10 @@
     flex-direction: column;
     border-radius: 4px;
     padding: 1rem;
-    box-shadow: #b3b3b3 0 0 1px 0;
+
     align-items: center;
     background: #252525;
     position: absolute;
-    height: 100%;
     left: 0;
     width: 44%;
 

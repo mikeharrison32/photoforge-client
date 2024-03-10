@@ -50,10 +50,7 @@
     </div>
   </div>
 </div>
-<!-- <div
-  class="type-layer"
-  *ngIf="selectedLayer && selectedLayer.Type == LayerType.Type"
->
+<div class="type-layer" *ngIf="selectedLayer && selectedLayer.type == 'type'">
   <div class="description">
     <img src="assets/tools-icons/text-tool.svg" class="icon" />
     <p>Type Layer Properies</p>
@@ -65,7 +62,7 @@
         <app-input
           class="input"
           unit="px"
-          [Value]="properties.width"
+          [Value]="selectedLayer.elem.clientWidth"
           [Disabled]="selectedLayer.Locked!"
           (onInputChange)="onWidthChange($event)"
         ></app-input>
@@ -76,7 +73,7 @@
           class="input"
           unit="px"
           [Disabled]="selectedLayer.Locked!"
-          [Value]="properties.height"
+          [Value]="selectedLayer.elem.clientHeight"
           (onInputChange)="onHeightChange($event)"
         ></app-input>
       </div>
@@ -88,7 +85,7 @@
           class="input"
           [Disabled]="selectedLayer.Locked!"
           unit="px"
-          [Value]="properties.left"
+          [Value]="selectedLayer.elem.clientLeft"
           (onInputChange)="onXChange($event)"
         ></app-input>
       </div>
@@ -98,7 +95,7 @@
           class="input"
           unit="px"
           [Disabled]="selectedLayer.Locked!"
-          [Value]="properties.top"
+          [Value]="selectedLayer.elem.clientTop"
           (onInputChange)="onYChange($event)"
         ></app-input>
       </div>
@@ -116,11 +113,11 @@
     <div class="row">
       <div class="small-input">
         <img src="assets/tool-properties-icons/small-and-big-text.svg" />
-        <app-select
+        <app-input
           class="input"
-          [Items]="properties.textSize"
-          (onSelectedItemChange)="onTextSizeChange($event)"
-        ></app-select>
+          [Value]="2"
+          (onInputChange)="onTextSizeChange($event)"
+        ></app-input>
       </div>
       <div class="small-input">
         <img src="assets/va.svg" />
@@ -146,20 +143,22 @@
       <div class="text-align-buttons">
         <img
           src="assets/tool-properties-icons/text-align-left.svg"
-          [class.text-align-active]="properties.selectedTextAlignment == 'left'"
+          [class.text-align-active]="
+            selectedLayer.properties.textAlign == 'left'
+          "
           (click)="setTextAlignment('left')"
         />
         <img
           src="assets/tool-properties-icons/text-align-center.svg"
           [class.text-align-active]="
-            properties.selectedTextAlignment == 'center'
+            selectedLayer.properties.textAlign == 'center'
           "
           (click)="setTextAlignment('center')"
         />
         <img
           src="assets/tool-properties-icons/text-align-right.svg"
           [class.text-align-active]="
-            properties.selectedTextAlignment == 'right'
+            selectedLayer.properties.textAlign == 'right'
           "
           (click)="setTextAlignment('right')"
         />
@@ -171,6 +170,7 @@
     </div>
   </div>
 </div>
+<!--
 <div
   class="shape-layer"
   *ngIf="selectedLayer && selectedLayer.Type == LayerType.Shape"
@@ -337,8 +337,9 @@
     </div>
   </div>
 </div>
+-->
 <div
-  *ngIf="selectedAdjustmentLayers[0]?.Type == AdjustmentLayer.Exposure"
+  *ngIf="selectedAdjustmentLayer && selectedAdjustmentLayer.type == 'exposure'"
   class="ad_layer_properity"
 >
   <div class="adj_type">
@@ -359,10 +360,19 @@
       ]"
     ></app-select>
   </div>
-  <app-volume [text]="'Exposure'"></app-volume>
-  <app-volume [text]="'Offset'"></app-volume>
-  <app-volume [text]="'Gamma Correction'"></app-volume>
-</div> -->
+  <app-volume
+    [text]="'Exposure'"
+    (volumeChange)="onExposureChange($event)"
+  ></app-volume>
+  <app-volume
+    [text]="'Offset'"
+    (volumeChange)="onExposureOffsetChange($event)"
+  ></app-volume>
+  <app-volume
+    [text]="'Gamma Correction'"
+    (volumeChange)="onExposureGammaCorrectionChange($event)"
+  ></app-volume>
+</div>
 <div
   *ngIf="
     selectedAdjustmentLayer &&
@@ -392,8 +402,8 @@
     <app-checkbox [text]="'Use Legacy'"></app-checkbox>
   </div>
 </div>
-<!-- <div
-  *ngIf="selectedAdjustmentLayers[0]?.Type == AdjustmentLayer.Vibrance"
+<div
+  *ngIf="selectedAdjustmentLayer && selectedAdjustmentLayer.type == 'vibrance'"
   class="ad_layer_properity"
 >
   <div class="adj_type">
@@ -401,12 +411,17 @@
     <img src="assets/middle-dark-icon.svg" />
     <p>Vibrance</p>
   </div>
-  <app-volume [text]="'Vibrance'"></app-volume>
-  <app-volume [text]="'Saturation'"></app-volume>
+  <app-volume
+    [text]="'Vibrance'"
+    (volumeChange)="onVibranceChange($event)"
+  ></app-volume>
+  <app-volume
+    [text]="'Saturation'"
+    (volumeChange)="onSaturationChange($event)"
+  ></app-volume>
 </div>
 
-
-<div
+<!-- <div
   *ngIf="selectedAdjustmentLayers[0]?.Type == AdjustmentLayer.ColorBalance"
   class="ad_layer_properity"
 >
@@ -423,8 +438,8 @@
   <app-volume [text]="'Magenta'" [rightText]="'Green'"></app-volume>
   <app-volume [text]="'Yellow'" [rightText]="'Blue'"></app-volume>
   <app-checkbox [text]="'Preserve Luminosity'"></app-checkbox>
-</div>
--->
+</div> -->
+
 <!-- <div
   *ngIf="selectedAdjustmentLayers[0]?.Type == AdjustmentLayer.BlackWhite"
   class="ad_layer_properity"

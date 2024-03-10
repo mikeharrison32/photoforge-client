@@ -58,7 +58,7 @@ export class CropTool {
     });
     this.createBottomLeftCorner({
       x: this.cropRect.x,
-      y: this.cropRect.y + this.cropRect.height - 30,
+      y: this.cropRect.y + this.cropRect.height - 30 + 6,
     });
     this.createBottomRightCorner({
       x: this.cropRect.x + this.cropRect.width - 26,
@@ -81,21 +81,35 @@ export class CropTool {
       y: this.cropRect.height / 2,
     });
 
-    this.createCropOverlay();
+    this.createCropOverlay(this.cropRect);
   }
 
-  private createCropOverlay() {
-    // this.cropOverlay = new PIXI.Graphics();
-    // // this.cropOverlay.beginFill('#00000086');
-    // this.cropOverlay.beginFill('blue');
-    // this.cropOverlay.drawRect(
-    //   0,
-    //   0,
-    //   this.cropCanvas!.screen.width,
-    //   this.cropCanvas!.screen.height
-    // );
-    // this.cropOverlay.endFill();
-    // this.cropCanvas?.stage.addChild(this.cropOverlay);
+  private createCropOverlay(rect: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  }) {
+    if (this.cropOverlay) {
+      this.cropCanvas?.stage.removeChild(this.cropOverlay);
+      this.cropOverlay.destroy(true);
+      delete this.cropOverlay;
+    }
+    this.cropOverlay = new PIXI.Graphics();
+    this.cropOverlay.clear();
+    this.cropOverlay.beginFill('#00000086');
+    this.cropOverlay.drawRect(
+      0,
+      0,
+      this.cropCanvas!.screen.width,
+      this.cropCanvas!.screen.height
+    );
+    this.cropOverlay.endFill();
+
+    this.cropOverlay.beginHole();
+    this.cropOverlay.drawRect(rect.x, rect.y, rect.width, rect.height);
+    this.cropOverlay.endHole();
+    this.cropCanvas?.stage.addChildAt(this.cropOverlay, 0);
   }
 
   private createCropBorder(rect: {
@@ -107,6 +121,7 @@ export class CropTool {
     if (this.border) {
       this.cropCanvas?.stage.removeChild(this.border);
       this.border.destroy();
+      delete this.border;
     }
     this.border = new PIXI.Graphics();
     this.border.zIndex = 2;
@@ -139,12 +154,12 @@ export class CropTool {
         return;
       }
 
-      this.cropRect = {
-        x: this.cropRect!.x,
-        y: this.cropRect!.y,
-        width: this.cropRect!.width,
-        height: e.global.y,
-      };
+      // this.cropRect = {
+      //   x: this.cropRect!.x,
+      //   y: this.cropRect!.y,
+      //   width: this.cropRect!.width,
+      //   height: e.global.y,
+      // };
       this.mbCorner?.position.set(
         this.cropRect!.x + this.cropRect!.width / 2 - 30 / 2,
         e.global.y + 4
@@ -161,10 +176,10 @@ export class CropTool {
         this.cropRect!.height / 2
       );
 
-      this.createCropBorder({
-        ...this.cropRect,
-        height: e.global.y,
-      });
+      // this.createCropBorder({
+      //   ...this.cropRect,
+      //   height: e.global.y,
+      // });
     });
   }
 
@@ -186,27 +201,27 @@ export class CropTool {
     });
     this.cropCanvas?.stage.addEventListener('mouseup', (e) => {
       mousedown = false;
-      this.cropRect = {
-        x: e.global.x,
-        y: this.cropRect!.y,
-        width: this.cropRect!.width - e.global.x,
-        height: e.global.y,
-      };
+      // this.cropRect = {
+      //   x: e.global.x,
+      //   y: this.cropRect!.y,
+      //   width: this.cropRect!.width - e.global.x,
+      //   height: e.global.y,
+      // };
     });
     this.cropCanvas?.stage.addEventListener('mousemove', (e) => {
       if (!mousedown) {
         return;
       }
-      this.mrCorner?.position.set(e.global.x - 4, e.global.y - 23);
-      // this.trCorner?.position.set(this.cropRect!.width - 26, e.global.y - 4);
-      this.tlCorner?.position.set(e.global.x - 4, this.cropRect!.y - 4);
+      // this.mrCorner?.position.set(e.global.x - 4, this.mrCorner.position.y);
+      // // this.trCorner?.position.set(this.cropRect!.width - 26, e.global.y - 4);
+      // this.trCorner?.position.set(e.global.x - 4, this.trCorner.position.y);
 
-      this.createCropBorder({
-        x: e.global.x,
-        y: this.cropRect!.y,
-        width: this.cropRect!.width - e.global.x,
-        height: e.global.y,
-      });
+      // this.createCropBorder({
+      //   x: this.cropRect!.x,
+      //   y: this.cropRect!.y,
+      //   width: this.cropRect!.width - e.global.x,
+      //   height: this.cropRect!.height,
+      // });
     });
   }
 
@@ -230,26 +245,38 @@ export class CropTool {
     });
     this.cropCanvas?.stage.addEventListener('mouseup', (e) => {
       mousedown = false;
-      this.cropRect = {
-        x: e.global.x,
-        y: this.cropRect!.y,
-        width: this.cropRect!.width - e.global.x,
-        height: e.global.y,
-      };
+      // this.cropRect = {
+      //   x: e.global.x,
+      //   y: this.cropRect!.y,
+      //   width: this.cropRect!.width - e.global.x,
+      //   height: e.global.y,
+      // };
     });
     this.cropCanvas?.stage.addEventListener('mousemove', (e) => {
       if (!mousedown) {
         return;
       }
-      this.mlCorner?.position.set(e.global.x - 4, e.global.y - 23);
+      this.mlCorner?.position.set(e.global.x - 4, this.mlCorner.position.y);
       // this.trCorner?.position.set(this.cropRect!.width - 26, e.global.y - 4);
       this.tlCorner?.position.set(e.global.x - 4, this.cropRect!.y - 4);
+      this.mtCorner?.position.set(
+        this.cropRect!.width + this.cropRect!.y / 2,
+        this.cropRect!.y - 4
+      );
+      this.mbCorner?.position.set(
+        this.cropRect!.width + this.cropRect!.y / 2,
+        this.cropRect!.y + this.cropRect!.height - 4
+      );
+      this.blCorner?.position.set(
+        e.global.x - 4,
+        this.cropRect!.y + this.cropRect!.height - 26
+      );
 
       this.createCropBorder({
         x: e.global.x,
         y: this.cropRect!.y,
         width: this.cropRect!.width - e.global.x,
-        height: e.global.y,
+        height: this.cropRect!.height,
       });
     });
   }
@@ -272,23 +299,23 @@ export class CropTool {
     });
     this.cropCanvas?.stage.addEventListener('mouseup', (e) => {
       mousedown = false;
-      this.cropRect = {
-        x: this.cropRect!.x,
-        y: e.global.y,
-        width: this.cropRect!.width,
-        height: this.cropRect!.height - e.global.y,
-      };
+      // this.cropRect = {
+      //   x: this.cropRect!.x,
+      //   y: e.global.y,
+      //   width: this.cropRect!.width,
+      //   height: this.cropRect!.height - e.global.y,
+      // };
     });
     this.cropCanvas?.stage.addEventListener('mousemove', (e) => {
       if (!mousedown) {
         return;
       }
-      this.cropRect = {
-        x: this.cropRect!.x,
-        y: e.global.y,
-        width: this.cropRect!.width,
-        height: this.cropRect!.height - e.global.y,
-      };
+      // this.cropRect = {
+      //   x: this.cropRect!.x,
+      //   y: e.global.y,
+      //   width: this.cropRect!.width,
+      //   height: this.cropRect!.height - e.global.y,
+      // };
       this.mtCorner?.position.set(this.mtCorner.position.x, e.global.y);
 
       // this.trCorner?.position.set(this.cropRect!.width - 26, e.global.y - 4);
@@ -332,12 +359,12 @@ export class CropTool {
     });
     this.cropCanvas?.stage.addEventListener('mouseup', (e) => {
       mousedown = false;
-      this.cropRect = {
-        x: e.global.x,
-        y: this.cropRect!.y,
-        width: this.cropRect!.width - e.global.x,
-        height: e.global.y,
-      };
+      // this.cropRect = {
+      //   x: e.global.x,
+      //   y: this.cropRect!.y,
+      //   width: this.cropRect!.width - e.global.x,
+      //   height: e.global.y,
+      // };
     });
     this.cropCanvas?.stage.addEventListener('mousemove', (e) => {
       if (!mousedown) {
@@ -375,12 +402,12 @@ export class CropTool {
     });
     this.cropCanvas?.stage.addEventListener('mouseup', (e) => {
       mousedown = false;
-      this.cropRect = {
-        x: e.global.x,
-        y: this.cropRect!.y,
-        width: this.cropRect!.width - e.global.x,
-        height: e.global.y,
-      };
+      // this.cropRect = {
+      //   x: e.global.x,
+      //   y: this.cropRect!.y,
+      //   width: this.cropRect!.width - e.global.x,
+      //   height: e.global.y,
+      // };
     });
     this.cropCanvas?.stage.addEventListener('mousemove', (e) => {
       if (!mousedown) {
@@ -418,13 +445,16 @@ export class CropTool {
     });
     this.cropCanvas?.stage.addEventListener('mouseup', (e) => {
       mousedown = false;
-      console.log(this.cropRect);
+      const cropRectWidth = this.cropRect!.width;
+      // this.cropRect!.width = cropRectWidth -  e.global.x;
     });
     this.cropCanvas?.stage.addEventListener('mousemove', (e) => {
       if (!mousedown) {
         return;
       }
-      console.log(this.cropRect);
+      this.cropRect!.x = e.global.x;
+      this.cropRect!.y = e.global.y;
+      // console.log(this.cropRect);
       this.tlCorner?.position.set(e.global.x - 4, e.global.y - 4);
       this.createCropBorder({
         x: e.global.x,
@@ -433,11 +463,32 @@ export class CropTool {
         height: this.cropRect!.height - e.global.y,
       });
       this.trCorner?.position.set(this.cropRect!.width - 26, e.global.y - 4);
-      this.mrCorner?.position.set(this.cropRect!.width - 26, e.global.y - 4);
-      this.mtCorner?.position.set(this.mtCorner.position.x, e.global.y - 4);
-      this.mlCorner?.position.set(this.cropRect!.width - 26, e.global.y - 4);
-      this.mbCorner?.position.set(this.cropRect!.width - 26, e.global.y - 4);
-      this.blCorner?.position.set(e.global.x - 4, this.blCorner.position.y);
+      const cropRectWidth = this.cropRect!.width;
+      const cropRectHeight = this.cropRect!.height;
+      this.createCropOverlay({
+        x: e.global.x,
+        y: e.global.y,
+        width: this.cropRect!.width - e.global.x,
+        height: this.cropRect!.height - e.global.y,
+      });
+      this.mrCorner?.position.set(
+        cropRectWidth - 4,
+        (cropRectHeight + e.global.y) / 2 - 30 / 2
+      );
+      this.mtCorner?.position.set(
+        (cropRectWidth + e.global.x) / 2 - 30 / 2,
+        e.global.y - 4
+      );
+      this.mlCorner?.position.set(
+        e.global.x - 4,
+        (cropRectHeight + e.global.y) / 2 - 30 / 2
+      );
+      this.mbCorner?.position.set(
+        (cropRectWidth + e.global.x) / 2 - 30 / 2,
+        e.global.y - 4
+      );
+      this.blCorner?.position.set(e.global.x - 4, cropRectHeight - 26);
+      this.brCorner?.position.set(cropRectWidth - 26, cropRectHeight - 26);
       // this.cropRect = {
       //   x: e.global.x,
       //   y: e.global.y,
@@ -479,7 +530,7 @@ export class CropTool {
       if (!mousedown) {
         return;
       }
-      this.trCorner?.position.set(e.global.x, e.global.y - 4);
+      this.trCorner?.position.set(e.global.x - 26, e.global.y - 4);
       this.tlCorner?.position.set(this.cropRect!.x - 4, e.global.y - 4);
       this.createCropBorder({
         x: this.cropRect!.x,

@@ -36,7 +36,14 @@ export class TopBarComponent implements OnInit, OnDestroy {
         updatedProjectsValue.push(p);
       }
     });
+    this.data.layers.getValue().forEach((layer) => {
+      if (layer.projectId == id) {
+        layer.remove();
+      }
+    });
     this.data.projects.next(updatedProjectsValue);
+    this.data.selectedLayers.next([]);
+
     if (this.data.projects.value.length > 0) {
       this.data.selectedProject.next(this.data.projects.value[0]);
     } else {

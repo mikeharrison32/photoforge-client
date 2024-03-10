@@ -46,7 +46,10 @@
       <h4>{{ project.name }}</h4>
       <p>{{ project.modifyedAt | date }}</p>
     </div>
-    <div class="not-logged-in">
+    <div class="loading" *ngIf="loading">
+      <h1>Loading...</h1>
+    </div>
+    <div class="not-logged-in" *ngIf="!loading">
       Login or Signup to see your recent projects.
       <button (click)="loadRecentProjects()">Continue</button>
     </div>

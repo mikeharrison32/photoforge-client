@@ -23,41 +23,41 @@ export class MoveToolPropertiesComponent implements OnInit, OnDestroy {
     this.selectedLayers?.forEach((layer) => {
       const display = this.data.displayElem.getValue();
 
-      layer.canvas!.style.top =
-        display!.clientHeight / 2 - layer.canvas!.clientHeight / 2 + 'px';
+      // layer.canvas!.style.top =
+      //   display!.clientHeight / 2 - layer.canvas!.clientHeight / 2 + 'px';
     });
   }
   centerSelectedObjHorizontal() {
     this.selectedLayers?.forEach((layer) => {
       const display = this.data.displayElem.getValue();
 
-      layer.canvas!.style.left =
-        display!.clientWidth / 2 - layer.canvas!.clientWidth / 2 + 'px';
+      // layer.canvas!.style.left =
+      //   display!.clientWidth / 2 - layer.canvas!.clientWidth / 2 + 'px';
     });
   }
   alignTop() {
     this.selectedLayers?.forEach((layer) => {
-      layer.canvas!.style.top = '0px';
+      // layer.canvas!.style.top = '0px';
     });
   }
   alignLeft() {
     this.selectedLayers?.forEach((layer) => {
-      layer.canvas!.style.left = '0px';
+      // layer.canvas!.style.left = '0px';
     });
   }
   alignRight() {
     this.selectedLayers?.forEach((layer) => {
       const display = this.data.displayElem.getValue();
-      layer.canvas!.style.left =
-        display!.clientWidth - layer.canvas!.clientWidth + 'px';
+      // layer.canvas!.style.left =
+      // display!.clientWidth - layer.canvas!.clientWidth + 'px';
     });
   }
   alignBottom() {
     const display = this.data.displayElem.getValue();
 
     this.selectedLayers?.forEach((layer) => {
-      layer.canvas!.style.top =
-        display!.clientHeight - layer.canvas!.clientHeight + 'px';
+      // layer.canvas!.style.top =
+      // display!.clientHeight - layer.canvas!.clientHeight + 'px';
     });
   }
 }

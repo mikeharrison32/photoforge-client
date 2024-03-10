@@ -1,7 +1,7 @@
 .notification {
   width: 20rem;
-  background: #7091db;
-  color: #fff;
+  background: #ffffff;
+  color: #4c4c4c;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -26,12 +26,13 @@
     }
   }
   .close-icon {
-    font-size: 0.7rem;
+    font-size: 1.5rem;
+
     margin: 0;
     font-size: 2rem;
     padding: 0;
     position: absolute;
-    top: -0.8rem;
+    top: 0rem;
     right: 0;
     cursor: pointer;
     font-weight: 100;

@@ -7,6 +7,7 @@ import {
   Output,
   EventEmitter,
   OnInit,
+  NgZone,
 } from '@angular/core';
 import { AdjustmentLayer } from 'src/app/core/layers/adjustment/adjustment_layer';
 import { LayerService } from 'src/app/core/services/layer.service';
@@ -28,6 +29,7 @@ export class AdjustmentLayerComponent implements OnInit {
   @Input() type?: string;
   @Output() onHideClick = new EventEmitter<boolean>();
   ngOnInit(): void {}
+  constructor(private ngZone: NgZone) {}
   @HostListener('document:click', ['$event'])
   handleClickOutside(e: MouseEvent) {
     if (!this.contextMenuActive) return;
@@ -35,7 +37,15 @@ export class AdjustmentLayerComponent implements OnInit {
       this.contextMenuActive = false;
     }
   }
-  toggleLayerHidden() {}
+  toggleLayerHidden() {
+    if (this.adjustment?.visible) {
+      this.adjustment.visible = false;
+      this.adjustment.hide(this.ngZone);
+    } else {
+      this.adjustment!.visible = true;
+      this.adjustment?.show(this.ngZone);
+    }
+  }
   onLayerRightClick(e: MouseEvent) {
     e.preventDefault();
     this.contextMenuActive = true;

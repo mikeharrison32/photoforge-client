@@ -1,66 +1,36 @@
 import * as PIXI from 'pixi.js-legacy';
 import { Layer } from './layer';
 import { ITextToolOptions } from '../tools';
+import { Renderer2 } from '@angular/core';
+import { DataService } from '../services/data.service';
 export class TypeLayer extends Layer {
   app!: PIXI.Application;
   textarea?: HTMLElement;
-  options?: ITextToolOptions;
+  properties: ITextToolOptions = {
+    textAlign: 'left',
+  };
+  textElem!: HTMLElement;
   constructor(
+    renderer: Renderer2,
     containerElem: HTMLElement,
+    data: DataService,
     id: string,
     name: string,
     projectId: string,
     text?: string,
     options?: ITextToolOptions
   ) {
-    super(containerElem, id, name, projectId, true);
-    if (text) {
-      this.setWidth(text.length);
-      this.setHeight(10);
-    }
-    this.canvas!.id = 'typeLayer';
-    this.app = new PIXI.Application({
-      view: this.canvas as HTMLCanvasElement,
-      width: 100,
-      height: 50,
-      background: 'transparent',
-      backgroundAlpha: 0,
-      backgroundColor: 'transparent',
-    });
-
-    const textObj = new PIXI.Text('Lorem ipsum');
-    textObj.name = id;
-    this.app.stage.addChild(textObj);
-
-    this.canvas?.addEventListener('click', (e) => {
-      if (!this.textarea) {
-        this.textarea = document.createElement('textarea');
-        this.textarea.classList.add('textarea');
-        containerElem.appendChild(this.textarea);
-        const canvasRect = this.canvas?.getBoundingClientRect()!;
-        this.textarea.style.left =
-          this.canvas!.clientLeft + this.canvas!.offsetLeft + 'px';
-        this.textarea.style.top = canvasRect.top + 'px';
-        this.textarea.focus();
-        this.canvas!.style.display = 'none';
-
-        let text = '';
-        this.textarea.addEventListener('input', (e: any) => {
-          text = text.concat(e.data);
-        });
-
-        this.textarea.addEventListener('keydown', (e) => {
-          if (e.code == 'Enter') {
-            this.setText(text);
-            this.canvas!.style.display = 'block';
-            this.textarea?.remove();
-          }
-        });
-      }
-    });
+    super(renderer, containerElem, data, id, name, projectId);
+    this.type = 'type';
+    this.textElem = this.renderer.createElement('p');
+    this.textElem.textContent = text || 'Hello';
+    this.renderer.appendChild(this.elem, this.textElem);
+    this.resizer.setWidth(this.elem.clientWidth);
+    this.resizer.setHeight(this.elem.clientHeight);
   }
+
   setText(text: string) {
-    const textObj = this.getTextObj();
+    const textObj = this.Obj();
     textObj.text = text;
     this.renderApp();
   }
@@ -68,12 +38,12 @@ export class TypeLayer extends Layer {
     this.app.render();
   }
 
-  private getTextObj() {
+  private Obj() {
     return this.app.stage.getChildByName(this.id) as PIXI.Text;
   }
 
   setColor(color: string) {
-    this.getTextObj().style.fill = color;
+    this.Obj().style.fill = color;
     this.renderApp();
   }
   setFontFamily(family: string) {}

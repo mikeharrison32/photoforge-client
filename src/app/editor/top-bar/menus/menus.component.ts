@@ -6,6 +6,7 @@ import {
   OnInit,
   OnDestroy,
   ViewEncapsulation,
+  Renderer2,
 } from '@angular/core';
 import { DataService } from 'src/app/core/services/data.service';
 import { Menus } from 'src/app/enums/menu.enum';
@@ -24,6 +25,7 @@ import { AdjustmentLayer } from 'src/app/types/layer';
 import * as PIXI from 'pixi.js-legacy';
 import { TypeLayer } from 'src/app/core/layers/type-layer';
 import { filter } from 'rxjs';
+import { Command } from 'src/app/core';
 @Component({
   selector: 'app-menus',
   templateUrl: './menus.component.html',
@@ -37,11 +39,12 @@ export class MenusComponent implements OnInit, OnDestroy {
   recentProjects: Project[] = [];
   constructor(
     private data: DataService,
-    private layer: LayerService,
+    private layerService: LayerService,
     private stateService: StateService,
     private clipboard: ClipboardService,
     private api: ApiService,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private renderer: Renderer2
   ) {}
   ngOnInit(): void {
     //TODO:
@@ -103,6 +106,8 @@ export class MenusComponent implements OnInit, OnDestroy {
           displayElem!.style.width = imgObj.width + 'px';
           displayElem!.style.height = imgObj.height + 'px';
           const pixelLayer = new PixelLayer(
+            this.data,
+            this.renderer,
             displayElem,
             'aaa',
             file.name,
@@ -142,7 +147,7 @@ export class MenusComponent implements OnInit, OnDestroy {
       if (l.projectId != selectedProject?.Id) {
         updatedLayers.push(l);
       } else {
-        l.canvas?.remove();
+        // l.canvas?.remove();
       }
     });
     this.data.layers.next(updatedLayers);
@@ -170,6 +175,8 @@ export class MenusComponent implements OnInit, OnDestroy {
     selectedLayers.forEach((sl: Layer) => {
       if (sl instanceof PixelLayer) {
         const duplicateLayer = new PixelLayer(
+          this.data,
+          this.renderer,
           displayElem,
           `${Math.random()}`,
           sl.name + 'Copy',
@@ -184,6 +191,8 @@ export class MenusComponent implements OnInit, OnDestroy {
     const displayElem = this.data.displayElem.getValue();
     const selectedProject = this.data.selectedProject.getValue();
     const layer = new PixelLayer(
+      this.data,
+      this.renderer,
       displayElem,
       `${Math.random()}`,
       'Layer 1',
@@ -195,6 +204,16 @@ export class MenusComponent implements OnInit, OnDestroy {
       ...this.data.selectedLayers.getValue(),
       layer,
     ]);
+
+    const undoCommand = new Command();
+    undoCommand.execute = () => {
+      layer.canvas?.remove();
+      this.data.layers
+        .getValue()
+        .splice(this.data.layers.getValue().indexOf(layer));
+      // this.data.layers.next(newLayers);
+    };
+    this.data.history.getValue().undoStack.push(undoCommand);
   }
   addFilter(filter: Filter) {
     // this.layer.addFilter(filter);
@@ -202,7 +221,7 @@ export class MenusComponent implements OnInit, OnDestroy {
   flipCanvas() {
     this.data.layers.subscribe((layers) => {
       layers.forEach((lr) => {
-        lr.canvas!.style.scale = '-1 1';
+        // lr.canvas!.style.scale = '-1 1';
       });
     });
   }
@@ -232,6 +251,8 @@ export class MenusComponent implements OnInit, OnDestroy {
         imgObj.onload = () => {
           const displayElem = this.data.displayElem.getValue();
           const pixelLayer = new PixelLayer(
+            this.data,
+            this.renderer,
             displayElem,
             'ede',
             file.name,
@@ -283,7 +304,7 @@ export class MenusComponent implements OnInit, OnDestroy {
   rotateCanvas() {
     this.data.layers.subscribe((layers) => {
       layers.forEach((lr) => {
-        lr.canvas!.style.transform = 'rotate(180deg)';
+        // lr.canvas!.style.transform = 'rotate(180deg)';
       });
     });
   }
@@ -310,10 +331,10 @@ export class MenusComponent implements OnInit, OnDestroy {
     throw new Error('Method not implemented.');
   }
   zoomOut() {
-    throw new Error('Method not implemented.');
+    this.data.zoom.next(this.data.zoom.getValue() - 2);
   }
   zoomIn() {
-    throw new Error('Method not implemented.');
+    this.data.zoom.next(this.data.zoom.getValue() + 2);
   }
   saveSlectionChannel() {
     throw new Error('Method not implemented.');
@@ -353,44 +374,39 @@ export class MenusComponent implements OnInit, OnDestroy {
   selectAll() {
     this.data.selectedLayers.next(this.data.layers.getValue());
   }
-  transformSelection() {
-    throw new Error('Method not implemented.');
-  }
-  fontPreview() {
-    throw new Error('Method not implemented.');
-  }
-  typeOrientation() {
-    throw new Error('Method not implemented.');
-  }
-  typeOnAPath() {
-    throw new Error('Method not implemented.');
-  }
-  matchFont() {
-    throw new Error('Method not implemented.');
-  }
-  simplifyText() {
-    throw new Error('Method not implemented.');
-  }
-  convertToShape() {
-    throw new Error('Method not implemented.');
-  }
-  createWorkPath() {
-    throw new Error('Method not implemented.');
-  }
-  verticalTypeMaskTool() {
-    throw new Error('Method not implemented.');
-  }
-  horizontalTypeMaskTool() {
-    throw new Error('Method not implemented.');
-  }
-  verticalTypeTool() {
-    throw new Error('Method not implemented.');
-  }
-  horizontalTypeTool() {
-    throw new Error('Method not implemented.');
-  }
+  // transformSelection() {
+  //   throw new Error('Method not implemented.');
+  // }
+  // fontPreview() {
+  //   throw new Error('Method not implemented.');
+  // }
+  // typeOrientation() {
+  //   throw new Error('Method not implemented.');
+  // }
+  // typeOnAPath() {
+  //   throw new Error('Method not implemented.');
+  // }
+  // matchFont() {
+  //   throw new Error('Method not implemented.');
+  // }
+  // simplifyText() {
+  //   throw new Error('Method not implemented.');
+  // }
+  // convertToShape() {
+  //   throw new Error('Method not implemented.');
+  // }
+  // createWorkPath() {
+  //   throw new Error('Method not implemented.');
+  // }
+  // verticalTypeMaskTool() {
+  //   throw new Error('Method not implemented.');
+  // }
+  // horizontalTypeMaskTool() {
+  //   throw new Error('Method not implemented.');
+  // }
+
   newTypeLayer() {
-    throw new Error('Method not implemented.');
+    this.layerService.createTypeLayer('Lorem Ipsum');
   }
   layerViaCut() {
     throw new Error('Method not implemented.');
