@@ -100,8 +100,8 @@ export class Resizer {
 
     const targetObjRect = this.targetObject.getBoundingClientRect();
     // this.elem.style.transform = `translate(${targetObjRect.left}px, ${targetObjRect.top}px)`;
-    // this.elem.style.left = targetObjRect.left + 'px';
-    // this.elem.style.top = targetObjRect.top + 'px';
+    // this.elem.style.left = targetObjRect.left * zoom + 'px';
+    // this.elem.style.top = targetObjRect.top * zoom + 'px';
     this.setWidth(this.targetObject.clientWidth * zoom);
     this.setHeight(this.targetObject.clientHeight * zoom);
   }
@@ -110,6 +110,7 @@ export class Resizer {
   }
   enable() {
     this.elem.style.display = 'block';
+    this.update();
     this.updateCorners();
   }
   setWidth(width: number) {
@@ -224,11 +225,22 @@ export class Resizer {
       if (resize == 'tl') {
         this.targetObject.style.width = `${e.clientX}px`;
         this.targetObject.style.height = `${e.clientY}px`;
-        // const rect = this.tr_corner?.getElem().getBoundingClientRect()!;
+        const rect = this.elem.getBoundingClientRect()!;
+        this.elem.style.left = `${e.clientX - rect.left}px`;
+        this.elem.style.top = `${e.clientY - rect.right}px`;
         this.setWidth(this.elem.clientWidth - e.clientX);
         this.setHeight(this.elem.clientHeight - e.clientY);
         return;
       } else if (resize == 'tr') {
+      } else if (resize == 'br') {
+        this.targetObject.style.width = `${e.clientX}px`;
+        this.targetObject.style.height = `${e.clientY}px`;
+
+        this.elem.style.left = `${this.elem.style.left}`;
+        this.elem.style.top = `${this.elem.style.top}`;
+        // const rect = this.tr_corner?.getElem().getBoundingClientRect()!;
+        this.setWidth(e.clientX);
+        this.setHeight(e.clientY);
       } else if (resize != '') {
         return;
       }

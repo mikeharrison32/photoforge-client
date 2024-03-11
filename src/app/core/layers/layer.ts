@@ -41,8 +41,6 @@ export class Layer extends PfObject {
   }
   hideControles() {}
   showControles() {}
-  setWidth(width: number) {}
-  setHeight(height: number) {}
 
   drawImage(img: any) {}
   moveTo(x: number, y: number) {}
