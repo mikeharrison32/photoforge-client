@@ -77,8 +77,12 @@ export class LayerComponent implements OnInit, OnDestroy {
     }
   }
   toggleLayerLocked() {
-    this.layer!.locked = this.layer?.locked ? false : true;
-    this.onLockClick.emit(true);
+    if (this.layer?.locked) {
+      this.layer?.unlock();
+    } else {
+      this.layer?.lock();
+    }
+    // this.onLockClick.emit(true);
   }
   toggleLayerHidden() {
     if (this.layer?.visible) {

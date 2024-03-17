@@ -17,6 +17,7 @@ export class PfObject {
   }
   remove() {
     this.elem.remove();
+    this.resizer.remove();
   }
   setWidth(width: number) {
     this.elem.style.width = `${width}px`;

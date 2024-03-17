@@ -21,7 +21,7 @@
         style="width: 100%; height: 100%; background: #fff"
         *ngIf="!imgSrc || imgSrc.length < 1"
       ></canvas>
-      <div class="shape-icon" *ngIf="getInstanceOf(layer) == 'shape'">
+      <div class="shape-icon" *ngIf="layer?.type == 'shape'">
         <img src="assets/rectangular-select.svg" />
       </div>
     </div>

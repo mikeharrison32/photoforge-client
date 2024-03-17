@@ -114,6 +114,7 @@ export class MenusComponent implements OnInit, OnDestroy {
             project.Id,
             imgObj
           );
+          pixelLayer.lock();
           this.data.layers.next([...this.data.layers.getValue(), pixelLayer]);
           this.data.projects.next([...this.data.projects.getValue(), project]);
           this.data.selectedProject.next(project);

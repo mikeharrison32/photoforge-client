@@ -4,6 +4,7 @@ import { DraggableBehaviour } from '../draggable-behavior';
 import { MouseDragEvent } from '../event';
 import { fabric } from 'fabric';
 import * as PIXI from 'pixi.js-legacy';
+import { DataService } from '../services/data.service';
 export class CropTool {
   type: string = 'cropTool';
   properties?: ICropToolProperties;
@@ -16,13 +17,16 @@ export class CropTool {
   mlCorner?: PIXI.Graphics;
   mtCorner?: PIXI.Graphics;
   blCorner?: PIXI.Graphics;
+  display?: HTMLElement;
   brCorner?: PIXI.Graphics;
   tlCorner?: PIXI.Graphics;
   cropOverlay?: PIXI.Graphics;
   drawingSurface?: PIXI.Sprite;
   texture!: PIXI.RenderTexture;
+  cornerWidth: number = 30;
+  cornerHeight: number = 5;
   cropRect?: { x: number; y: number; width: number; height: number };
-  configure(display: HTMLElement) {
+  configure(display: HTMLElement, data: DataService) {
     if (this.cropCanvas) {
       return;
     }
@@ -33,6 +37,7 @@ export class CropTool {
       antialias: true,
       resolution: 1,
     });
+    this.display = display;
     this.cropRect = {
       x: 10,
       y: 10,
@@ -44,6 +49,14 @@ export class CropTool {
     (this.cropCanvas.view as any).classList.add('crop-canvas');
     display.parentElement?.appendChild(this.cropCanvas.view as any);
 
+    document.addEventListener('keydown', (e) => {
+      if (e.code == 'Enter') {
+        const zoom = data.zoom.getValue() / 100;
+        display.style.width = this.cropRect!.width / zoom + 'px';
+        display.style.height = this.cropRect!.height / zoom + 'px';
+      }
+    });
+
     this.texture = PIXI.RenderTexture.create({
       width: this.cropCanvas?.view.width,
       height: this.cropCanvas?.view.height,
@@ -51,6 +64,7 @@ export class CropTool {
     this.drawingSurface = new PIXI.Sprite(this.texture);
     this.cropCanvas.stage.addChild(this.drawingSurface);
     this.drawingSurface.eventMode = 'static';
+
     this.createTopLeftCorner({ ...this.cropRect });
     this.createTopRightCorner({
       ...this.cropRect,
@@ -58,18 +72,18 @@ export class CropTool {
     });
     this.createBottomLeftCorner({
       x: this.cropRect.x,
-      y: this.cropRect.y + this.cropRect.height - 30 + 6,
+      y: this.cropRect.y + this.cropRect.height - this.cornerWidth + 6,
     });
     this.createBottomRightCorner({
       x: this.cropRect.x + this.cropRect.width - 26,
       y: this.cropRect.y + this.cropRect.height - 26,
     });
     this.createMiddleTopCorner({
-      x: this.cropRect.x + this.cropRect.width / 2 - 30 / 2,
+      x: this.cropRect.x + this.cropRect.width / 2 - this.cornerWidth / 2,
       y: this.cropRect.y,
     });
     this.createMiddleBottomCorner({
-      x: this.cropRect.x + this.cropRect.width / 2 - 30 / 2,
+      x: this.cropRect.x + this.cropRect.width / 2 - this.cornerWidth / 2,
       y: this.cropRect.y + this.cropRect.height,
     });
     this.createMiddleLeftCorner({
@@ -84,6 +98,10 @@ export class CropTool {
     this.createCropOverlay(this.cropRect);
   }
 
+  update() {
+    this.cropCanvas!.screen.width = this.display!.parentElement!.clientWidth;
+    this.cropCanvas!.screen.height = this.display!.parentElement!.clientHeight;
+  }
   private createCropOverlay(rect: {
     x: number;
     y: number;
@@ -97,7 +115,7 @@ export class CropTool {
     }
     this.cropOverlay = new PIXI.Graphics();
     this.cropOverlay.clear();
-    this.cropOverlay.beginFill('#00000086');
+    this.cropOverlay.beginFill('#747474b8');
     this.cropOverlay.drawRect(
       0,
       0,
@@ -137,10 +155,12 @@ export class CropTool {
     }
     this.mbCorner = new PIXI.Graphics();
     this.mbCorner.beginFill('#fff', 1);
-    this.mbCorner.drawRoundedRect(0, 0, 30, 8, 5);
+    this.mbCorner.drawRoundedRect(0, 0, this.cornerWidth, this.cornerHeight, 5);
     this.mbCorner.position.set(pos.x, pos.y);
     this.mbCorner.endFill();
     this.mbCorner.eventMode = 'static';
+    this.setCornerCursor(this.mbCorner, 'n-resize');
+
     this.cropCanvas?.stage.addChild(this.mbCorner);
     let mousedown = false;
     this.mbCorner?.addEventListener('mousedown', (e) => {
@@ -161,7 +181,7 @@ export class CropTool {
       //   height: e.global.y,
       // };
       this.mbCorner?.position.set(
-        this.cropRect!.x + this.cropRect!.width / 2 - 30 / 2,
+        this.cropRect!.x + this.cropRect!.width / 2 - this.cornerWidth / 2,
         e.global.y + 4
       );
       // this.trCorner?.position.set(this.cropRect!.width - 26, e.global.y - 4);
@@ -190,10 +210,12 @@ export class CropTool {
     }
     this.mrCorner = new PIXI.Graphics();
     this.mrCorner.beginFill('#fff', 1);
-    this.mrCorner.drawRoundedRect(0, 0, 8, 30, 5);
+    this.mrCorner.drawRoundedRect(0, 0, this.cornerHeight, this.cornerWidth, 5);
     this.mrCorner.position.set(pos.x - 4, pos.y - 4);
     this.mrCorner.endFill();
     this.mrCorner.eventMode = 'static';
+    this.setCornerCursor(this.mrCorner, 'e-resize');
+
     this.cropCanvas?.stage.addChild(this.mrCorner);
     let mousedown = false;
     this.mrCorner?.addEventListener('mousedown', (e) => {
@@ -234,10 +256,12 @@ export class CropTool {
     this.mlCorner.zIndex = 2;
 
     this.mlCorner.beginFill('#fff', 1);
-    this.mlCorner.drawRoundedRect(0, 0, 8, 30, 5);
+    this.mlCorner.drawRoundedRect(0, 0, this.cornerHeight, this.cornerWidth, 5);
     this.mlCorner.position.set(pos.x - 4, pos.y - 4);
     this.mlCorner.endFill();
     this.mlCorner.eventMode = 'static';
+    this.setCornerCursor(this.mlCorner, 'e-resize');
+
     this.cropCanvas?.stage.addChild(this.mlCorner);
     let mousedown = false;
     this.mlCorner?.addEventListener('mousedown', (e) => {
@@ -288,10 +312,13 @@ export class CropTool {
     }
     this.mtCorner = new PIXI.Graphics();
     this.mtCorner.beginFill('#fff', 1);
-    this.mtCorner.drawRoundedRect(0, 0, 30, 8, 5);
+    this.mtCorner.drawRoundedRect(0, 0, this.cornerWidth, this.cornerHeight, 5);
     this.mtCorner.position.set(pos.x - 4, pos.y - 4);
     this.mtCorner.endFill();
+
     this.mtCorner.eventMode = 'static';
+
+    this.setCornerCursor(this.mtCorner, 'n-resize');
     this.cropCanvas?.stage.addChild(this.mtCorner);
     let mousedown = false;
     this.mtCorner?.addEventListener('mousedown', (e) => {
@@ -347,11 +374,18 @@ export class CropTool {
     this.blCorner = new PIXI.Graphics();
     this.blCorner.zIndex = 3;
     this.blCorner.beginFill('#fff', 1);
-    this.blCorner.drawRoundedRect(0, 0, 8, 30, 5);
-    this.blCorner.drawRoundedRect(0, 23, 30, 8, 5);
+    this.blCorner.drawRoundedRect(0, 0, this.cornerHeight, this.cornerWidth, 5);
+    this.blCorner.drawRoundedRect(
+      0,
+      23,
+      this.cornerWidth,
+      this.cornerHeight,
+      5
+    );
     this.blCorner.position.set(pos.x - 4, pos.y - 4);
     this.blCorner.endFill();
     this.blCorner.eventMode = 'static';
+    this.setCornerCursor(this.blCorner, 'ne-resize');
     this.cropCanvas?.stage.addChild(this.blCorner);
     let mousedown = false;
     this.blCorner?.addEventListener('mousedown', (e) => {
@@ -390,11 +424,24 @@ export class CropTool {
     }
     this.brCorner = new PIXI.Graphics();
     this.brCorner.beginFill('#fff', 1);
-    this.brCorner.drawRoundedRect(23, 0, 8, 30, 5);
-    this.brCorner.drawRoundedRect(0, 23, 30, 8, 5);
+    this.brCorner.drawRoundedRect(
+      23,
+      0,
+      this.cornerHeight,
+      this.cornerWidth,
+      5
+    );
+    this.brCorner.drawRoundedRect(
+      0,
+      23,
+      this.cornerWidth,
+      this.cornerHeight,
+      5
+    );
     this.brCorner.position.set(pos.x - 4, pos.y - 4);
     this.brCorner.endFill();
     this.brCorner.eventMode = 'static';
+    this.setCornerCursor(this.brCorner, 'nw-resize');
     this.cropCanvas?.stage.addChild(this.brCorner);
     let mousedown = false;
     this.brCorner?.addEventListener('mousedown', (e) => {
@@ -431,10 +478,11 @@ export class CropTool {
       this.cropCanvas?.stage.removeChild(this.tlCorner);
       this.tlCorner.destroy();
     }
+
     this.tlCorner = new PIXI.Graphics();
     this.tlCorner.beginFill('#fff', 1);
-    this.tlCorner.drawRoundedRect(0, 0, 30, 8, 5);
-    this.tlCorner.drawRoundedRect(0, 0, 8, 30, 5);
+    this.tlCorner.drawRoundedRect(0, 0, this.cornerWidth, this.cornerHeight, 5);
+    this.tlCorner.drawRoundedRect(0, 0, this.cornerHeight, this.cornerWidth, 5);
     this.tlCorner.position.set(pos.x - 4, pos.y - 4);
     this.tlCorner.endFill();
     this.tlCorner.eventMode = 'static';
@@ -443,6 +491,8 @@ export class CropTool {
     this.tlCorner?.addEventListener('mousedown', (e) => {
       mousedown = true;
     });
+
+    this.setCornerCursor(this.tlCorner, 'nw-resize');
     this.cropCanvas?.stage.addEventListener('mouseup', (e) => {
       mousedown = false;
       const cropRectWidth = this.cropRect!.width;
@@ -473,18 +523,18 @@ export class CropTool {
       });
       this.mrCorner?.position.set(
         cropRectWidth - 4,
-        (cropRectHeight + e.global.y) / 2 - 30 / 2
+        (cropRectHeight + e.global.y) / 2 - this.cornerWidth / 2
       );
       this.mtCorner?.position.set(
-        (cropRectWidth + e.global.x) / 2 - 30 / 2,
+        (cropRectWidth + e.global.x) / 2 - this.cornerWidth / 2,
         e.global.y - 4
       );
       this.mlCorner?.position.set(
         e.global.x - 4,
-        (cropRectHeight + e.global.y) / 2 - 30 / 2
+        (cropRectHeight + e.global.y) / 2 - this.cornerWidth / 2
       );
       this.mbCorner?.position.set(
-        (cropRectWidth + e.global.x) / 2 - 30 / 2,
+        (cropRectWidth + e.global.x) / 2 - this.cornerWidth / 2,
         e.global.y - 4
       );
       this.blCorner?.position.set(e.global.x - 4, cropRectHeight - 26);
@@ -497,6 +547,15 @@ export class CropTool {
       // };
     });
   }
+  setCornerCursor(corner: PIXI.Graphics, cursor: string) {
+    const container = this.display?.parentElement;
+    corner.addEventListener('mouseover', (e) => {
+      container!.style.cursor = cursor;
+    });
+    corner.addEventListener('mouseout', (e) => {
+      container!.style.cursor = 'default';
+    });
+  }
 
   private createTopRightCorner(pos: { x: number; y: number }) {
     if (this.trCorner) {
@@ -506,11 +565,19 @@ export class CropTool {
 
     this.trCorner = new PIXI.Graphics();
     this.trCorner.beginFill('#fff', 1);
-    this.trCorner.drawRoundedRect(0, 0, 30, 8, 5);
-    this.trCorner.drawRoundedRect(23, 0, 8, 30, 5);
+    this.trCorner.drawRoundedRect(0, 0, this.cornerWidth, this.cornerHeight, 5);
+    this.trCorner.drawRoundedRect(
+      23,
+      0,
+      this.cornerHeight,
+      this.cornerWidth,
+      5
+    );
     this.trCorner.position.set(pos.x - 26, pos.y - 4);
     this.trCorner.endFill();
     this.trCorner.eventMode = 'static';
+
+    this.setCornerCursor(this.trCorner, 'ne-resize');
     this.cropCanvas?.stage.addChild(this.trCorner);
     let mousedown = false;
 

@@ -8,7 +8,11 @@ import { Mask } from '..';
 export class ShapeTool {
   type: string = 'shapeTool';
   shape: Shape = Shape.Rectangle;
+  properties: IShapeToolProperties = {};
+  listenForLayerResize!: (e: Event) => void;
+  listenForMouseDownEvent!: (e: any) => void;
   configure(display: HTMLElement, renderer: Renderer2, data: DataService) {
+    console.log('shape tool configured');
     const imgDisplay = display.parentElement?.parentElement;
     if (!imgDisplay) {
       return;
@@ -19,10 +23,11 @@ export class ShapeTool {
     let startX: number, startY: number;
     const imgDisplayRect = display.getBoundingClientRect();
 
-    imgDisplay.addEventListener('mousedown', (e) => {
+    this.listenForMouseDownEvent = (e: any) => {
+      console.log('mousedown');
       const shapeLayers = data.layers
         .getValue()
-        .filter((layer) => layer.type == 'shapeLayer');
+        .filter((layer) => layer.type == 'shape');
 
       const clickedShapeLayer = shapeLayers.find((sl) =>
         sl.contains(e.target as HTMLElement)
@@ -41,12 +46,26 @@ export class ShapeTool {
         'Shape Layer 1',
         data.selectedProject.getValue()?.Id || 'aaa'
       );
-      shapeLayer.type = 'shapeLayer';
+      shapeLayer.type = 'shape';
       // shapeLayer.setWidth(display.clientWidth);
       // shapeLayer.setHeight(display.clientHeight);
 
       data.layers.next([...data.layers.getValue(), shapeLayer]);
 
+      renderer.setStyle(
+        shapeLayer.elem,
+        'background',
+        this.properties.fill || '#000'
+      );
+      renderer.setStyle(
+        shapeLayer.elem,
+        'border',
+        `solid ${this.properties.stroke || ''} ${
+          this.properties.strokeWidth || 1
+        }`
+      );
+
+      let shapeElem: HTMLElement;
       switch (this.shape) {
         case Shape.Rectangle:
           // const mask = new Mask(shapeLayer, [
@@ -62,39 +81,77 @@ export class ShapeTool {
           //   0,
           // ]);
 
-          const shapeElem = renderer.createElement('div');
+          shapeElem = renderer.createElement('div');
+          renderer.addClass(shapeElem, 'shape');
+
+          shapeLayer.elem.appendChild(shapeElem);
+          break;
+        case Shape.RoundedRectangle:
+          shapeElem = renderer.createElement('div');
           renderer.addClass(shapeElem, 'shape');
           renderer.setStyle(
             shapeElem,
             'background',
             data.selectedColors.getValue().fg
           );
+          shapeLayer.elem.style.borderRadius = '40px';
           shapeLayer.elem.appendChild(shapeElem);
           break;
       }
-    });
+    };
+    imgDisplay.addEventListener('mousedown', this.listenForMouseDownEvent);
+
     document.addEventListener('mouseup', (e) => {
       mousedown = false;
       data.selectedLayers.next([shapeLayer]);
     });
 
     const zoom = data.zoom.getValue() / 100;
-    imgDisplay.addEventListener('mousemove', (e) => {
+    this.listenForLayerResize = (e: any) => {
       if (!mousedown || !shapeLayer) {
         return;
       }
-      shapeLayer.elem.style.left = `${startX}px`;
-      shapeLayer.elem.style.top = `${startY}px`;
-
-      shapeLayer.elem.style.width = `${
-        (e.clientX - imgDisplayRect.left) / zoom
-      }px`;
-      shapeLayer.elem.style.height = `${
-        (e.clientY - imgDisplayRect.top) / zoom
-      }px`;
-    });
+      this.resizeShapeLayer(
+        shapeLayer,
+        startX,
+        startY,
+        e,
+        imgDisplayRect,
+        zoom
+      );
+    };
+    imgDisplay.addEventListener('mousemove', this.listenForLayerResize);
   }
-  disconfigure(): void {}
+  private resizeShapeLayer(
+    shapeLayer: Layer,
+    startX: number,
+    startY: number,
+    e: MouseEvent,
+    imgDisplayRect: DOMRect,
+    zoom: number
+  ) {
+    shapeLayer.elem.style.left = `${startX}px`;
+    shapeLayer.elem.style.top = `${startY}px`;
+
+    shapeLayer.elem.style.width = `${
+      (e.clientX - imgDisplayRect.left) / zoom
+    }px`;
+    shapeLayer.elem.style.height = `${
+      (e.clientY - imgDisplayRect.top) / zoom
+    }px`;
+  }
+
+  disconfigure(display: HTMLElement): void {
+    document.removeEventListener('mousemove', this.listenForLayerResize);
+    const imgDisplay = display.parentElement?.parentElement;
+    imgDisplay?.removeEventListener('mousedown', this.listenForMouseDownEvent);
+  }
 }
 
 export const shapeTool = new ShapeTool();
+
+interface IShapeToolProperties {
+  fill?: string;
+  stroke?: string;
+  strokeWidth?: number;
+}

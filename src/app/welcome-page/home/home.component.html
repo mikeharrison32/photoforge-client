@@ -6,22 +6,24 @@
   <p>Show suggestions</p>
 </div>
 <div class="recent-files-container">
-  <h4>Recent</h4>
-  <div
-    [ngClass]="
-      activeView == 'list' ? 'list-view-icon-active' : 'list-view-icon'
-    "
-    (click)="setActiveView('list')"
-  >
-    <img src="assets/List-view-icon.svg" alt="List View Icon" />
-  </div>
-  <div
-    [ngClass]="
-      activeView == 'window' ? 'window-view-icon-active' : 'window-view-icon'
-    "
-    (click)="setActiveView('window')"
-  >
-    <img src="assets/Window-view-icon.svg" alt="Window View Icon" />
+  <div class="recent">
+    <h4>Recent</h4>
+    <div
+      [ngClass]="
+        activeView == 'list' ? 'list-view-icon-active' : 'list-view-icon'
+      "
+      (click)="setActiveView('list')"
+    >
+      <img src="assets/List-view-icon.svg" alt="List View Icon" />
+    </div>
+    <div
+      [ngClass]="
+        activeView == 'window' ? 'window-view-icon-active' : 'window-view-icon'
+      "
+      (click)="setActiveView('window')"
+    >
+      <img src="assets/Window-view-icon.svg" alt="Window View Icon" />
+    </div>
   </div>
   <div class="display-options">
     <div class="sort-container">
@@ -47,9 +49,33 @@
       <p>{{ project.modifyedAt | date }}</p>
     </div>
     <div class="loading" *ngIf="loading">
-      <h1>Loading...</h1>
+      <div class="file">
+        <div class="file-image"></div>
+        <h4></h4>
+        <p></p>
+      </div>
+      <div class="file">
+        <div class="file-image"></div>
+        <h4></h4>
+        <p></p>
+      </div>
+      <div class="file">
+        <div class="file-image"></div>
+        <h4></h4>
+        <p></p>
+      </div>
+      <div class="file">
+        <div class="file-image"></div>
+        <h4></h4>
+        <p></p>
+      </div>
+      <div class="file">
+        <div class="file-image"></div>
+        <h4></h4>
+        <p></p>
+      </div>
     </div>
-    <div class="not-logged-in" *ngIf="!loading">
+    <div class="not-logged-in" *ngIf="!loading && projects.length < 1">
       Login or Signup to see your recent projects.
       <button (click)="loadRecentProjects()">Continue</button>
     </div>

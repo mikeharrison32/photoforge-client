@@ -6,11 +6,11 @@ export class TextTool {
   type: string = 'textTool';
   data?: DataService;
   textArea?: HTMLElement;
+  mouseDownListener!: (e: any) => void;
   configure(display: HTMLElement, data: DataService, renderer: Renderer2) {
     this.data = data;
-    data.shortcutsEnabled.next(false);
     display.style.cursor = 'text';
-    display.addEventListener('mousedown', (e) => {
+    this.mouseDownListener = (e) => {
       const displayScale = parseFloat(display.style.scale || '1');
       const typeLayer = new TypeLayer(
         renderer,
@@ -22,13 +22,21 @@ export class TextTool {
         'Thank\nYou'
       );
       data.layers.next([...data.layers.getValue(), typeLayer]);
-    });
+    };
+    display.parentElement?.addEventListener(
+      'mousedown',
+      this.mouseDownListener
+    );
   }
 
   disconfigure(display: HTMLElement): void {
+    console.log('disconfiguring text tool');
     display.style.cursor = 'default';
     this.data?.shortcutsEnabled.next(true);
-    display.removeEventListener('mousedown', (e) => {});
+    display.parentElement?.removeEventListener(
+      'mousedown',
+      this.mouseDownListener
+    );
   }
 }
 

@@ -5,7 +5,7 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditorComponent } from './editor/editor.component';
 import { SharedModule } from './shared/shared.module';
 import { GetStartedModule } from './get-started/get-started.module';
@@ -28,6 +28,7 @@ import { HelpPageComponent } from './help-page/help-page.component';
 import { PricingComponent } from './pricing/pricing.component';
 import { ContactComponent } from './contact/contact.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { InfoDirective } from './shared/directives/info.directive';
 
 const routes: Routes = [
   {
@@ -89,6 +90,7 @@ const routes: Routes = [
     BrowserModule,
     BrowserAnimationsModule,
     EditorModule,
+    ReactiveFormsModule,
     SharedModule,
     CommonModule,
     GetStartedModule,

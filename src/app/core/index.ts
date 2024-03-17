@@ -16,7 +16,6 @@ export class Mask {
   clipPath!: SVGClipPathElement;
   defs!: SVGDefsElement;
   constructor(target: PfObject, points?: number[]) {
-    console.log(points);
     this.svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     this.path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     this.defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
@@ -33,7 +32,7 @@ export class Mask {
         d = `M${points[0]},${points[1]}`;
         this.path.setAttribute('d', d);
       }
-      for (let i = 0; i < points.length; i++) {
+      for (let i = 2; i < points.length; i += 2) {
         let x = points[i];
         let y = points[i + 1];
         const pathData = this.path.getAttribute('d');

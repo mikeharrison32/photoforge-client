@@ -16,6 +16,7 @@ export class Resizer {
   elem!: HTMLElement;
   targetObject!: HTMLElement;
   data!: DataService;
+  locked: boolean = false;
   constructor(
     private renderer: Renderer2,
     targetObject: HTMLElement,
@@ -91,6 +92,7 @@ export class Resizer {
       this.bl_corner = new Corner(this.elem);
       this.bl_corner.getElem().style.cursor = 'ne-resize';
     }
+
     this.makeElemDraggable();
     this.disable();
     //place the corner inside the elem provided
@@ -104,6 +106,25 @@ export class Resizer {
     // this.elem.style.top = targetObjRect.top * zoom + 'px';
     this.setWidth(this.targetObject.clientWidth * zoom);
     this.setHeight(this.targetObject.clientHeight * zoom);
+  }
+  remove() {
+    this.elem.remove();
+    this.tr_corner?.getElem().remove();
+    this.tl_corner?.getElem().remove();
+    this.br_corner?.getElem().remove();
+    this.mr_corner?.getElem().remove();
+    this.ml_corner?.getElem().remove();
+    this.bl_corner?.getElem().remove();
+    this.mt_corner?.getElem().remove();
+    this.mb_corner?.getElem().remove();
+  }
+  lock() {
+    this.disableCorners();
+    this.locked = true;
+  }
+  unlock() {
+    this.enableCorners();
+    this.locked = false;
   }
   disable() {
     this.elem.style.display = 'none';
@@ -218,10 +239,17 @@ export class Resizer {
 
     document.addEventListener('mouseup', (e) => {
       resize = 'n';
-      this.enableCorners();
+      if (!this.locked) {
+        this.enableCorners();
+      }
     });
 
     document.addEventListener('mousemove', (e) => {
+      if (!this.data.isMovingAllowed.getValue() || this.locked) {
+        console.log('not allowwed');
+        return;
+      }
+
       if (resize == 'tl') {
         this.targetObject.style.width = `${e.clientX}px`;
         this.targetObject.style.height = `${e.clientY}px`;
