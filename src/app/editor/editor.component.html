@@ -1,5 +1,5 @@
 <app-top-bar></app-top-bar>
-<div class="main" dropzone="">
+<div class="main">
   <app-tool-box></app-tool-box>
   <div class="image-display" id="image-display" #container>
     <div #cursor class="cursor" id="cursor"></div>
@@ -8,12 +8,11 @@
         id="display"
         #display
         [style.opacity]="projects.length < 1 ? '0' : '1'"
-      >
-        <div class="pf-object"></div>
-      </div>
+      ></div>
       <div id="resizers"></div>
     </div>
     <div
+      #contextMenuRef
       class="context-menu"
       [style.left]="contextMenu.x + 'px'"
       [style.top]="contextMenu.y + 'px'"

@@ -9,6 +9,7 @@ import { AdjustmentFilter } from '@pixi/filter-adjustment';
 import { SelectionContextMenu } from './selection-context-menu';
 import { Selection } from '../../selection';
 import { Mask } from '../..';
+import { Renderer2 } from '@angular/core';
 class ReactangularSelect {
   properites?: IRectangularProperties;
   contextMenu?: ContextMenu;
@@ -19,7 +20,13 @@ class ReactangularSelect {
   selectionRectPos!: { x: number; y: number; width: number; height: number };
   texture!: PIXI.RenderTexture;
   drawingSurface!: PIXI.Sprite;
-  configure(display: HTMLElement, data: DataService): void {
+  // data!: DataService;
+  configure(
+    display: HTMLElement,
+    data: DataService,
+    renderer: Renderer2
+  ): void {
+    // this.data = data;
     this.selectionRectPos = {
       x: 0,
       y: 0,
@@ -63,7 +70,7 @@ class ReactangularSelect {
       this.selectionRect?.destroy();
       delete this.selectionRect;
       this.selectionRect = new PIXI.Graphics();
-      this.selectionRect?.lineStyle({ color: 'rgb(255 43 121)', width: 2 });
+      this.selectionRect?.lineStyle({ color: '#717171', width: 2 });
       this.selectionRect?.drawRect(
         this.selectionRectPos.x,
         this.selectionRectPos.y,
@@ -98,26 +105,64 @@ class ReactangularSelect {
         const containerRect = (
           this.selectionCanvas?.view as any
         )?.getBoundingClientRect();
-        const c = {
+        const selectionContextMenu = {
           x: e.clientX - containerRect!.left,
           y: e.clientY - containerRect!.top,
           menus: [
             {
               name: 'Layer via Copy',
               click: () => {
-                const mask = new Mask(selectedLayer, [
-                  this.selectionRectPos.x,
-                  this.selectionRectPos.y,
-                  this.selectionRectPos.width,
-                  this.selectionRectPos.y,
-                  this.selectionRectPos.width,
-                  this.selectionRectPos.height,
-                  this.selectionRectPos.x,
-                  this.selectionRectPos.height,
-                  this.selectionRectPos.x,
-                  this.selectionRectPos.y,
-                ]);
-                console.log(mask.path);
+                if (selectedLayer instanceof PixelLayer) {
+                  const img = new Image();
+                  img.src = selectedLayer.src || '';
+                  const copyLayer = new PixelLayer(
+                    data,
+                    renderer,
+                    display,
+                    `${Math.random()}`,
+                    'Layer 1 Copy',
+                    selectedLayer.projectId,
+                    img
+                  );
+                  data.layers.next([...data.layers.getValue(), copyLayer]);
+                  console.log(this.selectionRectPos);
+                  this.selectionRectPos.width += this.selectionRectPos.x;
+                  this.selectionRectPos.height += this.selectionRectPos.y;
+                  const mask = new Mask(copyLayer, [
+                    this.selectionRectPos.x,
+                    this.selectionRectPos.y,
+                    // second point
+                    this.selectionRectPos.x,
+                    this.selectionRectPos.height,
+                    //thridlayer
+
+                    this.selectionRectPos.width,
+                    this.selectionRectPos.height,
+                    //forth
+                    this.selectionRectPos.width,
+                    this.selectionRectPos.x,
+                    //close
+                    this.selectionRectPos.x,
+                    this.selectionRectPos.y,
+                  ]);
+                  console.log([
+                    this.selectionRectPos.x,
+                    this.selectionRectPos.y,
+                    // second point
+                    this.selectionRectPos.x,
+                    this.selectionRectPos.height,
+                    //thridlayer
+
+                    this.selectionRectPos.width,
+                    this.selectionRectPos.height,
+                    //forth
+                    this.selectionRectPos.width,
+                    this.selectionRectPos.x,
+                    //close
+                    this.selectionRectPos.x,
+                    this.selectionRectPos.y,
+                  ]);
+                }
               },
             },
             {
@@ -130,6 +175,7 @@ class ReactangularSelect {
               name: 'Deselect',
               click: () => {
                 console.log('fill fill');
+                this.clearCanvas();
               },
             },
             {
@@ -170,7 +216,7 @@ class ReactangularSelect {
             },
           ],
         };
-        data.contextMenu.next(c);
+        data.contextMenu.next(selectionContextMenu);
         // this.selection = new Selection(this.selectionCanvas!)
         // this.selection.addFromRect(this.selectionRect)
         //   console.log('right clicked');
@@ -240,6 +286,7 @@ class ReactangularSelect {
   disconfigure(display: HTMLElement): void {
     this.selectionCanvas?.destroy(true);
     delete this.selectionCanvas;
+    // this.data.contextMenu.next({});
   }
 }
 

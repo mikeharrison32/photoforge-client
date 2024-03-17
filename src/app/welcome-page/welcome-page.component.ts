@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { TokenService } from '../core/services/token.service';
@@ -7,6 +7,7 @@ import { ApiService } from '../core/services/api.service';
 import { Project } from '../types/project';
 import { DataService } from '../core/services/data.service';
 import { StateService } from '../core/services/state.service';
+import { PixelLayer } from '../core/layers/pixel-layer';
 
 @Component({
   selector: 'app-welcome-page',
@@ -26,7 +27,8 @@ export class WelcomePageComponent implements OnInit {
     private jwtHelper: JwtHelperService,
     private api: ApiService,
     private data: DataService,
-    private stateService: StateService
+    private stateService: StateService,
+    private renderer: Renderer2
   ) {}
   ngOnInit() {
     this.data.showNav.next(false);
@@ -55,22 +57,24 @@ export class WelcomePageComponent implements OnInit {
             Width: imgObj.width,
             Height: imgObj.height,
           };
-
+          const displayElem = this.data.displayElem.getValue();
+          displayElem!.style.width = imgObj.width + 'px';
+          displayElem!.style.height = imgObj.height + 'px';
+          const pixelLayer = new PixelLayer(
+            this.data,
+            this.renderer,
+            displayElem,
+            'aaa',
+            file.name,
+            project.Id,
+            imgObj
+          );
+          this.data.layers.next([...this.data.layers.getValue(), pixelLayer]);
           this.data.projects.next([...this.data.projects.getValue(), project]);
-          this.data.canvas.value?.setWidth(project.Width!);
-          this.data.canvas.value?.setHeight(project.Height!);
           this.data.selectedProject.next(project);
+          this.router.navigateByUrl('/editor');
         };
       };
-      this.api.createProjectByUpload(file).subscribe({
-        next: (res) => {
-          console.log(res);
-          this.router.navigateByUrl('/editor');
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
       reader.readAsDataURL(file);
     }
   }

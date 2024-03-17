@@ -1,6 +1,7 @@
 :host {
   display: block;
   width: 100%;
+  height: 100%;
   .top-bar {
     display: flex;
     width: 97%;
@@ -33,7 +34,13 @@
     position: relative;
     display: flex;
     align-items: center;
-
+    flex-direction: column;
+    height: 100%;
+    .recent {
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
     %active-view {
       @extend %img-container;
       background: #3b3b3b;
@@ -122,6 +129,51 @@
       gap: 0.5rem;
       position: absolute;
       top: 7rem;
+      width: 100%;
+      height: 100%;
+      overflow-y: scroll;
+      &::-webkit-scrollbar {
+        background: transparent;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #575757;
+        border-radius: 1px;
+      }
+      .loading {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.3rem;
+        .file {
+          .file-image {
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #4b4b4b;
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              transition: 600ms;
+              &:hover {
+                scale: 1.2;
+              }
+            }
+          }
+          h4 {
+            width: 100%;
+            height: 1rem;
+            background-color: #4b4b4b;
+          }
+          p {
+            background-color: #4b4b4b;
+            width: 50%;
+            height: 1rem;
+          }
+        }
+      }
       .not-logged-in {
         display: flex;
         flex-direction: column;
@@ -139,16 +191,16 @@
           cursor: pointer;
         }
       }
+
       .file {
         transition: 200ms ease-out;
-
-        width: 14rem;
+        height: fit-content;
+        width: 18rem;
         padding: 1rem;
-        border-radius: 1px;
+        cursor: pointer;
         background: #2a2a2a;
         .file-image {
-          width: 14rem;
-          height: 9rem;
+          height: 13rem;
         }
         h4 {
           margin-bottom: 0.3rem;

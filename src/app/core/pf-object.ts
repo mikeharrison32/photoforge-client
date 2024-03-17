@@ -17,5 +17,15 @@ export class PfObject {
   }
   remove() {
     this.elem.remove();
+    this.resizer.remove();
+  }
+  setWidth(width: number) {
+    this.elem.style.width = `${width}px`;
+  }
+  setHeight(height: number) {
+    this.elem.style.height = `${height}px`;
+  }
+  contains(elem: HTMLElement) {
+    return this.elem.contains(elem) || this.resizer.elem.contains(elem);
   }
 }

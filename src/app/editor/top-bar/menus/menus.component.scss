@@ -35,10 +35,10 @@ $light_gray: #3a3a3a;
     top: 1rem;
     border-radius: 2px;
     position: absolute;
-    color: #d6d6d6;
-    background: #2d2d2d;
+    background: rgb(255 255 255);
+    box-shadow: #000 0 0 1px 0;
     border: solid 1px #656565;
-    z-index: 1000;
+    z-index: 1000000;
     ul {
       display: flex;
       flex-direction: column;
@@ -46,14 +46,14 @@ $light_gray: #3a3a3a;
       gap: 0;
       padding: 0;
       li {
+        color: #111;
         padding-inline: 0.6rem;
         padding-block: 0.2rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
         &:hover {
-          background: #ff06a8;
-
+          background: rgba(109, 109, 109, 0.849);
           color: #fff;
         }
         img {

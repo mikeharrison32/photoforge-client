@@ -40,12 +40,6 @@
       0% {
         transform: rotate(0deg);
       }
-      25% {
-        transform: rotate(120deg);
-      }
-      50% {
-        transform: rotate(180deg);
-      }
       100% {
         transform: rotate(360deg);
       }
@@ -63,6 +57,7 @@
       animation-name: infRotate;
       animation-duration: 500ms;
       animation-iteration-count: infinite;
+      animation-delay: 0ms;
     }
   }
   .form {
@@ -135,6 +130,16 @@
         border-radius: 38px;
         border: none;
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        .google-logo {
+          align-items: center;
+          width: 1.3rem;
+          height: 1.3rem;
+          display: flex;
+          margin-left: 1rem;
+        }
       }
       .done {
         width: 15rem;

@@ -3,6 +3,7 @@ import { Tool } from '../../enums/tool.enum';
 import { DataService } from '../../core/services/data.service';
 import { Layer } from 'src/app/types/layer';
 import { Shape } from 'src/app/enums/shapes';
+import { shapeTool } from 'src/app/core/tools';
 
 @Component({
   selector: 'app-tool-box',
@@ -31,22 +32,31 @@ export class ToolBoxComponent implements OnInit, OnDestroy {
       case Shape.Rectangle:
         this.shapeImgSrc =
           'assets/tools-icons/shape-tools-icons/rectangle-shape-tool.svg';
+        shapeTool.shape = Shape.Rectangle;
         break;
       case Shape.RoundedRectangle:
         this.shapeImgSrc =
           'assets/tools-icons/shape-tools-icons/rounded-rectangle-shape-tool.svg';
+        shapeTool.shape = Shape.RoundedRectangle;
+
         break;
       case Shape.Ellipse:
         this.shapeImgSrc =
           'assets/tools-icons/shape-tools-icons/ellipse-shape-tool.svg';
+        shapeTool.shape = Shape.Ellipse;
+
         break;
       case Shape.Polygon:
         this.shapeImgSrc =
           'assets/tools-icons/shape-tools-icons/polygon-shape-tool.svg';
+        shapeTool.shape = Shape.Polygon;
+
         break;
       case Shape.Line:
         this.shapeImgSrc =
           'assets/tools-icons/shape-tools-icons/line-shape-tool.svg';
+        shapeTool.shape = Shape.Line;
+
         break;
       case Shape.CustomShape:
         this.shapeImgSrc =

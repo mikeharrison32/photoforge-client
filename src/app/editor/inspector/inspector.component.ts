@@ -86,6 +86,7 @@ export class InspectorComponent implements OnInit, OnDestroy {
   }
   toggleMovingLocked() {
     this.movingLocked = this.movingLocked ? false : true;
+    this.data.isMovingAllowed.next(this.movingLocked);
   }
   toggleBrushLocked() {
     this.brushLocked = this.brushLocked ? false : true;

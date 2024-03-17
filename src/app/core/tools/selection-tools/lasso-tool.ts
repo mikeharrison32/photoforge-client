@@ -7,6 +7,7 @@ import * as PIXI from 'pixi.js-legacy';
 import { DataService } from '../../services/data.service';
 import { ContextMenu, Menu } from '../../context-menu';
 import { Mask } from '../..';
+import { Renderer2 } from '@angular/core';
 export class LassoTool {
   lassoCanvas?: PIXI.Application;
   type: string = 'lassoTool';
@@ -16,7 +17,7 @@ export class LassoTool {
   data?: DataService;
   selection?: Selection;
   display?: HTMLElement;
-  configure(display: HTMLElement, data: DataService) {
+  configure(display: HTMLElement, data: DataService, renderer: Renderer2) {
     this.data = data;
     this.display = display;
     console.log('lasso tool configured.');
@@ -37,7 +38,7 @@ export class LassoTool {
     this.addlassoCanvas(display.parentElement!);
 
     this.setupDrawingFeature();
-    this.registerListeners();
+    this.registerListeners(data, renderer, display);
   }
 
   private addlassoCanvas(display: HTMLElement) {
@@ -54,10 +55,10 @@ export class LassoTool {
       this.clearCanvas();
       prevPosition.set(e.global.x, e.global.y);
     });
-    let color = '#000';
+    let color = '#717171';
     const prevPosition = new PIXI.Point();
-    const lineFill = new PIXI.Graphics().beginFill('#000');
-    const brush = new PIXI.Graphics().beginFill('#000');
+    const lineFill = new PIXI.Graphics().beginFill('#717171');
+    const brush = new PIXI.Graphics().beginFill('#717171');
     const redraw = (x: number, y: number) => {
       brush.position.set(x, y);
       this.lassoCanvas?.renderer.render(brush, {
@@ -66,7 +67,7 @@ export class LassoTool {
       });
       lineFill
         .clear()
-        .lineStyle(2, color)
+        .lineStyle(3, color)
         .moveTo(prevPosition.x, prevPosition.y)
         .lineTo(brush.x, brush.y);
       this.lassoCanvas?.renderer.render(lineFill, {
@@ -79,7 +80,8 @@ export class LassoTool {
       if (!mousedown) {
         return;
       }
-      this.points.push(c.global.x, c.global.y);
+      const zoom = this.data!.zoom.getValue() / 100;
+      this.points.push(c.global.x / zoom, c.global.y / zoom);
       redraw(c.global.x, c.global.y);
     });
     this.drawingSurface.on('mouseup', () => {
@@ -100,16 +102,27 @@ export class LassoTool {
 
   private clearLassoCanvas(ctx: CanvasRenderingContext2D) {}
 
-  private registerListeners() {
+  private registerListeners(
+    data: DataService,
+    renderer: Renderer2,
+    display: HTMLElement
+  ) {
+    const zoom = this.data!.zoom.getValue() / 100;
     document.addEventListener('keydown', (e) => {
       if (e.code == 'Enter') {
         this.clearCanvas();
         if (this.selection) {
           this.selection.clearSelection(this.texture);
-          this.selection.addFromPoints(this.points, this.texture);
+          this.selection.addFromPoints(
+            this.points.map((c) => c * zoom),
+            this.texture
+          );
         } else {
           this.selection = new Selection(this.lassoCanvas!);
-          this.selection.addFromPoints(this.points, this.texture);
+          this.selection.addFromPoints(
+            this.points.map((c) => c * zoom),
+            this.texture
+          );
         }
       }
     });
@@ -119,7 +132,8 @@ export class LassoTool {
     });
     this.drawingSurface.on('rightclick', (e) => {
       console.log('right clicked');
-      const poly = new PIXI.Polygon(this.points);
+      const poly = new PIXI.Polygon(this.points.map((c) => c * zoom));
+      const selectedLayer = this.data?.selectedLayers.getValue()[0];
       if (poly.contains(e.global.x, e.global.y)) {
         const c = {
           x: e.x,
@@ -128,11 +142,21 @@ export class LassoTool {
             {
               name: 'Layer via Copy',
               click: () => {
-                const mask = new Mask(
-                  this.data!.selectedLayers.getValue()[0],
-                  this.points
-                );
-                console.log(mask.path);
+                if (selectedLayer instanceof PixelLayer) {
+                  const img = new Image();
+                  img.src = selectedLayer.src || '';
+                  const copyLayer = new PixelLayer(
+                    data,
+                    renderer,
+                    display,
+                    `${Math.random()}`,
+                    'Layer 1 Copy',
+                    selectedLayer.projectId,
+                    img
+                  );
+                  data.layers.next([...data.layers.getValue(), copyLayer]);
+                  const mask = new Mask(copyLayer, this.points);
+                }
               },
             },
             {

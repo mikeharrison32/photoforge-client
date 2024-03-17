@@ -60,6 +60,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
   @ViewChild('display') display?: ElementRef;
   @ViewChild('container') container?: ElementRef;
+  @ViewChild('contextMenuRef') contextMenuElem?: ElementRef;
   selectionContextMenu!: { isActive: boolean; x: number; y: number };
   currentSelection?: Selection | null;
   constructor(
@@ -90,22 +91,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.data.currentSelection.subscribe((cs) => {
       this.currentSelection = cs;
     });
-    this.data.selectionContextMenu.subscribe((cm) => {
-      this.selectionContextMenu = cm;
-      if (cm.isActive) {
-        document.addEventListener('mousedown', (e) => {
-          if (!this.rectSelectContextMenu?.nativeElement.contains(e.target)) {
-            this.data.selectionContextMenu.next({
-              isActive: false,
-              x: 0,
-              y: 0,
-            });
 
-            document.removeEventListener('mousedown', (e) => {});
-          }
-        });
-      }
-    });
     this.data.selectedProject.subscribe((project) => {
       this.selectedProject = project;
       this.data.zoom.next(project?.Zoom || 50);
@@ -120,12 +106,12 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         layer.resizer.disable();
       });
       sl.forEach((sl_layer) => {
-        sl_layer.resizer.enable();
+        if (sl_layer.visible) {
+          sl_layer.resizer.enable();
+        }
       });
     });
-    this.data.shortcutsEnabled.subscribe((en) => {
-      this.addShortcuts();
-    });
+
     this.data.zoom.subscribe((zoom) => {
       this.zoom = zoom;
       this.display!.nativeElement.style.scale = (zoom / 100).toString();
@@ -142,6 +128,10 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       this.data.selectedLayers.getValue().forEach((lr) => {
         lr.resizer.update();
       });
+
+      if (this.data.selectedTool.getValue() == 'cropTool') {
+        cropTool.update();
+      }
     });
   }
   private filterLayers(project: Project | null) {
@@ -178,6 +168,17 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       img
     );
 
+    const contextMenuElem = this.contextMenuElem?.nativeElement as HTMLElement;
+    const clickedOutSizeContextMenu = (e: any) => {
+      if (
+        !contextMenuElem.contains(e.target) &&
+        Object.entries(this.data.contextMenu.getValue()).length > 0
+      ) {
+        this.data.contextMenu.next({});
+      }
+    };
+    this.renderer.listen(document, 'mousedown', clickedOutSizeContextMenu);
+
     (this.container?.nativeElement as HTMLElement).addEventListener(
       'mousedown',
       (e) => {
@@ -187,18 +188,15 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           // console.log('selectedLayer: ', selectedLayer.name);
         }
         this.data.layers.getValue().forEach((layer) => {
-          if (
-            layer.elem.contains(e.target as HTMLElement) ||
-            layer.resizer.elem.contains(e.target as HTMLElement)
-          ) {
-            // console.log('bb containes', layer.name);
+          if (layer.contains(e.target as HTMLElement)) {
+            console.log('bb containes', layer.name);
             // selectedLayer.resizer.disable();
             this.data.selectedLayers.next([layer]);
             layer.resizer.enable();
           } else {
             // console.log(layer.elem, ' does not contain ', e.target);
             // console.log(selectedLayer);
-            if (selectedLayer) {
+            if (selectedLayer && selectedLayer.resizer) {
               // console.log(selectedLayer);
               selectedLayer.resizer.disable();
               // this.data.selectedLayers.next([]);
@@ -254,17 +252,26 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
             case 'shapeTool':
               tool.configure(
                 this.display?.nativeElement,
-                this.selectedLayers[0]
+                this.renderer,
+                this.data
               );
               break;
             case 'cropTool':
-              tool.configure(this.display?.nativeElement);
+              tool.configure(this.display?.nativeElement, this.data);
               break;
             case 'lassoTool':
-              tool.configure(this.display?.nativeElement, this.data);
+              tool.configure(
+                this.display?.nativeElement,
+                this.data,
+                this.renderer
+              );
               break;
             case 'rectangularSelectTool':
-              tool.configure(this.display?.nativeElement, this.data);
+              tool.configure(
+                this.display?.nativeElement,
+                this.data,
+                this.renderer
+              );
               break;
             case 'cloneStampTool':
               tool.configure(this.display?.nativeElement, this.layers[0]);
@@ -336,10 +343,10 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         case 'KeyM':
           this.data.selectedTool.next('moveTool');
           this.disconfigureTools();
-
           break;
         case 'KeyA':
           if (e.ctrlKey) {
+            this.data.selectedLayers.next([...this.data.layers.getValue()]);
           }
           break;
         case 'KeyL':
@@ -432,7 +439,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           const newLayersArray: Layer[] = [];
           this.data.layers.getValue().forEach((layer) => {
             if (this.selectedLayers.includes(layer)) {
-              // layer.canvas?.remove();
+              layer.remove();
             } else {
               newLayersArray.push(layer);
             }

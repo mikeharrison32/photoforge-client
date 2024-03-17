@@ -113,7 +113,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-block: 0.4rem;
       width: 84%;
       img {
         padding: 0.5rem;
@@ -147,6 +146,9 @@
       .right-bottom-border-icon {
         border-bottom-right-radius: $border-radius;
       }
+    }
+    .row {
+      margin-block: 2px;
     }
     input {
       background: transparent;

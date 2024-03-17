@@ -11,6 +11,7 @@ import { DestroyableDirective } from './directives/destroyable.directive';
 import { GroupFolderComponent } from './components/group-folder/group-folder.component';
 import { ColorPickerComponent } from './components/color-picker/color-picker.component';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { InfoDirective } from './directives/info.directive';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
     DestroyableDirective,
     GroupFolderComponent,
     ColorPickerComponent,
+    InfoDirective,
   ],
   imports: [CommonModule, HttpClientModule, FormsModule, ColorPickerModule],
   providers: [],
@@ -34,6 +36,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
     GroupFolderComponent,
     DestroyableDirective,
     ColorPickerComponent,
+    InfoDirective,
   ],
 })
 export class SharedModule {}

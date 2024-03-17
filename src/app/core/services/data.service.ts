@@ -33,13 +33,8 @@ export class DataService {
   selectedAjLayers = new BehaviorSubject<AdjustmentLayer[]>([]);
   zoom = new BehaviorSubject<number>(1);
   contextMenu = new BehaviorSubject<any>({});
-  selectionContextMenu = new BehaviorSubject<SelectionContextMenu>({
-    isActive: false,
-    x: 0,
-    y: 0,
-  });
-
   history = new BehaviorSubject<History>(new History());
+  isMovingAllowed = new BehaviorSubject<boolean>(true);
 }
 interface SelectionContextMenu {
   isActive: boolean;

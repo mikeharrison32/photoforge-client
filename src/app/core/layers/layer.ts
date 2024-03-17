@@ -25,29 +25,33 @@ export class Layer extends PfObject {
   }
   hide() {
     this.elem.style.display = 'none';
+    this.resizer.elem.style.display = 'none';
     this.visible = false;
-    this.hideResizer();
+    this.resizer.disable();
   }
   hideCoreners() {}
   show() {
     this.elem.style.display = 'block';
     this.visible = true;
   }
-  hideResizer() {
-    this.resizer.elem.style.display = 'none';
-  }
-  showResizer() {
-    this.resizer.elem.style.display = 'block';
-  }
+
   hideControles() {}
   showControles() {}
-  setWidth(width: number) {}
-  setHeight(height: number) {}
-
+  clone() {
+    return this.elem.cloneNode(true);
+  }
   drawImage(img: any) {}
   moveTo(x: number, y: number) {}
   sendBackward() {}
   sendToBack() {}
   bringForward() {}
   bringToFront() {}
+  lock() {
+    this.locked = true;
+    this.resizer.lock();
+  }
+  unlock() {
+    this.locked = false;
+    this.resizer.unlock();
+  }
 }

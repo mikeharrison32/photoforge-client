@@ -31,7 +31,7 @@ export class LayerPropertyComponent implements OnInit, OnDestroy {
     });
   }
   onXChange(x: any) {
-    this.selectedLayer.canvas.style.left = x + 'px';
+    this.selectedLayer.elem.style.left = x + 'px';
   }
   onExposureChange(value: any) {
     if (this.selectedAdjustmentLayer instanceof Exposure) {
@@ -151,13 +151,13 @@ export class LayerPropertyComponent implements OnInit, OnDestroy {
     }
   }
   onYChange(y: any) {
-    this.selectedLayer.canvas.style.top = y + 'px';
+    this.selectedLayer.elem.style.top = y + 'px';
   }
   onWidthChange(width: any) {
-    this.selectedLayer.canvas.style.width = width + 'px';
+    this.selectedLayer.elem.style.width = width + 'px';
   }
   onHeightChange(height: any) {
-    this.selectedLayer.canvas.style.height = height + 'px';
+    this.selectedLayer.elem.style.height = height + 'px';
   }
   onLineHeightChange($event: string) {
     throw new Error('Method not implemented.');
@@ -167,8 +167,12 @@ export class LayerPropertyComponent implements OnInit, OnDestroy {
   }
   onTextSizeChange(size: number) {}
   setTextAlignment(align: string) {}
-  onFillChange(e: any) {}
-  onStrokeChange(e: any) {}
+  onFillChange(e: any) {
+    this.selectedLayer.elem.style.background = e.target.value;
+  }
+  onStrokeChange(e: any) {
+    this.selectedLayer.elem.style.border = `solid ${e.target.value}`;
+  }
   onStrokeWidthChange(width: string) {}
   ngOnDestroy(): void {
     this.data.selectedAjLayers.unsubscribe();

@@ -23,6 +23,8 @@
     position: absolute;
     width: 100%;
     display: flex;
+    top: 0;
+    align-items: center;
     padding-block: 0.2rem;
     background-color: #3a3a3a;
     justify-content: space-between;
@@ -34,6 +36,11 @@
         right: 0rem;
         left: 1rem;
       }
+    }
+    .auth-info {
+      height: 100%;
+      display: flex;
+      align-items: center;
     }
     img {
       width: 1.3rem;

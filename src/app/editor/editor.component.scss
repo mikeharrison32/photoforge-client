@@ -6,18 +6,7 @@ $light_gray: #3a3a3a;
   width: 100%;
   height: 100%;
   background: $dark_gray;
-  .object {
-    width: 100%;
-    height: 100%;
-  }
-  .rect {
-    width: 100%;
-    height: 100%;
-    background-color: red;
-    position: absolute;
-    top: 0;
-    clip-path: url(#bob);
-  }
+
   .main {
     display: flex;
     width: auto;
@@ -43,27 +32,11 @@ $light_gray: #3a3a3a;
         }
       }
 
-      .layer-corner {
-        width: 1rem;
-        background: beige;
-        height: 1rem;
-        position: absolute;
-        left: 26.4rem;
-        border: solid rgb(0, 192, 255) 2px;
-        top: 75.3438px;
-        border-radius: 1px;
-        z-index: 100000000;
-      }
       .displayContainer {
         display: flex;
         align-items: center;
         justify-content: center;
         position: relative;
-        .selection-rect {
-          border: solid #ffff9b;
-          position: absolute;
-          z-index: 1000000;
-        }
       }
       #display {
         width: 95%;
