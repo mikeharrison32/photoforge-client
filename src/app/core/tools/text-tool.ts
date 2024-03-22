@@ -14,7 +14,7 @@ export class TextTool {
       const displayScale = parseFloat(display.style.scale || '1');
       const typeLayer = new TypeLayer(
         renderer,
-        display,
+        // display,
         data,
         `${Math.random()}`,
         'Text',

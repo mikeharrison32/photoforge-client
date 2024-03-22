@@ -77,13 +77,16 @@ export class Selection {
       redraw(x, y);
     }
     // const ticker = this.app?.ticker.add(() => {
+    // setInterval(() => {
+    //   console.log('int');
     //   color = color == 'black' ? 'white' : 'black';
     //   for (let i = 0; i < points.length; i += 2) {
     //     const x = points[i];
     //     const y = points[i + 1];
     //     redraw(x, y);
     //   }
-    // });
+    // }, 800);
+    // })
     // ticker!.autoStart = true;
   }
   clearSelection(texture: PIXI.RenderTexture) {

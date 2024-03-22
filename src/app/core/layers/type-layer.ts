@@ -12,7 +12,7 @@ export class TypeLayer extends Layer {
   textElem!: HTMLElement;
   constructor(
     renderer: Renderer2,
-    containerElem: HTMLElement,
+    // containerElem: HTMLElement,
     data: DataService,
     id: string,
     name: string,
@@ -20,7 +20,7 @@ export class TypeLayer extends Layer {
     text?: string,
     options?: ITextToolOptions
   ) {
-    super(renderer, containerElem, data, id, name, projectId);
+    super(renderer, data, id, name, projectId);
     this.type = 'type';
     this.textElem = this.renderer.createElement('p');
     this.textElem.textContent = text || 'Hello';

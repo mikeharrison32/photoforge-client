@@ -130,11 +130,13 @@ export class Resizer {
     this.elem.style.display = 'none';
   }
   enable() {
+    console.log('enabling');
     this.elem.style.display = 'block';
     this.update();
     this.updateCorners();
   }
   setWidth(width: number) {
+    console.log('updateing width');
     this.elem.style.width = width + 'px';
     // this.elem.style.transform = `translate(${
     //   this.targetObject.getBoundingClientRect().left
@@ -246,7 +248,6 @@ export class Resizer {
 
     document.addEventListener('mousemove', (e) => {
       if (!this.data.isMovingAllowed.getValue() || this.locked) {
-        console.log('not allowwed');
         return;
       }
 

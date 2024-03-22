@@ -11,6 +11,7 @@ export class ShapeTool {
   properties: IShapeToolProperties = {};
   listenForLayerResize!: (e: Event) => void;
   listenForMouseDownEvent!: (e: any) => void;
+  mouseUpListener!: (e: any) => void;
   configure(display: HTMLElement, renderer: Renderer2, data: DataService) {
     console.log('shape tool configured');
     const imgDisplay = display.parentElement?.parentElement;
@@ -40,7 +41,7 @@ export class ShapeTool {
       mousedown = true;
       shapeLayer = new Layer(
         renderer,
-        display,
+        // display,
         data,
         `${Math.random()}`,
         'Shape Layer 1',
@@ -101,10 +102,11 @@ export class ShapeTool {
     };
     imgDisplay.addEventListener('mousedown', this.listenForMouseDownEvent);
 
-    document.addEventListener('mouseup', (e) => {
+    this.mouseUpListener = (e: any) => {
       mousedown = false;
       data.selectedLayers.next([shapeLayer]);
-    });
+    };
+    document.addEventListener('mouseup', this.mouseUpListener);
 
     const zoom = data.zoom.getValue() / 100;
     this.listenForLayerResize = (e: any) => {
@@ -145,6 +147,7 @@ export class ShapeTool {
     document.removeEventListener('mousemove', this.listenForLayerResize);
     const imgDisplay = display.parentElement?.parentElement;
     imgDisplay?.removeEventListener('mousedown', this.listenForMouseDownEvent);
+    document.removeEventListener('mouseup', this.mouseUpListener);
   }
 }
 

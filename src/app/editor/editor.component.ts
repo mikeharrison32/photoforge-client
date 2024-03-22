@@ -30,6 +30,7 @@ import { Selection } from '../core/selection';
 import * as PIXI from 'pixi.js-legacy';
 import { fabric } from 'fabric';
 import { Command } from '../core';
+import { LayerService } from '../core/services/layer.service';
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
@@ -67,7 +68,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     private data: DataService,
     private renderer: Renderer2,
     private clipboard: ClipboardService,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private layerService: LayerService
   ) {}
   ngOnInit() {
     //create new layer
@@ -84,9 +86,17 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       this.projects = projects;
     });
     this.data.layers.subscribe((layers) => {
+      // this.filterLayers(this.selectedProject!)
       this.layers = layers.filter(
         (layer) => layer.projectId == this.selectedProject?.Id
       );
+      console.log('selec', this.data.selectedProject.getValue()?.Title);
+      console.log('lalal', layers);
+      console.log('booom', this.layers);
+      this.layers.forEach((layer) => {
+        console.log(layer.getElem());
+        this.display?.nativeElement.appendChild(layer.getElem());
+      });
     });
     this.data.currentSelection.subscribe((cs) => {
       this.currentSelection = cs;
@@ -105,6 +115,10 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       this.data.layers.getValue().forEach((layer) => {
         layer.resizer.disable();
       });
+      const selectedTool = this.data.selectedTool.getValue();
+      if (selectedTool != 'moveTool') {
+        return;
+      }
       sl.forEach((sl_layer) => {
         if (sl_layer.visible) {
           sl_layer.resizer.enable();
@@ -154,6 +168,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       Title: 'testproj',
       Width: 500,
       Height: 700,
+      Zoom: 84,
     };
     const img = new Image();
     img.src = 'assets/fixtures/deer.jpg';
@@ -161,13 +176,16 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     const layer = new PixelLayer(
       this.data,
       this.renderer,
-      this.display!.nativeElement,
       'eew',
       'Deer png',
       'bbb',
       img
     );
-
+    // layer.getPixels();
+    this.data.projects.next([p]);
+    this.data.layers.next([layer]);
+    this.data.selectedProject.next(p);
+    this.data.displayElem.next(this.display?.nativeElement as HTMLElement);
     const contextMenuElem = this.contextMenuElem?.nativeElement as HTMLElement;
     const clickedOutSizeContextMenu = (e: any) => {
       if (
@@ -182,35 +200,26 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     (this.container?.nativeElement as HTMLElement).addEventListener(
       'mousedown',
       (e) => {
+        const selectedTool = this.data.selectedTool.getValue();
+        if (selectedTool != 'moveTool') {
+          return;
+        }
         // console.log('md');
         const selectedLayer = this.data.selectedLayers.getValue()[0];
-        if (selectedLayer) {
-          // console.log('selectedLayer: ', selectedLayer.name);
-        }
         this.data.layers.getValue().forEach((layer) => {
           if (layer.contains(e.target as HTMLElement)) {
-            console.log('bb containes', layer.name);
-            // selectedLayer.resizer.disable();
-            this.data.selectedLayers.next([layer]);
+            console.log('contains');
             layer.resizer.enable();
+            // this.data.selectedLayers.next([layer]);
           } else {
-            // console.log(layer.elem, ' does not contain ', e.target);
-            // console.log(selectedLayer);
             if (selectedLayer && selectedLayer.resizer) {
-              // console.log(selectedLayer);
               selectedLayer.resizer.disable();
-              // this.data.selectedLayers.next([]);
             }
           }
         });
       }
     );
-    // layer.getPixels();
-    this.data.projects.next([p]);
-    this.data.layers.next([layer]);
-    this.data.displayElem.next(this.display?.nativeElement as HTMLElement);
-    this.data.selectedProject.next(p);
-    this.data.selectedLayers.next([layer]);
+
     // this.createLayerFromASelectionViaCopy();
     this.addShortcuts();
     const displayScale = parseFloat(
@@ -353,8 +362,12 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           this.data.selectedTool.next('lassoTool');
           break;
         case 'KeyD':
+          e.preventDefault();
           if (e.ctrlKey) {
-            e.preventDefault();
+            this.layerService.duplicateLayer(
+              this.renderer,
+              this.selectedLayers[0]
+            );
           }
           break;
         case 'KeyR':

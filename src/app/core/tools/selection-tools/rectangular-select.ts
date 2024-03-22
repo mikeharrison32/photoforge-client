@@ -118,14 +118,13 @@ class ReactangularSelect {
                   const copyLayer = new PixelLayer(
                     data,
                     renderer,
-                    display,
+                    // display,
                     `${Math.random()}`,
                     'Layer 1 Copy',
                     selectedLayer.projectId,
                     img
                   );
                   data.layers.next([...data.layers.getValue(), copyLayer]);
-                  console.log(this.selectionRectPos);
                   this.selectionRectPos.width += this.selectionRectPos.x;
                   this.selectionRectPos.height += this.selectionRectPos.y;
                   const mask = new Mask(copyLayer, [
@@ -145,23 +144,9 @@ class ReactangularSelect {
                     this.selectionRectPos.x,
                     this.selectionRectPos.y,
                   ]);
-                  console.log([
-                    this.selectionRectPos.x,
-                    this.selectionRectPos.y,
-                    // second point
-                    this.selectionRectPos.x,
-                    this.selectionRectPos.height,
-                    //thridlayer
-
-                    this.selectionRectPos.width,
-                    this.selectionRectPos.height,
-                    //forth
-                    this.selectionRectPos.width,
-                    this.selectionRectPos.x,
-                    //close
-                    this.selectionRectPos.x,
-                    this.selectionRectPos.y,
-                  ]);
+                  data.selectedTool.next('moveTool');
+                  data.contextMenu.next({});
+                  data.selectedLayers.next([copyLayer]);
                 }
               },
             },
@@ -223,9 +208,7 @@ class ReactangularSelect {
       }
     });
     (this.selectionCanvas.view as any).classList.add('selection-canvas');
-    display.parentElement?.parentElement?.appendChild(
-      this.selectionCanvas.view as any
-    );
+    display.parentElement?.appendChild(this.selectionCanvas.view as any);
     this.registerListeners();
   }
 
@@ -239,24 +222,23 @@ class ReactangularSelect {
 
           const points: number[] = [
             // first corner
-            ...splitLineIntoSegments(
-              this.selectionRectPos.x,
-              this.selectionRectPos.y,
-              this.selectionRectPos.x + this.selectionRectPos.width,
-              this.selectionRectPos.y,
-              3
-            ),
+            // ...splitLineIntoSegments(
+            this.selectionRectPos.x,
+            this.selectionRectPos.y,
+            this.selectionRectPos.x + this.selectionRectPos.width,
+            this.selectionRectPos.y,
 
+            // ),
             //second corner
             //third corner
-            ...splitLineIntoSegments(
-              this.selectionRectPos.x + this.selectionRectPos.width,
-              this.selectionRectPos.y + this.selectionRectPos.height,
-              //fourth corner
-              this.selectionRectPos.x,
-              this.selectionRectPos.y + this.selectionRectPos.height,
-              3
-            ),
+            // ...splitLineIntoSegments(
+            this.selectionRectPos.x + this.selectionRectPos.width,
+            this.selectionRectPos.y + this.selectionRectPos.height,
+            //fourth corner
+            this.selectionRectPos.x,
+            this.selectionRectPos.y + this.selectionRectPos.height,
+
+            // ),
             //last and fifth corner
             this.selectionRectPos.x,
             this.selectionRectPos.y,
@@ -290,7 +272,7 @@ class ReactangularSelect {
   }
 }
 
-function splitLineIntoSegments(
+export function splitLineIntoSegments(
   x1: number,
   y1: number,
   x2: number,

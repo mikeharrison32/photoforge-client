@@ -16,6 +16,8 @@ export class BrushTool {
   data!: DataService;
   display!: HTMLElement;
   mouseMoveListener!: (e: any) => void;
+  mouseDownListener!: (e: any) => void;
+  mouseUpListner!: (e: any) => void;
 
   configure(
     display: HTMLElement,
@@ -37,7 +39,7 @@ export class BrushTool {
     drawingSurface.classList.add('drawing');
     const layer = new Layer(
       renderer,
-      display,
+      // display,
       data,
       `${Math.random()}`,
       'Drawing',
@@ -48,15 +50,20 @@ export class BrushTool {
     layer.elem.appendChild(drawingSurface);
     data.layers.next([...data.layers.getValue(), layer]);
 
-    document.addEventListener('mouseup', (e) => {
+    this.mouseUpListner = (e: any) => {
       mousedown = false;
       data.selectedLayers.next([layer]);
-    });
+    };
+    document.addEventListener('mouseup', this.mouseUpListner);
     const mask = new Mask(layer);
-    display.parentElement?.parentElement!.addEventListener('mousedown', (e) => {
+    this.mouseDownListener = (e: any) => {
       console.log('br');
       mousedown = true;
-    });
+    };
+    display.parentElement?.parentElement!.addEventListener(
+      'mousedown',
+      this.mouseDownListener
+    );
     let prevPointX: number, prevPointY: number;
     this.mouseMoveListener = (e) => {
       this.brush?.moveTo(
@@ -83,7 +90,16 @@ export class BrushTool {
   disconfigure(): void {
     this.brush?.elem?.remove();
     this.brush?.destroy();
+    const displayContainer = this.display?.parentElement;
+    if (displayContainer) {
+      const container = displayContainer.parentElement;
+      if (container) {
+        container.removeEventListener('mousedown', this.mouseDownListener);
+        container.style.cursor = 'default';
+      }
+    }
     document.removeEventListener('mousemove', this.mouseMoveListener);
+    document.removeEventListener('mouseup', this.mouseUpListner);
     delete this.brush;
   }
 }

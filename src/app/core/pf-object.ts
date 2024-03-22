@@ -7,17 +7,20 @@ export class PfObject {
   elem!: HTMLElement;
   constructor(
     protected renderer: Renderer2,
-    container: HTMLElement,
+    // container: HTMLElement,
     data: DataService
   ) {
     this.elem = document.createElement('div');
     this.elem.classList.add('pf-object');
-    this.renderer.appendChild(container, this.elem);
+    // this.renderer.appendChild(container, this.elem);
     this.resizer = new Resizer(this.renderer, this.elem, data);
   }
   remove() {
     this.elem.remove();
     this.resizer.remove();
+  }
+  getElem() {
+    return this.elem;
   }
   setWidth(width: number) {
     this.elem.style.width = `${width}px`;

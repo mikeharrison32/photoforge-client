@@ -8,6 +8,7 @@ import { DataService } from '../../services/data.service';
 import { ContextMenu, Menu } from '../../context-menu';
 import { Mask } from '../..';
 import { Renderer2 } from '@angular/core';
+import { splitLineIntoSegments } from './rectangular-select';
 export class LassoTool {
   lassoCanvas?: PIXI.Application;
   type: string = 'lassoTool';
@@ -50,12 +51,16 @@ export class LassoTool {
 
     // drawingSurface.interactive = true;
     let mousedown = false;
+    let prevPoint: PIXI.Point = new PIXI.Point();
+
     this.drawingSurface.on('mousedown', (e) => {
       mousedown = true;
       this.clearCanvas();
       prevPosition.set(e.global.x, e.global.y);
+      prevPoint.set(e.global.x, e.global.y);
     });
     let color = '#717171';
+
     const prevPosition = new PIXI.Point();
     const lineFill = new PIXI.Graphics().beginFill('#717171');
     const brush = new PIXI.Graphics().beginFill('#717171');
@@ -76,13 +81,25 @@ export class LassoTool {
       });
       prevPosition.copyFrom(brush.position);
     };
+
     this.drawingSurface.on('mousemove', (c) => {
       if (!mousedown) {
         return;
       }
       const zoom = this.data!.zoom.getValue() / 100;
+      // const spiltPoints = splitLineIntoSegments(
+      //   prevPoint.x / zoom,
+      //   prevPoint.y / zoom,
+      //   c.global.x / zoom,
+      //   c.global.y / zoom,
+      //   5
+      // );
       this.points.push(c.global.x / zoom, c.global.y / zoom);
+      // this.points.push(...spiltPoints);
+
       redraw(c.global.x, c.global.y);
+
+      prevPoint.set(c.global.x, c.global.y);
     });
     this.drawingSurface.on('mouseup', () => {
       mousedown = false;
@@ -148,7 +165,7 @@ export class LassoTool {
                   const copyLayer = new PixelLayer(
                     data,
                     renderer,
-                    display,
+                    // display,
                     `${Math.random()}`,
                     'Layer 1 Copy',
                     selectedLayer.projectId,

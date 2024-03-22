@@ -5,6 +5,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { Layer } from 'src/app/core/layers/layer';
 import { DataService } from 'src/app/core/services/data.service';
 import { Project } from 'src/app/types/project';
 @Component({
@@ -31,17 +32,28 @@ export class TopBarComponent implements OnInit, OnDestroy {
   closeProject(id: string) {
     const currentProjectsValue = this.data.projects.getValue();
     const updatedProjectsValue: Project[] = [];
+    const currentLayersValue = this.data.layers.getValue();
+    const updatedLayersValue: Layer[] = [];
+
     currentProjectsValue.forEach((p) => {
       if (p.Id != id) {
         updatedProjectsValue.push(p);
       }
     });
+
+    currentLayersValue.forEach((layer) => {
+      if (layer.projectId != id) {
+        updatedLayersValue.push(layer);
+      }
+    });
+
     this.data.layers.getValue().forEach((layer) => {
       if (layer.projectId == id) {
         layer.remove();
       }
     });
     this.data.projects.next(updatedProjectsValue);
+    this.data.layers.next(updatedLayersValue);
     this.data.selectedLayers.next([]);
 
     if (this.data.projects.value.length > 0) {

@@ -10,8 +10,8 @@ export class EraserTool {
   type: string = 'eraserTool';
   configure(display: HTMLElement, data: DataService) {
     this.brush = new Brush({ size: 30 });
-    display.parentElement?.appendChild(this.brush.elem!);
-    display.parentElement!.style.cursor = 'none';
+    display.parentElement?.parentElement?.appendChild(this.brush.elem!);
+    display.parentElement!.parentElement!.style.cursor = 'none';
     display.style.cursor = 'none';
 
     const rect = display.parentElement?.parentElement?.getBoundingClientRect();

@@ -12,13 +12,13 @@ export class Layer extends PfObject {
   locked: boolean = false;
   constructor(
     renderer: Renderer2,
-    containerElem: HTMLElement | null,
+    // containerElem: HTMLElement | null,
     data: DataService,
     id: string,
     name: string,
     projectId: string
   ) {
-    super(renderer, containerElem!, data);
+    super(renderer, data);
     this.id = id;
     this.projectId = projectId;
     this.name = name;

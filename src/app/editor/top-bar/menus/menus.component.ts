@@ -108,16 +108,16 @@ export class MenusComponent implements OnInit, OnDestroy {
           const pixelLayer = new PixelLayer(
             this.data,
             this.renderer,
-            displayElem,
-            'aaa',
+            // displayElem,
+            `${Math.random()}`,
             file.name,
             project.Id,
             imgObj
           );
           pixelLayer.lock();
-          this.data.layers.next([...this.data.layers.getValue(), pixelLayer]);
           this.data.projects.next([...this.data.projects.getValue(), project]);
           this.data.selectedProject.next(project);
+          this.data.layers.next([...this.data.layers.getValue(), pixelLayer]);
         };
       };
       this.api.createProjectByUpload(file).subscribe({
@@ -178,7 +178,7 @@ export class MenusComponent implements OnInit, OnDestroy {
         const duplicateLayer = new PixelLayer(
           this.data,
           this.renderer,
-          displayElem,
+          // displayElem,
           `${Math.random()}`,
           sl.name + 'Copy',
           selectedProject!.Title,
@@ -194,7 +194,7 @@ export class MenusComponent implements OnInit, OnDestroy {
     const layer = new PixelLayer(
       this.data,
       this.renderer,
-      displayElem,
+      // displayElem,
       `${Math.random()}`,
       'Layer 1',
       selectedProject?.Id || 'aaa',
@@ -254,7 +254,7 @@ export class MenusComponent implements OnInit, OnDestroy {
           const pixelLayer = new PixelLayer(
             this.data,
             this.renderer,
-            displayElem,
+            // displayElem,
             'ede',
             file.name,
             selectedProject?.Id || 'aaa',

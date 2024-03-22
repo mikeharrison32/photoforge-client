@@ -16,6 +16,7 @@ import * as PIXI from 'pixi.js-legacy';
 import { applyBrightneesFromProgram } from '../filters';
 import { Renderer2 } from '@angular/core';
 import { DataService } from '../services/data.service';
+import { Mask } from '..';
 export class PixelLayer extends Layer {
   pixels: IColorRGBA[] = [];
   src?: string;
@@ -24,10 +25,11 @@ export class PixelLayer extends Layer {
   gl?: WebGLRenderingContext | WebGL2RenderingContext | null;
   app?: PIXI.Application;
   canvas!: HTMLCanvasElement;
+  mask?: Mask;
   constructor(
     data: DataService,
     renderer: Renderer2,
-    containerElem: HTMLElement | null,
+    // containerElem: HTMLElement | null,
     id: string,
     name: string,
     projectId: string,
@@ -35,7 +37,7 @@ export class PixelLayer extends Layer {
     width?: number,
     height?: number
   ) {
-    super(renderer, containerElem, data, id, name, projectId);
+    super(renderer, data, id, name, projectId);
     this.canvas = document.createElement('canvas');
     this.canvas.classList.add('layer');
     this.type = 'pixel';
@@ -49,8 +51,8 @@ export class PixelLayer extends Layer {
 
     // this.canvas!.style.clipPath = 'url(#bob)';
     if (img instanceof PIXI.Texture) {
-      this.setWidth(containerElem!.clientWidth);
-      this.setHeight(containerElem!.clientHeight);
+      this.setWidth(data.selectedProject.getValue()?.Width || 800);
+      this.setHeight(data.selectedProject.getValue()?.Height || 800);
       this.app = new PIXI.Application({
         view: this.canvas as any,
         backgroundColor: 'transparent',
@@ -66,18 +68,17 @@ export class PixelLayer extends Layer {
       this.elem.style.height = img.height + 'px';
       // this.canvas.style.width = img.width + 'px';
       // this.canvas.style.height = img.height + 'px';
-
-      const displayScale = data.zoom.getValue() / 100;
-      this.resizer.setWidth(img.width * displayScale);
-      this.resizer.setHeight(img.height * displayScale);
       this.app = new PIXI.Application({
         view: this.canvas as any,
         backgroundColor: 'transparent',
         backgroundAlpha: 0,
       });
-      this.src = img.src;
       this.img = img;
+      this.src = img.src;
       this.insertImage();
+      const displayScale = data.zoom.getValue() / 100;
+      this.resizer.setWidth(img.width * displayScale);
+      this.resizer.setHeight(img.height * displayScale);
     }
   }
 
