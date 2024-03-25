@@ -11,6 +11,7 @@ import { BrightnessContrastAdjustmentLayer } from 'src/app/core/layers/adjustmen
 import { Exposure } from 'src/app/core/layers/adjustment/exposure';
 import { HueSaturationLightnees } from 'src/app/core/layers/adjustment/hue_saturation_lightnees';
 import { Vibrance } from 'src/app/core/layers/adjustment/vibrance';
+import { PixelLayer } from 'src/app/core/layers/pixel-layer';
 import { DataService } from 'src/app/core/services/data.service';
 @Component({
   selector: 'app-layer-property',
@@ -73,81 +74,54 @@ export class LayerPropertyComponent implements OnInit, OnDestroy {
     if (
       this.selectedAdjustmentLayer instanceof BrightnessContrastAdjustmentLayer
     ) {
-      this.selectedAdjustmentLayer.set(
-        {
+      this.ngZone.runOutsideAngular(() => {
+        this.selectedAdjustmentLayer.set({
           brightness: value,
-          contrast: this.selectedAdjustmentLayer.contrast,
-        },
-        this.ngZone
-      );
+        });
+      });
     }
   }
   onContrastChange(value: any) {
     if (
       this.selectedAdjustmentLayer instanceof BrightnessContrastAdjustmentLayer
     ) {
-      this.selectedAdjustmentLayer.set(
-        {
-          brightness: this.selectedAdjustmentLayer.brightness,
+      this.ngZone.runOutsideAngular(() => {
+        this.selectedAdjustmentLayer.set({
           contrast: value,
-        },
-        this.ngZone
-      );
+        });
+      });
     }
   }
   onHueChange(value: any) {
     if (this.selectedAdjustmentLayer instanceof HueSaturationLightnees) {
-      this.selectedAdjustmentLayer.set(
-        {
-          hue: value * 255,
-          saturation: this.selectedAdjustmentLayer.saturation,
-          lightnees: this.selectedAdjustmentLayer.lightnees,
-        },
-        this.ngZone
-      );
+      this.selectedAdjustmentLayer.set({
+        hue: value * 255,
+      });
     }
   }
   onSaturationChange(value: any) {
     if (this.selectedAdjustmentLayer instanceof HueSaturationLightnees) {
-      this.selectedAdjustmentLayer.set(
-        {
-          hue: this.selectedAdjustmentLayer.hue,
-          saturation: value,
-          lightnees: this.selectedAdjustmentLayer.lightnees,
-        },
-        this.ngZone
-      );
+      this.selectedAdjustmentLayer.set({
+        saturation: value,
+      });
     } else if (this.selectedAdjustmentLayer instanceof Vibrance) {
-      this.selectedAdjustmentLayer.set(
-        {
-          vibrance: this.selectedAdjustmentLayer.vibrance,
-          saturation: value,
-        },
-        this.ngZone
-      );
+      this.selectedAdjustmentLayer.set({
+        saturation: value,
+      });
     }
   }
   onVibranceChange(value: any) {
     if (this.selectedAdjustmentLayer instanceof Vibrance) {
-      this.selectedAdjustmentLayer.set(
-        {
-          saturation: this.selectedAdjustmentLayer.saturation,
-          vibrance: value,
-        },
-        this.ngZone
-      );
+      this.selectedAdjustmentLayer.set({
+        vibrance: value,
+      });
     }
   }
   onLightnessChange(value: any) {
     if (this.selectedAdjustmentLayer instanceof HueSaturationLightnees) {
-      this.selectedAdjustmentLayer.set(
-        {
-          hue: this.selectedAdjustmentLayer.hue,
-          saturation: this.selectedAdjustmentLayer.saturation,
-          lightnees: value,
-        },
-        this.ngZone
-      );
+      this.selectedAdjustmentLayer.set({
+        lightnees: value,
+      });
     }
   }
   onYChange(y: any) {

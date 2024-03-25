@@ -26,6 +26,7 @@ import * as PIXI from 'pixi.js-legacy';
 import { TypeLayer } from 'src/app/core/layers/type-layer';
 import { filter } from 'rxjs';
 import { Command } from 'src/app/core';
+import { settings } from 'src/app/settings/settings';
 @Component({
   selector: 'app-menus',
   templateUrl: './menus.component.html',
@@ -37,6 +38,10 @@ export class MenusComponent implements OnInit, OnDestroy {
   @ViewChild('menus') menus!: ElementRef;
   selectedMenu: Menus = Menus.None;
   recentProjects: Project[] = [];
+
+  get settings() {
+    return settings;
+  }
   constructor(
     private data: DataService,
     private layerService: LayerService,
@@ -297,7 +302,9 @@ export class MenusComponent implements OnInit, OnDestroy {
     throw new Error('Method not implemented.');
   }
   adjustmentsPanel() {
-    throw new Error('Method not implemented.');
+    const visible = settings.panals.adjustments.visible;
+    settings.panals.adjustments.visible = visible ? false : true;
+    console.log(settings.panals.adjustments.visible);
   }
   revealAll() {
     throw new Error('Method not implemented.');

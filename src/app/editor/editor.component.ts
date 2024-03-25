@@ -72,8 +72,6 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     private layerService: LayerService
   ) {}
   ngOnInit() {
-    //create new layer
-    //undeo(): layer.remve()
     this.data.showNav.next(false);
 
     this.data.contextMenu.subscribe((cm) => {
@@ -162,78 +160,18 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.data.zoom.next(e);
   }
   ngAfterViewInit() {
-    const p: Project = {
-      Id: 'bbb',
-      UserId: 'fg',
-      Title: 'testproj',
-      Width: 500,
-      Height: 700,
-      Zoom: 84,
-    };
-    const img = new Image();
-    img.src = 'assets/fixtures/deer.jpg';
+    this.data.displayElem.next(this.display?.nativeElement);
+    this.configureContextMenu();
+    this.handleLayerClick();
 
-    const layer = new PixelLayer(
-      this.data,
-      this.renderer,
-      'eew',
-      'Deer png',
-      'bbb',
-      img
-    );
-    // layer.getPixels();
-    this.data.projects.next([p]);
-    this.data.layers.next([layer]);
-    this.data.selectedProject.next(p);
-    this.data.displayElem.next(this.display?.nativeElement as HTMLElement);
-    const contextMenuElem = this.contextMenuElem?.nativeElement as HTMLElement;
-    const clickedOutSizeContextMenu = (e: any) => {
-      if (
-        !contextMenuElem.contains(e.target) &&
-        Object.entries(this.data.contextMenu.getValue()).length > 0
-      ) {
-        this.data.contextMenu.next({});
-      }
-    };
-    this.renderer.listen(document, 'mousedown', clickedOutSizeContextMenu);
-
-    (this.container?.nativeElement as HTMLElement).addEventListener(
-      'mousedown',
-      (e) => {
-        const selectedTool = this.data.selectedTool.getValue();
-        if (selectedTool != 'moveTool') {
-          return;
-        }
-        // console.log('md');
-        const selectedLayer = this.data.selectedLayers.getValue()[0];
-        this.data.layers.getValue().forEach((layer) => {
-          if (layer.contains(e.target as HTMLElement)) {
-            console.log('contains');
-            layer.resizer.enable();
-            // this.data.selectedLayers.next([layer]);
-          } else {
-            if (selectedLayer && selectedLayer.resizer) {
-              selectedLayer.resizer.disable();
-            }
-          }
-        });
-      }
-    );
-
-    // this.createLayerFromASelectionViaCopy();
     this.addShortcuts();
-    const displayScale = parseFloat(
-      this.display?.nativeElement.style.scale || '1'
-    );
 
-    this.display!.nativeElement.parentElement.style.width =
-      this.display?.nativeElement.clientWidth * displayScale + 'px';
-    this.display!.nativeElement.parentElement.style.height =
-      this.display?.nativeElement.clientHeight * displayScale + 'px';
     this.data.selectedTool.next('moveTool');
 
-    // this.drawSVG();
+    this.handleSelectedToolConfig();
+  }
 
+  private handleSelectedToolConfig() {
     this.data.selectedTool.subscribe((selectedTool) => {
       this.tools.forEach((tool) => {
         if (tool.type == selectedTool) {
@@ -295,25 +233,41 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       });
     });
-    // const project: Project = {
-    //   Id: 'ae',
-    //   UserId: 'dss',
-    //   Title: 'dsrfre',
-    //   Width: 720,
-    //   Height: 1080,
-    // };
-    // this.data.projects.next([project]);
+  }
 
-    // this.data.selectedProject.next(project);
-    // this.display!.nativeElement.style.scale = '0.5';
-    // const layer = new PixelLayer(
-    //   this.display?.nativeElement,
-    //   'dasd',
-    //   'dasd',
-    //   'ae',
-    //   null
-    // );
-    // this.data.layers.next([layer]);
+  private configureContextMenu() {
+    const contextMenuElem = this.contextMenuElem?.nativeElement as HTMLElement;
+    const clickedOutSizeContextMenu = (e: any) => {
+      if (
+        !contextMenuElem.contains(e.target) &&
+        Object.entries(this.data.contextMenu.getValue()).length > 0
+      ) {
+        this.data.contextMenu.next({});
+      }
+    };
+    this.renderer.listen(document, 'mousedown', clickedOutSizeContextMenu);
+  }
+
+  private handleLayerClick() {
+    (this.container?.nativeElement as HTMLElement).addEventListener(
+      'mousedown',
+      (e) => {
+        const selectedTool = this.data.selectedTool.getValue();
+        if (selectedTool != 'moveTool') {
+          return;
+        }
+        // console.log('md');
+        const selectedLayer = this.data.selectedLayers.getValue()[0];
+        this.data.layers.getValue().forEach((layer) => {
+          if (layer.contains(e.target as HTMLElement)) {
+            layer.resizer.enable();
+            // this.data.selectedLayers.next([layer]);
+          } else if (selectedLayer && selectedLayer.resizer) {
+            selectedLayer.resizer.disable();
+          }
+        });
+      }
+    );
   }
 
   private drawSVG() {
@@ -555,35 +509,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   createLayerFromASelectionViaCut() {
     throw new Error('Method not implemented.');
   }
-  createLayerFromASelectionViaCopy() {
-    const selectedLayer = this.selectedLayers[0];
-    if (selectedLayer instanceof PixelLayer) {
-      const sprite = selectedLayer.getSprite() as PIXI.Sprite;
-      // const buffer = selectedLayer.app?.renderer.extract.pixels(sprite);
-      // const data = new Uint8Array(buffer!.length * 2);
-
-      const r = new PIXI.Renderer({
-        context: (selectedLayer.canvas as HTMLCanvasElement).getContext(
-          'webgl2'
-        ),
-        view: selectedLayer.canvas as HTMLCanvasElement,
-      });
-
-      r.render(sprite, {
-        clear: true,
-      });
-
-      r.clear();
-      console.log(r);
-      // data.set(data, 3);
-      // this.insertArrayBuffer(
-      //   selectedLayer.app!,
-      //   data,
-      //   sprite.width,
-      //   sprite.height
-      // );
-    }
-  }
+  createLayerFromASelectionViaCopy() {}
   insertArrayBuffer(
     app: PIXI.Application,
     buffer: Uint8Array | Uint8ClampedArray,

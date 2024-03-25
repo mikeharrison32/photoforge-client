@@ -63,19 +63,18 @@ void main() {
   override hide(ngZone: NgZone) {}
   set(options: IExposureOptions, ngZone: NgZone) {
     ngZone.runOutsideAngular(() => {
-      const img = this.pl?.getSprite();
-      if (img?.filters) {
-        const exposureIndex = img.filters.indexOf(this.exposureFilter!);
-        img.filters.splice(exposureIndex, 1);
-        this.exposureFilter!.uniforms['u_exposure'] = options.exposure; // Set the default vibrance strength
-        this.exposureFilter!.uniforms['u_offset'] = options.offset; // Set the default vibrance strength
-        this.exposureFilter!.uniforms['u_gamma'] = options.gammaCorrection; // Set the default vibrance strength
-
-        img.filters.push(this.exposureFilter!);
-      } else {
-        img!.filters = [this.exposureFilter!];
-      }
-      this.pl?.app?.render();
+      // const img = this.pl?.getSprite();
+      // if (img?.filters) {
+      //   const exposureIndex = img.filters.indexOf(this.exposureFilter!);
+      //   img.filters.splice(exposureIndex, 1);
+      //   this.exposureFilter!.uniforms['u_exposure'] = options.exposure; // Set the default vibrance strength
+      //   this.exposureFilter!.uniforms['u_offset'] = options.offset; // Set the default vibrance strength
+      //   this.exposureFilter!.uniforms['u_gamma'] = options.gammaCorrection; // Set the default vibrance strength
+      //   img.filters.push(this.exposureFilter!);
+      // } else {
+      //   img!.filters = [this.exposureFilter!];
+      // }
+      // this.pl?.app?.render();
     });
   }
   override show() {}

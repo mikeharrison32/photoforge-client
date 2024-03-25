@@ -62,7 +62,7 @@ export class Selection {
         clear: false,
       });
       this.lineFill!.clear()
-        .lineStyle({ width: 2, color })
+        .lineStyle({ width: 1, color })
         .moveTo(this.prevPosition!.x, this.prevPosition!.y)
         .lineTo(this.brush!.x, this.brush!.y);
       this.app?.renderer.render(this.lineFill!, {
@@ -78,14 +78,14 @@ export class Selection {
     }
     // const ticker = this.app?.ticker.add(() => {
     // setInterval(() => {
-    //   console.log('int');
+    //   // this.clearSelection(texture);
     //   color = color == 'black' ? 'white' : 'black';
     //   for (let i = 0; i < points.length; i += 2) {
     //     const x = points[i];
     //     const y = points[i + 1];
     //     redraw(x, y);
     //   }
-    // }, 800);
+    // }, 300);
     // })
     // ticker!.autoStart = true;
   }

@@ -21,6 +21,7 @@ import { Layer } from 'src/app/core/layers/layer';
 import { HueSaturationLightnees } from 'src/app/core/layers/adjustment/hue_saturation_lightnees';
 import { Vibrance } from 'src/app/core/layers/adjustment/vibrance';
 import { Exposure } from 'src/app/core/layers/adjustment/exposure';
+import { settings } from 'src/app/settings/settings';
 
 @Component({
   selector: 'app-inspector',
@@ -66,6 +67,9 @@ export class InspectorComponent implements OnInit, OnDestroy {
     return AdjustmentLayer;
   }
 
+  get settings() {
+    return settings;
+  }
   constructor(
     private data: DataService,
     private layerService: LayerService,
