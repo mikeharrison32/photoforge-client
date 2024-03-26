@@ -14,14 +14,14 @@ export class TextTool {
       const displayScale = parseFloat(display.style.scale || '1');
       const typeLayer = new TypeLayer(
         renderer,
-        // display,
         data,
         `${Math.random()}`,
         'Text',
         data.selectedProject.getValue()?.Id || 'aaa',
-        'Thank\nYou'
+        'Lorem Ipsum'
       );
       data.layers.next([...data.layers.getValue(), typeLayer]);
+      data.selectedLayers.next([typeLayer]);
     };
     display.parentElement?.addEventListener(
       'mousedown',

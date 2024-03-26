@@ -1,0 +1,52 @@
+<div class="pixel-layer">
+  <div class="description">
+    <img src="assets/pic-icon.svg" />
+    <p>Pixel Layer Properies</p>
+  </div>
+  <div class="grid">
+    <div class="row">
+      <div class="value">
+        <p>W:</p>
+        <app-input
+          class="input"
+          unit="px"
+          [Value]="selectedLayer.canvas.clientWidth || 0"
+          [Disabled]="selectedLayer.locked"
+          (onInputChange)="onWidthChange($event)"
+        ></app-input>
+      </div>
+      <div class="value">
+        <p>H:</p>
+        <app-input
+          class="input"
+          unit="px"
+          [Disabled]="selectedLayer.locked"
+          [Value]="selectedLayer.canvas.clientHeight || 0"
+          (onInputChange)="onHeightChange($event)"
+        ></app-input>
+      </div>
+    </div>
+    <div class="row">
+      <div class="value">
+        <p>X:</p>
+        <app-input
+          class="input"
+          [Disabled]="selectedLayer.locked"
+          unit="px"
+          [Value]="0"
+          (onInputChange)="onXChange($event)"
+        ></app-input>
+      </div>
+      <div class="value">
+        <p>Y:</p>
+        <app-input
+          class="input"
+          unit="px"
+          [Disabled]="selectedLayer.locked"
+          [Value]="0"
+          (onInputChange)="onYChange($event)"
+        ></app-input>
+      </div>
+    </div>
+  </div>
+</div>

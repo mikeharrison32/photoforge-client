@@ -34,40 +34,40 @@ export class LayerPropertyComponent implements OnInit, OnDestroy {
   onXChange(x: any) {
     this.selectedLayer.elem.style.left = x + 'px';
   }
+  onYChange(y: any) {
+    this.selectedLayer.elem.style.top = y + 'px';
+  }
+  onWidthChange(width: any) {
+    this.selectedLayer.elem.style.width = width + 'px';
+  }
+  onHeightChange(height: any) {
+    this.selectedLayer.elem.style.height = height + 'px';
+  }
   onExposureChange(value: any) {
     if (this.selectedAdjustmentLayer instanceof Exposure) {
-      this.selectedAdjustmentLayer.set(
-        {
-          exposure: value,
-          offset: this.selectedAdjustmentLayer.offset,
-          gammaCorrection: this.selectedAdjustmentLayer.gammaCorrection,
-        },
-        this.ngZone
-      );
+      this.selectedAdjustmentLayer.set({
+        exposure: value,
+        offset: this.selectedAdjustmentLayer.offset,
+        gammaCorrection: this.selectedAdjustmentLayer.gammaCorrection,
+      });
     }
   }
   onExposureOffsetChange(value: any) {
     if (this.selectedAdjustmentLayer instanceof Exposure) {
-      this.selectedAdjustmentLayer.set(
-        {
-          offset: value,
-          exposure: this.selectedAdjustmentLayer.exposure,
-          gammaCorrection: this.selectedAdjustmentLayer.gammaCorrection,
-        },
-        this.ngZone
-      );
+      this.selectedAdjustmentLayer.set({
+        offset: value,
+        exposure: this.selectedAdjustmentLayer.exposure,
+        gammaCorrection: this.selectedAdjustmentLayer.gammaCorrection,
+      });
     }
   }
   onExposureGammaCorrectionChange(value: any) {
     if (this.selectedAdjustmentLayer instanceof Exposure) {
-      this.selectedAdjustmentLayer.set(
-        {
-          gammaCorrection: value,
-          exposure: this.selectedAdjustmentLayer.exposure,
-          offset: this.selectedAdjustmentLayer.offset,
-        },
-        this.ngZone
-      );
+      this.selectedAdjustmentLayer.set({
+        gammaCorrection: value,
+        exposure: this.selectedAdjustmentLayer.exposure,
+        offset: this.selectedAdjustmentLayer.offset,
+      });
     }
   }
   onBrightnessChange(value: any) {
@@ -124,23 +124,7 @@ export class LayerPropertyComponent implements OnInit, OnDestroy {
       });
     }
   }
-  onYChange(y: any) {
-    this.selectedLayer.elem.style.top = y + 'px';
-  }
-  onWidthChange(width: any) {
-    this.selectedLayer.elem.style.width = width + 'px';
-  }
-  onHeightChange(height: any) {
-    this.selectedLayer.elem.style.height = height + 'px';
-  }
-  onLineHeightChange($event: string) {
-    throw new Error('Method not implemented.');
-  }
-  onSelectedTypeLayerFontFamilyChange($event: string) {
-    throw new Error('Method not implemented.');
-  }
-  onTextSizeChange(size: number) {}
-  setTextAlignment(align: string) {}
+
   onFillChange(e: any) {
     this.selectedLayer.elem.style.background = e.target.value;
   }

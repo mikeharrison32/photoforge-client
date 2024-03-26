@@ -88,11 +88,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       this.layers = layers.filter(
         (layer) => layer.projectId == this.selectedProject?.Id
       );
-      console.log('selec', this.data.selectedProject.getValue()?.Title);
-      console.log('lalal', layers);
-      console.log('booom', this.layers);
       this.layers.forEach((layer) => {
-        console.log(layer.getElem());
         this.display?.nativeElement.appendChild(layer.getElem());
       });
     });

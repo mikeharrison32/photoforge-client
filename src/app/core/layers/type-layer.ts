@@ -27,6 +27,44 @@ export class TypeLayer extends Layer {
     this.renderer.appendChild(this.elem, this.textElem);
     this.resizer.setWidth(this.elem.clientWidth);
     this.resizer.setHeight(this.elem.clientHeight);
+
+    this.elem.addEventListener('dblclick', (e) => {
+      // this.elem.style.opacity = '0';
+      const textarea = document.createElement('textarea');
+      textarea.value = this.textElem.textContent || '';
+      textarea.select();
+      textarea.classList.add('textarea');
+      const elemRect = this.elem.getBoundingClientRect();
+      textarea.style.left = elemRect.left + 'px';
+      textarea.style.top = elemRect.top + 'px';
+      data.shortcutsEnabled.next(false);
+      let text = '';
+      textarea.oninput = (e) => {
+        text = (e.target as any).value;
+      };
+      const finishTextInsertion = (e: any) => {
+        if (e.code == 'Enter') {
+          this.textElem.textContent = text;
+          disableTextEditing();
+        } else if (e.code == 'Escape') {
+          disableTextEditing();
+        }
+      };
+      const disableTextEditing = () => {
+        textarea.remove();
+        document.removeEventListener('keydown', finishTextInsertion);
+        document.removeEventListener('mousedown', checkForClickOutsideElem);
+        data.shortcutsEnabled.next(true);
+      };
+      const checkForClickOutsideElem = (e: any) => {
+        if (!this.contains(e.target)) {
+          disableTextEditing();
+        }
+      };
+      document.addEventListener('keydown', finishTextInsertion);
+      document.addEventListener('mousedown', checkForClickOutsideElem);
+      this.elem.appendChild(textarea);
+    });
   }
 
   setText(text: string) {

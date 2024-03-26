@@ -9,15 +9,21 @@ import { LayerPropertyComponent } from './layer-property/layer-property.componen
 import { SharedModule } from 'src/app/shared/shared.module';
 import { LayersComponent } from './layers/layers.component';
 import { LayerModule } from './layer/layer.module';
+import { LayerPropertyModule } from './layer-property/layer-property.module';
 @NgModule({
   declarations: [
     InspectorComponent,
     AdjustmentLayerComponent,
     PanelComponent,
-    LayerPropertyComponent,
     LayersComponent,
-   ],
-  imports: [CommonModule, DndModule, SharedModule, LayerModule],
+  ],
+  imports: [
+    CommonModule,
+    DndModule,
+    SharedModule,
+    LayerModule,
+    LayerPropertyModule,
+  ],
   exports: [InspectorComponent],
 })
 export class InspectorModule {}

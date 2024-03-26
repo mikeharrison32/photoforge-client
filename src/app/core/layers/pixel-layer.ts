@@ -103,7 +103,7 @@ void main() {
     this.render();
   }
 
-  resizeCanvasToDisplaySize(canvas: HTMLCanvasElement) {
+  private resizeCanvasToDisplaySize(canvas: HTMLCanvasElement) {
     // Lookup the size the browser is displaying the canvas in CSS pixels.
     const displayWidth = parseInt(this.elem.style.width);
     const displayHeight = parseInt(this.elem.style.height);
@@ -120,6 +120,28 @@ void main() {
     return needResize;
   }
 
+  private flipPixels(
+    originalPixels: Uint8Array,
+    width: number,
+    height: number
+  ) {
+    const flippedPixels = new Uint8Array(originalPixels.length);
+
+    for (let y = 0; y < height; y++) {
+      const originalRowIndex = y * width * 4; // Assuming RGBA format (4 components per pixel)
+      const flippedRowIndex = (height - y - 1) * width * 4;
+
+      // Copy pixels from original row to flipped row, reversing the order
+      for (let x = 0; x < width * 4; x += 4) {
+        for (let i = 0; i < 4; i++) {
+          flippedPixels[flippedRowIndex + x + i] =
+            originalPixels[originalRowIndex + x + i];
+        }
+      }
+    }
+
+    return flippedPixels;
+  }
   render() {
     const program = drawImage(this.gl!, this.img, this.fragmentShaderSource);
     if (!program) {
@@ -154,26 +176,11 @@ void main() {
     const displayWidth = parseInt(this.elem.style.width);
     const displayHeight = parseInt(this.elem.style.height);
 
-    let width = 300;
-    let height = 300;
+    let width = displayWidth;
+    let height = displayHeight;
 
     const pixels = new Uint8Array(width * height * 4);
 
-    // const frameBuffer = this.gl?.createFramebuffer();
-    // this.gl?.bindFramebuffer(this.gl.FRAMEBUFFER, frameBuffer!);
-    // this.gl?.framebufferTexture2D(
-    //   this.gl.FRAMEBUFFER,
-    //   this.gl.COLOR_ATTACHMENT0,
-    //   this.gl.TEXTURE_2D,
-    //   null,
-    //   0
-    // );
-
-    // const status = this.gl?.checkFramebufferStatus(this.gl.FRAMEBUFFER);
-
-    // if (status !== this.gl?.FRAMEBUFFER_COMPLETE) {
-    //   console.error('frame buffer is not complete');
-    // }
     this.gl?.readPixels(
       0,
       0,
@@ -181,8 +188,7 @@ void main() {
       height,
       this.gl.RGBA,
       this.gl.UNSIGNED_BYTE,
-      pixels,
-      0
+      pixels
     );
 
     // for (let i = 0; i < pixels.length; i += 4) {
@@ -193,23 +199,15 @@ void main() {
     this.gl?.texSubImage2D(
       this.gl.TEXTURE_2D,
       0,
-      30,
-      30,
+      0,
+      0,
       width,
       height,
       this.gl.RGBA,
       this.gl.UNSIGNED_BYTE,
-      pixels
+      this.flipPixels(pixels, displayWidth, displayHeight)
     );
 
-    const canvas = document.createElement('canvas');
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
-    const ctx = canvas.getContext('2d');
-    const imgData = new ImageData(width, height);
-    imgData.data.set(pixels);
-    ctx?.putImageData(imgData, 0, 0);
-    document.body.appendChild(canvas);
     this.gl?.clearColor(1.0, 1.0, 1.0, 1.0);
     this.gl?.clear(this.gl?.COLOR_BUFFER_BIT);
     this.gl?.drawArrays(this.gl?.TRIANGLES, 0, 6);
