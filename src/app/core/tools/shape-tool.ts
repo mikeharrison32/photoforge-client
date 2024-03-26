@@ -6,7 +6,7 @@ import { DataService } from '../services/data.service';
 import { Shape } from 'src/app/enums/shapes';
 import { Mask } from '..';
 export class ShapeTool {
-  type: string = 'shapeTool';
+  readonly type: string = 'shapeTool';
   shape: Shape = Shape.Rectangle;
   properties: IShapeToolProperties = {};
   listenForLayerResize!: (e: Event) => void;

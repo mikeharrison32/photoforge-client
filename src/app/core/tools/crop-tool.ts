@@ -6,7 +6,7 @@ import { fabric } from 'fabric';
 import * as PIXI from 'pixi.js-legacy';
 import { DataService } from '../services/data.service';
 export class CropTool {
-  type: string = 'cropTool';
+  readonly type: string = 'cropTool';
   properties?: ICropToolProperties;
   cropCanvas?: PIXI.Application;
   corners: Corner[] = [];

@@ -3,7 +3,7 @@ import { TypeLayer } from '../layers/type-layer';
 import { DataService } from '../services/data.service';
 export class TextTool {
   properties: ITextToolOptions = {};
-  type: string = 'textTool';
+  readonly type: string = 'textTool';
   data?: DataService;
   textArea?: HTMLElement;
   mouseDownListener!: (e: any) => void;

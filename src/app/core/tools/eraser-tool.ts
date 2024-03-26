@@ -7,7 +7,7 @@ import * as PIXI from 'pixi.js-legacy';
 export class EraserTool {
   properties?: IEraserToolProperties;
   brush?: Brush;
-  type: string = 'eraserTool';
+  readonly type: string = 'eraserTool';
   configure(display: HTMLElement, data: DataService) {
     this.brush = new Brush({ size: 30 });
     display.parentElement?.parentElement?.appendChild(this.brush.elem!);

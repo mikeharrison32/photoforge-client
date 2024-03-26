@@ -5,15 +5,23 @@ import { DataService } from './services/data.service';
 export class PfObject {
   resizer!: Resizer;
   elem!: HTMLElement;
+  data!: DataService;
   constructor(
     protected renderer: Renderer2,
     // container: HTMLElement,
     data: DataService
   ) {
+    this.data = data;
     this.elem = document.createElement('div');
     this.elem.classList.add('pf-object');
     // this.renderer.appendChild(container, this.elem);
     this.resizer = new Resizer(this.renderer, this.elem, data);
+  }
+  moveTo(x: number, y: number) {
+    let zoom = this.data.zoom.getValue() / 100;
+    this.elem.style.left = x + 'px';
+    this.elem.style.top = y + 'px';
+    this.resizer.moveTo(x * zoom, y * zoom);
   }
   remove() {
     this.elem.remove();

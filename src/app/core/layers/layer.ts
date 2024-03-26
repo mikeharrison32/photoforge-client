@@ -41,7 +41,6 @@ export class Layer extends PfObject {
     return this.elem.cloneNode(true);
   }
   drawImage(img: any) {}
-  moveTo(x: number, y: number) {}
   sendBackward() {}
   sendToBack() {}
   bringForward() {}

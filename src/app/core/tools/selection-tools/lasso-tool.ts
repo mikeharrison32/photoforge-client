@@ -11,7 +11,7 @@ import { Renderer2 } from '@angular/core';
 import { splitLineIntoSegments } from './rectangular-select';
 export class LassoTool {
   lassoCanvas?: PIXI.Application;
-  type: string = 'lassoTool';
+  readonly type: string = 'lassoTool';
   points: number[] = [];
   texture!: PIXI.RenderTexture;
   drawingSurface!: PIXI.Sprite;
@@ -128,19 +128,10 @@ export class LassoTool {
     document.addEventListener('keydown', (e) => {
       if (e.code == 'Enter') {
         this.clearCanvas();
-        if (this.selection) {
-          this.selection.clearSelection(this.texture);
-          this.selection.addFromPoints(
-            this.points.map((c) => c * zoom),
-            this.texture
-          );
-        } else {
-          this.selection = new Selection(this.lassoCanvas!);
-          this.selection.addFromPoints(
-            this.points.map((c) => c * zoom),
-            this.texture
-          );
-        }
+        const selection = new Selection();
+        selection.addFromPoints(this.points.map((c) => c * zoom));
+        this.data?.currentSelection.next(selection);
+        this.points = [];
       }
     });
 
@@ -241,8 +232,9 @@ export class LassoTool {
   }
   applySelection(ctx: CanvasRenderingContext2D) {
     this.clearLassoCanvas(ctx);
-    const selection = new Selection(ctx.canvas, this.texture, this.points);
-    selection.show();
+    const selection = new Selection();
+    selection.addFromPoints(this.points);
+    this.data?.currentSelection.next(selection);
   }
   disconfigure(): void {
     this.lassoCanvas?.destroy(true);

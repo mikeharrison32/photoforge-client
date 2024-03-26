@@ -9,7 +9,7 @@ import { DataService } from '../services/data.service';
 import { NotificationService } from '../services/notification.service';
 import * as PIXI from 'pixi.js-legacy';
 export class BrushTool {
-  type: string = 'brushTool';
+  readonly type: string = 'brushTool';
   brush?: Brush;
   texture!: PIXI.RenderTexture;
   drawingSurface!: PIXI.Sprite;

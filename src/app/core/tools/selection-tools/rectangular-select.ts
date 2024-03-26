@@ -13,7 +13,7 @@ import { Renderer2 } from '@angular/core';
 class ReactangularSelect {
   properites?: IRectangularProperties;
   contextMenu?: ContextMenu;
-  type: string = 'rectangularSelectTool';
+  readonly type: string = 'rectangularSelectTool';
   selectionCanvas?: PIXI.Application;
   selectionRect?: PIXI.Graphics;
   selection?: Selection;
@@ -209,12 +209,12 @@ class ReactangularSelect {
     });
     (this.selectionCanvas.view as any).classList.add('selection-canvas');
     display.parentElement?.appendChild(this.selectionCanvas.view as any);
-    this.registerListeners();
+    this.registerListeners(data);
   }
 
   layerViaCopy() {}
 
-  private registerListeners() {
+  private registerListeners(data: DataService) {
     document.addEventListener('keydown', (e) => {
       switch (e.code) {
         case 'Enter':
@@ -243,13 +243,8 @@ class ReactangularSelect {
             this.selectionRectPos.x,
             this.selectionRectPos.y,
           ];
-          if (this.selection) {
-            this.selection.clearSelection(this.texture);
-            this.selection.addFromPoints(points, this.texture);
-          } else {
-            this.selection = new Selection(this.selectionCanvas!);
-            this.selection.addFromPoints(points, this.texture);
-          }
+          const selection = new Selection();
+          data.currentSelection.next(selection);
           break;
       }
     });

@@ -3,7 +3,7 @@ import { MouseDragEvent } from '../event';
 import { PixelLayer } from '../layers/pixel-layer';
 
 export class CloneStampTool {
-  type: string = 'cloneStampTool';
+  readonly type: string = 'cloneStampTool';
   firstBrush?: Brush;
   secondBrush?: Brush;
   configure(display: HTMLElement, layer: PixelLayer) {

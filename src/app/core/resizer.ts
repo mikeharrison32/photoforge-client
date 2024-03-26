@@ -93,7 +93,7 @@ export class Resizer {
       this.bl_corner.getElem().style.cursor = 'ne-resize';
     }
 
-    this.makeElemDraggable();
+    // this.makeElemDraggable();
     this.disable();
     //place the corner inside the elem provided
   }
@@ -106,6 +106,10 @@ export class Resizer {
     // this.elem.style.top = targetObjRect.top * zoom + 'px';
     this.setWidth(this.targetObject.clientWidth * zoom);
     this.setHeight(this.targetObject.clientHeight * zoom);
+  }
+  moveTo(x: number, y: number) {
+    this.elem.style.left = x + 'px';
+    this.elem.style.top = y + 'px';
   }
   remove() {
     this.elem.remove();
