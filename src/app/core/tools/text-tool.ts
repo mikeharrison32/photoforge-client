@@ -3,7 +3,7 @@ import { TypeLayer } from '../layers/type-layer';
 import { DataService } from '../services/data.service';
 export class TextTool {
   properties: ITextToolOptions = {};
-  type: string = 'textTool';
+  readonly type: string = 'textTool';
   data?: DataService;
   textArea?: HTMLElement;
   mouseDownListener!: (e: any) => void;
@@ -14,14 +14,14 @@ export class TextTool {
       const displayScale = parseFloat(display.style.scale || '1');
       const typeLayer = new TypeLayer(
         renderer,
-        display,
         data,
         `${Math.random()}`,
         'Text',
         data.selectedProject.getValue()?.Id || 'aaa',
-        'Thank\nYou'
+        'Lorem Ipsum'
       );
       data.layers.next([...data.layers.getValue(), typeLayer]);
+      data.selectedLayers.next([typeLayer]);
     };
     display.parentElement?.addEventListener(
       'mousedown',
@@ -30,7 +30,6 @@ export class TextTool {
   }
 
   disconfigure(display: HTMLElement): void {
-    console.log('disconfiguring text tool');
     display.style.cursor = 'default';
     this.data?.shortcutsEnabled.next(true);
     display.parentElement?.removeEventListener(

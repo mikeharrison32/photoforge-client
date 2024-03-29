@@ -42,42 +42,11 @@ void main() {
     this.id = `${Math.random()}`;
     this.type = 'exposure';
     if (options) {
-      this.offset = options.offset;
-      this.exposure = options.exposure;
-      this.gammaCorrection = options.gammaCorrection;
-      const img = pl.app?.stage.getChildByName('image');
-      this.exposureFilter = new PIXI.Filter(undefined, this.fragmentShader);
-      this.exposureFilter.uniforms['u_exposure'] = options.exposure; // Set the default vibrance strength
-      this.exposureFilter.uniforms['u_offset'] = options.offset; // Set the default vibrance strength
-      this.exposureFilter.uniforms['u_gamma'] = options.gammaCorrection; // Set the default vibrance strength
-
-      if (img?.filters) {
-        img!.filters.push(this.exposureFilter);
-      } else {
-        img!.filters = [this.exposureFilter];
-      }
-      pl.app?.render();
     }
   }
 
   override hide(ngZone: NgZone) {}
-  set(options: IExposureOptions, ngZone: NgZone) {
-    ngZone.runOutsideAngular(() => {
-      const img = this.pl?.getSprite();
-      if (img?.filters) {
-        const exposureIndex = img.filters.indexOf(this.exposureFilter!);
-        img.filters.splice(exposureIndex, 1);
-        this.exposureFilter!.uniforms['u_exposure'] = options.exposure; // Set the default vibrance strength
-        this.exposureFilter!.uniforms['u_offset'] = options.offset; // Set the default vibrance strength
-        this.exposureFilter!.uniforms['u_gamma'] = options.gammaCorrection; // Set the default vibrance strength
-
-        img.filters.push(this.exposureFilter!);
-      } else {
-        img!.filters = [this.exposureFilter!];
-      }
-      this.pl?.app?.render();
-    });
-  }
+  set(options: IExposureOptions) {}
   override show() {}
   clear() {}
 }

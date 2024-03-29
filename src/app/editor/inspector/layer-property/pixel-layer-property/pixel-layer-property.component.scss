@@ -1,0 +1,47 @@
+.pixel-layer {
+  width: 100%;
+
+  img {
+    width: 1rem;
+  }
+  .input {
+    width: 3rem;
+  }
+  p {
+    margin: 0;
+  }
+  .description {
+    width: 100%;
+    gap: 4px;
+    display: flex;
+    align-items: center;
+    font-size: 0.7rem;
+    padding: 0.4rem;
+    border-bottom: solid 1px #2a2a2a;
+  }
+  .grid {
+    width: 100%;
+    display: grid;
+    padding: 0.3rem;
+
+    .row {
+      width: 84%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.6rem;
+      margin-block: 0.2rem;
+      .input {
+        margin-left: 1rem;
+      }
+      p {
+        margin: 0;
+        position: absolute;
+      }
+      div {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}

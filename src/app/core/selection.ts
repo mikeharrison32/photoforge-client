@@ -5,44 +5,48 @@ interface Rect {
   width: number;
   height: number;
 }
-
-export class Selection {
-  app?: PIXI.Application;
-  texture: PIXI.RenderTexture | undefined;
-  prevPosition?: PIXI.Point;
-  lineFill?: PIXI.Graphics;
-  brush?: PIXI.Graphics;
+interface ISelection {
+  view?: HTMLElement;
+  points: number[];
+}
+interface ISelectionOptions {
+  width?: number;
+  height?: number;
+}
+export class Selection implements ISelection {
+  private app?: PIXI.Application;
+  private texture: PIXI.RenderTexture | undefined;
+  private prevPosition?: PIXI.Point;
+  private lineFill?: PIXI.Graphics;
+  private brush?: PIXI.Graphics;
+  view?: HTMLElement;
   points: number[] = [];
-  constructor(
-    canvas: HTMLCanvasElement | PIXI.Application,
-    texture?: PIXI.RenderTexture,
-    points?: number[]
-  ) {
-    if (texture) {
-      this.texture = texture;
-    }
-    if (canvas instanceof HTMLCanvasElement) {
-    } else if (canvas instanceof PIXI.Application) {
-      this.app = canvas;
-      console.log('canvas innstance of app');
-      this.texture = PIXI.RenderTexture.create({
-        width: this.app?.view.width,
-        height: this.app?.view.height,
-      });
-      if (!points) {
-        return;
-      }
-      if (texture) {
-        this.addFromPoints(points, texture);
-      }
-    }
+  private drawingSurface: PIXI.Sprite;
+  constructor(options?: ISelectionOptions) {
+    this.app = new PIXI.Application({
+      background: 'transparent',
+      backgroundAlpha: 0,
+      backgroundColor: 'transparent',
+    });
+
+    const view = this.app.view as any;
+    view.classList.add('selection');
+    view.style.width = `${options?.width}px` || '100%';
+    view.style.height = `${options?.height}px` || '100%';
+    this.texture = PIXI.RenderTexture.create({
+      width: options?.width || this.app?.view.width,
+      height: options?.height || this.app?.view.height,
+    });
+    this.drawingSurface = new PIXI.Sprite(this.texture);
+    this.app.stage.addChild(this.drawingSurface);
+    this.view = this.app.view as any;
   }
   show() {}
   clear() {}
   intersect(sl: Selection) {}
   subtract(sl: Selection) {}
 
-  addFromPoints(points: number[], texture: PIXI.RenderTexture) {
+  addFromPoints(points: number[]) {
     this.points = points;
     let color = 'black';
     if (!this.prevPosition) {
@@ -58,15 +62,15 @@ export class Selection {
       color = color == 'black' ? 'white' : 'black';
       this.brush!.position.set(x, y);
       this.app?.renderer.render(this.brush!, {
-        renderTexture: texture,
+        renderTexture: this.texture,
         clear: false,
       });
       this.lineFill!.clear()
-        .lineStyle({ width: 2, color })
+        .lineStyle({ width: 1, color })
         .moveTo(this.prevPosition!.x, this.prevPosition!.y)
         .lineTo(this.brush!.x, this.brush!.y);
       this.app?.renderer.render(this.lineFill!, {
-        renderTexture: texture,
+        renderTexture: this.texture,
         clear: false,
       });
       this.prevPosition!.copyFrom(this.brush!.position);
@@ -77,13 +81,16 @@ export class Selection {
       redraw(x, y);
     }
     // const ticker = this.app?.ticker.add(() => {
+    // setInterval(() => {
+    //   // this.clearSelection(texture);
     //   color = color == 'black' ? 'white' : 'black';
     //   for (let i = 0; i < points.length; i += 2) {
     //     const x = points[i];
     //     const y = points[i + 1];
     //     redraw(x, y);
     //   }
-    // });
+    // }, 300);
+    // })
     // ticker!.autoStart = true;
   }
   clearSelection(texture: PIXI.RenderTexture) {

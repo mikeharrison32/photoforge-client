@@ -75,11 +75,6 @@ export class NewDocumentComponent implements OnInit {
       ...presets,
     };
     this.data.projects.value.push(newProject);
-    const displayElem = this.data.displayElem.getValue();
-    if (displayElem) {
-      displayElem.style.width = newProject.Width + 'px';
-      displayElem.style.height = newProject.Height + 'px';
-    }
     this.data.selectedProject.next(newProject);
     this.router.navigateByUrl('/editor');
     this.createBtnClicked.emit(true);

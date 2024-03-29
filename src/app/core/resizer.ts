@@ -93,7 +93,7 @@ export class Resizer {
       this.bl_corner.getElem().style.cursor = 'ne-resize';
     }
 
-    this.makeElemDraggable();
+    // this.makeElemDraggable();
     this.disable();
     //place the corner inside the elem provided
   }
@@ -106,6 +106,10 @@ export class Resizer {
     // this.elem.style.top = targetObjRect.top * zoom + 'px';
     this.setWidth(this.targetObject.clientWidth * zoom);
     this.setHeight(this.targetObject.clientHeight * zoom);
+  }
+  moveTo(x: number, y: number) {
+    this.elem.style.left = x + 'px';
+    this.elem.style.top = y + 'px';
   }
   remove() {
     this.elem.remove();
@@ -130,11 +134,13 @@ export class Resizer {
     this.elem.style.display = 'none';
   }
   enable() {
+    console.log('enabling');
     this.elem.style.display = 'block';
     this.update();
     this.updateCorners();
   }
   setWidth(width: number) {
+    console.log('updateing width');
     this.elem.style.width = width + 'px';
     // this.elem.style.transform = `translate(${
     //   this.targetObject.getBoundingClientRect().left
@@ -160,35 +166,57 @@ export class Resizer {
   }
   private updateMrCorner() {
     const mr_corner_elem = this.mr_corner!.getElem();
-    mr_corner_elem.classList.add('mrt_corner');
-    mr_corner_elem.style.transform = `translate(${
-      -mr_corner_elem.clientWidth / 2
-    }px, ${this.elem.getBoundingClientRect().height / 2}px)`;
+    if (this.elem.clientHeight < mr_corner_elem.clientHeight) {
+      mr_corner_elem.style.display = 'none';
+    } else {
+      mr_corner_elem.style.display = 'block';
+      mr_corner_elem.classList.add('mrt_corner');
+      mr_corner_elem.style.transform = `translate(${
+        -mr_corner_elem.clientWidth / 2
+      }px, ${this.elem.getBoundingClientRect().height / 2}px)`;
+    }
   }
   private updateMlCorner() {
     const ml_corner_elem = this.ml_corner!.getElem();
-    ml_corner_elem.classList.add('mrt_corner');
-    ml_corner_elem.style.transform = `translate(${
-      this.elem.getBoundingClientRect().width - ml_corner_elem.clientWidth / 2
-    }px, ${this.elem.getBoundingClientRect().height / 2}px)`;
+    if (this.elem.clientHeight < ml_corner_elem.clientHeight) {
+      ml_corner_elem.style.display = 'none';
+    } else {
+      ml_corner_elem.style.display = 'block';
+      ml_corner_elem.classList.add('mrt_corner');
+      ml_corner_elem.style.transform = `translate(${
+        this.elem.getBoundingClientRect().width - ml_corner_elem.clientWidth / 2
+      }px, ${this.elem.getBoundingClientRect().height / 2}px)`;
+    }
   }
   private updateMtCorner() {
     const mt_corner_elem = this.mt_corner!.getElem();
-    mt_corner_elem.classList.add('mtt_corner');
-    mt_corner_elem.style.transform = `translate(${
-      this.elem.getBoundingClientRect().width / 2 -
-      mt_corner_elem.clientWidth / 2
-    }px, ${-mt_corner_elem.clientHeight / 2}px)`;
+    if (this.elem.clientWidth < mt_corner_elem.clientWidth) {
+      mt_corner_elem.style.display = 'none';
+    } else {
+      mt_corner_elem.style.display = 'block';
+      mt_corner_elem.classList.add('mtt_corner');
+      mt_corner_elem.style.transform = `translate(${
+        this.elem.getBoundingClientRect().width / 2 -
+        mt_corner_elem.clientWidth / 2
+      }px, ${-mt_corner_elem.clientHeight / 2}px)`;
+    }
   }
   private updateMbCorner() {
     const mb_corner_elem = this.mb_corner!.getElem();
-    mb_corner_elem.classList.add('mtt_corner');
-    mb_corner_elem.style.transform = `translate(${
-      this.elem.getBoundingClientRect().width / 2 -
-      mb_corner_elem.clientWidth / 2
-    }px, ${
-      this.elem.getBoundingClientRect().height - mb_corner_elem.clientHeight / 2
-    }px)`;
+    if (this.elem.clientWidth < mb_corner_elem.clientWidth) {
+      mb_corner_elem.style.display = 'none';
+    } else {
+      mb_corner_elem.style.display = 'block';
+
+      mb_corner_elem.classList.add('mtt_corner');
+      mb_corner_elem.style.transform = `translate(${
+        this.elem.getBoundingClientRect().width / 2 -
+        mb_corner_elem.clientWidth / 2
+      }px, ${
+        this.elem.getBoundingClientRect().height -
+        mb_corner_elem.clientHeight / 2
+      }px)`;
+    }
   }
 
   private updateBlCorner() {
@@ -246,7 +274,6 @@ export class Resizer {
 
     document.addEventListener('mousemove', (e) => {
       if (!this.data.isMovingAllowed.getValue() || this.locked) {
-        console.log('not allowwed');
         return;
       }
 

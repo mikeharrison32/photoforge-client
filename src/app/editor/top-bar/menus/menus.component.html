@@ -297,7 +297,9 @@
     <div class="options">
       <ul>
         <!-- <li>Actions</li> -->
-        <li (click)="adjustmentsPanel()">Adjustments</li>
+        <li (click)="adjustmentsPanel()">
+          Adjustments <span *ngIf="settings.panals.adjustments">(true)</span>
+        </li>
         <!-- <li (click)="brushesPanel()">Brushes</li> -->
         <!-- <li (click)="characterPanel()">Character</li> -->
         <!-- <li (click)="colorPanel()">Color</li> -->

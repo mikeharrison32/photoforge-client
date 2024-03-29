@@ -1,24 +1,19 @@
-import { Injectable, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import {
-  AdjustmentLayer,
-  AdjustmentLayerType,
-  Layer,
-  LayerType,
-} from '../../types/layer';
+  Injectable,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  inject,
+} from '@angular/core';
 import { DataService } from './data.service';
-import { fabric } from 'fabric';
-import { Filter } from 'src/app/enums/filter';
-import { StateService } from './state.service';
+import { Layer } from '../layers/layer';
+import { PixelLayer } from '../layers/pixel-layer';
 import { TypeLayer } from '../layers/type-layer';
-import { map } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
 export class LayerService {
-  constructor(
-    private data: DataService,
-    private stateService: StateService // private renderer: Renderer2
-  ) {}
+  constructor(private data: DataService) {}
   createTypeLayer(text?: string, projectId?: string) {
     // const displayElem = this.data.displayElem.getValue();
     // let lastIndex =
@@ -33,5 +28,27 @@ export class LayerService {
     //   text
     // );
     // this.data.layers.next([...this.data.layers.getValue(), textLayer]);
+  }
+
+  duplicateLayer(renderer: Renderer2, layer: Layer) {
+    if (layer instanceof PixelLayer) {
+      const displayElem = this.data.displayElem.getValue();
+      const img = new Image();
+      img.src = layer.src || '';
+      img.onload = () => {
+        const newLayer = new PixelLayer(
+          this.data,
+          renderer,
+          // displayElem,
+          `${Math.random()}`,
+          layer.name + ' Copy',
+          layer.projectId,
+          img
+        );
+
+        this.data.layers.next([...this.data.layers.getValue(), newLayer]);
+      };
+    } else if (layer instanceof TypeLayer) {
+    }
   }
 }

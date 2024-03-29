@@ -57,14 +57,10 @@ export class WelcomePageComponent implements OnInit {
             Width: imgObj.width,
             Height: imgObj.height,
           };
-          const displayElem = this.data.displayElem.getValue();
-          displayElem!.style.width = imgObj.width + 'px';
-          displayElem!.style.height = imgObj.height + 'px';
           const pixelLayer = new PixelLayer(
             this.data,
             this.renderer,
-            displayElem,
-            'aaa',
+            `${Math.random()}`,
             file.name,
             project.Id,
             imgObj
