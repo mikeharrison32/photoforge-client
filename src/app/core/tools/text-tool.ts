@@ -30,7 +30,6 @@ export class TextTool {
   }
 
   disconfigure(display: HTMLElement): void {
-    console.log('disconfiguring text tool');
     display.style.cursor = 'default';
     this.data?.shortcutsEnabled.next(true);
     display.parentElement?.removeEventListener(

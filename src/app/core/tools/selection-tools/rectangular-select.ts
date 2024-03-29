@@ -20,13 +20,11 @@ class ReactangularSelect {
   selectionRectPos!: { x: number; y: number; width: number; height: number };
   texture!: PIXI.RenderTexture;
   drawingSurface!: PIXI.Sprite;
-  // data!: DataService;
   configure(
     display: HTMLElement,
     data: DataService,
     renderer: Renderer2
   ): void {
-    // this.data = data;
     this.selectionRectPos = {
       x: 0,
       y: 0,
@@ -67,9 +65,10 @@ class ReactangularSelect {
       if (!mousedown) {
         return;
       }
-      this.selectionRect?.destroy();
-      delete this.selectionRect;
-      this.selectionRect = new PIXI.Graphics();
+      if (!this.selectionRect) {
+        this.selectionRect = new PIXI.Graphics();
+      }
+      this.selectionRect.clear();
       this.selectionRect?.lineStyle({ color: '#717171', width: 2 });
       this.selectionRect?.drawRect(
         this.selectionRectPos.x,
@@ -91,121 +90,6 @@ class ReactangularSelect {
         width: e.global.x - this.selectionRectPos.x,
         height: e.global.y - this.selectionRectPos.y,
       };
-    });
-    document.addEventListener('contextmenu', (e) => e.preventDefault());
-    this.drawingSurface.on('rightclick', (e) => {
-      e.preventDefault();
-      if (
-        this.selection &&
-        this.selection.isPointInsideSelection(e.global.x, e.global.y)
-      ) {
-        const selectedLayer = data.selectedLayers.getValue()[0];
-
-        console.log('point is in poly');
-        const containerRect = (
-          this.selectionCanvas?.view as any
-        )?.getBoundingClientRect();
-        const selectionContextMenu = {
-          x: e.clientX - containerRect!.left,
-          y: e.clientY - containerRect!.top,
-          menus: [
-            {
-              name: 'Layer via Copy',
-              click: () => {
-                if (selectedLayer instanceof PixelLayer) {
-                  const img = new Image();
-                  img.src = selectedLayer.src || '';
-                  const copyLayer = new PixelLayer(
-                    data,
-                    renderer,
-                    // display,
-                    `${Math.random()}`,
-                    'Layer 1 Copy',
-                    selectedLayer.projectId,
-                    img
-                  );
-                  data.layers.next([...data.layers.getValue(), copyLayer]);
-                  this.selectionRectPos.width += this.selectionRectPos.x;
-                  this.selectionRectPos.height += this.selectionRectPos.y;
-                  const mask = new Mask(copyLayer, [
-                    this.selectionRectPos.x,
-                    this.selectionRectPos.y,
-                    // second point
-                    this.selectionRectPos.x,
-                    this.selectionRectPos.height,
-                    //thridlayer
-
-                    this.selectionRectPos.width,
-                    this.selectionRectPos.height,
-                    //forth
-                    this.selectionRectPos.width,
-                    this.selectionRectPos.x,
-                    //close
-                    this.selectionRectPos.x,
-                    this.selectionRectPos.y,
-                  ]);
-                  data.selectedTool.next('moveTool');
-                  data.contextMenu.next({});
-                  data.selectedLayers.next([copyLayer]);
-                }
-              },
-            },
-            {
-              name: 'Layer via Cut',
-              click: () => {
-                console.log('layer via cut');
-              },
-            },
-            {
-              name: 'Deselect',
-              click: () => {
-                console.log('fill fill');
-                this.clearCanvas();
-              },
-            },
-            {
-              name: 'Select Inverse',
-              click: () => {
-                console.log('fill fill');
-              },
-            },
-            {
-              name: 'Select and Mask',
-              click: () => {
-                console.log('fill fill');
-              },
-            },
-            {
-              name: 'New Layer...',
-              click: () => {
-                console.log('fill fill');
-              },
-            },
-            {
-              name: 'Fill',
-              click: () => {
-                console.log('fill fill');
-              },
-            },
-            {
-              name: 'Stroke...',
-              click: () => {
-                console.log('fill fill');
-              },
-            },
-            {
-              name: 'Fade...',
-              click: () => {
-                console.log('fill fill');
-              },
-            },
-          ],
-        };
-        data.contextMenu.next(selectionContextMenu);
-        // this.selection = new Selection(this.selectionCanvas!)
-        // this.selection.addFromRect(this.selectionRect)
-        //   console.log('right clicked');
-      }
     });
     (this.selectionCanvas.view as any).classList.add('selection-canvas');
     display.parentElement?.appendChild(this.selectionCanvas.view as any);
@@ -244,6 +128,7 @@ class ReactangularSelect {
             this.selectionRectPos.y,
           ];
           const selection = new Selection();
+          selection.addFromPoints(points);
           data.currentSelection.next(selection);
           break;
       }

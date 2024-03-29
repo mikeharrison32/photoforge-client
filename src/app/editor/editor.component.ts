@@ -142,7 +142,10 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     this.data.currentSelection.subscribe((cs) => {
-      this.display?.nativeElement.appendChild(cs?.view);
+      this.currentSelection = cs;
+      if (cs) {
+        this.display?.nativeElement.appendChild(cs?.view);
+      }
     });
   }
   private filterLayers(project: Project | null) {
@@ -161,7 +164,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     document.addEventListener('contextmenu', (e) => {
       e.preventDefault();
-      console.log(e.target);
+
       const selectionElem = this.data.currentSelection.getValue()?.view;
       if (selectionElem?.contains(e.target as HTMLElement)) {
         let containerRect = selectionElem.getBoundingClientRect();
@@ -225,7 +228,34 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
             {
               name: 'Fill',
               click: () => {
-                console.log('fill fill');
+                if (
+                  !(selectedLayer instanceof PixelLayer) ||
+                  !this.currentSelection
+                ) {
+                  return;
+                }
+                const points = this.currentSelection.points;
+                const poly = new PIXI.Polygon(points);
+                const pixels = selectedLayer.pixels!;
+
+                // selectedLayer.forEachPixels((x, y) => {});
+                selectedLayer.forEachPixels((x, y) => {
+                  if (poly.contains(x, y)) {
+                    const index = (y * selectedLayer.width + x) * 4;
+                    pixels[index] = 0;
+                    pixels[index + 1] = 0;
+                    pixels[index + 2] = 0;
+                    pixels[index + 3] = 0;
+                  }
+                });
+
+                selectedLayer.insertPixels(
+                  pixels,
+                  0,
+                  0,
+                  selectedLayer.width,
+                  selectedLayer.height
+                );
               },
             },
             {
@@ -260,7 +290,6 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.data.selectedTool.subscribe((selectedTool) => {
       this.tools.forEach((tool) => {
         if (tool.type == selectedTool) {
-          console.log('selectedTool', selectedTool);
           this.disconfigureTools();
           switch (tool.type) {
             case 'moveTool':
@@ -430,15 +459,19 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           }
           break;
         case 'Delete':
-          const newLayersArray: Layer[] = [];
-          this.data.layers.getValue().forEach((layer) => {
-            if (this.selectedLayers.includes(layer)) {
-              layer.remove();
-            } else {
-              newLayersArray.push(layer);
-            }
-          });
-          this.data.layers.next(newLayersArray);
+          const selection = this.data.currentSelection.getValue();
+          if (selection) {
+          } else {
+            const newLayersArray: Layer[] = [];
+            this.data.layers.getValue().forEach((layer) => {
+              if (this.selectedLayers.includes(layer)) {
+                layer.remove();
+              } else {
+                newLayersArray.push(layer);
+              }
+            });
+            this.data.layers.next(newLayersArray);
+          }
           break;
         case 'Equal':
           if (e.ctrlKey) {

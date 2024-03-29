@@ -18,9 +18,11 @@ import { Renderer2 } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { Mask } from '..';
 export class PixelLayer extends Layer {
-  pixels: IColorRGBA[] = [];
+  pixels?: Uint8Array;
   src?: string;
-  fragmentShaderSource = `
+  width!: number;
+  height!: number;
+  private fragmentShaderSource = `
   uniform sampler2D textureSampler;
   precision highp float;
   varying vec2 texCoords;
@@ -29,7 +31,7 @@ export class PixelLayer extends Layer {
   uniform float u_vibrance;
   uniform float u_saturation;
 vec3 adjustBrightness(vec3 color, float brightness) {
-return color + brightness;
+    return color + brightness;
 }
 
 vec3 adjustContrast(vec3 color, float contrast) {
@@ -50,6 +52,7 @@ vec3 adjustSaturation(vec3 color, float saturation) {
 
 void main() {
     vec4 color = texture2D(textureSampler, texCoords);
+
     color.rgb = adjustBrightness(color.rgb, u_brightnees);
     color.rgb = adjustContrast(color.rgb,  u_contrast);
     color.rgb = adjustSaturation(color.rgb,  u_saturation);
@@ -67,9 +70,8 @@ void main() {
   };
   img: any;
   gl?: WebGLRenderingContext | WebGL2RenderingContext | null;
-  app?: PIXI.Application;
   canvas!: HTMLCanvasElement;
-  mask?: Mask;
+  private program?: WebGLProgram;
   constructor(
     data: DataService,
     renderer: Renderer2,
@@ -84,22 +86,24 @@ void main() {
     super(renderer, data, id, name, projectId);
     this.canvas = document.createElement('canvas');
     this.canvas.classList.add('layer');
-
-    // this.canvas.width = this.canvas.clientWidth * 2;
-    // this.canvas.height = this.canvas.clientHeight * 2;
     this.type = 'pixel';
+
     this.renderer.appendChild(this.elem, this.canvas);
 
+    this.width = img.width;
+    this.height = img.height;
     this.elem.style.width = img.width + 'px';
     this.elem.style.height = img.height + 'px';
+
     this.img = img;
     this.src = img.src;
+
     this.gl = this.canvas.getContext('webgl2');
+
+    this.resizeCanvasToDisplaySize(this.canvas);
     const displayScale = data.zoom.getValue() / 100;
     this.resizer.setWidth(img.width * displayScale);
     this.resizer.setHeight(img.height * displayScale);
-    // const program = drawImage(this.gl!, this.img, this.fragmentShaderSource);
-    this.resizeCanvasToDisplaySize(this.canvas);
     this.render();
   }
 
@@ -143,11 +147,42 @@ void main() {
     return flippedPixels;
   }
   render() {
-    const program = drawImage(this.gl!, this.img, this.fragmentShaderSource);
-    if (!program) {
-      console.error('no program');
+    if (!this.program) {
+      console.log('Createing Program...');
+      this.program = drawImage(this.gl!, this.img, this.fragmentShaderSource);
+    }
+
+    if (!this.program) {
+      console.error('No program');
       return;
     }
+    this.updateFilters(this.program);
+    this.renderGL();
+
+    this.updatePixels();
+    this.renderGL();
+  }
+  private updatePixels() {
+    const displayWidth = parseInt(this.elem.style.width);
+    const displayHeight = parseInt(this.elem.style.height);
+
+    let width = displayWidth;
+    let height = displayHeight;
+    const pixels = new Uint8Array(width * height * 4);
+
+    this.gl?.readPixels(
+      0,
+      0,
+      width,
+      height,
+      this.gl.RGBA,
+      this.gl.UNSIGNED_BYTE,
+      pixels
+    );
+    this.pixels = this.flipPixels(pixels, width, width);
+  }
+
+  private updateFilters(program: WebGLProgram) {
     const brightneesUniformLocation = this.gl?.getUniformLocation(
       program,
       'u_brightnees'
@@ -167,49 +202,53 @@ void main() {
     this.gl?.uniform1f(brightneesUniformLocation!, this.filters.brightnees);
     this.gl?.uniform1f(contrastUniformLocation!, this.filters.contrast);
     this.gl?.uniform1f(saturationUniformLocation!, this.filters.saturation);
-    // this.gl?.uniform1f(vibranceUniformLocation!, this.filters.vibrance);
+  }
 
+  forEachPixels(cb: (x: number, y: number) => void) {
+    for (let y = 0; y < this.height; y++) {
+      for (let x = 0; x < this.width; x++) {
+        cb(x, y);
+      }
+    }
+  }
+  renderGL() {
     this.gl?.clearColor(1.0, 1.0, 1.0, 1.0);
     this.gl?.clear(this.gl?.COLOR_BUFFER_BIT);
     this.gl?.drawArrays(this.gl?.TRIANGLES, 0, 6);
-
-    const displayWidth = parseInt(this.elem.style.width);
-    const displayHeight = parseInt(this.elem.style.height);
-
-    let width = displayWidth;
-    let height = displayHeight;
-
-    const pixels = new Uint8Array(width * height * 4);
-
-    this.gl?.readPixels(
+  }
+  insertPixels(
+    pixels: Uint8Array,
+    x: number,
+    y: number,
+    width: number,
+    height: number
+  ) {
+    this.gl?.texSubImage2D(
+      this.gl.TEXTURE_2D,
       0,
-      0,
+      x,
+      y,
       width,
       height,
       this.gl.RGBA,
       this.gl.UNSIGNED_BYTE,
       pixels
     );
+    this.renderGL();
+  }
 
-    // for (let i = 0; i < pixels.length; i += 4) {
-    //   pixels[i] = 255;
-    //   // pixels[i + 3] = 255;
-    // }
+  readPixels(x: number, y: number, width: number, height: number) {
+    const pixels = new Uint8Array(width * height * 4);
 
-    this.gl?.texSubImage2D(
-      this.gl.TEXTURE_2D,
-      0,
-      0,
-      0,
+    this.gl?.readPixels(
+      x,
+      y,
       width,
       height,
       this.gl.RGBA,
       this.gl.UNSIGNED_BYTE,
-      this.flipPixels(pixels, displayWidth, displayHeight)
+      pixels
     );
-
-    this.gl?.clearColor(1.0, 1.0, 1.0, 1.0);
-    this.gl?.clear(this.gl?.COLOR_BUFFER_BIT);
-    this.gl?.drawArrays(this.gl?.TRIANGLES, 0, 6);
+    return pixels;
   }
 }

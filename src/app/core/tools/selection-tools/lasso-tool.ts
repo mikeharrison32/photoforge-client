@@ -39,7 +39,7 @@ export class LassoTool {
     this.addlassoCanvas(display.parentElement!);
 
     this.setupDrawingFeature();
-    this.registerListeners(data, renderer, display);
+    this.registerListeners();
   }
 
   private addlassoCanvas(display: HTMLElement) {
@@ -47,17 +47,21 @@ export class LassoTool {
   }
 
   private setupDrawingFeature() {
-    // const redrawLess = _.throttle(redraw, 50);
-
-    // drawingSurface.interactive = true;
     let mousedown = false;
     let prevPoint: PIXI.Point = new PIXI.Point();
 
     this.drawingSurface.on('mousedown', (e) => {
+      this.points = [];
       mousedown = true;
       this.clearCanvas();
       prevPosition.set(e.global.x, e.global.y);
       prevPoint.set(e.global.x, e.global.y);
+      const selection = this.data?.currentSelection.getValue();
+      console.log(selection);
+      if (selection) {
+        selection.view?.remove();
+        this.data?.currentSelection.next(null);
+      }
     });
     let color = '#717171';
 
@@ -87,15 +91,7 @@ export class LassoTool {
         return;
       }
       const zoom = this.data!.zoom.getValue() / 100;
-      // const spiltPoints = splitLineIntoSegments(
-      //   prevPoint.x / zoom,
-      //   prevPoint.y / zoom,
-      //   c.global.x / zoom,
-      //   c.global.y / zoom,
-      //   5
-      // );
       this.points.push(c.global.x / zoom, c.global.y / zoom);
-      // this.points.push(...spiltPoints);
 
       redraw(c.global.x, c.global.y);
 
@@ -117,13 +113,7 @@ export class LassoTool {
     });
   }
 
-  private clearLassoCanvas(ctx: CanvasRenderingContext2D) {}
-
-  private registerListeners(
-    data: DataService,
-    renderer: Renderer2,
-    display: HTMLElement
-  ) {
+  private registerListeners() {
     const zoom = this.data!.zoom.getValue() / 100;
     document.addEventListener('keydown', (e) => {
       if (e.code == 'Enter') {
@@ -134,108 +124,8 @@ export class LassoTool {
         this.points = [];
       }
     });
-
-    document.addEventListener('contextmenu', (e) => {
-      e.preventDefault();
-    });
-    this.drawingSurface.on('rightclick', (e) => {
-      console.log('right clicked');
-      const poly = new PIXI.Polygon(this.points.map((c) => c * zoom));
-      const selectedLayer = this.data?.selectedLayers.getValue()[0];
-      if (poly.contains(e.global.x, e.global.y)) {
-        const c = {
-          x: e.x,
-          y: e.y,
-          menus: [
-            {
-              name: 'Layer via Copy',
-              click: () => {
-                if (selectedLayer instanceof PixelLayer) {
-                  const img = new Image();
-                  img.src = selectedLayer.src || '';
-                  const copyLayer = new PixelLayer(
-                    data,
-                    renderer,
-                    // display,
-                    `${Math.random()}`,
-                    'Layer 1 Copy',
-                    selectedLayer.projectId,
-                    img
-                  );
-                  data.layers.next([...data.layers.getValue(), copyLayer]);
-                  const mask = new Mask(copyLayer, this.points);
-                }
-              },
-            },
-            {
-              name: 'Layer via Cut',
-              click: () => {
-                console.log('layer via cut');
-              },
-            },
-            {
-              name: 'Fill',
-              click: () => {
-                console.log('fill fill');
-              },
-            },
-          ],
-        };
-        this.data?.contextMenu.next(c);
-      }
-    });
   }
 
-  private insertSelection(color: string) {
-    const brush = new PIXI.Graphics().beginFill('black');
-    const lineFill = new PIXI.Graphics();
-    const prevPosition = new PIXI.Point(this.points[0], this.points[1]);
-    this.clearCanvas();
-    for (let i = 0; i < this.points.length; i += 2) {
-      let x = this.points[i];
-      let y = this.points[i + 1];
-      brush.position.set(x, y);
-      this.lassoCanvas?.renderer.render(brush, {
-        renderTexture: this.texture,
-        clear: false,
-      });
-      lineFill
-        .clear()
-        .lineStyle(2, color)
-        .moveTo(prevPosition.x, prevPosition.y)
-        .lineTo(brush.x, brush.y);
-      this.lassoCanvas?.renderer.render(lineFill, {
-        renderTexture: this.texture,
-        clear: false,
-      });
-      prevPosition.copyFrom(brush.position);
-    }
-  }
-  adjustPoints(pts: number[], len: number) {
-    let prevPoint = new PIXI.Point(pts[0], pts[1]);
-    let curPoint = new PIXI.Point(pts[0], pts[1]);
-    for (let i = 0; i < pts.length; i += 2) {
-      let x1 = pts[i];
-      let y1 = pts[i];
-      let x2 = pts[i];
-      let y2 = pts[i + 1];
-      let current_length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
-      if (current_length != len) {
-        let ratio = length / current_length;
-        let x2_new = x1 + (x2 - x1) * ratio;
-        let y2_new = y1 + (y2 - y1) * ratio;
-        pts[i + 1] = x2_new;
-        pts[i + 1] = x2_new;
-      }
-    }
-    return pts;
-  }
-  applySelection(ctx: CanvasRenderingContext2D) {
-    this.clearLassoCanvas(ctx);
-    const selection = new Selection();
-    selection.addFromPoints(this.points);
-    this.data?.currentSelection.next(selection);
-  }
   disconfigure(): void {
     this.lassoCanvas?.destroy(true);
     delete this.lassoCanvas;

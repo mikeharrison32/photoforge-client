@@ -15,7 +15,6 @@ class MoveTool {
     let zoom: number;
     let movingAllowed: boolean = data.isMovingAllowed.getValue();
     this.mouseDownListener = (e: any) => {
-      console.log('mousedown');
       rect = display.getBoundingClientRect();
       zoom = data.zoom.getValue() / 100;
       const layers = data.layers.getValue();
@@ -23,10 +22,7 @@ class MoveTool {
       layerToMove = layers.find((layer) =>
         layer.contains(e.target as HTMLElement)
       );
-      console.log('layerToMove', layerToMove);
       if (layerToMove) {
-        console.log('there is layer to move');
-
         mousedown = true;
       }
     };
