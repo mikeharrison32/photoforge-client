@@ -223,6 +223,37 @@ export class InspectorComponent implements OnInit, OnDestroy {
     // img.applyFilters();
     // }
   }
+  onRGBChannelVisibleChange(e: any) {
+    const selectedLayer = this.selectedLayers[0];
+    if (selectedLayer instanceof PixelLayer) {
+      selectedLayer.channels.red = e;
+      selectedLayer.channels.green = e;
+      selectedLayer.channels.blue = e;
+      selectedLayer.render();
+    }
+  }
+  onRedChannelVisibleChange(e: any) {
+    const selectedLayer = this.selectedLayers[0];
+    if (selectedLayer instanceof PixelLayer) {
+      selectedLayer.channels.red = e;
+      selectedLayer.render();
+    }
+  }
+  onGreenChannelVisibleChange(e: any) {
+    const selectedLayer = this.selectedLayers[0];
+    if (selectedLayer instanceof PixelLayer) {
+      selectedLayer.channels.green = e;
+      console.log(e);
+      selectedLayer.render();
+    }
+  }
+  onBlueChannelVisibleChange(e: any) {
+    const selectedLayer = this.selectedLayers[0];
+    if (selectedLayer instanceof PixelLayer) {
+      selectedLayer.channels.blue = e;
+      selectedLayer.render();
+    }
+  }
   ngOnDestroy() {
     this.data.selectedLayers.unsubscribe();
   }

@@ -30,6 +30,9 @@ export class PixelLayer extends Layer {
   uniform float u_contrast;
   uniform float u_vibrance;
   uniform float u_saturation;
+  uniform vec2 pixelCoords;
+  uniform vec4 newColor;
+
 vec3 adjustBrightness(vec3 color, float brightness) {
     return color + brightness;
 }
@@ -57,6 +60,10 @@ void main() {
     color.rgb = adjustContrast(color.rgb,  u_contrast);
     color.rgb = adjustSaturation(color.rgb,  u_saturation);
     //adjustVibrance(color.rgb, u_vibrance);
+    if (gl_FragCoord.xy == pixelCoords) {
+      color = newColor; // Change the color of the pixel
+    }
+
     gl_FragColor = color;
 }`;
   adjustmentLayers: AdjustmentLayer[] = [];
@@ -68,10 +75,16 @@ void main() {
     hue: 0,
     lightnees: 0,
   };
+  channels = {
+    rgb: true,
+    red: true,
+    green: true,
+    blue: true,
+  };
   img: any;
   gl?: WebGLRenderingContext | WebGL2RenderingContext | null;
   canvas!: HTMLCanvasElement;
-  private program?: WebGLProgram;
+  program?: WebGLProgram;
   constructor(
     data: DataService,
     renderer: Renderer2,
@@ -104,6 +117,7 @@ void main() {
     const displayScale = data.zoom.getValue() / 100;
     this.resizer.setWidth(img.width * displayScale);
     this.resizer.setHeight(img.height * displayScale);
+    this.updatePixels();
     this.render();
   }
 
@@ -156,10 +170,10 @@ void main() {
       console.error('No program');
       return;
     }
-    this.updateFilters(this.program);
-    this.renderGL();
 
-    this.updatePixels();
+    const { red, green, blue } = this.channels;
+    this.gl?.colorMask(red, green, blue, true);
+    this.updateFilters(this.program);
     this.renderGL();
   }
   private updatePixels() {

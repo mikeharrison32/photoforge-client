@@ -1,0 +1,9 @@
+<div class="channel">
+  <div class="show-hide-icon" (click)="toggleVisible()">
+    <img src="assets/eye-ball.svg" alt="show hide icon" *ngIf="visible" />
+  </div>
+  <div class="layer-img">
+    <img [src]="pixelLayer?.src" alt="layer img" />
+  </div>
+  <div class="name">{{ name }}</div>
+</div>

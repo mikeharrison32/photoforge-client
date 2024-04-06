@@ -238,24 +238,17 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
                 const poly = new PIXI.Polygon(points);
                 const pixels = selectedLayer.pixels!;
 
-                // selectedLayer.forEachPixels((x, y) => {});
                 selectedLayer.forEachPixels((x, y) => {
                   if (poly.contains(x, y)) {
-                    const index = (y * selectedLayer.width + x) * 4;
-                    pixels[index] = 0;
-                    pixels[index + 1] = 0;
-                    pixels[index + 2] = 0;
-                    pixels[index + 3] = 0;
+                    // const index = (y * selectedLayer.width + x) * 4;
+                    // pixels[index] = 0;
+                    // pixels[index + 1] = 0;
+                    // pixels[index + 2] = 0;
+                    // pixels[index + 3] = 0;
+                    selectedLayer.insertPixels(new Uint8Array(4), x, y, 1, 1);
                   }
                 });
-
-                selectedLayer.insertPixels(
-                  pixels,
-                  0,
-                  0,
-                  selectedLayer.width,
-                  selectedLayer.height
-                );
+                selectedLayer.renderGL();
               },
             },
             {
@@ -374,7 +367,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         const selectedLayer = this.data.selectedLayers.getValue()[0];
         this.data.layers.getValue().forEach((layer) => {
           if (layer.contains(e.target as HTMLElement)) {
-            layer.resizer.enable();
+            // layer.resizer.enable();
             // this.data.selectedLayers.next([layer]);
           } else if (selectedLayer && selectedLayer.resizer) {
             selectedLayer.resizer.disable();

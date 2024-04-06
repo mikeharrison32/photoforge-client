@@ -93,26 +93,22 @@ class ReactangularSelect {
     });
     (this.selectionCanvas.view as any).classList.add('selection-canvas');
     display.parentElement?.appendChild(this.selectionCanvas.view as any);
-    this.registerListeners(data);
+    this.registerListeners(data, display);
   }
 
   layerViaCopy() {}
 
-  private registerListeners(data: DataService) {
+  private registerListeners(data: DataService, display: HTMLElement) {
     document.addEventListener('keydown', (e) => {
       switch (e.code) {
         case 'Enter':
           this.clearCanvas();
 
           const points: number[] = [
-            // first corner
-            // ...splitLineIntoSegments(
             this.selectionRectPos.x,
             this.selectionRectPos.y,
             this.selectionRectPos.x + this.selectionRectPos.width,
             this.selectionRectPos.y,
-
-            // ),
             //second corner
             //third corner
             // ...splitLineIntoSegments(
@@ -127,7 +123,9 @@ class ReactangularSelect {
             this.selectionRectPos.x,
             this.selectionRectPos.y,
           ];
-          const selection = new Selection();
+          const selection = new Selection({
+            container: display.parentElement?.parentElement || undefined,
+          });
           selection.addFromPoints(points);
           data.currentSelection.next(selection);
           break;

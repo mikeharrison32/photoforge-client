@@ -21,6 +21,14 @@ $light_gray: #3a3a3a;
   }
   .properties {
   }
+  .channels {
+    span {
+      box-sizing: border-box;
+      padding: 1rem;
+      display: flex;
+      color: #c6c6c6;
+    }
+  }
   .adjustments {
     margin-bottom: 1rem;
     .icons {

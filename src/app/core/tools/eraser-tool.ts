@@ -9,10 +9,14 @@ export class EraserTool {
   properties?: IEraserToolProperties;
   brush?: Brush;
   readonly type: string = 'eraserTool';
+  mouseDownListener!: (e: any) => void;
+  mouseMoveListener!: (e: any) => void;
+  mouseUpListener!: (e: any) => void;
   configure(display: HTMLElement, data: DataService) {
     this.brush = new Brush({ size: 50 });
     display.parentElement?.parentElement?.appendChild(this.brush.elem!);
     display.parentElement!.parentElement!.style.cursor = 'none';
+    display.parentElement!.style.cursor = 'none';
     display.style.cursor = 'none';
 
     const rect = display.parentElement?.parentElement?.getBoundingClientRect();
@@ -21,7 +25,7 @@ export class EraserTool {
 
     let zoom: number;
     let prevPoint: { x: number; y: number };
-    display.parentElement!.addEventListener('mousedown', (e) => {
+    this.mouseDownListener = (e: any) => {
       const layer = data.selectedLayers.getValue()[0];
       if (!(layer instanceof PixelLayer)) {
         return;
@@ -33,8 +37,8 @@ export class EraserTool {
       const x = e.clientX - selectedLayerRect.left;
       const y = e.clientY - selectedLayerRect.top;
       prevPoint = { x, y };
-    });
-    document.addEventListener('mousemove', (e) => {
+    };
+    this.mouseMoveListener = (e: any) => {
       this.brush?.moveTo(
         e.x - rect!.left - this.brush.elem!.clientWidth / 2,
         e.y - rect!.top - this.brush.elem!.clientHeight / 2
@@ -44,37 +48,15 @@ export class EraserTool {
         return;
       }
       const selectedLayerRect = selectedLayer.elem.getBoundingClientRect();
+
       let brushSize = 50 / zoom;
 
       //Initialize the array that's going be used to fill the area
       const array = new Uint8Array(brushSize * brushSize * 4);
-
       //Get the current position of the cursor
       const x = e.clientX - selectedLayerRect.left;
       const y = e.clientY - selectedLayerRect.top;
 
-      const width = brushSize;
-      const height = brushSize;
-      //Get the pixels at the x,y postions in a rectangular form
-      const pixels_rect = new PIXI.Rectangle(x, y, width, height);
-      const copy_pixels: number[] = [];
-      const layer_pixels = selectedLayer.pixels!;
-      // selectedLayer.forEachPixels((x, y) => {
-      //   if (pixels_rect.contains(x, y)) {
-      //     console.log('cont..');
-      //     const index = (y * width + x) * 4;
-      //     copy_pixels.push(layer_pixels[index]);
-      //     copy_pixels.push(layer_pixels[index + 1]);
-      //     copy_pixels.push(layer_pixels[index + 2]);
-      //     copy_pixels.push(layer_pixels[index + 3]);
-      //   }
-      // });
-      // console.log(copy_pixels);
-      // array.set(copy_pixels);
-      //Fill the array with pixels
-      // array.set(pixels);
-
-      //Insert pixels
       selectedLayer.insertPixels(
         array,
         (x - brushSize / 2) / zoom,
@@ -82,36 +64,25 @@ export class EraserTool {
         brushSize,
         brushSize
       );
-    });
+    };
 
-    document.addEventListener('mouseup', (e) => {
+    this.mouseUpListener = (e: any) => {
       mousedown = false;
-      if (selectedLayer) {
-        // selectedLayer.updatePixels();
-      }
-    });
-  }
-  getPixelsRect(
-    pixels: Uint8Array,
-    x: number,
-    y: number,
-    width: number,
-    height: number
-  ) {
-    const rectPixels: number[] = [];
-    for (let row = y; row < y + height; row++) {
-      for (let col = 0; col < x + width; col++) {
-        const index = (row * width + col) * 4;
-        rectPixels.push(pixels[index]);
-        rectPixels.push(pixels[index + 1]);
-        rectPixels.push(pixels[index + 2]);
-        rectPixels.push(pixels[index + 3]);
-      }
-    }
-    return rectPixels;
+    };
+    display.parentElement!.addEventListener(
+      'mousedown',
+      this.mouseDownListener
+    );
+    document.addEventListener('mousemove', this.mouseMoveListener);
+    document.addEventListener('mouseup', this.mouseUpListener);
   }
 
-  disconfigure(): void {
+  disconfigure(display: HTMLElement): void {
+    document.removeEventListener('mousemove', this.mouseMoveListener);
+    document.removeEventListener('mouseup', this.mouseUpListener);
+    display.removeEventListener('mousedown', this.mouseDownListener);
+    display.parentElement!.parentElement!.style.cursor = 'default';
+    display.parentElement!.style.cursor = 'default';
     this.brush?.elem?.remove();
     delete this.brush;
   }

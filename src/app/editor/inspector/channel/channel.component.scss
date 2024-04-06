@@ -1,0 +1,31 @@
+.channel {
+  display: flex;
+  align-items: center;
+  height: 2rem;
+  background: #5c5c5c;
+  border-bottom: solid 1px #434343;
+  .layer-img {
+    width: 2rem;
+    display: flex;
+    img {
+      width: 100%;
+    }
+  }
+  .name {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 1rem;
+    font-size: 0.9rem;
+    color: #e7e7e7;
+  }
+  .show-hide-icon {
+    height: 100%;
+    width: 2rem;
+    cursor: pointer;
+    justify-content: center;
+    img {
+      width: 1rem;
+    }
+  }
+}

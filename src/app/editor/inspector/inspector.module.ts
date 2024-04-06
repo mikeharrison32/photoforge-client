@@ -10,12 +10,14 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { LayersComponent } from './layers/layers.component';
 import { LayerModule } from './layer/layer.module';
 import { LayerPropertyModule } from './layer-property/layer-property.module';
+import { ChannelComponent } from './channel/channel.component';
 @NgModule({
   declarations: [
     InspectorComponent,
     AdjustmentLayerComponent,
     PanelComponent,
     LayersComponent,
+    ChannelComponent,
   ],
   imports: [
     CommonModule,
