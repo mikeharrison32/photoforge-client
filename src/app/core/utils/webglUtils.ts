@@ -71,19 +71,32 @@ export function drawImage(
 
   gl.enableVertexAttribArray(positionLocation);
 
+  const framebuffer = gl.createFramebuffer();
+  gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer!);
+
   const texture = gl.createTexture();
-  gl.activeTexture(gl.TEXTURE0);
+  // gl.activeTexture(gl.TEXTURE0);
   gl.bindTexture(gl.TEXTURE_2D, texture);
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+  gl.generateMipmap(gl.TEXTURE_2D);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
 
-  // // Draw our 6 VERTICES as 2 triangles
-  // gl.clearColor(1.0, 1.0, 1.0, 1.0);
-  // gl.clear(gl.COLOR_BUFFER_BIT);
-  // gl.drawArrays(gl.TRIANGLES, 0, 6);
+  gl.framebufferTexture2D(
+    gl.FRAMEBUFFER,
+    gl.COLOR_ATTACHMENT0,
+    gl.TEXTURE_2D,
+    texture!,
+    0
+  );
+
+  // Check if the framebuffer is complete
+  if (gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE) {
+    console.error('Framebuffer is not complete');
+  }
+
   return program;
 }
 

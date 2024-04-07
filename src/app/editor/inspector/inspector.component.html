@@ -236,7 +236,31 @@
     </div>
   </div>
   <div class="channels" panelBody-2>
-    <h3>Channels</h3>
+    <div *ngIf="selectedLayers[0]">
+      <app-channel
+        name="RGB"
+        [layer]="selectedLayers[0]"
+        (onVisibleChange)="onRGBChannelVisibleChange($event)"
+      ></app-channel>
+      <app-channel
+        name="Red"
+        [layer]="selectedLayers[0]"
+        (onVisibleChange)="onRedChannelVisibleChange($event)"
+      ></app-channel>
+      <app-channel
+        name="Green"
+        [layer]="selectedLayers[0]"
+        (onVisibleChange)="onGreenChannelVisibleChange($event)"
+      ></app-channel>
+      <app-channel
+        name="Blue"
+        [layer]="selectedLayers[0]"
+        (onVisibleChange)="onBlueChannelVisibleChange($event)"
+      ></app-channel>
+    </div>
+    <div *ngIf="!selectedLayers[0]">
+      <span>Select a pixel layer to see its channels</span>
+    </div>
   </div>
   <div class="paths" panelBody-3>
     <h3>Paths</h3>

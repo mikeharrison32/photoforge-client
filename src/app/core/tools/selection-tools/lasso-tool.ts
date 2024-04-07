@@ -39,7 +39,7 @@ export class LassoTool {
     this.addlassoCanvas(display.parentElement!);
 
     this.setupDrawingFeature();
-    this.registerListeners();
+    this.registerListeners(display);
   }
 
   private addlassoCanvas(display: HTMLElement) {
@@ -113,12 +113,14 @@ export class LassoTool {
     });
   }
 
-  private registerListeners() {
+  private registerListeners(display: HTMLElement) {
     const zoom = this.data!.zoom.getValue() / 100;
     document.addEventListener('keydown', (e) => {
       if (e.code == 'Enter') {
         this.clearCanvas();
-        const selection = new Selection();
+        const selection = new Selection({
+          container: display.parentElement?.parentElement || undefined,
+        });
         selection.addFromPoints(this.points.map((c) => c * zoom));
         this.data?.currentSelection.next(selection);
         this.points = [];

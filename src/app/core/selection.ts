@@ -12,6 +12,7 @@ interface ISelection {
 interface ISelectionOptions {
   width?: number;
   height?: number;
+  container?: HTMLElement;
 }
 export class Selection implements ISelection {
   private app?: PIXI.Application;
@@ -27,6 +28,7 @@ export class Selection implements ISelection {
       background: 'transparent',
       backgroundAlpha: 0,
       backgroundColor: 'transparent',
+      resizeTo: options?.container,
     });
 
     const view = this.app.view as any;
