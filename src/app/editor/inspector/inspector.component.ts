@@ -128,7 +128,7 @@ export class InspectorComponent implements OnInit, OnDestroy {
           const aj = new HueSaturationLightnees(
             this.selectedLayers[0],
             'HueSaturationLightnees ' + hsl_count,
-            { hue: 10, saturation: 10, lightnees: 10 }
+            { hue: 0, saturation: 0, lightnees: 0 }
           );
           this.selectedLayers[0].adjustmentLayers.push(aj);
         }

@@ -1,5 +1,7 @@
 <div class="tool-propertie crop-tool">
-  <app-select [Items]="['Original Ratio']"></app-select>
+  <app-select
+    [Items]="['Original Ratio', '1:1 (Square)', '4:3', '16:9 (Widescreen)']"
+  ></app-select>
   <app-input [Value]="8.5" unit="in"></app-input>
   <div class="swap-icon">
     <img src="assets/tool-properties-icons/swap-values.svg" />

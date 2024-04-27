@@ -30,6 +30,7 @@ export class PixelLayer extends Layer {
   uniform float u_contrast;
   uniform float u_vibrance;
   uniform float u_saturation;
+  uniform float u_hue;
 
   uniform vec2 u_resolution;  // Canvas resolution
   uniform vec2 u_center;      // Center of the circle
@@ -46,10 +47,54 @@ vec3 adjustContrast(vec3 color, float contrast) {
   return 0.5 + (contrast + 1.0) * (color.rgb - 0.5);
 }
 
+// Define a function-like snippet for vibrance adjustment
+void adjustVibrance(inout vec3 color, float vibrance) {
+    float average = (color.r + color.g + color.b) / 3.0;
+    float maxColor = max(max(color.r, color.g), color.b);
+    float colorVariance = maxColor - average;
+    float adjustment = (1.0 - colorVariance) * vibrance;
 
-// vec3 adjustVibrance(vec3 color, float v) {
-//   return 0.1;
-// }
+    color = mix(vec3(average), color, adjustment);
+}
+
+// Define a function-like snippet for hue shifting
+void hueShift(inout vec3 color, float shift) {
+    // Convert RGB to HSL
+    float chromaMax = max(color.r, max(color.g, color.b));
+    float chromaMin = min(color.r, min(color.g, color.b));
+    float chromaDelta = chromaMax - chromaMin;
+    float hue = 0.0;
+    if (chromaDelta == 0.0) {
+        hue = 0.0;
+    } else if (chromaMax == color.r) {
+        hue = mod((color.g - color.b) / chromaDelta, 6.0);
+    } else if (chromaMax == color.g) {
+        hue = ((color.b - color.r) / chromaDelta) + 2.0;
+    } else {
+        hue = ((color.r - color.g) / chromaDelta) + 4.0;
+    }
+    hue = hue / 6.0;
+    hue = mod(hue + shift, 1.0);
+
+    // Convert HSL back to RGB
+    float c = (1.0 - abs(2.0 * color.r - 1.0));
+    float x = c * (1.0 - abs(mod(hue * 6.0, 2.0) - 1.0));
+    float m = color.r - 0.5 * c;
+    if (0.0 <= hue && hue < 1.0/6.0) {
+        color = vec3(c, x, 0.0);
+    } else if (1.0/6.0 <= hue && hue < 2.0/6.0) {
+        color = vec3(x, c, 0.0);
+    } else if (2.0/6.0 <= hue && hue < 3.0/6.0) {
+        color = vec3(0.0, c, x);
+    } else if (3.0/6.0 <= hue && hue < 4.0/6.0) {
+        color = vec3(0.0, x, c);
+    } else if (4.0/6.0 <= hue && hue < 5.0/6.0) {
+        color = vec3(x, 0.0, c);
+    } else {
+        color = vec3(c, 0.0, x);
+    }
+    color += vec3(m);
+}
 
 vec3 adjustSaturation(vec3 color, float saturation) {
   // WCAG 2.1 relative luminance base
@@ -58,32 +103,48 @@ vec3 adjustSaturation(vec3 color, float saturation) {
   return mix(grayscaleColor, color, 1.0 + saturation);
 }
 
+
+// Define a function-like snippet for exposure adjustment with offset and gamma correction
+void adjustExposure(inout vec3 color, float exposure, float offset, float gamma) {
+    // Apply exposure adjustment
+    color = color * pow(2.0, exposure);
+
+    // Apply offset
+    color += offset;
+
+    // Apply gamma correction
+    color = pow(color, vec3(1.0 / gamma));
+}
+
+
+// Define a function-like snippet for color balance adjustment
+void adjustColorBalance(inout vec3 color, float redBalance, float greenBalance, float blueBalance) {
+    // Apply color balance adjustment
+    color.r *= redBalance;
+    color.g *= greenBalance;
+    color.b *= blueBalance;
+}
+
 void main() {
     vec4 color = texture2D(textureSampler, texCoords);
+    color.rgb = adjustBrightness(color.rgb, u_brightnees);
+    color.rgb = adjustContrast(color.rgb, u_contrast);
+    color.rgb = adjustSaturation(color.rgb, u_saturation);
+    //adjustVibrance(color.rgb, u_vibrance);
+    //hueShift(color.rgb, u_hue);
+    //adjustExposure(color.rgb, 1.5, 0.0, 2.2);
+    //adjustColorBalance(color.rgb, 1.0, 1.0, 2.0);
+    gl_FragColor = color;
 
-
-    // Calculate the distance from the current pixel to the center of the circle
-
-    //vec2 center = vec2(0.5, 0.5); // Assuming the texture is centered
-    float distance = distance(gl_FragCoord.xy / u_resolution, u_center);
-
-
-    // Check if the pixel is inside the circle
-    if (distance <= u_radius) {
-      color.a = 0.0;
-      gl_FragColor = color;
-    } else {
-      gl_FragColor = color;
-    }
 }`;
   adjustmentLayers: AdjustmentLayer[] = [];
   filters = {
-    brightnees: 0,
-    contrast: 0,
-    saturation: 0,
-    vibrance: 0,
-    hue: 0,
-    lightnees: 0,
+    brightnees: 0.0,
+    contrast: 0.0,
+    saturation: 0.0,
+    vibrance: 0.0,
+    hue: 0.0,
+    lightnees: 0.0,
   };
   channels = {
     rgb: true,
@@ -182,8 +243,6 @@ void main() {
   render() {
     if (!this.program) {
       console.log('Createing Program...');
-      console.log(this.img);
-      document.body.appendChild(this.img);
       this.program = drawImage(this.gl!, this.img, this.fragmentShaderSource);
     }
 
@@ -211,13 +270,16 @@ void main() {
       program,
       'u_saturation'
     );
-    // const vibranceUniformLocation = this.gl?.getUniformLocation(
-    //   program,
-    //   'u_vibrance'
-    // );
+    const vibranceUniformLocation = this.gl?.getUniformLocation(
+      program,
+      'u_vibrance'
+    );
+    const hueUniformLocation = this.gl?.getUniformLocation(program, 'u_hue');
     this.gl?.uniform1f(brightneesUniformLocation!, this.filters.brightnees);
     this.gl?.uniform1f(contrastUniformLocation!, this.filters.contrast);
     this.gl?.uniform1f(saturationUniformLocation!, this.filters.saturation);
+    this.gl?.uniform1f(vibranceUniformLocation!, this.filters.vibrance);
+    this.gl?.uniform1f(hueUniformLocation!, this.filters.hue);
   }
 
   forEachPixels(cb: (x: number, y: number) => void) {

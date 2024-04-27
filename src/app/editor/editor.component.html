@@ -4,13 +4,17 @@
   <app-tool-box></app-tool-box>
   <div class="image-display" id="image-display" #container>
     <div #cursor class="cursor" id="cursor"></div>
-    <div class="displayContainer">
+    <div class="displayContainer" #displayContainer>
       <div
         id="display"
         #display
         [style.opacity]="projects.length < 1 ? '0' : '1'"
       ></div>
       <div id="resizers"></div>
+      <app-crop-rect
+        *ngIf="selectedTool == 'cropTool'"
+        [display]="display"
+      ></app-crop-rect>
     </div>
     <div
       #contextMenuRef

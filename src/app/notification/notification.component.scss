@@ -1,19 +1,19 @@
 .notification {
+  padding: 1rem;
   width: 20rem;
-  background: #ffffff;
-  color: #4c4c4c;
+  background: #0c0c0c;
+  color: #fff;
   display: flex;
-  align-items: center;
-  justify-content: center;
   position: absolute;
   border-radius: 2px;
   z-index: 1000000000000;
   right: 1rem;
   bottom: 2rem;
   padding-inline: 0.3rem;
-  animation-name: "pop-up";
-  animation-duration: 100ms;
-  animation-iteration-count: 1;
+  animation-name: pop-up;
+  animation-duration: 1s;
+  animation-iteration-count: 3;
+  animation: pop-up 300s ease-in 1;
   display: flex;
   flex-direction: column;
 
@@ -32,8 +32,8 @@
     font-size: 2rem;
     padding: 0;
     position: absolute;
-    top: 0rem;
-    right: 0;
+    top: -8px;
+    right: 5px;
     cursor: pointer;
     font-weight: 100;
   }
@@ -50,10 +50,13 @@
     padding: 0.3rem;
     padding-inline: 1rem;
   }
+  .details {
+    font-size: 0.7rem;
+    color: #ababab;
+  }
   .mainText {
     // position: relative;
     top: -2rem;
-    padding: 1rem;
     left: -3rem;
     font-size: 0.9rem;
     font-weight: 500;

@@ -41,10 +41,10 @@ export class CropTool {
     this.display = display;
 
     this.cropRect = {
-      x: 0,
-      y: 0,
-      width: this.cropCanvas.screen.width,
-      height: this.cropCanvas.screen.height,
+      x: 10,
+      y: 10,
+      width: this.cropCanvas.screen.width - 10,
+      height: this.cropCanvas.screen.height - 10,
     };
 
     this.cropCanvas.stage.eventMode = 'static';
@@ -76,8 +76,8 @@ export class CropTool {
       y: this.cropRect.y + this.cropRect.height - this.cornerWidth + 6,
     });
     this.createBottomRightCorner({
-      x: this.cropRect.x + this.cropRect.width - 26,
-      y: this.cropRect.y + this.cropRect.height - 26,
+      x: this.cropRect.x + this.cropRect.width,
+      y: this.cropRect.y + this.cropRect.height,
     });
     this.createMiddleTopCorner({
       x: this.cropRect.x + this.cropRect.width / 2 - this.cornerWidth / 2,

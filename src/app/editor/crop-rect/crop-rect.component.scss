@@ -1,0 +1,139 @@
+.crop-rect {
+  width: 100%;
+  height: 100%;
+  border: solid;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-style: solid;
+  box-sizing: border-box;
+  border-color: rgb(149 149 149 / 55%);
+  border-width: 0px 0px 0px 0px;
+  z-index: 1000;
+  .crop-box {
+    width: 100%;
+    height: 100%;
+    border: solid;
+    box-sizing: border-box;
+
+    .lines {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      .hl,
+      .vl {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        flex-direction: column;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .vl {
+        flex-direction: row;
+      }
+      .hl1,
+      .hl2 {
+        width: 100%;
+        background: #fff;
+        height: 1px;
+        box-shadow: #000 0 0 4px 0;
+      }
+
+      .vl1,
+      .vl2 {
+        height: 100%;
+        width: 1px;
+        background: #fff;
+        box-shadow: #000 0 0 4px 0;
+      }
+    }
+    .tl-corner,
+    .bl-corner,
+    .br-corner,
+    .tr-corner {
+      width: 2rem;
+      height: 0.5rem;
+      position: absolute;
+      border-radius: 5px;
+      top: -6px;
+      left: -6px;
+      background-color: #fff;
+      z-index: 100;
+      &:before {
+        display: block;
+        content: "";
+        width: 0.5rem;
+        border-radius: 5px;
+
+        position: absolute;
+        height: 2rem;
+        background-color: #fff;
+      }
+    }
+    .tl-corner,
+    .br-corner {
+      cursor: nw-resize;
+    }
+    .tr-corner {
+      cursor: ne-resize;
+      left: calc(100% - 29px);
+      &::before {
+        left: 1.5rem;
+      }
+    }
+
+    .m-corner {
+      width: 2rem;
+      height: 0.5rem;
+      position: absolute;
+      border-radius: 5px;
+      background-color: #fff;
+      z-index: 100;
+    }
+    .mr-corner,
+    .ml-corner {
+      height: 2rem;
+      width: 0.5rem;
+      top: 50%;
+      cursor: e-resize;
+    }
+    .mr-corner {
+      right: -3px;
+    }
+    .ml-corner {
+      left: -3px;
+    }
+    .mb-corner,
+    .mt-corner {
+      left: 50%;
+      cursor: n-resize;
+    }
+    .mt-corner {
+      top: -3px;
+    }
+    .mb-corner {
+      bottom: -3px;
+    }
+    .bl-corner {
+      cursor: ne-resize;
+      top: 100%;
+      &::before {
+        top: -1.5rem;
+      }
+    }
+    .br-corner {
+      top: 100%;
+      left: calc(100% - 29px);
+      &::before {
+        top: -1.5rem;
+        left: 1.5rem;
+      }
+    }
+  }
+}

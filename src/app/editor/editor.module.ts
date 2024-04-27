@@ -11,9 +11,10 @@ import { SharedModule } from '../shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { NewDocumentModule } from '../welcome-page/new-document/new-document.module';
 import { TopBarModule } from './top-bar/top-bar.module';
+import { CropRectComponent } from './crop-rect/crop-rect.component';
 
 @NgModule({
-  declarations: [EditorComponent, ToolBoxComponent],
+  declarations: [EditorComponent, ToolBoxComponent, CropRectComponent],
   imports: [
     TopBarModule,
     ToolBoxModule,

@@ -12,7 +12,6 @@ import { DataService } from '../core/services/data.service';
 import {
   brushTool,
   cloneStampTool,
-  cropTool,
   eraserTool,
   lassoTool,
   rectangularSelect,
@@ -35,6 +34,7 @@ import { moveTool } from '../core/tools/move-tool';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
+import { LoadingService } from '../core/services/loading.service';
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
@@ -45,6 +45,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedLayers: Layer[] = [];
   selectedProject?: Project | null;
   layers: Layer[] = [];
+  selectedTool: string = 'moveTool';
   projects: Project[] = [];
   zoom: number = 1;
   newDocumentActive?: boolean;
@@ -56,7 +57,6 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   tools: any[] = [
     brushTool,
     shapeTool,
-    cropTool,
     rectangularSelect,
     lassoTool,
     cloneStampTool,
@@ -65,6 +65,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     moveTool,
   ];
   @ViewChild('display') display?: ElementRef;
+  @ViewChild('displayContainer') displayContainer?: ElementRef;
+
   @ViewChild('container') container?: ElementRef;
   @ViewChild('contextMenuRef') contextMenuElem?: ElementRef;
   selectionContextMenu!: { isActive: boolean; x: number; y: number };
@@ -78,13 +80,15 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     private layerService: LayerService,
     private api: ApiService,
     private activatedRoute: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    private loadingService: LoadingService
   ) {}
   async ngOnInit() {
     const openedProjects = this.data.openedProjects.getValue();
     const params = this.activatedRoute.snapshot.params as any;
     //create a method for returing a single project from the server
     if (openedProjects.length < 1) {
+      this.loadingService.startLoading('Loading project...');
       this.api
         .getProjects()
         .then((projects: any) => {
@@ -98,6 +102,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           this.data.openedProjects.next([serializedProject]);
           this.data.selectedProject.next(serializedProject);
           this.data.loadingLayers.next(true);
+          this.loadingService.stopLoading();
           this.api
             .getLayers(project.id)
             .then((layers: any) => {
@@ -143,6 +148,11 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
             });
         })
         .catch((err) => {
+          this.loadingService.stopLoading();
+          this.notification.createNotification({
+            title: "Couldn't load project.",
+            quitAfter: 4000,
+          });
           console.log(err);
         });
     }
@@ -195,6 +205,10 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         this.display?.nativeElement.appendChild(cs?.view);
       }
     });
+
+    this.data.selectedTool.subscribe((tool) => {
+      this.selectedTool = tool;
+    });
   }
   private updateZoom() {
     this.data.zoom.subscribe((zoom) => {
@@ -213,10 +227,6 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       this.data.selectedLayers.getValue().forEach((lr) => {
         lr.resizer.update();
       });
-
-      if (this.data.selectedTool.getValue() == 'cropTool') {
-        cropTool.update();
-      }
     });
   }
 
@@ -252,17 +262,11 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       this.display!.nativeElement.style.width = project?.width + 'px';
       this.display!.nativeElement.style.height = project?.height + 'px';
 
-      this.data.zoom.next(project?.Zoom || 50);
+      this.data.zoom.next(project?.Zoom || 36);
       this.filterLayers(project);
-
-      console.log(this.layers);
-
-      console.log(project);
     });
     const selectedProject = this.data.selectedProject.getValue();
     const openedProjects = this.data.openedProjects.getValue();
-    console.log(openedProjects);
-    console.log(selectedProject);
     if (!selectedProject && openedProjects.length > 1) {
       this.data.selectedProject.next(openedProjects[0]);
     }
@@ -292,26 +296,25 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
             if (!(selectedLayer instanceof PixelLayer)) {
               return;
             }
-              // //layers/layer-via-copy
-              this.api
-                .layerViaCopy(
-                  selectedLayer.projectId,
-                  selectedLayer.id,
-                  this.currentSelection?.points || []
-                )
-                .then((result) => {
-                  console.log(result);
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-              // {
-              //   id: "",
-              //   projectId: "",
-              //   points: []
-              // }
-              // -> newLayer
-            
+            // //layers/layer-via-copy
+            this.api
+              .layerViaCopy(
+                selectedLayer.projectId,
+                selectedLayer.id,
+                this.currentSelection?.points || []
+              )
+              .then((result) => {
+                console.log(result);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+            // {
+            //   id: "",
+            //   projectId: "",
+            //   points: []
+            // }
+            // -> newLayer
           },
         },
         {
@@ -398,13 +401,6 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.display?.nativeElement,
                 this.renderer,
                 this.data
-              );
-              break;
-            case 'cropTool':
-              tool.configure(
-                this.display?.nativeElement,
-                this.data,
-                this.renderer
               );
               break;
             case 'lassoTool':

@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 import { newDocAnimation } from 'src/app/animations';
 import { ApiService } from 'src/app/core/services/api.service';
 import { LoadingService } from 'src/app/core/services/loading.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-new-document',
@@ -31,7 +32,8 @@ export class NewDocumentComponent implements OnInit {
     private data: DataService,
     private router: Router,
     private api: ApiService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private notificationService: NotificationService
   ) {}
   recentTemplates: Template[] = templates.filter(
     (t) => t.type == TemplateType.Recent
@@ -89,11 +91,16 @@ export class NewDocumentComponent implements OnInit {
         console.log(project);
         this.data.openedProjects.next(project);
         this.data.selectedProject.next(project);
-        this.router.navigateByUrl(`/editor?q=${project.id}`);
+        this.router.navigateByUrl(`/editor/${project.id}`);
         this.loadingService.stopLoading();
       })
       .catch((err) => {
         this.loadingService.stopLoading();
+        this.notificationService.createNotification({
+          title: "Couldn't create layer.",
+          details: 'The server might be down.',
+          // quitAfter: 5000,
+        });
         console.log(err);
       });
   }
