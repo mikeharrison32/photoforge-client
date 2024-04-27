@@ -32,6 +32,15 @@ export class PixelLayer extends Layer {
   uniform float u_saturation;
   uniform float u_hue;
 
+  uniform float u_exposure;
+  uniform float u_gamma;
+  uniform float u_exposure_offset;
+
+  uniform float u_cb_red;
+  uniform float u_cb_green;
+  uniform float u_cb_blue;
+
+
   uniform vec2 u_resolution;  // Canvas resolution
   uniform vec2 u_center;      // Center of the circle
   uniform float u_radius;     // Radius of the circle
@@ -132,8 +141,8 @@ void main() {
     color.rgb = adjustSaturation(color.rgb, u_saturation);
     //adjustVibrance(color.rgb, u_vibrance);
     //hueShift(color.rgb, u_hue);
-    //adjustExposure(color.rgb, 1.5, 0.0, 2.2);
-    //adjustColorBalance(color.rgb, 1.0, 1.0, 2.0);
+    adjustExposure(color.rgb,u_exposure, u_exposure_offset, u_gamma);
+    adjustColorBalance(color.rgb, u_cb_red, u_cb_green, u_cb_blue);
     gl_FragColor = color;
 
 }`;
@@ -145,6 +154,16 @@ void main() {
     vibrance: 0.0,
     hue: 0.0,
     lightnees: 0.0,
+    exposure: {
+      exposure: 0.0,
+      gammaCorrection: 2.2,
+      offset: 0.0,
+    },
+    colorBalance: {
+      red: 1,
+      green: 1,
+      blue: 1,
+    },
   };
   channels = {
     rgb: true,
@@ -191,36 +210,6 @@ void main() {
 
     // this.circle();
     // this.render();
-  }
-
-  private circle() {
-    const resolutionUniform = this.gl?.getUniformLocation(
-      this.program!,
-      'u_resolution'
-    );
-    const radiusUniform = this.gl?.getUniformLocation(
-      this.program!,
-      'u_radius'
-    );
-    const circleCenterUniform = this.gl?.getUniformLocation(
-      this.program!,
-      'u_center'
-    );
-
-    // Set canvas resolution uniform
-    console.log(this.canvas.width, this.canvas.height);
-    this.gl?.uniform2f(
-      resolutionUniform!,
-      this.canvas.width,
-      this.canvas.height
-    );
-
-    // Set circle parameters (center and radius)
-    const centerX = this.canvas.width / 2;
-    const centerY = this.canvas.height / 2;
-    const radius = 0.1;
-    this.gl?.uniform2f(circleCenterUniform!, 0.5, 0.5);
-    this.gl?.uniform1f(radiusUniform!, radius);
   }
 
   private resizeCanvasToDisplaySize(canvas: HTMLCanvasElement) {
@@ -275,6 +264,55 @@ void main() {
       'u_vibrance'
     );
     const hueUniformLocation = this.gl?.getUniformLocation(program, 'u_hue');
+
+    //exposure
+    const exposureUniformLocation = this.gl?.getUniformLocation(
+      program,
+      'u_exposure'
+    );
+    const exposureOffsetUniformLocation = this.gl?.getUniformLocation(
+      program,
+      'u_exposure_offset'
+    );
+    const gammaUniformLocation = this.gl?.getUniformLocation(
+      program,
+      'u_gamma'
+    );
+
+    this.gl?.uniform1f(
+      exposureUniformLocation!,
+      this.filters.exposure.exposure
+    );
+    this.gl?.uniform1f(
+      exposureOffsetUniformLocation!,
+      this.filters.exposure.offset
+    );
+    this.gl?.uniform1f(
+      gammaUniformLocation!,
+      this.filters.exposure.gammaCorrection
+    );
+
+    //color balance
+
+    const cbRedUniformLocation = this.gl?.getUniformLocation(
+      program,
+      'u_cb_red'
+    );
+    const cbGreenUniformLocation = this.gl?.getUniformLocation(
+      program,
+      'u_cb_green'
+    );
+    const cbBlueUniformLocation = this.gl?.getUniformLocation(
+      program,
+      'u_cb_blue'
+    );
+    this.gl?.uniform1f(cbRedUniformLocation!, this.filters.colorBalance.red);
+    this.gl?.uniform1f(
+      cbGreenUniformLocation!,
+      this.filters.colorBalance.green
+    );
+    this.gl?.uniform1f(cbBlueUniformLocation!, this.filters.colorBalance.blue);
+    // ----
     this.gl?.uniform1f(brightneesUniformLocation!, this.filters.brightnees);
     this.gl?.uniform1f(contrastUniformLocation!, this.filters.contrast);
     this.gl?.uniform1f(saturationUniformLocation!, this.filters.saturation);

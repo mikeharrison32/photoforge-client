@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { AdjustmentLayer } from 'src/app/core/layers/adjustment/adjustment_layer';
 import { BrightnessContrastAdjustmentLayer } from 'src/app/core/layers/adjustment/brightness_contrast';
+import { ColorBalance } from 'src/app/core/layers/adjustment/color_balance';
 import { Exposure } from 'src/app/core/layers/adjustment/exposure';
 import { HueSaturationLightnees } from 'src/app/core/layers/adjustment/hue_saturation_lightnees';
 import { Vibrance } from 'src/app/core/layers/adjustment/vibrance';
@@ -47,8 +48,6 @@ export class LayerPropertyComponent implements OnInit, OnDestroy {
     if (this.selectedAdjustmentLayer instanceof Exposure) {
       this.selectedAdjustmentLayer.set({
         exposure: value,
-        offset: this.selectedAdjustmentLayer.offset,
-        gammaCorrection: this.selectedAdjustmentLayer.gammaCorrection,
       });
     }
   }
@@ -56,8 +55,6 @@ export class LayerPropertyComponent implements OnInit, OnDestroy {
     if (this.selectedAdjustmentLayer instanceof Exposure) {
       this.selectedAdjustmentLayer.set({
         offset: value,
-        exposure: this.selectedAdjustmentLayer.exposure,
-        gammaCorrection: this.selectedAdjustmentLayer.gammaCorrection,
       });
     }
   }
@@ -65,8 +62,6 @@ export class LayerPropertyComponent implements OnInit, OnDestroy {
     if (this.selectedAdjustmentLayer instanceof Exposure) {
       this.selectedAdjustmentLayer.set({
         gammaCorrection: value,
-        exposure: this.selectedAdjustmentLayer.exposure,
-        offset: this.selectedAdjustmentLayer.offset,
       });
     }
   }
@@ -132,6 +127,28 @@ export class LayerPropertyComponent implements OnInit, OnDestroy {
     this.selectedLayer.elem.style.border = `solid ${e.target.value}`;
   }
   onStrokeWidthChange(width: string) {}
+
+  onCbRedChange(value: number) {
+    if (this.selectedAdjustmentLayer instanceof ColorBalance) {
+      this.selectedAdjustmentLayer.set({
+        red: value,
+      });
+    }
+  }
+  onCbBlueChange(value: number) {
+    if (this.selectedAdjustmentLayer instanceof ColorBalance) {
+      this.selectedAdjustmentLayer.set({
+        blue: value,
+      });
+    }
+  }
+  onCbGreenChange(value: number) {
+    if (this.selectedAdjustmentLayer instanceof ColorBalance) {
+      this.selectedAdjustmentLayer.set({
+        green: value,
+      });
+    }
+  }
   ngOnDestroy(): void {
     this.data.selectedAjLayers.unsubscribe();
     this.data.selectedLayers.unsubscribe();

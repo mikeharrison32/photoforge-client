@@ -5,6 +5,7 @@ import { BrightnessContrastAdjustmentLayer } from '../layers/adjustment/brightne
 import { Vibrance } from '../layers/adjustment/vibrance';
 import { Exposure } from '../layers/adjustment/exposure';
 import { HueSaturationLightnees } from '../layers/adjustment/hue_saturation_lightnees';
+import { ColorBalance } from '../layers/adjustment/color_balance';
 
 @Injectable({
   providedIn: 'root',
@@ -63,19 +64,37 @@ export class AdjustmentService {
 
         break;
       case AdjustmentLayer.Exposure:
-        let exposureLayersCout = 1;
+        let exposureLayersCount = 1;
         layer.adjustmentLayers.forEach((aj) => {
           if (aj instanceof Exposure) {
-            exposureLayersCout += 1;
+            exposureLayersCount += 1;
           }
         });
-        aj = new Exposure(layer, 'Exposure ' + exposureLayersCout, {
+        aj = new Exposure(layer, 'Exposure ' + exposureLayersCount, {
           exposure: 0,
           offset: 0,
           gammaCorrection: 0,
         });
         layer.adjustmentLayers.push(aj);
 
+        break;
+      case AdjustmentLayer.ColorBalance:
+        let colorBalanceLayersCount = 1;
+        layer.adjustmentLayers.forEach((aj) => {
+          if (aj instanceof ColorBalance) {
+            colorBalanceLayersCount += 1;
+          }
+        });
+        aj = new ColorBalance(
+          layer,
+          'Color Balance ' + colorBalanceLayersCount,
+          {
+            red: 0,
+            green: 0,
+            blue: 0,
+          }
+        );
+        layer.adjustmentLayers.push(aj);
         break;
     }
   }

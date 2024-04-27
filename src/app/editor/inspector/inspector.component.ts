@@ -23,6 +23,7 @@ import { HueSaturationLightnees } from 'src/app/core/layers/adjustment/hue_satur
 import { Vibrance } from 'src/app/core/layers/adjustment/vibrance';
 import { Exposure } from 'src/app/core/layers/adjustment/exposure';
 import { settings } from 'src/app/settings/settings';
+import { AdjustmentService } from 'src/app/core/services/adjustment.service';
 
 @Component({
   selector: 'app-inspector',
@@ -75,7 +76,8 @@ export class InspectorComponent implements OnInit, OnDestroy {
     private data: DataService,
     private layerService: LayerService,
     private notification: NotificationService,
-    private api: ApiService
+    private api: ApiService,
+    private adjustmentService: AdjustmentService
   ) {}
 
   ngOnInit() {
@@ -97,74 +99,9 @@ export class InspectorComponent implements OnInit, OnDestroy {
     this.brushLocked = this.brushLocked ? false : true;
   }
   addAdjustmentLayer(ad_type: AdjustmentLayer) {
-    switch (ad_type) {
-      case AdjustmentLayer.BrightnessContrast:
-        if (this.selectedLayers[0] instanceof PixelLayer) {
-          let bc_count = 1;
-          this.selectedLayers[0].adjustmentLayers.forEach((aj) => {
-            if (aj instanceof BrightnessContrastAdjustmentLayer) {
-              bc_count += 1;
-            }
-          });
-          const aj = new BrightnessContrastAdjustmentLayer(
-            this.selectedLayers[0],
-            'BrightneesContrast ' + bc_count,
-            {
-              brightness: 1,
-              contrast: 1,
-            }
-          );
-          this.selectedLayers[0].adjustmentLayers.push(aj);
-        }
-        break;
-      case AdjustmentLayer.HueSaturation:
-        if (this.selectedLayers[0] instanceof PixelLayer) {
-          let hsl_count = 1;
-          this.selectedLayers[0].adjustmentLayers.forEach((aj) => {
-            if (aj instanceof HueSaturationLightnees) {
-              hsl_count += 1;
-            }
-          });
-          const aj = new HueSaturationLightnees(
-            this.selectedLayers[0],
-            'HueSaturationLightnees ' + hsl_count,
-            { hue: 0, saturation: 0, lightnees: 0 }
-          );
-          this.selectedLayers[0].adjustmentLayers.push(aj);
-        }
-        break;
-      case AdjustmentLayer.Vibrance:
-        if (this.selectedLayers[0] instanceof PixelLayer) {
-          let vibranceLayersCout = 1;
-          this.selectedLayers[0].adjustmentLayers.forEach((aj) => {
-            if (aj instanceof Vibrance) {
-              vibranceLayersCout += 1;
-            }
-          });
-          const aj = new Vibrance(
-            this.selectedLayers[0],
-            'Vibrance ' + vibranceLayersCout,
-            { saturation: 0, vibrance: 0 }
-          );
-          this.selectedLayers[0].adjustmentLayers.push(aj);
-        }
-        break;
-      case AdjustmentLayer.Exposure:
-        if (this.selectedLayers[0] instanceof PixelLayer) {
-          let exposureLayersCout = 1;
-          this.selectedLayers[0].adjustmentLayers.forEach((aj) => {
-            if (aj instanceof Exposure) {
-              exposureLayersCout += 1;
-            }
-          });
-          const aj = new Exposure(
-            this.selectedLayers[0],
-            'Exposure ' + exposureLayersCout,
-            { exposure: 0, offset: 0, gammaCorrection: 0 }
-          );
-          this.selectedLayers[0].adjustmentLayers.push(aj);
-        }
-        break;
+    const layer = this.selectedLayers[0];
+    if (layer instanceof PixelLayer) {
+      this.adjustmentService.addAdjustmentLayer(ad_type, layer);
     }
   }
 

@@ -254,9 +254,11 @@
   ></app-volume>
 </div>
 
-<!-- <div
-  *ngIf="selectedAdjustmentLayers[0]?.Type == AdjustmentLayer.ColorBalance"
+<div
   class="ad_layer_properity"
+  *ngIf="
+    selectedAdjustmentLayer && selectedAdjustmentLayer.type == 'colorBalance'
+  "
 >
   <div class="adj_type">
     <img src="assets/adjustments-icons/color-balance.svg" />
@@ -267,11 +269,23 @@
     <p>Tone:</p>
     <app-select [Items]="['Shadows', 'Midtones', 'Highlights']"></app-select>
   </div>
-  <app-volume [text]="'Cyan'" [rightText]="'Red'"></app-volume>
-  <app-volume [text]="'Magenta'" [rightText]="'Green'"></app-volume>
-  <app-volume [text]="'Yellow'" [rightText]="'Blue'"></app-volume>
+  <app-volume
+    [text]="'Cyan'"
+    [rightText]="'Red'"
+    (volumeChange)="onCbRedChange($event)"
+  ></app-volume>
+  <app-volume
+    [text]="'Magenta'"
+    [rightText]="'Green'"
+    (volumeChange)="onCbGreenChange($event)"
+  ></app-volume>
+  <app-volume
+    [text]="'Yellow'"
+    [rightText]="'Blue'"
+    (volumeChange)="onCbBlueChange($event)"
+  ></app-volume>
   <app-checkbox [text]="'Preserve Luminosity'"></app-checkbox>
-</div> -->
+</div>
 
 <!-- <div
   *ngIf="selectedAdjustmentLayers[0]?.Type == AdjustmentLayer.BlackWhite"
