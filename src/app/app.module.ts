@@ -29,6 +29,7 @@ import { PricingComponent } from './pricing/pricing.component';
 import { ContactComponent } from './contact/contact.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { InfoDirective } from './shared/directives/info.directive';
+import { LoadingPageComponent } from './loading-page/loading-page.component';
 
 const routes: Routes = [
   {
@@ -38,7 +39,7 @@ const routes: Routes = [
     // canActivate: [authGuard],
   },
   {
-    path: 'editor',
+    path: 'editor/:projectId',
     component: EditorComponent,
     title: 'Editor - Photoforge',
     data: { animation: 'EditorPage' },
@@ -75,6 +76,7 @@ const routes: Routes = [
     PricingComponent,
     ContactComponent,
     NavBarComponent,
+    LoadingPageComponent,
   ],
   imports: [
     JwtModule.forRoot({

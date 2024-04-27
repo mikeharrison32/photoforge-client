@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="217.74908px" height="220.22742px" viewBox="0 0 217.74908 220.22742" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB" id="filter_1">
+      <feFlood flood-opacity="0" result="BackgroundImageFix" />
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 128 0" />
+      <feOffset dx="0" dy="2" />
+      <feGaussianBlur stdDeviation="2" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0.39215687 0 0 0 0 0.39215687 0 0 0 0 0.39215687 0 0 0 0.49803922 0" />
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect0_dropShadow" />
+      <feBlend mode="normal" in="SourceGraphic" in2="effect0_dropShadow" result="shape" />
+    </filter>
+    <path d="M-587.517 -225.52C-587.517 -225.52 -539.621 -207.202 -539.621 -207.202C-549.185 -184.748 -566.356 -166.011 -588.21 -154.185C-610.064 -142.359 -635.248 -138.175 -659.471 -142.345C-683.694 -146.516 -705.457 -158.783 -721.053 -177.057C-736.648 -195.33 -745.111 -218.48 -744.999 -242.561C-744.887 -266.643 -736.207 -290.165 -720.438 -309.122C-704.67 -328.078 -682.788 -341.295 -658.521 -346.52C-634.254 -351.746 -609.104 -348.657 -587.356 -337.779C-565.608 -326.902 -548.607 -308.909 -539.251 -286.867C-539.251 -286.867 -587.327 -266.46 -587.327 -266.46C-592.135 -277.787 -600.872 -287.034 -612.048 -292.623C-623.224 -298.213 -636.148 -299.801 -648.619 -297.115C-661.089 -294.43 -672.334 -287.638 -680.438 -277.896C-688.541 -268.155 -693.002 -256.067 -693.059 -243.692C-693.117 -231.316 -688.768 -219.42 -680.753 -210.029C-672.739 -200.638 -661.555 -194.334 -649.107 -192.191C-636.659 -190.048 -623.717 -192.198 -612.487 -198.276C-601.256 -204.353 -592.432 -213.982 -587.517 -225.52Z" id="path_1" />
+    <clipPath id="clip_1">
+      <use xlink:href="#path_1" />
+    </clipPath>
+  </defs>
+  <g id="loading-img-1" filter="url(#filter_1)">
+    <g clip-path="url(#clip_1)">
+      <use xlink:href="#path_1" fill="none" stroke="#FF156B" stroke-width="28" />
+    </g>
+  </g>
+</svg>

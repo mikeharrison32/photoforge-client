@@ -14,6 +14,8 @@ import { ProjectPreset } from 'src/app/types/project';
 import { DataService } from 'src/app/core/services/data.service';
 import { Router } from '@angular/router';
 import { newDocAnimation } from 'src/app/animations';
+import { ApiService } from 'src/app/core/services/api.service';
+import { LoadingService } from 'src/app/core/services/loading.service';
 
 @Component({
   selector: 'app-new-document',
@@ -25,7 +27,12 @@ export class NewDocumentComponent implements OnInit {
   selectedTemplateType: string = 'Recent';
   @Output() closeBtnClicked = new EventEmitter<boolean>();
   @Output() createBtnClicked = new EventEmitter<boolean>();
-  constructor(private data: DataService, private router: Router) {}
+  constructor(
+    private data: DataService,
+    private router: Router,
+    private api: ApiService,
+    private loadingService: LoadingService
+  ) {}
   recentTemplates: Template[] = templates.filter(
     (t) => t.type == TemplateType.Recent
   );
@@ -69,15 +76,26 @@ export class NewDocumentComponent implements OnInit {
     this.closeBtnClicked.emit(true);
   }
   onCreateBtnClick(presets: ProjectPreset) {
+    this.loadingService.startLoading('Creating project...');
     const newProject = {
-      Id: `${Math.random()}`,
-      UserId: '42ds',
-      ...presets,
+      name: presets.Title,
+      width: presets.Width,
+      height: presets.Height,
     };
-    this.data.projects.value.push(newProject);
-    this.data.selectedProject.next(newProject);
-    this.router.navigateByUrl('/editor');
-    this.createBtnClicked.emit(true);
+
+    this.api
+      .createBlankProject(newProject)
+      .then((project) => {
+        console.log(project);
+        this.data.openedProjects.next(project);
+        this.data.selectedProject.next(project);
+        this.router.navigateByUrl(`/editor?q=${project.id}`);
+        this.loadingService.stopLoading();
+      })
+      .catch((err) => {
+        this.loadingService.stopLoading();
+        console.log(err);
+      });
   }
 
   ngOnInit() {

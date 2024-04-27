@@ -4,6 +4,8 @@
   left: 0;
   width: 100%;
   z-index: 1000;
+  background: #fff;
+  box-shadow: #000 0 0 1px 0;
   .nav {
     padding-block: 0.7rem;
     ul {
@@ -12,7 +14,7 @@
       gap: 3rem;
       margin: 0;
       a {
-        color: #b1b1b1;
+        color: #525252;
         text-decoration: none;
         cursor: pointer;
         position: relative;
@@ -26,7 +28,7 @@
           transition: 200ms;
         }
         &:hover {
-          color: #fff;
+          color: #1f1f1f;
           &::after {
             transition: 200ms;
             display: block;

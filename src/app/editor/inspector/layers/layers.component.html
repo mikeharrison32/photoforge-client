@@ -1,4 +1,5 @@
 <div class="layers">
+  <p *ngIf="loading">Loading layers....</p>
   <div *ngFor="let layer of layers">
     <app-adjustment-layer
       *ngFor="let aj_layer of layer.adjustmentLayers"

@@ -29,67 +29,41 @@ export class ApiService {
     );
     return firstValueFrom(result);
   }
-  createBlankProject(presets: ProjectPreset): Observable<any> {
-    const body = presets;
-    const headers = new HttpHeaders()
-      .set('Authorization', `Bearer ${this.tokenService.getAccessToken()}`)
-      .set('Content-Type', 'application/json');
-    return this.http.post<any>(
-      `${environments.development.apiUrl}/projects/create-blank`,
-      JSON.stringify(body),
-      { headers }
+  createBlankProject(presets: any) {
+    // const headers = new HttpHeaders()
+    //   .set('Authorization', `Bearer ${this.tokenService.getAccessToken()}`)
+    //   .set('Content-Type', 'application/json');
+    const result = this.http.post<any>(
+      `${environments.development.apiUrl}/projects/create`,
+      presets
+      // { headers }
     );
+
+    return firstValueFrom(result);
   }
-  createProjectByUpload(file: File): Observable<any> {
+  createProjectByUpload(file: File) {
     const image = new FormData();
-    image.append('File', file);
+    console.log(file);
+    image.append('image', file);
     // const headers = new HttpHeaders().set(
     //   'Authorization',
     //   `Bearer ${this.tokenService.getAccessToken()}`
     // );
-    return this.http.post<any>(
+    const result = this.http.post<any>(
       `${environments.development.apiUrl}/projects/upload`,
       image
     );
+    return firstValueFrom(result);
   }
   updateProject() {}
-  getLayers() {
+  getLayers(projectId: string) {
     const result = this.http.get<any>(
-      `${environments.development.apiUrl}/layers`
+      `${environments.development.apiUrl}/projects/${projectId}/layers`
     );
     return firstValueFrom(result);
   }
-  layerFromSelectionViaCopy(
-    layerId: string,
-    projectId: string,
-    pixels: IPixel[]
-  ) {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    const result = this.http.post<any>(
-      `${environments.development.apiUrl}/layers/${projectId}/${layerId}/selection/layer-via-copy`,
-      JSON.stringify({
-        Pixels: pixels,
-      }),
-      { headers }
-    );
-    console.log({ Pixels: pixels });
-    return firstValueFrom(result);
-  }
-  layerFromSelectionViaCut(
-    layerId: string,
-    projectId: string,
-    pixels: IPixel[]
-  ) {
-    const result = this.http.post<any>(
-      `${environments.development.apiUrl}/layers/selection/layer-via-cut`,
-      {
-        layerId: layerId,
-        projectId: projectId,
-        pixels: pixels,
-      }
-    );
-    return firstValueFrom(result);
-  }
+
+
   createBlankLayer(projectId: string) {
     const result = this.http.post<any>(
       `${environments.development.apiUrl}/layers/${projectId}/create-blank`,
@@ -97,7 +71,25 @@ export class ApiService {
     );
     return firstValueFrom(result);
   }
-  deleteProject() {}
+  deleteProject(projectId: string) {
+    return firstValueFrom(
+      this.http.delete(
+        `${environments.development.apiUrl}/projects/${projectId}`
+      )
+    );
+  }
 
   saveProject() {}
+
+  layerViaCopy(projectId: string, layerId: string, points: number[]) {
+    const data = {
+      points,
+    };
+    return firstValueFrom(
+      this.http.post(
+        `${environments.development.apiUrl}/layers/${projectId}/${layerId}/selection/layer-via-copy`,
+        data
+      )
+    );
+  }
 }

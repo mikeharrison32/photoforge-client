@@ -152,6 +152,7 @@
             align-items: center;
             justify-content: center;
             background-color: #4b4b4b;
+
             img {
               width: 100%;
               height: 100%;
@@ -197,10 +198,40 @@
         height: fit-content;
         width: 18rem;
         padding: 1rem;
-        cursor: pointer;
         background: #2a2a2a;
+        position: relative;
+        .more-icon {
+          display: none;
+          align-items: center;
+          justify-content: center;
+          background: #fff;
+          width: 3rem;
+          border-radius: 4px;
+          height: 1.3rem;
+          position: absolute;
+          right: 1rem;
+          top: 0.4rem;
+          img {
+            width: 2rem;
+            filter: brightness(0.2);
+          }
+        }
+        &:hover {
+          .more-icon {
+            display: flex;
+          }
+        }
         .file-image {
+          cursor: pointer;
           height: 13rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          img {
+            width: 100%;
+            object-fit: cover;
+          }
         }
         h4 {
           margin-bottom: 0.3rem;

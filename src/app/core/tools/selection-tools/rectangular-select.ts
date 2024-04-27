@@ -51,11 +51,16 @@ class ReactangularSelect {
     this.selectionRect = new PIXI.Graphics();
 
     this.drawingSurface.on('mousedown', (e) => {
-      delete this.selectionRect;
-      delete this.selection;
+      if (!this.selectionRect) {
+        this.selectionRect = new PIXI.Graphics();
+      }
+      this.selection?.clear();
       data.contextMenu.next({});
-
-      this.selectionRect = new PIXI.Graphics();
+      const currentSelection = data.currentSelection.getValue();
+      if (currentSelection) {
+        currentSelection.view?.remove();
+        data.currentSelection.next(null);
+      }
       // this.clearCanvas();
       mousedown = true;
       this.selectionRectPos.x = e.global.x;
@@ -128,6 +133,7 @@ class ReactangularSelect {
           });
           selection.addFromPoints(points);
           data.currentSelection.next(selection);
+          data.selectedTool.next('moveTool');
           break;
       }
     });

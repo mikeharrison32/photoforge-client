@@ -32,6 +32,9 @@ import { fabric } from 'fabric';
 import { Command } from '../core';
 import { LayerService } from '../core/services/layer.service';
 import { moveTool } from '../core/tools/move-tool';
+import { ActivatedRoute } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
@@ -66,14 +69,84 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('contextMenuRef') contextMenuElem?: ElementRef;
   selectionContextMenu!: { isActive: boolean; x: number; y: number };
   currentSelection?: Selection | null;
+  loadingLayers: boolean = false;
   constructor(
     private data: DataService,
     private renderer: Renderer2,
     private clipboard: ClipboardService,
     private notification: NotificationService,
-    private layerService: LayerService
+    private layerService: LayerService,
+    private api: ApiService,
+    private activatedRoute: ActivatedRoute,
+    private http: HttpClient
   ) {}
-  ngOnInit() {
+  async ngOnInit() {
+    const openedProjects = this.data.openedProjects.getValue();
+    const params = this.activatedRoute.snapshot.params as any;
+    //create a method for returing a single project from the server
+    if (openedProjects.length < 1) {
+      this.api
+        .getProjects()
+        .then((projects: any) => {
+          const project = projects.find((p: any) => p.id == params.projectId);
+          const serializedProject: Project = {
+            Id: project.id,
+            UserId: '',
+            name: project.name,
+            ...project,
+          };
+          this.data.openedProjects.next([serializedProject]);
+          this.data.selectedProject.next(serializedProject);
+          this.data.loadingLayers.next(true);
+          this.api
+            .getLayers(project.id)
+            .then((layers: any) => {
+              this.data.loadingLayers.next(false);
+              layers.forEach((layer: any) => {
+                const imageResult = firstValueFrom(
+                  this.http.get(layer.url, { responseType: 'blob' })
+                );
+                imageResult
+                  .then((res: Blob) => {
+                    console.log('res::', res);
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                      const img = new Image();
+
+                      img.onload = () => {
+                        const player = new PixelLayer(
+                          this.data,
+                          this.renderer,
+                          layer.id,
+                          layer.name,
+                          layer.projectId,
+                          img
+                        );
+                        this.data.layers.next([
+                          ...this.data.layers.getValue(),
+                          player,
+                        ]);
+                      };
+                      img.crossOrigin = '';
+                      img.src = e.target!.result as string;
+                    };
+                    reader.readAsDataURL(res);
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              });
+            })
+            .catch((err: any) => {
+              this.data.loadingLayers.next(false);
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
     this.data.showNav.next(false);
 
     this.data.contextMenu.subscribe((cm) => {
@@ -82,11 +155,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.data.shortcutsEnabled.subscribe((se) => {
       this.shortcutsEnabled = se;
     });
-    this.data.projects.subscribe((projects) => {
-      this.projects = projects;
-    });
+
     this.data.layers.subscribe((layers) => {
-      // this.filterLayers(this.selectedProject!)
       this.layers = layers.filter(
         (layer) => layer.projectId == this.selectedProject?.Id
       );
@@ -94,12 +164,10 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         this.display?.nativeElement.appendChild(layer.getElem());
       });
     });
-
-    this.data.selectedProject.subscribe((project) => {
-      this.selectedProject = project;
-      this.data.zoom.next(project?.Zoom || 50);
-      this.filterLayers(project);
+    this.data.openedProjects.subscribe((projects) => {
+      this.projects = projects;
     });
+
     this.data.newMenuClick.subscribe((clicked) => {
       this.newDocumentActive = clicked;
     });
@@ -119,6 +187,16 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     });
 
+    this.updateZoom();
+
+    this.data.currentSelection.subscribe((cs) => {
+      this.currentSelection = cs;
+      if (cs) {
+        this.display?.nativeElement.appendChild(cs?.view);
+      }
+    });
+  }
+  private updateZoom() {
     this.data.zoom.subscribe((zoom) => {
       this.zoom = zoom;
       this.display!.nativeElement.style.scale = (zoom / 100).toString();
@@ -140,19 +218,16 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         cropTool.update();
       }
     });
-
-    this.data.currentSelection.subscribe((cs) => {
-      this.currentSelection = cs;
-      if (cs) {
-        this.display?.nativeElement.appendChild(cs?.view);
-      }
-    });
   }
-  private filterLayers(project: Project | null) {
+
+  private filterLayers(project: any) {
     this.data.layers.getValue().forEach((layer) => {
+      console.log('projectId', project.id);
+      console.log(layer.projectId == project.id);
       if (layer.projectId != project?.Id) {
         layer.hide();
       } else {
+        console.log(layer);
         layer.show();
       }
     });
@@ -164,110 +239,33 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     document.addEventListener('contextmenu', (e) => {
       e.preventDefault();
-
       const selectionElem = this.data.currentSelection.getValue()?.view;
       if (selectionElem?.contains(e.target as HTMLElement)) {
         let containerRect = selectionElem.getBoundingClientRect();
         const selectedLayer = this.selectedLayers[0];
-        const selectionContextMenu = {
-          x: e.clientX - containerRect!.left,
-          y: e.clientY - containerRect!.top,
-          menus: [
-            {
-              name: 'Layer via Copy',
-              click: () => {
-                if (selectedLayer instanceof PixelLayer) {
-                  const img = new Image();
-                  img.src = selectedLayer.src || '';
-                  const copyLayer = new PixelLayer(
-                    this.data,
-                    this.renderer,
-                    // display,
-                    `${Math.random()}`,
-                    'Layer 1 Copy',
-                    selectedLayer.projectId,
-                    img
-                  );
-                  this.data.layers.next([
-                    ...this.data.layers.getValue(),
-                    copyLayer,
-                  ]);
-                }
-              },
-            },
-            {
-              name: 'Layer via Cut',
-              click: () => {
-                console.log('layer via cut');
-              },
-            },
-            {
-              name: 'Deselect',
-              click: () => {
-                console.log('fill fill');
-              },
-            },
-            {
-              name: 'Select Inverse',
-              click: () => {
-                console.log('fill fill');
-              },
-            },
-            {
-              name: 'Select and Mask',
-              click: () => {
-                console.log('fill fill');
-              },
-            },
-            {
-              name: 'New Layer...',
-              click: () => {
-                console.log('fill fill');
-              },
-            },
-            {
-              name: 'Fill',
-              click: () => {
-                if (
-                  !(selectedLayer instanceof PixelLayer) ||
-                  !this.currentSelection
-                ) {
-                  return;
-                }
-                const points = this.currentSelection.points;
-                const poly = new PIXI.Polygon(points);
-                const pixels = selectedLayer.pixels!;
-
-                selectedLayer.forEachPixels((x, y) => {
-                  if (poly.contains(x, y)) {
-                    // const index = (y * selectedLayer.width + x) * 4;
-                    // pixels[index] = 0;
-                    // pixels[index + 1] = 0;
-                    // pixels[index + 2] = 0;
-                    // pixels[index + 3] = 0;
-                    selectedLayer.insertPixels(new Uint8Array(4), x, y, 1, 1);
-                  }
-                });
-                selectedLayer.renderGL();
-              },
-            },
-            {
-              name: 'Stroke...',
-              click: () => {
-                console.log('fill fill');
-              },
-            },
-            {
-              name: 'Fade...',
-              click: () => {
-                console.log('fill fill');
-              },
-            },
-          ],
-        };
-        this.data.contextMenu.next(selectionContextMenu);
+        this.setupSelectionContextMenu(e, containerRect, selectedLayer);
       }
     });
+
+    this.data.selectedProject.subscribe((project) => {
+      this.selectedProject = project;
+      this.display!.nativeElement.style.width = project?.width + 'px';
+      this.display!.nativeElement.style.height = project?.height + 'px';
+
+      this.data.zoom.next(project?.Zoom || 50);
+      this.filterLayers(project);
+
+      console.log(this.layers);
+
+      console.log(project);
+    });
+    const selectedProject = this.data.selectedProject.getValue();
+    const openedProjects = this.data.openedProjects.getValue();
+    console.log(openedProjects);
+    console.log(selectedProject);
+    if (!selectedProject && openedProjects.length > 1) {
+      this.data.selectedProject.next(openedProjects[0]);
+    }
     this.data.displayElem.next(this.display?.nativeElement);
     this.configureContextMenu();
     this.handleLayerClick();
@@ -277,6 +275,98 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.data.selectedTool.next('moveTool');
 
     this.handleSelectedToolConfig();
+  }
+
+  private setupSelectionContextMenu(
+    e: MouseEvent,
+    containerRect: DOMRect,
+    selectedLayer: Layer
+  ) {
+    const selectionContextMenu = {
+      x: e.clientX - containerRect!.left,
+      y: e.clientY - containerRect!.top,
+      menus: [
+        {
+          name: 'Layer via Copy',
+          click: () => {
+            if (!(selectedLayer instanceof PixelLayer)) {
+              return;
+            }
+              // //layers/layer-via-copy
+              this.api
+                .layerViaCopy(
+                  selectedLayer.projectId,
+                  selectedLayer.id,
+                  this.currentSelection?.points || []
+                )
+                .then((result) => {
+                  console.log(result);
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+              // {
+              //   id: "",
+              //   projectId: "",
+              //   points: []
+              // }
+              // -> newLayer
+            
+          },
+        },
+        {
+          name: 'Layer via Cut',
+          click: () => {
+            //include layerviacopy
+            //remove the parts
+          },
+        },
+        {
+          name: 'Deselect',
+          click: () => {
+            // client operation
+          },
+        },
+        {
+          name: 'Select Inverse',
+          click: () => {
+            // client operation
+          },
+        },
+        {
+          name: 'Select and Mask',
+          click: () => {
+            // unsure
+          },
+        },
+        {
+          name: 'New Layer...',
+          click: () => {
+            // don't know what this does
+          },
+        },
+        {
+          name: 'Fill',
+          click: () => {
+            // layers/selection/fill
+            //include layerviacopy
+          },
+        },
+        {
+          name: 'Stroke...',
+          click: () => {
+            //  unsure
+          },
+        },
+        {
+          name: 'Fade...',
+          click: () => {
+            // unsure
+          },
+        },
+      ],
+    };
+    this.data.contextMenu.next(selectionContextMenu);
   }
 
   private handleSelectedToolConfig() {
@@ -311,7 +401,11 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
               );
               break;
             case 'cropTool':
-              tool.configure(this.display?.nativeElement, this.data);
+              tool.configure(
+                this.display?.nativeElement,
+                this.data,
+                this.renderer
+              );
               break;
             case 'lassoTool':
               tool.configure(

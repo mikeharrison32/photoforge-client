@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ApiService } from '../core/services/api.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-contact',
@@ -19,7 +20,7 @@ export class ContactComponent implements AfterViewInit {
   @ViewChild('email') emailElem?: ElementRef;
   @ViewChild('message') messageElem?: ElementRef;
   loading: boolean = false;
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService, private http: HttpClient) {}
   ngAfterViewInit(): void {
     this.emailElem?.nativeElement.focus();
     this.emailElem?.nativeElement.addEventListener('keydown', (e: any) => {

@@ -13,6 +13,7 @@ import { ProjectPreset } from 'src/app/types/project';
 import { DataService } from 'src/app/core/services/data.service';
 import { Orientaion } from '../enums/Orientaion';
 import { Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-preset-detail',
@@ -29,6 +30,7 @@ export class PresetDetailComponent implements OnInit {
   @ViewChild('selectedUnitType') selectedUnitType!: ElementRef;
   @Output() closeBtnClicked = new EventEmitter<boolean>();
   @Output() createBtnClicked = new EventEmitter<ProjectPreset>();
+  heightFormControl = new FormControl();
   advancedOptionsOpen: boolean = true;
   Orientation!: Orientaion;
   UnitTypes = [
@@ -41,9 +43,8 @@ export class PresetDetailComponent implements OnInit {
   ];
   presets: ProjectPreset = {
     Title: 'Untitled-1',
-    Width: this.activeTemplate == undefined ? 1080 : this.activeTemplate.width,
-    Height:
-      this.activeTemplate == undefined ? 1090 : this.activeTemplate.height,
+    Width: 1080,
+    Height: 740,
     Unit: 'Pixels',
     Resolution: {},
     ColorMode: {},

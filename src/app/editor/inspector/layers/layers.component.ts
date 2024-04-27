@@ -15,6 +15,7 @@ export class LayersComponent implements OnInit, AfterViewInit, OnDestroy {
   // groups: Group[] = [];
   layers: any[] = [];
   selectedProject?: Project | null;
+  loading: boolean = false;
 
   constructor(private data: DataService) {}
 
@@ -27,14 +28,18 @@ export class LayersComponent implements OnInit, AfterViewInit, OnDestroy {
           (layer) => layer.projectId == this.selectedProject?.Id || 'aaa'
         );
     });
+
+    this.data.loadingLayers.subscribe((loading) => {
+      this.loading = loading;
+    });
     this.data.selectedProject.subscribe((project) => {
       this.selectedProject = project;
       this.layers = this.data.layers
         .getValue()
         .filter((layer) => layer.projectId == project?.Id);
       const displayElem = this.data.displayElem.getValue();
-      displayElem!.style.width = project!.Width + 'px';
-      displayElem!.style.height = project!.Height + 'px';
+      displayElem!.style.width = project!.width + 'px';
+      displayElem!.style.height = project!.height + 'px';
     });
     this.data.selectedAjLayers.subscribe((aj_layers) => {
       this.data.selectedLayers.next([]);

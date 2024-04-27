@@ -57,13 +57,14 @@ export class EraserTool {
       const x = e.clientX - selectedLayerRect.left;
       const y = e.clientY - selectedLayerRect.top;
 
-      selectedLayer.insertPixels(
-        array,
-        (x - brushSize / 2) / zoom,
-        (y - brushSize / 2) / zoom,
-        brushSize,
-        brushSize
+      const circleCenterUniform = selectedLayer.gl?.getUniformLocation(
+        selectedLayer.program!,
+        'u_center'
       );
+
+      selectedLayer.gl?.uniform2f(circleCenterUniform!, 0.5, 0.5);
+
+      selectedLayer.render();
     };
 
     this.mouseUpListener = (e: any) => {

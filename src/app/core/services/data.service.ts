@@ -18,6 +18,7 @@ export class DataService {
   selectedTool = new BehaviorSubject<string>('none');
   selectedLayers = new BehaviorSubject<Layer[]>([]);
   projects = new BehaviorSubject<Project[]>([]);
+  openedProjects = new BehaviorSubject<Project[]>([]);
   selectedProject = new BehaviorSubject<Project | null>(null);
   showNav = new BehaviorSubject<boolean>(true);
   orientaion = new BehaviorSubject<Orientaion>(Orientaion.Landscape);
@@ -35,6 +36,7 @@ export class DataService {
   contextMenu = new BehaviorSubject<any>({});
   history = new BehaviorSubject<History>(new History());
   isMovingAllowed = new BehaviorSubject<boolean>(true);
+  loadingLayers = new BehaviorSubject<boolean>(false);
 }
 interface SelectionContextMenu {
   isActive: boolean;

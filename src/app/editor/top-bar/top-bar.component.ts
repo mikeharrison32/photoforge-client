@@ -18,8 +18,9 @@ export class TopBarComponent implements OnInit, OnDestroy {
   selectedProject?: Project | null;
   constructor(private data: DataService) {}
   ngOnInit(): void {
-    this.data.projects.subscribe((project) => {
-      this.projects = project;
+    this.data.openedProjects.subscribe((projects) => {
+      this.projects = projects;
+      console.log(projects);
     });
     this.data.selectedProject.subscribe((project) => {
       this.selectedProject = project;

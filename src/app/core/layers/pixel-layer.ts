@@ -30,8 +30,13 @@ export class PixelLayer extends Layer {
   uniform float u_contrast;
   uniform float u_vibrance;
   uniform float u_saturation;
-  uniform vec2 pixelCoords;
-  uniform vec4 newColor;
+
+  uniform vec2 u_resolution;  // Canvas resolution
+  uniform vec2 u_center;      // Center of the circle
+  uniform float u_radius;     // Radius of the circle
+
+
+
 
 vec3 adjustBrightness(vec3 color, float brightness) {
     return color + brightness;
@@ -56,15 +61,20 @@ vec3 adjustSaturation(vec3 color, float saturation) {
 void main() {
     vec4 color = texture2D(textureSampler, texCoords);
 
-    color.rgb = adjustBrightness(color.rgb, u_brightnees);
-    color.rgb = adjustContrast(color.rgb,  u_contrast);
-    color.rgb = adjustSaturation(color.rgb,  u_saturation);
-    //adjustVibrance(color.rgb, u_vibrance);
-    if (gl_FragCoord.xy == pixelCoords) {
-      color = newColor; // Change the color of the pixel
-    }
 
-    gl_FragColor = color;
+    // Calculate the distance from the current pixel to the center of the circle
+
+    //vec2 center = vec2(0.5, 0.5); // Assuming the texture is centered
+    float distance = distance(gl_FragCoord.xy / u_resolution, u_center);
+
+
+    // Check if the pixel is inside the circle
+    if (distance <= u_radius) {
+      color.a = 0.0;
+      gl_FragColor = color;
+    } else {
+      gl_FragColor = color;
+    }
 }`;
   adjustmentLayers: AdjustmentLayer[] = [];
   filters = {
@@ -88,13 +98,10 @@ void main() {
   constructor(
     data: DataService,
     renderer: Renderer2,
-    // containerElem: HTMLElement | null,
     id: string,
     name: string,
     projectId: string,
-    img: any | PIXI.Texture,
-    width?: number,
-    height?: number
+    img: any
   ) {
     super(renderer, data, id, name, projectId);
     this.canvas = document.createElement('canvas');
@@ -120,6 +127,39 @@ void main() {
 
     //Draw the image for the first time
     this.render();
+
+    // this.circle();
+    // this.render();
+  }
+
+  private circle() {
+    const resolutionUniform = this.gl?.getUniformLocation(
+      this.program!,
+      'u_resolution'
+    );
+    const radiusUniform = this.gl?.getUniformLocation(
+      this.program!,
+      'u_radius'
+    );
+    const circleCenterUniform = this.gl?.getUniformLocation(
+      this.program!,
+      'u_center'
+    );
+
+    // Set canvas resolution uniform
+    console.log(this.canvas.width, this.canvas.height);
+    this.gl?.uniform2f(
+      resolutionUniform!,
+      this.canvas.width,
+      this.canvas.height
+    );
+
+    // Set circle parameters (center and radius)
+    const centerX = this.canvas.width / 2;
+    const centerY = this.canvas.height / 2;
+    const radius = 0.1;
+    this.gl?.uniform2f(circleCenterUniform!, 0.5, 0.5);
+    this.gl?.uniform1f(radiusUniform!, radius);
   }
 
   private resizeCanvasToDisplaySize(canvas: HTMLCanvasElement) {
@@ -139,31 +179,11 @@ void main() {
     return needResize;
   }
 
-  private flipPixels(
-    originalPixels: Uint8Array,
-    width: number,
-    height: number
-  ) {
-    const flippedPixels = new Uint8Array(originalPixels.length);
-
-    for (let y = 0; y < height; y++) {
-      const originalRowIndex = y * width * 4; // Assuming RGBA format (4 components per pixel)
-      const flippedRowIndex = (height - y - 1) * width * 4;
-
-      // Copy pixels from original row to flipped row, reversing the order
-      for (let x = 0; x < width * 4; x += 4) {
-        for (let i = 0; i < 4; i++) {
-          flippedPixels[flippedRowIndex + x + i] =
-            originalPixels[originalRowIndex + x + i];
-        }
-      }
-    }
-
-    return flippedPixels;
-  }
   render() {
     if (!this.program) {
       console.log('Createing Program...');
+      console.log(this.img);
+      document.body.appendChild(this.img);
       this.program = drawImage(this.gl!, this.img, this.fragmentShaderSource);
     }
 
@@ -176,25 +196,6 @@ void main() {
     this.gl?.colorMask(red, green, blue, true);
     this.updateFilters(this.program);
     this.renderGL();
-  }
-  private updatePixels() {
-    const displayWidth = parseInt(this.elem.style.width);
-    const displayHeight = parseInt(this.elem.style.height);
-
-    let width = displayWidth;
-    let height = displayHeight;
-    const pixels = new Uint8Array(width * height * 4);
-
-    this.gl?.readPixels(
-      0,
-      0,
-      width,
-      height,
-      this.gl.RGBA,
-      this.gl.UNSIGNED_BYTE,
-      pixels
-    );
-    this.pixels = this.flipPixels(pixels, width, width);
   }
 
   private updateFilters(program: WebGLProgram) {

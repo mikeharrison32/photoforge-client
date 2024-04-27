@@ -22,7 +22,7 @@ export class ShapeTool {
     let mousedown = false;
     let shapeLayer: Layer;
     let startX: number, startY: number;
-    const imgDisplayRect = display.getBoundingClientRect();
+    const imgDisplayRect = display.parentElement!.getBoundingClientRect();
 
     this.listenForMouseDownEvent = (e: any) => {
       console.log('mousedown');

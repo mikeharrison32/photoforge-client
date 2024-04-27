@@ -1,9 +1,9 @@
 export type Project = {
   Id: string;
   UserId: string;
-  Title: string;
-  Width?: number;
-  Height?: number;
+  name: string;
+  width?: number;
+  height?: number;
   Unit?: string;
   Resolution?: Record<string, string>;
   ColorMode?: Record<string, string>;

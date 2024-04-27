@@ -47,7 +47,12 @@
     "
   >
     <div class="file" *ngFor="let project of projects">
-      <div class="file-image"></div>
+      <div class="more-icon">
+        <img src="assets/tools-icons/more-icon.svg" alt="more icon" />
+      </div>
+      <div class="file-image" (dblclick)="openProject(project)">
+        <img [src]="getImageUrl(project)" alt="" />
+      </div>
       <h4>{{ project.name }}</h4>
       <p>{{ project.modifyedAt | date }}</p>
     </div>
@@ -78,9 +83,9 @@
         <p></p>
       </div>
     </div>
-    <div class="not-logged-in" *ngIf="!loading && projects.length < 1">
+    <!--  <div class="not-logged-in" *ngIf="!loading && projects.length < 1">
       Login or Signup to see your recent projects.
       <button (click)="loadRecentProjects()">Continue</button>
-    </div>
+    </div> -->
   </div>
 </div>

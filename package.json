@@ -24,6 +24,7 @@
     "@angular/platform-server": "^16.1.0",
     "@angular/router": "^16.1.0",
     "@auth0/angular-jwt": "^5.1.2",
+    "@emailjs/browser": "^4.3.3",
     "@improbable-eng/grpc-web": "^0.15.0",
     "@microsoft/signalr": "^7.0.9",
     "@nguniversal/express-engine": "^16.1.1",

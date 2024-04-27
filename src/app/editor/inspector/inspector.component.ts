@@ -6,6 +6,7 @@ import {
   HostListener,
   ViewChild,
   ElementRef,
+  Input,
 } from '@angular/core';
 import { DataService } from 'src/app/core/services/data.service';
 import { fabric } from 'fabric';

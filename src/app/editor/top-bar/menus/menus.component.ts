@@ -16,17 +16,14 @@ import { Project } from 'src/app/types/project';
 import { StateService } from 'src/app/core/services/state.service';
 import { ClipboardService } from 'src/app/core/services/clipboard.service';
 import { ApiService } from 'src/app/core/services/api.service';
-import { ImageCanvas } from 'src/app/core/image-canvas';
 import { PixelLayer } from 'src/app/core/layers/pixel-layer';
-import { rgbaFormatter } from 'src/app/core/rgba-formater';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { Layer } from 'src/app/core/layers/layer';
 import { AdjustmentLayer } from 'src/app/types/layer';
 import * as PIXI from 'pixi.js-legacy';
-import { TypeLayer } from 'src/app/core/layers/type-layer';
-import { filter } from 'rxjs';
 import { Command } from 'src/app/core';
 import { settings } from 'src/app/settings/settings';
+import {Router} from "@angular/router"
 @Component({
   selector: 'app-menus',
   templateUrl: './menus.component.html',
@@ -49,13 +46,15 @@ export class MenusComponent implements OnInit, OnDestroy {
     private clipboard: ClipboardService,
     private api: ApiService,
     private notification: NotificationService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private router: Router
   ) {}
   ngOnInit(): void {
     //TODO:
     //sort the projects based on their modifyed date
     //reverse the array
     //then get the first few project and display
+    this.recentProjects = this.data.projects.getValue()
   }
   async saveProject() {
     // project.pfd
@@ -86,8 +85,7 @@ export class MenusComponent implements OnInit, OnDestroy {
     this.selectedMenu = Menus.None;
   }
   openProject(project: Project) {
-    this.data.projects.next([...this.data.projects.getValue(), project]);
-    this.data.selectedProject.next(project);
+  this.router.navigateByUrl(`editor/${project.Id}`)    
   }
   onOpenFileOptionChange(e: any) {
     for (let file of e.target.files) {
@@ -102,10 +100,10 @@ export class MenusComponent implements OnInit, OnDestroy {
           this.notification.hideNotification();
           const project: Project = {
             Id: `${Math.random()}`,
-            Title: file.name,
+            name: file.name,
             UserId: 'dasd',
-            Width: imgObj.width,
-            Height: imgObj.height,
+            width: imgObj.width,
+            height: imgObj.height,
           };
           const displayElem = this.data.displayElem.getValue();
           displayElem!.style.width = imgObj.width + 'px';
@@ -125,15 +123,6 @@ export class MenusComponent implements OnInit, OnDestroy {
           this.data.layers.next([...this.data.layers.getValue(), pixelLayer]);
         };
       };
-      this.api.createProjectByUpload(file).subscribe({
-        next: (res) => {
-          console.log(res);
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      });
-      reader.readAsDataURL(file);
     }
     this.closeMenu();
   }
@@ -186,7 +175,7 @@ export class MenusComponent implements OnInit, OnDestroy {
           // displayElem,
           `${Math.random()}`,
           sl.name + 'Copy',
-          selectedProject!.Title,
+          selectedProject!.name,
           null
         );
         this.data.layers.next([...this.data.layers.getValue(), duplicateLayer]);
