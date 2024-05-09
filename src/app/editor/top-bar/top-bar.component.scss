@@ -1,33 +1,120 @@
-$dark_gray: #1d1d1d;
-$light_gray: #3a3a3a;
-:host {
-  width: auto;
-  background: $dark_gray;
-  .opened-projects {
-    width: 100%;
-    position: absolute;
-    height: 1.4rem;
-    background: #282828;
-    ul {
-      margin: 0;
-      display: flex;
-      align-items: center;
-      li {
-        display: flex;
-        align-items: center;
-        font-size: 0.53rem;
-        padding: 0.2rem;
-        color: #989898;
+@import "/src/app/variables.scss";
 
-        img {
-          width: 1rem;
-          cursor: pointer;
-        }
-      }
-      .active_project {
-        background: #3a3a3a;
-        color: #fff;
-      }
+:host {
+  width: 100%;
+  height: 2rem;
+  background: #323232;
+  padding: 4px;
+  margin-bottom: 2px;
+}
+
+.arrow-down {
+  svg {
+    width: 12px;
+  }
+}
+.h-divider {
+  width: calc(100% - 32px);
+  min-height: 1px;
+  background: #717171;
+  margin: 0 16px;
+}
+
+.zoom-actions {
+  position: absolute;
+  z-index: 100;
+  background: $primary-color;
+  border: solid 1px #707070;
+  display: flex;
+  color: #ebebeb;
+  flex-direction: column;
+  gap: 8px;
+  border-radius: 4px;
+
+  span {
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 200px;
+    cursor: pointer;
+    &:hover {
+      background: #ffffff1a;
     }
   }
+}
+.state-action {
+  padding: 4px;
+  display: flex;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.search,
+.state-action,
+.level {
+  &:hover {
+    background: $action-btn-hover-background;
+  }
+}
+.search {
+  padding: 0 4px;
+  .icon {
+    svg {
+      width: 16px;
+    }
+  }
+  cursor: pointer;
+}
+.project-name {
+  margin-right: 8px;
+}
+
+.level {
+  cursor: pointer;
+  gap: 8px;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+:host,
+.start,
+.center,
+.end,
+.app-menu,
+.project-options,
+.level,
+.icon,
+#doc-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+#doc-actions {
+  gap: 8px;
+}
+.start,
+.center,
+.end {
+  flex-grow: 1;
+  gap: 4px;
+}
+svg,
+img {
+  width: 24px;
+}
+.app-menu {
+  padding: 4px;
+  svg {
+    width: 19px;
+  }
+}
+
+.divider {
+  height: auto;
+  align-self: stretch;
+  width: 1px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  background: #717171;
 }

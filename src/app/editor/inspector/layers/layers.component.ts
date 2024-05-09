@@ -19,8 +19,7 @@ export class LayersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(private data: DataService) {}
 
-  ngOnInit() {}
-  ngAfterViewInit(): void {
+  ngOnInit() {
     this.data.layers.subscribe((layers) => {
       this.layers = this.data.layers
         .getValue()
@@ -28,9 +27,14 @@ export class LayersComponent implements OnInit, AfterViewInit, OnDestroy {
           (layer) => layer.projectId == this.selectedProject?.Id || 'aaa'
         );
     });
-
+  }
+  ngAfterViewInit(): void {
     this.data.loadingLayers.subscribe((loading) => {
       this.loading = loading;
+    });
+
+    this.data.selectedLayers.subscribe((layers) => {
+      this.selectedLayers = layers;
     });
     this.data.selectedProject.subscribe((project) => {
       this.selectedProject = project;
@@ -70,12 +74,5 @@ export class LayersComponent implements OnInit, AfterViewInit, OnDestroy {
   onDrop(e: any) {
     console.log(e);
   }
-  ngOnDestroy(): void {
-    this.data.layers.unsubscribe();
-    // this.data.selectedLayers.unsubscribe();
-    this.data.displayElem.unsubscribe();
-    this.data.selectedAjLayers.unsubscribe();
-    // this.data.adustmentLayers.unsubscribe();
-    // this.data.selectedAdjustmentLayers.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 }

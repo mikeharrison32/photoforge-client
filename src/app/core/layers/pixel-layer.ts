@@ -156,7 +156,7 @@ void main() {
     lightnees: 0.0,
     exposure: {
       exposure: 0.0,
-      gammaCorrection: 2.2,
+      gammaCorrection: 1.0,
       offset: 0.0,
     },
     colorBalance: {
@@ -208,6 +208,18 @@ void main() {
     //Draw the image for the first time
     this.render();
 
+    // const pixels = this.readPixels(0, 0, 600, 600);
+    // this.insertPixels(pixels, 0, 0, 600, 600);
+
+    // let cx = 300;
+    // let cy = 300;
+    // let r = 1000;
+    // const array = new Uint8Array(100 * 100 * 4);
+    // for (let y = cy; y < r; y++) {
+    //   for (let x = cx; x < r; x++) {
+    //     this.insertPixels(array, x, y, 100, 100);
+    //   }
+    // }
     // this.circle();
     // this.render();
   }

@@ -149,8 +149,5 @@ export class LayerPropertyComponent implements OnInit, OnDestroy {
       });
     }
   }
-  ngOnDestroy(): void {
-    this.data.selectedAjLayers.unsubscribe();
-    this.data.selectedLayers.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 }

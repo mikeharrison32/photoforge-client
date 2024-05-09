@@ -1,72 +1,45 @@
-$dark_gray: #1d1d1d;
-$light_gray: #3a3a3a;
+@import "/src/app/variables.scss";
 :host {
   position: relative;
-  background: $light_gray;
+  background: $primary-color;
   height: auto;
-  margin-top: 0.3rem;
   display: flex;
   z-index: 5;
   flex-direction: column;
   align-items: center;
-  width: 1rem;
   padding: 0.5rem;
-  box-shadow: #79797f 0px 0px 1px 0px;
+  margin-right: 2px;
+  gap: 22px;
 
-  .tools {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 1rem;
-    padding: 1rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: 0.24rem;
-    .tool-choice {
+  .color-options {
+    .colors-panel {
       display: flex;
-      align-items: center;
-      gap: 2px;
-      padding-left: 0.6rem;
-      padding-block: 1px;
-      &:hover {
-        background: #7a7a7a;
-      }
-      img {
-        width: 0.7rem;
-      }
-    }
-
-    .color-options {
-      .colors-panel {
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+      .colors-panel-icons {
         display: flex;
-        flex-wrap: wrap;
-        margin-top: 0.5rem;
-        .colors-panel-icons {
-          display: flex;
-          gap: 0.4rem;
-          img {
-            width: 0.5rem;
-          }
+        gap: 0.4rem;
+        img {
+          width: 0.5rem;
         }
-        .colors {
-          margin-top: 0.3rem;
-          position: relative;
-          width: 100%;
-          height: 2rem;
-          .foreground {
-            width: 1rem;
-            height: 1rem;
-            position: absolute;
-            z-index: 1000;
-          }
-          .background {
-            width: 1rem;
-            height: 1rem;
-            position: absolute;
-            right: 0;
-            top: 0.7rem;
-          }
+      }
+      .colors {
+        margin-top: 0.3rem;
+        position: relative;
+        width: 100%;
+        height: 2rem;
+        .foreground {
+          width: 1rem;
+          height: 1rem;
+          position: absolute;
+          z-index: 1000;
+        }
+        .background {
+          width: 1rem;
+          height: 1rem;
+          position: absolute;
+          right: 0;
+          top: 0.7rem;
         }
       }
     }

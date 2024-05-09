@@ -33,25 +33,14 @@ export class LayerComponent implements OnInit, OnDestroy {
   @Output() onLockClick = new EventEmitter<boolean>();
   @Output() onHideClick = new EventEmitter<boolean>();
   maskContextMenuActive: boolean = false;
-  get LayerType() {
-    return LayerType;
-  }
+  @ViewChild('thumbnail') thumbnail?: ElementRef;
+  type = this.layer?.type;
   constructor(private data: DataService, private layerService: LayerService) {}
   ngOnInit(): void {
     if (this.layer instanceof PixelLayer) {
-      this.imgSrc = this.layer.src;
     } else if (this.layer instanceof TypeLayer) {
       this.imgSrc = 'assets/tools-icons/text-tool.svg';
     }
-    this.data.selectedLayers.subscribe((layers) => {
-      this.selected = layers.includes(this.layer!);
-      if (this.selected) {
-        // this.layer!.canvas!.style.border = 'solid rgb(0, 192, 255) ';
-      } else {
-        // this.layer!.canvas!.style.border = 'none';
-      }
-      // this.data.selectedAjLayers.next([]);
-    });
   }
   ngOnDestroy(): void {
     // this.data.selectedLayers.unsubscribe();
@@ -66,6 +55,7 @@ export class LayerComponent implements OnInit, OnDestroy {
     }
   }
   onLayerClick(e: any) {
+    console.log(this.selected);
     if (e.ctrlKey) {
       this.data.selectedLayers.next([
         ...this.data.selectedLayers.getValue(),

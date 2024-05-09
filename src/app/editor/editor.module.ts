@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { ToolBoxComponent } from './tool-box/tool-box.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
-import { ToolPropertiesComponent } from './top-bar/tool-properties/tool-properties.component';
+import { ToolPropertiesModule } from './top-bar/tool-properties/tool-properties.module';
 import { MenusComponent } from './top-bar/menus/menus.component';
 import { EditorComponent } from './editor.component';
-import { ToolPropertiesModule } from './top-bar/tool-properties/tool-properties.module';
 import { ToolBoxModule } from './tool-box/tool-box.module';
 import { InspectorModule } from './inspector/inspector.module';
 import { SharedModule } from '../shared/shared.module';
@@ -23,6 +22,7 @@ import { CropRectComponent } from './crop-rect/crop-rect.component';
     CommonModule,
     NewDocumentModule,
     SharedModule,
+    ToolPropertiesModule
   ],
   exports: [],
 })

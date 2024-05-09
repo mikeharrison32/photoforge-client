@@ -1,144 +1,21 @@
-<div class="selected-tool">
-  <img
-    *ngIf="selectedTool == 'moveTool'"
-    class="tool-icon"
-    src="assets/tools-icons/move-tool.svg"
-  />
-  <img
-    *ngIf="selectedTool == 'rectangularSelectTool'"
-    class="tool-icon"
-    src="assets/tools-icons/rectangular-marquee-tool.svg"
-  />
-  <img
-    *ngIf="selectedTool == 'lassoTool'"
-    class="tool-icon"
-    src="assets/tools-icons/lasso-tool.svg"
-  />
-  <img
-    *ngIf="selectedTool == 'quickSelectionTool'"
-    class="tool-icon"
-    src="assets/tools-icons/quick-selection-tool.svg"
-  />
-  <img
-    *ngIf="selectedTool == 'cropTool'"
-    class="tool-icon"
-    src="assets/tools-icons/crop-tool.svg"
-  />
-  <img
-    *ngIf="selectedTool == 'colorPickerTool'"
-    class="tool-icon"
-    src="assets/tools-icons/color-picker.svg"
-  />
-  <img
-    *ngIf="selectedTool == 'spotHealingBrushTool'"
-    class="tool-icon"
-    src="assets/tools-icons/spot-healing-brush.svg"
-  />
-  <img
-    *ngIf="selectedTool == 'brushTool'"
-    class="tool-icon"
-    src="assets/tools-icons/brush-tool.svg"
-  />
-  <img
-    *ngIf="selectedTool == 'dodgeTool'"
-    class="tool-icon"
-    src="assets/tools-icons/raster-tool.svg"
-  />
-  <img
-    *ngIf="selectedTool == 'eraserTool'"
-    class="tool-icon"
-    src="assets/tools-icons/eraser-tool.svg"
-  />
-  <img
-    *ngIf="selectedTool == 'gradienTool'"
-    class="tool-icon"
-    src="assets/tools-icons/gradient-tool.svg"
-  />
-  <img
-    *ngIf="selectedTool == 'penTool'"
-    class="tool-icon"
-    src="assets/tools-icons/pen-tool.svg"
-  />
-  <img
-    *ngIf="selectedTool == 'textTool'"
-    class="tool-icon"
-    src="assets/tools-icons/text-tool.svg"
-  />
-  <img
-    *ngIf="selectedTool == 'pathSelectionTool'"
-    class="tool-icon"
-    src="assets/tools-icons/pointer-tool.svg"
-  />
-  <img
-    *ngIf="selectedTool == 'blurTool'"
-    class="tool-icon"
-    src="assets/tools-icons/water-drop-icon.svg"
-  />
-  <img
-    *ngIf="selectedTool == 'shapeTool'"
-    class="tool-icon"
-    src="assets/tools-icons/shape-tools-icons/rectangle-shape-tool.svg"
-  />
-  <img
-    *ngIf="selectedTool == 'zoomTool'"
-    class="tool-icon"
-    src="assets/tools-icons/zoom-tool.svg"
-  />
-  <img
-    *ngIf="selectedTool == 'handTool'"
-    class="tool-icon"
-    src="assets/tools-icons/hand-tool.svg"
-  />
-  <img src="assets/ArrowDown.svg" class="arrow-down" />
-</div>
 <app-move-tool-properties
   *ngIf="selectedTool == 'moveTool'"
 ></app-move-tool-properties>
 <app-rect-select-tool-properties
   *ngIf="selectedTool == 'rectangularSelectTool'"
 ></app-rect-select-tool-properties>
-<app-lasso-tool-properties
-  *ngIf="selectedTool == 'lassoTool'"
-></app-lasso-tool-properties>
-<app-quick-select-tool-properties
-  *ngIf="selectedTool == 'quickSelectionTool'"
-></app-quick-select-tool-properties>
 <app-crop-tool-properties
   *ngIf="selectedTool == 'cropTool'"
 ></app-crop-tool-properties>
-<app-eyedrop-tool-properties
-  *ngIf="selectedTool == 'colorPickerTool'"
-></app-eyedrop-tool-properties>
-<app-spot-healing-tool-properties
-  *ngIf="selectedTool == 'spotHealing'"
-></app-spot-healing-tool-properties>
 <app-brush-tool-properties
   *ngIf="selectedTool == 'brushTool'"
 ></app-brush-tool-properties>
 <app-clone-stamp-tool-properties
   *ngIf="selectedTool == 'cloneStampTool'"
 ></app-clone-stamp-tool-properties>
-<app-eraser-tool-properties
-  *ngIf="selectedTool == 'eraserTool'"
-></app-eraser-tool-properties>
-<app-blur-tool-properties
-  *ngIf="selectedTool == 'blurTool'"
-></app-blur-tool-properties>
-<app-gradient-tool-properties
-  *ngIf="selectedTool == 'gradientTool'"
-></app-gradient-tool-properties>
-<app-pen-tool-properties
-  *ngIf="selectedTool == 'penTool'"
-></app-pen-tool-properties>
 <app-text-tool-properties
   *ngIf="selectedTool == 'textTool'"
 ></app-text-tool-properties>
 <app-shape-tool-properties
   *ngIf="selectedTool == 'shapeTool'"
 ></app-shape-tool-properties>
-<app-zoom-tool-properties
-  *ngIf="selectedTool == 'zoomTool'"
-></app-zoom-tool-properties>
-<app-hand-tool-properties
-  *ngIf="selectedTool == 'handTool'"
-></app-hand-tool-properties>

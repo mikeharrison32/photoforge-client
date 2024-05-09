@@ -1,20 +1,54 @@
 :host {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
+  background: #fff;
+  position: fixed;
   z-index: 1000;
   background: #fff;
-  box-shadow: #000 0 0 1px 0;
   .nav {
-    padding-block: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    box-shadow: #00000078 0px 0px 2px 0px;
+    padding-inline: 2rem;
+    .logo {
+      img {
+        cursor: pointer;
+        width: 9rem;
+      }
+    }
+
     ul {
+      margin-right: 2rem;
       display: flex;
       list-style: none;
-      gap: 3rem;
+      gap: 1.6rem;
       margin: 0;
+      align-items: center;
+      .start-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 500;
+        color: #fff;
+        text-decoration: none;
+        background: #e7263c;
+        transition: 200ms;
+        border: none;
+        padding-block: 0.5rem;
+        padding-inline: 1rem;
+        border-radius: 50px;
+        margin-right: 1rem;
+        &:hover {
+          &::after {
+            display: none;
+          }
+        }
+      }
+
       a {
-        color: #525252;
+        color: #878787;
+
         text-decoration: none;
         cursor: pointer;
         position: relative;

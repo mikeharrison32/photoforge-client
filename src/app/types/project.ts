@@ -20,7 +20,7 @@ export type ProjectPreset = {
   Width: number;
   Height: number;
   Unit: string;
-  Resolution: Record<string, string>;
+  Resolution: number;
   ColorMode: Record<string, string>;
   ColorProfile: string;
   PixelAspectRatio: string;

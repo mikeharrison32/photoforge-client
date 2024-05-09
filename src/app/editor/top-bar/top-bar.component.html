@@ -1,16 +1,143 @@
-<!-- <app-menus></app-menus> -->
-<app-tool-properties></app-tool-properties>
-<div class="opened-projects">
-  <ul>
-    <li
-      *ngFor="let project of projects"
-      [ngClass]="{ active_project: selectedProject?.Id == project.Id }"
-      (click)="setSelectedProject(project)"
-    >
-      <img src="assets/cancel-icon.svg" (click)="closeProject(project.Id)" />{{
-        project.name
-      }}
-      @ {{ project.Zoom }}% (DSC00984, RGB/8)*
-    </li>
-  </ul>
+<div class="start">
+  <div class="brand">
+    <img src="assets/phorge-icon.svg" />
+  </div>
+  <div class="divider"></div>
+
+  <app-menus></app-menus>
+
+  <div class="project-options">
+    <span class="project-name">{{ project?.name || "Project" }}</span>
+    <div class="arrow-down">
+      <svg
+        viewBox="0 0 48 48"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="#ffffff"
+      >
+        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+        <g
+          id="SVGRepo_tracerCarrier"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        ></g>
+        <g id="SVGRepo_iconCarrier">
+          <path d="M0 0h48v48H0z" fill="none"></path>
+          <g id="Shopicon">
+            <g>
+              <polygon
+                points="24,29.171 9.414,14.585 6.586,17.413 24,34.827 41.414,17.413 38.586,14.585 "
+              ></polygon>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+</div>
+<div class="center"></div>
+<div class="end">
+  <div id="doc-actions">
+    <div class="state-action">
+      <svg
+        role="img"
+        fill="currentColor"
+        viewBox="0 0 18 18"
+        id="SUndo18N-icon"
+        width="18"
+        height="18"
+        aria-hidden="true"
+        aria-label=""
+        focusable="false"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M15.332,6.271A5.2,5.2,0,0,0,11.835,5H5.5V2.4A.4.4,0,0,0,5.1,2a.389.389,0,0,0-.264.1L1.072,5.825a.249.249,0,0,0,0,.35L4.834,9.9A.394.394,0,0,0,5.1,10a.4.4,0,0,0,.4-.4V7h6.439a3.069,3.069,0,0,1,3.109,2.9A2.945,2.945,0,0,1,12,13H8.5a.5.5,0,0,0-.5.5v1a.5.5,0,0,0,.5.5h3.263a5.168,5.168,0,0,0,5.213-4.506A4.976,4.976,0,0,0,15.332,6.271Z"
+        ></path>
+      </svg>
+    </div>
+    <div class="state-action">
+      <svg
+        role="img"
+        fill="currentColor"
+        viewBox="0 0 18 18"
+        id="SRedo18N-icon"
+        width="18"
+        height="18"
+        aria-hidden="true"
+        aria-label=""
+        focusable="false"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M2.668,6.271A5.2,5.2,0,0,1,6.165,5H12.5V2.4a.4.4,0,0,1,.4-.4.389.389,0,0,1,.264.1l3.762,3.723a.249.249,0,0,1,0,.35L13.166,9.9a.394.394,0,0,1-.264.1.4.4,0,0,1-.4-.4V7H6.061A3.069,3.069,0,0,0,2.952,9.9,2.945,2.945,0,0,0,6,13H9.5a.5.5,0,0,1,.5.5v1a.5.5,0,0,1-.5.5H6.237a5.168,5.168,0,0,1-5.213-4.506A4.976,4.976,0,0,1,2.668,6.271Z"
+        ></path>
+      </svg>
+    </div>
+
+    <div class="zoom-bar">
+      <div class="level" (click)="zoomActions = zoomActions ? false : true">
+        <span>{{ zoom }}%</span>
+        <div class="arrow-down">
+          <svg
+            viewBox="0 0 48 48"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="#ffffff"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <path d="M0 0h48v48H0z" fill="none"></path>
+              <g id="Shopicon">
+                <g>
+                  <polygon
+                    points="24,29.171 9.414,14.585 6.586,17.413 24,34.827 41.414,17.413 38.586,14.585 "
+                  ></polygon>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+      <div class="zoom-actions" *ngIf="zoomActions">
+        <span
+          >Zoom in
+          <kbd>Ctrl + +</kbd>
+        </span>
+        <span
+          >Zoom out
+          <kbd>Ctrl + -</kbd>
+        </span>
+        <div class="h-divider"></div>
+        <span>100%</span>
+        <span>200%</span>
+        <span>Fit to screen</span>
+        <span>Fill screen</span>
+        <div class="h-divider"></div>
+        <span>Full screen mode</span>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="search">
+      <div class="icon">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 36 36"
+          role="img"
+          fill="currentColor"
+          height="24"
+          width="24"
+          aria-hidden="false"
+          aria-label="Search"
+        >
+          <path
+            d="M33.173 30.215 25.4 22.443a12.826 12.826 0 1 0-2.957 2.957l7.772 7.772a2.1 2.1 0 0 0 2.958-2.958ZM6 15a9 9 0 1 1 9 9 9 9 0 0 1-9-9Z"
+          ></path>
+        </svg>
+      </div>
+    </div>
+  </div>
 </div>

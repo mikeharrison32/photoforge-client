@@ -1,0 +1,67 @@
+.action-group {
+  width: 100%;
+  padding: 0 8px;
+  box-sizing: border-box;
+}
+
+svg {
+  width: 24px;
+}
+
+.action-btn {
+  font-size: 12px;
+}
+.action-btn {
+  padding: 11px;
+  margin: 4px 0 0;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  &:hover {
+    background: #3f3f3f;
+  }
+}
+.active-action-btn {
+  @extend .action-btn;
+  background-color: rgb(255 11 80);
+  &:hover {
+    background-color: rgb(255 11 80);
+  }
+}
+
+.transform-tool-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.field {
+  display: flex;
+  align-items: center;
+  input {
+    padding: 5px 11px 8px;
+    border: solid 1px #909090;
+    border-radius: 4px;
+    background: #1d1d1d;
+    width: 73px;
+    padding: 5px 11px 8px;
+    color: #ebebeb;
+  }
+}
+
+.group {
+  padding: 11px 0;
+}
+.tool-settings {
+  background: #3f3f3f;
+  padding: 11px;
+}
+
+.label {
+  font-size: 12px;
+  padding: 4px 0 5px;
+  color: #d1d1d1;
+  width: 100%;
+  display: flex;
+}

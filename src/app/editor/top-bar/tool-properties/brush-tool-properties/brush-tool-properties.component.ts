@@ -7,6 +7,7 @@ import { DataService } from 'src/app/core/services/data.service';
   styleUrls: ['./brush-tool-properties.component.scss'],
 })
 export class BrushToolPropertiesComponent {
+  activeTool: 'brush' | 'eraser' | 'gradient' = 'brush';
   constructor(private data: DataService) {}
   onBrushSizeChange(size: number) {}
 }

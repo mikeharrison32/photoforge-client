@@ -9,7 +9,7 @@ export class ShapeTool {
   readonly type: string = 'shapeTool';
   shape: Shape = Shape.Rectangle;
   properties: IShapeToolProperties = {};
-  listenForLayerResize!: (e: Event) => void;
+  mouseMoveListener!: (e: Event) => void;
   listenForMouseDownEvent!: (e: any) => void;
   mouseUpListener!: (e: any) => void;
   configure(display: HTMLElement, renderer: Renderer2, data: DataService) {
@@ -22,10 +22,10 @@ export class ShapeTool {
     let mousedown = false;
     let shapeLayer: Layer;
     let startX: number, startY: number;
-    const imgDisplayRect = display.parentElement!.getBoundingClientRect();
+    const clientRect = display.getBoundingClientRect();
 
     this.listenForMouseDownEvent = (e: any) => {
-      console.log('mousedown');
+      console.log(clientRect);
       const shapeLayers = data.layers
         .getValue()
         .filter((layer) => layer.type == 'shape');
@@ -36,8 +36,8 @@ export class ShapeTool {
       if (clickedShapeLayer) {
         return;
       }
-      startX = e.clientX - imgDisplayRect.left;
-      startY = e.clientY - imgDisplayRect.top;
+      startX = (e.clientX - clientRect.left) / zoom;
+      startY = (e.clientY - clientRect.top) / zoom;
       mousedown = true;
       shapeLayer = new Layer(
         renderer,
@@ -109,42 +109,34 @@ export class ShapeTool {
     document.addEventListener('mouseup', this.mouseUpListener);
 
     const zoom = data.zoom.getValue() / 100;
-    this.listenForLayerResize = (e: any) => {
+    this.mouseMoveListener = (e: any) => {
       if (!mousedown || !shapeLayer) {
         return;
       }
-      this.resizeShapeLayer(
-        shapeLayer,
-        startX,
-        startY,
-        e,
-        imgDisplayRect,
-        zoom
-      );
+      this.resizeShapeLayer(shapeLayer, startX, startY, e, clientRect, zoom);
     };
-    imgDisplay.addEventListener('mousemove', this.listenForLayerResize);
+    imgDisplay.addEventListener('mousemove', this.mouseMoveListener);
   }
   private resizeShapeLayer(
     shapeLayer: Layer,
     startX: number,
     startY: number,
     e: MouseEvent,
-    imgDisplayRect: DOMRect,
+    rect: DOMRect,
     zoom: number
   ) {
     shapeLayer.elem.style.left = `${startX}px`;
     shapeLayer.elem.style.top = `${startY}px`;
 
-    shapeLayer.elem.style.width = `${
-      (e.clientX - imgDisplayRect.left) / zoom
-    }px`;
-    shapeLayer.elem.style.height = `${
-      (e.clientY - imgDisplayRect.top) / zoom
-    }px`;
+    const width = (e.clientX - startX) / zoom;
+    const height = (e.clientY - startY) / zoom;
+    console.log(`Width: ${width} Height: ${height}`);
+    shapeLayer.elem.style.width = `${width}px`;
+    shapeLayer.elem.style.height = `${height}px`;
   }
 
   disconfigure(display: HTMLElement): void {
-    document.removeEventListener('mousemove', this.listenForLayerResize);
+    document.removeEventListener('mousemove', this.mouseMoveListener);
     const imgDisplay = display.parentElement?.parentElement;
     imgDisplay?.removeEventListener('mousedown', this.listenForMouseDownEvent);
     document.removeEventListener('mouseup', this.mouseUpListener);
@@ -158,3 +150,36 @@ interface IShapeToolProperties {
   stroke?: string;
   strokeWidth?: number;
 }
+
+// const shapes = []
+
+// class Path {
+//   x: number
+//   y: number
+
+//   constructor(x: number,y: number, cx?: number, cy?: number){
+//     this.x = x
+//     this.y = y
+//   }
+// }
+
+// class Shape {
+//   paths: Path[]
+//   constructor(path: Path[]){
+//     this.paths = path
+//   }
+// }
+
+// class Rectangle extends Shape {
+//   constructor(x: number, y: number, width: number, height: number){
+//     const paths: Path[] = [
+//       new Path(x, y),
+//       new Path(x+width, y),
+//       new Path(x+width, y+height),
+//       new Path(x, y+height),
+//       new Path(x, y),
+//     ]
+
+//     super(paths);
+//   }
+// }

@@ -14,6 +14,7 @@ import {
   cloneStampTool,
   eraserTool,
   lassoTool,
+  penTool,
   rectangularSelect,
   shapeTool,
   textTool,
@@ -63,6 +64,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     textTool,
     eraserTool,
     moveTool,
+    penTool,
   ];
   @ViewChild('display') display?: ElementRef;
   @ViewChild('displayContainer') displayContainer?: ElementRef;
@@ -113,7 +115,6 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
                 );
                 imageResult
                   .then((res: Blob) => {
-                    console.log('res::', res);
                     const reader = new FileReader();
                     reader.onload = (e) => {
                       const img = new Image();
@@ -156,8 +157,6 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log(err);
         });
     }
-
-    this.data.showNav.next(false);
 
     this.data.contextMenu.subscribe((cm) => {
       this.contextMenu = cm;
@@ -296,25 +295,25 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
             if (!(selectedLayer instanceof PixelLayer)) {
               return;
             }
-            // //layers/layer-via-copy
-            this.api
-              .layerViaCopy(
-                selectedLayer.projectId,
-                selectedLayer.id,
-                this.currentSelection?.points || []
-              )
-              .then((result) => {
-                console.log(result);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-            // {
-            //   id: "",
-            //   projectId: "",
-            //   points: []
-            // }
-            // -> newLayer
+            // // //layers/layer-via-copy
+            // this.api
+            //   .layerViaCopy(
+            //     selectedLayer.projectId,
+            //     selectedLayer.id,
+            //     this.currentSelection?.points || []
+            //   )
+            //   .then((result) => {
+            //     console.log(result);
+            //   })
+            //   .catch((err) => {
+            //     console.log(err);
+            //   });
+            // // {
+            // //   id: "",
+            // //   projectId: "",
+            // //   points: []
+            // // }
+            // // -> newLayer
           },
         },
         {
@@ -345,15 +344,12 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
         {
           name: 'New Layer...',
           click: () => {
-            // don't know what this does
+            //don't know what thi does
           },
         },
         {
           name: 'Fill',
-          click: () => {
-            // layers/selection/fill
-            //include layerviacopy
-          },
+          click: () => {},
         },
         {
           name: 'Stroke...',
@@ -423,6 +419,13 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
             case 'eraserTool':
               tool.configure(this.display?.nativeElement, this.data);
               break;
+            case 'penTool':
+              tool.configure(
+                this.display?.nativeElement,
+                this.data,
+                this.renderer
+              );
+              break;
             default:
               tool.configure();
           }
@@ -446,25 +449,23 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private handleLayerClick() {
-    (this.container?.nativeElement as HTMLElement).addEventListener(
-      'mousedown',
-      (e) => {
-        const selectedTool = this.data.selectedTool.getValue();
-        if (selectedTool != 'moveTool') {
-          return;
-        }
-        // console.log('md');
-        const selectedLayer = this.data.selectedLayers.getValue()[0];
-        this.data.layers.getValue().forEach((layer) => {
-          if (layer.contains(e.target as HTMLElement)) {
-            // layer.resizer.enable();
-            // this.data.selectedLayers.next([layer]);
-          } else if (selectedLayer && selectedLayer.resizer) {
-            selectedLayer.resizer.disable();
-          }
-        });
+    this.renderer.listen(this.container?.nativeElement, 'mousedown', (e) => {
+      const selectedTool = this.data.selectedTool.getValue();
+      if (selectedTool != 'moveTool') {
+        return;
       }
-    );
+
+      const activeLayer = this.data.layers
+        .getValue()
+        .find((layer) => layer.resizer.enabled);
+      this.data.layers.getValue().forEach((layer) => {
+        if (layer.contains(e.target)) {
+          layer.resizer.enable();
+        } else if (activeLayer && activeLayer.resizer) {
+          activeLayer.resizer.disable();
+        }
+      });
+    });
   }
 
   addShortcuts() {
@@ -534,6 +535,16 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           break;
         case 'KeyH':
           this.data.selectedTool.next('handTool');
+          break;
+        case 'KeyF':
+          e.preventDefault();
+          if (e.ctrlKey) {
+            this.data.selectedLayers.getValue().forEach((layer) => {
+              layer.elem.style.zIndex = `${
+                parseInt(layer.elem.style.zIndex || '1') + 1
+              }`;
+            });
+          }
           break;
         case 'KeyG':
           if (e.ctrlKey) {

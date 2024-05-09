@@ -3,7 +3,6 @@ import { MouseDragEvent } from '../event';
 import { Layer } from '../layers/layer';
 import { PixelLayer } from '../layers/pixel-layer';
 import { DataService } from '../services/data.service';
-import * as PIXI from 'pixi.js-legacy';
 
 export class EraserTool {
   properties?: IEraserToolProperties;
@@ -54,17 +53,10 @@ export class EraserTool {
       //Initialize the array that's going be used to fill the area
       const array = new Uint8Array(brushSize * brushSize * 4);
       //Get the current position of the cursor
-      const x = e.clientX - selectedLayerRect.left;
-      const y = e.clientY - selectedLayerRect.top;
+      const x = (e.clientX - selectedLayerRect.left - brushSize / 2) / zoom;
+      const y = (e.clientY - selectedLayerRect.top - brushSize / 2) / zoom;
 
-      const circleCenterUniform = selectedLayer.gl?.getUniformLocation(
-        selectedLayer.program!,
-        'u_center'
-      );
-
-      selectedLayer.gl?.uniform2f(circleCenterUniform!, 0.5, 0.5);
-
-      selectedLayer.render();
+      selectedLayer.insertPixels(array, x, y, brushSize, brushSize);
     };
 
     this.mouseUpListener = (e: any) => {
@@ -82,8 +74,6 @@ export class EraserTool {
     document.removeEventListener('mousemove', this.mouseMoveListener);
     document.removeEventListener('mouseup', this.mouseUpListener);
     display.removeEventListener('mousedown', this.mouseDownListener);
-    display.parentElement!.parentElement!.style.cursor = 'default';
-    display.parentElement!.style.cursor = 'default';
     this.brush?.elem?.remove();
     delete this.brush;
   }

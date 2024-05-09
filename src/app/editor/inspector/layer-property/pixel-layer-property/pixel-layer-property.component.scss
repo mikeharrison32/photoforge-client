@@ -1,47 +1,99 @@
-.pixel-layer {
-  width: 100%;
+:host {
+}
 
-  img {
-    width: 1rem;
-  }
-  .input {
-    width: 3rem;
-  }
-  p {
-    margin: 0;
-  }
-  .description {
-    width: 100%;
-    gap: 4px;
-    display: flex;
-    align-items: center;
-    font-size: 0.7rem;
-    padding: 0.4rem;
-    border-bottom: solid 1px #2a2a2a;
-  }
-  .grid {
-    width: 100%;
-    display: grid;
-    padding: 0.3rem;
+h4 {
+  padding: 0 12px;
+}
+.props {
+  display: grid;
+  grid-template-columns: repeat(4, 0.1fr);
+  padding: 12px;
+  gap: 11px;
+  font-size: 12px;
+  grid-template-areas: "hscalelabel hscaleinput lockicon2 vscalelabel vscaleinput"
+  ". . . lock . ."
+  "hmovelable xinput lockicon1 vmovelabel yinput"
+  ;  
+}
+.input {
+  width: 5rem;
+}
 
-    .row {
-      width: 84%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.6rem;
-      margin-block: 0.2rem;
-      .input {
-        margin-left: 1rem;
-      }
-      p {
-        margin: 0;
-        position: absolute;
-      }
-      div {
-        display: flex;
-        align-items: center;
-      }
-    }
+.lock-scale-top-icon{
+  width: 10px;
+  height: 2px;
+  background: #505050;  
+  position: relative;
+  grid-area: lockicon2;
+  &::before{
+    display: block;
+    content: '';
+    width: 2px;
+    height: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #505050;
   }
+}
+.lock-scale-bottom-icon {
+    width: 10px;
+  height: 2px;
+  background: #505050;  
+  position: relative;
+  grid-area: lockicon1;
+
+  &::before{
+    display: block;
+    content: '';
+    width: 2px;
+    height: 10px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #505050;
+  }
+}
+.action-group {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 41px;
+}
+.x-input {
+  grid-area: xinput;
+}
+.y-input {
+  grid-area: yinput;
+
+}
+.w-input {
+  gird-area: hscaleinput;
+}
+.h-input {
+  grid-area: vscaleinput;
+
+}
+
+.h-scale-label {
+  grid-area: hscalelabel;
+}
+
+.h-move-label {
+  grid-area: hmovelable;
+
+}
+
+.v-scale-label {
+  grid-area: vscalelabel;
+
+}
+
+.v-move-label {
+  grid-area: vmovelabel;
+
+}
+
+.lock-icon {
+  grid-area: lock;
+
 }

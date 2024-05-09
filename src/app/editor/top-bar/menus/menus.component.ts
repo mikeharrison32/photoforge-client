@@ -23,7 +23,7 @@ import { AdjustmentLayer } from 'src/app/types/layer';
 import * as PIXI from 'pixi.js-legacy';
 import { Command } from 'src/app/core';
 import { settings } from 'src/app/settings/settings';
-import {Router} from "@angular/router"
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-menus',
   templateUrl: './menus.component.html',
@@ -35,6 +35,7 @@ export class MenusComponent implements OnInit, OnDestroy {
   @ViewChild('menus') menus!: ElementRef;
   selectedMenu: Menus = Menus.None;
   recentProjects: Project[] = [];
+  visible: boolean = false;
 
   get settings() {
     return settings;
@@ -54,7 +55,12 @@ export class MenusComponent implements OnInit, OnDestroy {
     //sort the projects based on their modifyed date
     //reverse the array
     //then get the first few project and display
-    this.recentProjects = this.data.projects.getValue()
+    this.recentProjects = this.data.projects.getValue();
+  }
+
+  backToHome() {
+    //check if the the project is saved otherwise warn the user
+    this.router.navigateByUrl('/start');
   }
   async saveProject() {
     // project.pfd
@@ -85,46 +91,27 @@ export class MenusComponent implements OnInit, OnDestroy {
     this.selectedMenu = Menus.None;
   }
   openProject(project: Project) {
-  this.router.navigateByUrl(`editor/${project.Id}`)    
+    this.router.navigateByUrl(`editor/${project.Id}`);
   }
-  onOpenFileOptionChange(e: any) {
-    for (let file of e.target.files) {
-      const reader = new FileReader();
-      reader.onload = (event: any) => {
-        const imgObj = new Image();
-        imgObj.src = event.target.result;
-        this.notification.createNotification({
-          title: 'Opening image ' + file.name,
+  onOpenFileOptionChange(e: any) {}
+
+  placeEmbedded(e: any) {
+    const file = e.target.files[0];
+    const selectedProject = this.data.selectedProject.getValue();
+    if (selectedProject) {
+      this.api
+        .uploadLayer(selectedProject.Id, file)
+        .then((layer) => {
+          this.data.layers.next([
+            ...this.data.layers.getValue(),
+            layer as Layer,
+          ]);
+        })
+        .catch((err) => {
+          console.log(err);
         });
-        imgObj.onload = () => {
-          this.notification.hideNotification();
-          const project: Project = {
-            Id: `${Math.random()}`,
-            name: file.name,
-            UserId: 'dasd',
-            width: imgObj.width,
-            height: imgObj.height,
-          };
-          const displayElem = this.data.displayElem.getValue();
-          displayElem!.style.width = imgObj.width + 'px';
-          displayElem!.style.height = imgObj.height + 'px';
-          const pixelLayer = new PixelLayer(
-            this.data,
-            this.renderer,
-            // displayElem,
-            `${Math.random()}`,
-            file.name,
-            project.Id,
-            imgObj
-          );
-          pixelLayer.lock();
-          this.data.projects.next([...this.data.projects.getValue(), project]);
-          this.data.selectedProject.next(project);
-          this.data.layers.next([...this.data.layers.getValue(), pixelLayer]);
-        };
-      };
+      this.closeMenu();
     }
-    this.closeMenu();
   }
   clearProject() {
     const selectedProject = this.data.selectedProject.getValue();
@@ -151,7 +138,7 @@ export class MenusComponent implements OnInit, OnDestroy {
     this.clipboard.pasteLayer();
   }
   copySelectedObj() {
-    this.clipboard.copyLayer(this.data.selectedLayers.value[0]);
+    this.clipboard.copyLayer(this.data.selectedLayers.getValue()[0]);
   }
   deleteLayer() {
     const updatedLayers: Layer[] = [];
@@ -236,31 +223,7 @@ export class MenusComponent implements OnInit, OnDestroy {
     }
     this.closeMenu();
   }
-  placeEmbedded(e: any) {
-    for (let file of e.target.files) {
-      const reader = new FileReader();
-      reader.onload = (event: any) => {
-        const imgObj = new Image();
-        imgObj.src = event.target.result;
-        const selectedProject = this.data.selectedProject.getValue();
-        imgObj.onload = () => {
-          const displayElem = this.data.displayElem.getValue();
-          const pixelLayer = new PixelLayer(
-            this.data,
-            this.renderer,
-            // displayElem,
-            'ede',
-            file.name,
-            selectedProject?.Id || 'aaa',
-            imgObj
-          );
-          this.data.layers.next([...this.data.layers.getValue(), pixelLayer]);
-        };
-      };
-      reader.readAsDataURL(file);
-    }
-    this.closeMenu();
-  }
+
   fill() {
     throw new Error('Method not implemented.');
   }

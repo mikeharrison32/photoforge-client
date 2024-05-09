@@ -10,11 +10,15 @@ import { DataService } from 'src/app/core/services/data.service';
 export class MoveToolPropertiesComponent implements OnInit, OnDestroy {
   canvas?: fabric.Canvas | null;
   selectedLayers?: Layer[];
+  activeTool: 'move' | 'transform' | 'crop' = 'move';
   constructor(private data: DataService) {}
   ngOnInit(): void {
     this.data.selectedLayers.subscribe((sl) => {
       this.selectedLayers = sl;
     });
+  }
+  setActive(tool: 'move' | 'transform' | 'crop') {
+    this.activeTool = tool;
   }
   ngOnDestroy(): void {
     // this.data.selectedLayers.unsubscribe();

@@ -47,7 +47,6 @@ export class AuthComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     document.title = 'Autentication - Photoforge';
-    this.data.showNav.next(false);
   }
   ngAfterViewInit(): void {
     this.usernameElem?.nativeElement.focus();

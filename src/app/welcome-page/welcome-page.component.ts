@@ -8,7 +8,7 @@ import { Project } from '../types/project';
 import { DataService } from '../core/services/data.service';
 import { StateService } from '../core/services/state.service';
 import { PixelLayer } from '../core/layers/pixel-layer';
-import {LoadingService} from "../core/services/loading.service"
+import { LoadingService } from '../core/services/loading.service';
 
 @Component({
   selector: 'app-welcome-page',
@@ -32,9 +32,7 @@ export class WelcomePageComponent implements OnInit {
     private renderer: Renderer2,
     private loadingService: LoadingService
   ) {}
-  ngOnInit() {
-    this.data.showNav.next(false);
-  }
+  ngOnInit() {}
   setActiveElement(el: string) {
     this.selectedTab = el;
     this.activeTab = el;
@@ -46,18 +44,18 @@ export class WelcomePageComponent implements OnInit {
     this.createNewBtnClicked = true;
   }
   onOpenFileBtnChange(e: any) {
-    this.loadingService.startLoading("Uploading Image...")
+    this.loadingService.startLoading('Uploading Image...');
     const file = e.target.files[0];
     this.api
       .createProjectByUpload(file)
       .then((project: any) => {
-        this.loadingService.stopLoading()
+        this.loadingService.stopLoading();
         this.data.openedProjects.next([project]);
         this.data.selectedProject.next(project);
         this.router.navigateByUrl(`/editor/${project.id}`);
       })
       .catch((err: any) => {
-        this.loadingService.stopLoading()
+        this.loadingService.stopLoading();
         console.log(err);
       });
   }

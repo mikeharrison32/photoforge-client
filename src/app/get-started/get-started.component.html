@@ -1,54 +1,25 @@
-<div class="home">
-  <div class="content">
-    <div class="heading" [@removeToTop]>
-      <img src="assets/phorge-logo.svg" alt="logo" class="logo" />
-      <h3>Photoforge</h3>
-    </div>
-    <p [@removeToTop]>Create beautiful graphics, photos and arts anywhere.</p>
+<app-nav-bar></app-nav-bar>
 
-    <a class="download-btn" routerLink="/auth" [@removeToBottom]>Download</a>
-    <!-- <a href="/start" class="try-web-btn">web</a> -->
-  </div>
-
-  <div class="showcase-img">
-    <img src="assets/pf-showcase-img.png" alt="showcase image" />
-  </div>
+<div class="first">
+  <h2>
+    Bring your
+    <span class="imagination-word">
+      <span> imagination </span>
+    </span>
+    to life with Photoforge
+  </h2>
+  <p>
+    Welcome to Photoforge, where creativity meets possibility! Dive into our
+    toolbox packed with a kaleidoscope of powerful editing tools designed to
+    unleash your imagination. From precision brushes to mesmerizing filters,
+    every tool is a brushstroke in the masterpiece of your vision. Let's paint
+    your world with pixels!
+  </p>
+  <button class="start-btn" routerLink="/auth">Start editing</button>
+  <img
+    class="pf-showcase-img"
+    src="assets/first-pf-showcase-img.png"
+    alt="photofoge showcase img"
+  />
 </div>
-<div class="adjustments">
-  <div class="box">
-    <h1>Adjustments</h1>
-    <p>
-      Photoforge offers a comprehensive set of adjustment options, allowing you
-      to
-      <br />
-      fine-tune the brightness, contrast, color balance, saturation, and more to
-      <br />
-      achieve the perfect look for your photos.
-    </p>
-  </div>
-  <div class="image">
-    <img src="assets/Screenshot (58).png" alt="showcase image" />
-  </div>
-</div>
-
-<div class="tools">
-  <div class="image"></div>
-  <div class="box">
-    <h1>Tools</h1>
-    <p>
-      Photoforge provides a range of versatile editing tools, allowing you to
-      <br />
-      crop, select, retouch, and enhance your photos with ease.
-    </p>
-  </div>
-</div>
-
-<footer>
-  <div>
-    <a routerLink="privacy-policy">Privacy Policy</a>
-    <a routerLink="terms-of-service">Terms of Service</a>
-  </div>
-  <div>
-    <a routerLink="contact">Contact</a>
-  </div>
-</footer>
+<div class="second"></div>

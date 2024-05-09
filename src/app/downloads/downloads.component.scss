@@ -1,0 +1,65 @@
+:host {
+  overflow: scroll;
+  height: 100%;
+  width: 100%;
+  display: block;
+  .downloads {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    color: #3e3e3e;
+  }
+  footer {
+    width: 100%;
+    height: 50%;
+    background: #404040;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem;
+    box-sizing: border-box;
+    div {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      a {
+        color: #e6e6e6;
+        text-decoration: none;
+      }
+    }
+  }
+  .buttons {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem;
+    img {
+      width: 4rem;
+    }
+    .download-icon {
+      width: 1rem;
+    }
+    button {
+      border: none;
+      padding: 1rem;
+      color: #fff;
+      background: #e7263c;
+
+      cursor: pointer;
+      &:hover {
+        background-color: #eb5a6b;
+      }
+    }
+    .download {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+  }
+}

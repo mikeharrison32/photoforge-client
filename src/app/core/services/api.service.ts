@@ -23,18 +23,33 @@ export class ApiService {
     //   `Bearer ${this.tokenService.getAccessToken()}`
     // );
     const RETRY_COUNT = new HttpContextToken(() => 3);
-    const result = this.http.get(
-      `${environments.development.apiUrl}/projects`,
-      { context: new HttpContext().set(RETRY_COUNT, 5) }
+    const result = this.http.get(`${environments.apiUrl}/projects`, {
+      context: new HttpContext().set(RETRY_COUNT, 5),
+    });
+    return firstValueFrom(result);
+  }
+
+  uploadLayer(projectId: string, file: File) {
+    const formData = new FormData();
+    formData.append('image', file);
+    const result = this.http.post(
+      `${environments.apiUrl}/layers/upload/${projectId}`,
+      formData
     );
     return firstValueFrom(result);
+  }
+  getTemplates() {
+    const result = firstValueFrom(
+      this.http.get(`${environments.apiUrl}/templates`)
+    );
+    return result;
   }
   createBlankProject(presets: any) {
     // const headers = new HttpHeaders()
     //   .set('Authorization', `Bearer ${this.tokenService.getAccessToken()}`)
     //   .set('Content-Type', 'application/json');
     const result = this.http.post<any>(
-      `${environments.development.apiUrl}/projects/create`,
+      `${environments.apiUrl}/projects/create`,
       presets
       // { headers }
     );
@@ -50,7 +65,7 @@ export class ApiService {
     //   `Bearer ${this.tokenService.getAccessToken()}`
     // );
     const result = this.http.post<any>(
-      `${environments.development.apiUrl}/projects/upload`,
+      `${environments.apiUrl}/projects/upload`,
       image
     );
     return firstValueFrom(result);
@@ -58,24 +73,21 @@ export class ApiService {
   updateProject() {}
   getLayers(projectId: string) {
     const result = this.http.get<any>(
-      `${environments.development.apiUrl}/projects/${projectId}/layers`
+      `${environments.apiUrl}/projects/${projectId}/layers`
     );
     return firstValueFrom(result);
   }
 
-
   createBlankLayer(projectId: string) {
     const result = this.http.post<any>(
-      `${environments.development.apiUrl}/layers/${projectId}/create-blank`,
+      `${environments.apiUrl}/layers/${projectId}/create-blank`,
       {}
     );
     return firstValueFrom(result);
   }
   deleteProject(projectId: string) {
     return firstValueFrom(
-      this.http.delete(
-        `${environments.development.apiUrl}/projects/${projectId}`
-      )
+      this.http.delete(`${environments.apiUrl}/projects/${projectId}`)
     );
   }
 
@@ -87,7 +99,7 @@ export class ApiService {
     };
     return firstValueFrom(
       this.http.post(
-        `${environments.development.apiUrl}/layers/${projectId}/${layerId}/selection/layer-via-copy`,
+        `${environments.apiUrl}/layers/${projectId}/${layerId}/selection/layer-via-copy`,
         data
       )
     );

@@ -20,7 +20,6 @@ export class DataService {
   projects = new BehaviorSubject<Project[]>([]);
   openedProjects = new BehaviorSubject<Project[]>([]);
   selectedProject = new BehaviorSubject<Project | null>(null);
-  showNav = new BehaviorSubject<boolean>(true);
   orientaion = new BehaviorSubject<Orientaion>(Orientaion.Landscape);
   layers = new BehaviorSubject<Layer[]>([]);
   canvas = new BehaviorSubject<fabric.Canvas | null>(null);

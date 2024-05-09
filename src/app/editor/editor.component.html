@@ -1,7 +1,9 @@
-<app-menus></app-menus>
 <app-top-bar></app-top-bar>
 <div class="main">
-  <app-tool-box></app-tool-box>
+  <div id="tools">
+    <app-tool-box></app-tool-box>
+    <app-tool-properties></app-tool-properties>
+  </div>
   <div class="image-display" id="image-display" #container>
     <div #cursor class="cursor" id="cursor"></div>
     <div class="displayContainer" #displayContainer>
@@ -25,18 +27,6 @@
       <p *ngFor="let c of contextMenu.menus" (click)="c.click()">
         {{ c.name }}
       </p>
-    </div>
-  </div>
-  <div class="zoom-bar">
-    <div class="level">
-      <app-input
-        [Value]="zoom"
-        [Max]="100"
-        [Min]="0"
-        [Floor]="true"
-        unit="%"
-        (onInputChange)="setZoom($event)"
-      ></app-input>
     </div>
   </div>
 

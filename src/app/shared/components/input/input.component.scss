@@ -1,71 +1,48 @@
+@import "/src/app/variables.scss";
 :host {
-.input {
-  display: flex;
-  align-items: center;
-  position: relative;
-  .value {
-    width: 100%;
-    border: solid 1px #6f6f6f;
-    overflow: hidden;
+  .input {
     display: flex;
-    padding: 1px;
-    height: 0.8rem;
-    justify-content: space-between;
+    align-items: center;
     position: relative;
-    outline: none;
-    background: #242424;
-    border-radius: 1px;
-    color: #fff;
-    font-size: 0.6rem;
-    .volume-drop-down {
-      width: 1rem;
-      height: 100%;
-      border-left: solid 1px #6d6d6d;
-      margin-left: 0.4rem;
+    .value {
+      width: 100%;
+      border: solid 1px $border-color-1;
+      overflow: hidden;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      img {
-        width: 0.5rem;
-        filter: brightness(1.3);
-      }
+      padding: $text-field-padding;
+      height: 0.8rem;
+      justify-content: space-between;
+      position: relative;
+      outline: none;
+      background: $input-background;
+      border-radius: $text-field-border-raduis;
+      font-size: 0.6rem;
+    }
+
+    .disabled-value {
+      border: none;
+      @extend .value;
+      background: none;
+    }
+    .edit-mode-input {
+      @extend .value;
     }
   }
-  .volume {
-    width: 13rem;
-    position: absolute;
-    background: #242424;
-    height: 1rem;
-    left: 0;
-    top: 1rem;
-    z-index: 1000000;
-  }
-
-  .disabled-value {
-    border: none;
-    @extend .value;
-    background: none;
-  }
-  .edit-mode-input {
-    @extend .value;
-  }
-}
-.editMode-input {
-
+  .editMode-input {
     input {
-         width: 100%;
-    border: solid 1px #6f6f6f;
-    overflow: hidden;
-    display: flex;
-    padding: 1px;
-    height: 0.8rem;
-    justify-content: space-between;
-    position: relative;
-    outline: none;
-    background: #242424;
-    border-radius: 1px;
-    color: #fff;
-    font-size: 0.6rem; 
+      width: 100%;
+      border: solid 1px $border-color-1;
+      overflow: hidden;
+      display: flex;
+      padding: $text-field-padding;
+      height: 0.8rem;
+      justify-content: space-between;
+      position: relative;
+      outline: none;
+      background: $input-background;
+      border-radius: $text-field-border-raduis;
+      color: #fff;
+      font-size: 0.6rem;
     }
-}
+  }
 }

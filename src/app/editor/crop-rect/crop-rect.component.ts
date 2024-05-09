@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   Input,
+  OnDestroy,
   Renderer2,
   ViewChild,
 } from '@angular/core';
@@ -14,7 +15,7 @@ import { DataService } from 'src/app/core/services/data.service';
   templateUrl: './crop-rect.component.html',
   styleUrls: ['./crop-rect.component.scss'],
 })
-export class CropRectComponent implements AfterViewInit {
+export class CropRectComponent implements AfterViewInit, OnDestroy {
   @ViewChild('tlCorner') tlCorner?: ElementRef;
   @ViewChild('trCorner') trCorner?: ElementRef;
   @ViewChild('blCorner') blCorner?: ElementRef;
@@ -29,9 +30,13 @@ export class CropRectComponent implements AfterViewInit {
   @ViewChild('cropBox') cropBox?: ElementRef;
 
   @Input() display?: HTMLElement;
+  keydownListener!: () => void;
   constructor(private renderer: Renderer2, private data: DataService) {}
   ngAfterViewInit(): void {
     this.initCropTool();
+  }
+  ngOnDestroy(): void {
+    this.keydownListener();
   }
   private initCropTool() {
     const tlCornerElem = this.tlCorner?.nativeElement as HTMLElement;
@@ -112,8 +117,6 @@ export class CropRectComponent implements AfterViewInit {
           cropRect.style.borderWidth = `${cropBoxTop}px ${cropBoxRight}px ${cropBoxBottom}px ${cropBoxLeft}px`;
           break;
         case 'tr':
-          trCornerElem.style.left = e.clientX - x - 29 + 'px';
-          trCornerElem.style.top = e.clientY - y - 5 + 'px';
           cropBoxTop = e.clientY - cropClientRect.top;
           cropBoxRight = cropClientRect.right - e.clientX;
           cropRect.style.borderWidth = `${cropBoxTop}px ${cropBoxRight}px ${cropBoxBottom}px ${cropBoxLeft}px`;
@@ -164,7 +167,7 @@ export class CropRectComponent implements AfterViewInit {
       mousedown = false;
     });
 
-    this.renderer.listen(document, 'keydown', (e) => {
+    this.keydownListener = this.renderer.listen(document, 'keydown', (e) => {
       if (e.code == 'Enter') {
         const zoom = this.data.zoom.getValue() / 100;
         console.log({
@@ -184,8 +187,8 @@ export class CropRectComponent implements AfterViewInit {
             .filter((layer) => layer.projectId == selectedProject?.Id);
           // layer.elem.style.right = cropBoxRight + 'px';
           layers.forEach((layer) => {
-            layer.elem.style.left = -cropBoxLeft / zoom + 'px';
-            layer.elem.style.top = -cropBoxTop / zoom + 'px';
+            layer.elem.style.left = (-cropBoxLeft + layer.x) / zoom + 'px';
+            layer.elem.style.top = (-cropBoxTop + layer.y) / zoom + 'px';
           });
 
           this.data.selectedTool.next('moveTool');

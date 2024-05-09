@@ -5,6 +5,8 @@ import { GetStartedComponent } from './get-started.component';
 import { AuthComponent } from './auth/auth.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppModule } from '../app.module';
+import { NavBarModule } from '../nav-bar/nav-bar.module';
 
 @NgModule({
   declarations: [GetStartedComponent, AuthComponent],
@@ -26,6 +28,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ]),
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    NavBarModule,
   ],
   exports: [],
 })

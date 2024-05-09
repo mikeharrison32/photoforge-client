@@ -1,0 +1,30 @@
+@import "/src/app/variables.scss";
+
+.slider {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0 0 24px;
+}
+
+.group {
+  width: 100%;
+  display: flex;
+  align-items: start;
+  gap: 15px;
+  flex-direction: column;
+}
+
+.slider-name {
+  font-size: 12px;
+  color: $small-text-color;
+}
+
+input {
+  border: solid 1px #909090;
+  border-radius: 4px;
+  background: $input-background;
+  width: 40px;
+  padding: 5px 11px 8px;
+}

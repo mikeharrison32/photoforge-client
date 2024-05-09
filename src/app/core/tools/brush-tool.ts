@@ -95,7 +95,6 @@ export class BrushTool {
       const container = displayContainer.parentElement;
       if (container) {
         container.removeEventListener('mousedown', this.mouseDownListener);
-        container.style.cursor = 'default';
       }
     }
     document.removeEventListener('mousemove', this.mouseMoveListener);

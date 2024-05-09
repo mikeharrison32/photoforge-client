@@ -46,18 +46,14 @@ export class PresetDetailComponent implements OnInit {
     Width: 1080,
     Height: 740,
     Unit: 'Pixels',
-    Resolution: {},
+    Resolution: 300,
     ColorMode: {},
     ColorProfile: '',
     PixelAspectRatio: '',
     BackgroundContent: '',
   };
   toggleAdvancedOptions() {
-    if (this.advancedOptionsOpen) {
-      this.advancedOptionsOpen = false;
-    } else {
-      this.advancedOptionsOpen = true;
-    }
+    this.advancedOptionsOpen = this.advancedOptionsOpen ? false : true;
   }
   onCloseBtnClick() {
     this.closeBtnClicked.emit(true);

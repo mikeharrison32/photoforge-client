@@ -1,22 +1,105 @@
-<div class="tool-propertie brush-tool">
-  <app-brush (brushSizeChange)="onBrushSizeChange($event)"></app-brush>
-  <div class="brush-folder-icon">
-    <img src="assets/tool-properties-icons/brush-folder-icon.svg" />
+<app-tool-bar-header headerName="Paint"></app-tool-bar-header>
+<div class="action-group">
+  <div class="tool-bar-toolitem">
+    <div
+      class="action-btn"
+      [class.active-action-btn]="activeTool == 'brush'"
+      (click)="activeTool = 'brush'"
+    >
+      <svg
+        role="img"
+        fill="currentColor"
+        viewBox="0 0 18 18"
+        id="SBrush18N-icon"
+        width="18"
+        height="18"
+        aria-hidden="true"
+        aria-label=""
+        focusable="false"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M6.254,10.515a2.46,2.46,0,0,0-2.1.6,6.476,6.476,0,0,0-1.34,2.391,2.808,2.808,0,0,1-1.679,2.386.3.3,0,0,0-.171.356.45.45,0,0,0,.322.329c.293.073.627.142.989.2,1.3.205,3.74.369,5.4-.826a3.446,3.446,0,0,0,1.411-2.273A3.407,3.407,0,0,0,6.254,10.515Z"
+        ></path>
+        <path
+          fill-rule="evenodd"
+          d="M9.95,12.05c3.617-4.113,8.211-9.768,7.008-10.971S10.773,5.488,7.19,9.415A5.027,5.027,0,0,1,9.95,12.05Z"
+        ></path>
+      </svg>
+      Brush
+    </div>
+    <div class="tool-settings" *ngIf="activeTool == 'brush'">
+      <app-slider label="Brush size"></app-slider>
+      <app-slider label="Brush hardness"></app-slider>
+      <app-slider label="Flow"></app-slider>
+    </div>
   </div>
-  <div class="mode">
-    <span>Mode:</span>
-    <app-select [Items]="['Normal']"></app-select>
+  <div class="tool-bar-toolitem">
+    <div
+      class="action-btn"
+      [class.active-action-btn]="activeTool == 'eraser'"
+      (click)="activeTool = 'eraser'"
+    >
+      <svg
+        role="img"
+        fill="currentColor"
+        viewBox="0 0 18 18"
+        id="SErase18N-icon"
+        width="18"
+        height="18"
+        aria-hidden="true"
+        aria-label=""
+        focusable="false"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M9.307,14.066a.5.5,0,0,0,.707,0l6.78-6.78a.5.5,0,0,0,0-.708L11.138.922a.5.5,0,0,0-.708,0L3.65,7.7a.5.5,0,0,0,0,.707L4,8.763.852,11.914a1,1,0,0,0,0,1.414l3.253,3.253A1.4,1.4,0,0,0,5.067,17c.053,0,.149,0,.149,0H16.75a.25.25,0,0,0,.25-.25v-.5a.25.25,0,0,0-.25-.25H6.666l2.287-2.288ZM5.448,15.8a.5.5,0,0,1-.707,0L1.559,12.621,4.711,9.47l3.535,3.535Z"
+        ></path>
+      </svg>
+      Eraser
+    </div>
+    <div class="tool-settings" *ngIf="activeTool == 'eraser'">
+      <app-slider label="Brush size"></app-slider>
+      <app-slider label="Brush hardness"></app-slider>
+      <app-slider label="Flow"></app-slider>
+    </div>
   </div>
-  <div class="opacity">
-    <span>Opacity:</span>
-    <app-input [Value]="100" [hasVolume]="true" unit="%"></app-input>
+  <div class="tool-bar-toolitem">
+    <div
+      class="action-btn"
+      [class.active-action-btn]="activeTool == 'gradient'"
+      (click)="activeTool = 'gradient'"
+    >
+      <svg
+        role="img"
+        fill="currentColor"
+        viewBox="0 0 36 36"
+        id="SGradient18N-icon"
+        width="36"
+        height="36"
+        aria-hidden="true"
+        aria-label=""
+        focusable="false"
+      >
+        <rect height="24" width="2" x="4" y="6" opacity="0.9"></rect>
+        <rect height="24" width="2" x="6" y="6" opacity="0.8"></rect>
+        <rect height="24" width="2" x="8" y="6" opacity="0.7"></rect>
+        <rect height="24" width="2" x="10" y="6" opacity="0.6"></rect>
+        <rect height="24" width="2" x="12" y="6" opacity="0.5"></rect>
+        <rect height="24" width="2" x="14" y="6" opacity="0.4"></rect>
+        <rect height="24" width="2" x="20" y="6" opacity="0.25"></rect>
+        <rect height="24" width="2" x="18" y="6" opacity="0.3"></rect>
+        <rect height="24" width="2" x="16" y="6" opacity="0.35"></rect>
+        <rect height="24" width="2" x="22" y="6" opacity="0.2"></rect>
+        <rect height="24" width="2" x="24" y="6" opacity="0.15"></rect>
+        <rect height="24" width="2" x="26" y="6" opacity="0.1"></rect>
+        <rect height="24" width="2" x="28" y="6" opacity="0.05"></rect>
+        <path
+          fill-rule="evenodd"
+          d="M2,5V31a1,1,0,0,0,1,1H33a1,1,0,0,0,1-1V5a1,1,0,0,0-1-1H3A1,1,0,0,0,2,5ZM32,30H4V6H32Z"
+        ></path>
+      </svg>
+      Gradient
+    </div>
   </div>
-  <img src="assets/tool-properties-icons/bow-hit-icon.svg" />
-  <div class="smoothing">
-    <span>Smoothing:</span>
-    <app-input [Value]="10" [hasVolume]="true" unit="%"></app-input>
-  </div>
-  <img src="assets/tool-properties-icons/setting-icon.svg" />
-  <app-checkbox [text]="'Auto Erase'"></app-checkbox>
-  <img src="assets/tool-properties-icons/bow-hit-icon.svg" />
 </div>

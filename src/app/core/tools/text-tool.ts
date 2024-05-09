@@ -10,16 +10,34 @@ export class TextTool {
   configure(display: HTMLElement, data: DataService, renderer: Renderer2) {
     this.data = data;
     display.style.cursor = 'text';
-    this.mouseDownListener = (e) => {
+    this.mouseDownListener = (e: MouseEvent) => {
       const displayScale = parseFloat(display.style.scale || '1');
+      const clickedElem = e.target as HTMLElement;
+      const typeLayers = data.layers
+        .getValue()
+        .filter((layer) => layer.type == 'type');
+      const isClickedOnTypeLayer = typeLayers.find((layer) =>
+        layer.contains(clickedElem)
+      );
+      if (isClickedOnTypeLayer) {
+        return;
+      }
       const typeLayer = new TypeLayer(
         renderer,
         data,
         `${Math.random()}`,
         'Text',
         data.selectedProject.getValue()?.Id || 'aaa',
-        'Lorem Ipsum'
+        'Lorem Ipsum',
+        {
+          fontSize: 87,
+        }
       );
+      const rect = display.getBoundingClientRect();
+      const zoom = data.zoom.getValue() / 100;
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      typeLayer.moveTo(x / zoom, y / zoom);
       data.layers.next([...data.layers.getValue(), typeLayer]);
       data.selectedLayers.next([typeLayer]);
     };

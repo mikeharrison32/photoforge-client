@@ -26,6 +26,54 @@
   %img {
     width: 1rem;
   }
+  .selectedProject {
+    border: solid 1px #e61c74;
+  }
+  .delete-warning {
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    left: 0;
+    margin: auto;
+    background-color: #4f4f4f;
+    border-radius: 5px;
+    color: #fff;
+    bottom: 0;
+    right: 0;
+    height: 16rem;
+    width: 32rem;
+    justify-content: center;
+    box-shadow: #ffffffa6 0 0 2px 0;
+    h2 {
+      font-size: 1.2rem;
+    }
+    .buttons {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      width: 100%;
+      justify-content: center;
+      margin-top: 2rem;
+      button {
+        border: none;
+        outline: none;
+        padding: 1rem;
+        border-radius: 5px;
+        color: #fff;
+        cursor: pointer;
+      }
+      .delete-btn {
+        background: red;
+      }
+      .cancel-btn {
+        background: transparent;
+        border: solid 1px;
+      }
+    }
+  }
   %img-container {
     position: absolute;
     right: 1rem;
@@ -202,6 +250,8 @@
         background: #2a2a2a;
         position: relative;
         border-radius: 5px;
+        box-sizing: border-box;
+
         .more-icon {
           display: none;
           align-items: center;
@@ -278,3 +328,4 @@
     }
   }
 }
+

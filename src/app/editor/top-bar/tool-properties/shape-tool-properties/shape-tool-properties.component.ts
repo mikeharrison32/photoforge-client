@@ -10,6 +10,7 @@ import { ShapeToolProperties } from 'src/app/types/tool';
 })
 export class ShapeToolPropertiesComponent implements OnInit, OnDestroy {
   shapeProps?: ShapeToolProperties;
+  activeTool: 'rect' | 'ellipse' | 'line' | 'polygon' | 'triangle' = 'rect';
   get Shape() {
     return Shape;
   }

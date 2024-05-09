@@ -7,7 +7,8 @@ import { NgOptimizedImage } from '@angular/common';
       [ngClass]="Active ? 'active-tool' : 'tool'"
       (click)="toggleToolChoices()"
     >
-      <img width="30" class="tool-icon" [src]="ImgSrc" />
+      <img width="30" class="tool-icon" [src]="ImgSrc" *ngIf="ImgSrc"/>
+      <ng-content></ng-content>
       <div class="tool-choices" *ngIf="hasChoices && toolChoicesActive">
         <ng-content select="[tool-choices]"></ng-content>
       </div>

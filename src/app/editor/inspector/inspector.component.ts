@@ -24,17 +24,20 @@ import { Vibrance } from 'src/app/core/layers/adjustment/vibrance';
 import { Exposure } from 'src/app/core/layers/adjustment/exposure';
 import { settings } from 'src/app/settings/settings';
 import { AdjustmentService } from 'src/app/core/services/adjustment.service';
-
+import { slideAnimation } from './animations';
 @Component({
   selector: 'app-inspector',
   templateUrl: './inspector.component.html',
   styleUrls: ['./inspector.component.scss'],
+  animations: [slideAnimation],
 })
 export class InspectorComponent implements OnInit, OnDestroy {
   @ViewChild('ad_choices') ad_choices?: ElementRef;
   ad_choices_active: boolean = false;
   selectedLayers: Layer[] = [];
   movingLocked: boolean = false;
+  layersPanel: boolean = true;
+  propertiesPanel: boolean = false;
   blendingMods: string[] = [
     'Normal',
     'Dissolve',

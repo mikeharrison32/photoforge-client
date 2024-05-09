@@ -1,160 +1,78 @@
-$dark_gray: #282828;
-$light_gray: #3a3a3a;
+@import "/src/app/variables.scss";
+
 :host {
-  img {
-    width: 0.9rem;
-    cursor: pointer;
-  }
-  .layer-context-menu {
-    overflow-y: scroll;
-    width: 12rem;
-    color: #000;
-    background: #e1e1e1;
-    border-radius: 2px;
-    position: absolute;
-    z-index: 100;
-    top: 0;
-    right: 14rem;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-    ul {
-      list-style: none;
-      font-size: 0.6rem;
-      padding: 0;
-      li {
-        padding-inline: 0.6rem;
-        padding-block: 0.2rem;
-        cursor: pointer;
-        &:hover {
-          color: #fff;
-          background: #8700ff;
-        }
-      }
-    }
-  }
+}
+
+.layer {
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
   &:hover {
-    .eye-ball {
-      opacity: 1;
-    }
-  }
-  .layer {
-    width: 97%;
     background: #373737;
-    display: flex;
-    align-items: center;
-    height: 2.2rem;
-    cursor: pointer;
-    border: solid 1px #363636;
-    position: relative;
-    &:hover {
-      background: #4d4d4d;
-      .lock-icon-hidden {
-        display: block;
-        position: absolute;
-        right: 0.4rem;
-        cursor: pointer;
-      }
+  }
+}
+.layer.selected {
+  background: rgb(161 161 161 / 24%);
+  .thumbnail {
+    border: solid 2px $backgourd-color-1;
+  }
+  .type-layer-thumbnail {
+    svg > * {
+      color: $backgourd-color-1;
     }
-    .link-icon {
-      transform: rotate(90deg);
-      position: relative;
-      left: 0.4rem;
-    }
-    .eye-ball {
-      width: 1.3rem;
-      height: 100%;
-      cursor: pointer;
-      justify-content: center;
-      display: flex;
-      background: #373737;
-    }
-    .layer-title {
-      font-size: 0.7rem;
-      margin: 0;
-      color: #c5c5c5;
-    }
-    .lock {
-      position: absolute;
-      right: 0.4rem;
-      cursor: pointer;
-    }
-    .lock-icon-hidden {
-      display: none;
-    }
-    .layer-image {
-      width: 2.3rem;
-      height: 100%;
-
-      justify-content: center;
-      display: flex;
-      align-items: center;
-
-      .image {
-        width: 83%;
-        height: 86%;
-        position: relative;
-        img {
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
-        }
-        .shape-icon {
-          width: 0.8rem;
-          height: 0.8rem;
-          margin-bottom: 0.3rem;
-          background: #3d3d3d;
-          display: flex;
-          position: absolute;
-          bottom: 0;
-          right: 0;
-        }
+    .badge {
+      border: $backgourd-color-1 2px solid;
+      svg > * {
+        color: $backgourd-color-1;
       }
     }
   }
-  .active-layer {
-    @extend .layer;
-    background: #6d6d6d;
-    cursor: default;
-    .layer-title {
-      margin-left: 0.6rem;
-    }
-    .layer-image {
-      .active-layer-wrapper {
-        display: flex;
-        position: absolute;
-        height: 100%;
-        img {
-          scale: 1;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-      }
-    }
-  }
-  .layer-mask {
-    width: 3rem;
-    height: 100%;
+}
+.toggle-visibility {
+  margin-right: 16px;
+}
+.thumbnail {
+  width: 56px;
+  height: 50px;
+  background: #fff;
+  border: solid 2px #696969;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+.type-layer-thumbnail {
+  width: 100%;
+  height: 100%;
+  background-color: #3f3f3f;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .badge {
+    border-radius: 100%;
+    position: absolute;
+    left: -10px;
+    top: 14px;
+    border: solid 1px #696969;
+    width: 15px;
+    background: #fff;
+    height: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
-    .mask {
-      position: relative;
-      width: 1.9rem;
-      height: 77%;
-      background: #fff;
-    }
-    .active-layer-wrapper {
-      display: flex;
-      position: absolute;
-      height: 100%;
-      img {
-        scale: 1;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
+    svg > * {
+      color: #696969;
     }
   }
+  .icon {
+  }
+}
+.layer-name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  /* display: flex; */
+  white-space: nowrap;
+  font-size: 14px;
 }
