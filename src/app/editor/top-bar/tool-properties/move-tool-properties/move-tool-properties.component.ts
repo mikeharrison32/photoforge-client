@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Layer } from 'src/app/core/layers/layer';
 import { DataService } from 'src/app/core/services/data.service';
+import { sizePositionToolTypes } from './sizePositionToolTypes';
+import { MoveToolService } from 'src/app/core/services/move-tool.service';
+import { TransformService } from 'src/app/core/services/transform.service';
 
 @Component({
   selector: 'app-move-tool-properties',
@@ -9,59 +12,44 @@ import { DataService } from 'src/app/core/services/data.service';
 })
 export class MoveToolPropertiesComponent implements OnInit, OnDestroy {
   canvas?: fabric.Canvas | null;
-  selectedLayers?: Layer[];
-  activeTool: 'move' | 'transform' | 'crop' = 'move';
-  constructor(private data: DataService) {}
+  selectedLayer?: Layer;
+  activeTool: sizePositionToolTypes = 'move';
+  constructor(
+    private data: DataService,
+    private moveToolService: MoveToolService,
+    private transformService: TransformService
+  ) {}
   ngOnInit(): void {
-    this.data.selectedLayers.subscribe((sl) => {
-      this.selectedLayers = sl;
-    });
+    this.activeTool = this.data.tools.getValue().sizePositionGroup.selectedTool;
   }
-  setActive(tool: 'move' | 'transform' | 'crop') {
+  setActive(tool: sizePositionToolTypes) {
     this.activeTool = tool;
+    this.data.tools.getValue().sizePositionGroup.selectedTool = tool;
+    switch (tool) {
+      case 'transform':
+        this.selectedLayer = this.data.selectedLayers.getValue()[0];
+        break;
+    }
   }
   ngOnDestroy(): void {
     // this.data.selectedLayers.unsubscribe();
   }
   centerSelectedObjVertical() {
-    this.selectedLayers?.forEach((layer) => {
-      const display = this.data.displayElem.getValue();
-
-      // layer.canvas!.style.top =
-      //   display!.clientHeight / 2 - layer.canvas!.clientHeight / 2 + 'px';
-    });
+    this.moveToolService.centerSelectedObjVertical();
   }
   centerSelectedObjHorizontal() {
-    this.selectedLayers?.forEach((layer) => {
-      const display = this.data.displayElem.getValue();
-
-      // layer.canvas!.style.left =
-      //   display!.clientWidth / 2 - layer.canvas!.clientWidth / 2 + 'px';
-    });
+    this.moveToolService.centerSelectedObjHorizontal();
   }
   alignTop() {
-    this.selectedLayers?.forEach((layer) => {
-      // layer.canvas!.style.top = '0px';
-    });
+    this.moveToolService.alignTop();
   }
   alignLeft() {
-    this.selectedLayers?.forEach((layer) => {
-      // layer.canvas!.style.left = '0px';
-    });
+    this.moveToolService.alignLeft();
   }
   alignRight() {
-    this.selectedLayers?.forEach((layer) => {
-      const display = this.data.displayElem.getValue();
-      // layer.canvas!.style.left =
-      // display!.clientWidth - layer.canvas!.clientWidth + 'px';
-    });
+    this.moveToolService.alignRight();
   }
   alignBottom() {
-    const display = this.data.displayElem.getValue();
-
-    this.selectedLayers?.forEach((layer) => {
-      // layer.canvas!.style.top =
-      // display!.clientHeight - layer.canvas!.clientHeight + 'px';
-    });
+    this.moveToolService.alignBottom();
   }
 }

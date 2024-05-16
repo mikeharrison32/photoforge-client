@@ -7,6 +7,7 @@ import {
   OnDestroy,
   ViewEncapsulation,
   Renderer2,
+  Input,
 } from '@angular/core';
 import { DataService } from 'src/app/core/services/data.service';
 import { Menus } from 'src/app/enums/menu.enum';
@@ -33,6 +34,7 @@ export class MenusComponent implements OnInit, OnDestroy {
   @ViewChild('menuOptions') menuOptions!: ElementRef;
   @ViewChild('open') open!: ElementRef;
   @ViewChild('menus') menus!: ElementRef;
+  @Input() display?: HTMLElement;
   selectedMenu: Menus = Menus.None;
   recentProjects: Project[] = [];
   visible: boolean = false;
@@ -102,10 +104,7 @@ export class MenusComponent implements OnInit, OnDestroy {
       this.api
         .uploadLayer(selectedProject.Id, file)
         .then((layer) => {
-          this.data.layers.next([
-            ...this.data.layers.getValue(),
-            layer as Layer,
-          ]);
+          //reload layers
         })
         .catch((err) => {
           console.log(err);
@@ -113,27 +112,7 @@ export class MenusComponent implements OnInit, OnDestroy {
       this.closeMenu();
     }
   }
-  clearProject() {
-    const selectedProject = this.data.selectedProject.getValue();
-
-    const undoAction = () => {
-      const layers = this.data.layers.getValue();
-      this.data.layers.next(layers);
-    };
-    const redoAction = () => {
-      this.clearProject();
-    };
-    this.stateService.setState(undoAction, redoAction);
-    const updatedLayers: Layer[] = [];
-    this.data.layers.getValue().forEach((l) => {
-      if (l.projectId != selectedProject?.Id) {
-        updatedLayers.push(l);
-      } else {
-        // l.canvas?.remove();
-      }
-    });
-    this.data.layers.next(updatedLayers);
-  }
+  clearProject() {}
   pasteObj() {
     this.clipboard.pasteLayer();
   }
@@ -150,37 +129,41 @@ export class MenusComponent implements OnInit, OnDestroy {
     });
     this.data.layers.next(updatedLayers);
   }
-  duplicateLayer() {
+  async duplicateLayer() {
     const selectedLayers = this.data.selectedLayers.getValue();
-    const selectedProject = this.data.selectedProject.getValue();
-    const displayElem = this.data.displayElem.getValue();
-    selectedLayers.forEach((sl: Layer) => {
+    const openedProject = this.data.openedProject.getValue();
+    selectedLayers.forEach(async (sl: Layer) => {
       if (sl instanceof PixelLayer) {
         const duplicateLayer = new PixelLayer(
           this.data,
           this.renderer,
-          // displayElem,
           `${Math.random()}`,
-          sl.name + 'Copy',
-          selectedProject!.name,
-          null
+          sl.name + ' Copy',
+          openedProject!.Id
         );
+        duplicateLayer.setWidth(sl.width);
+        duplicateLayer.setHeight(sl.height);
+        const ctx = await sl.get2DContext();
+        const imgData = ctx?.getImageData(0, 0, sl.width, sl.height);
+        duplicateLayer.insertImageData(imgData!, 0, 0);
         this.data.layers.next([...this.data.layers.getValue(), duplicateLayer]);
       }
     });
   }
-  createNewLayer() {
-    const displayElem = this.data.displayElem.getValue();
+  async createNewLayer() {
     const selectedProject = this.data.selectedProject.getValue();
     const layer = new PixelLayer(
       this.data,
       this.renderer,
-      // displayElem,
       `${Math.random()}`,
       'Layer 1',
-      selectedProject?.Id || 'aaa',
-      PIXI.Texture.EMPTY
+      selectedProject?.Id || 'aaa'
     );
+    layer.setWidth(this.display?.clientWidth || 200);
+    layer.setHeight(this.display?.clientHeight || 200);
+
+    const ctx = await layer.get2DContext();
+    ctx?.fillRect(0, 0, 300, 300);
     this.data.layers.next([...this.data.layers.getValue(), layer]);
     this.data.selectedLayers.next([
       ...this.data.selectedLayers.getValue(),
@@ -269,7 +252,7 @@ export class MenusComponent implements OnInit, OnDestroy {
     });
   }
   crop() {
-    this.data.selectedTool.next('cropTool');
+    this.data.selectedToolGroup.next('cropTool');
   }
   flipVertical() {}
   flipHorizontal() {

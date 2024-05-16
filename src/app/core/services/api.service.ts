@@ -28,6 +28,10 @@ export class ApiService {
     });
     return firstValueFrom(result);
   }
+  getProject(id: string) {
+    const result = this.http.get(`${environments.apiUrl}/projects/${id}`);
+    return firstValueFrom(result);
+  }
 
   uploadLayer(projectId: string, file: File) {
     const formData = new FormData();

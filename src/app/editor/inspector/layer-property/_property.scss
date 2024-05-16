@@ -1,0 +1,13 @@
+.name {
+  margin: 0px 0 14px;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+:host {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 9px;
+  box-sizing: border-box;
+}

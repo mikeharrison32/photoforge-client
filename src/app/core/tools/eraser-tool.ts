@@ -11,7 +11,8 @@ export class EraserTool {
   mouseDownListener!: (e: any) => void;
   mouseMoveListener!: (e: any) => void;
   mouseUpListener!: (e: any) => void;
-  configure(display: HTMLElement, data: DataService) {
+  async configure(display: HTMLElement, data: DataService) {
+    console.log('eraser tool configured...');
     this.brush = new Brush({ size: 50 });
     display.parentElement?.parentElement?.appendChild(this.brush.elem!);
     display.parentElement!.parentElement!.style.cursor = 'none';
@@ -24,6 +25,13 @@ export class EraserTool {
 
     let zoom: number;
     let prevPoint: { x: number; y: number };
+    const layer = data.selectedLayers.getValue()[0];
+
+    let ctx: CanvasRenderingContext2D;
+    if (layer instanceof PixelLayer) {
+      ctx = await layer.get2DContext();
+    }
+
     this.mouseDownListener = (e: any) => {
       const layer = data.selectedLayers.getValue()[0];
       if (!(layer instanceof PixelLayer)) {
@@ -48,15 +56,20 @@ export class EraserTool {
       }
       const selectedLayerRect = selectedLayer.elem.getBoundingClientRect();
 
-      let brushSize = 50 / zoom;
+      let brushSize = 70 / zoom;
 
-      //Initialize the array that's going be used to fill the area
-      const array = new Uint8Array(brushSize * brushSize * 4);
-      //Get the current position of the cursor
       const x = (e.clientX - selectedLayerRect.left - brushSize / 2) / zoom;
       const y = (e.clientY - selectedLayerRect.top - brushSize / 2) / zoom;
 
-      selectedLayer.insertPixels(array, x, y, brushSize, brushSize);
+      const data = ctx.getImageData(x / 2, y / 2, brushSize, brushSize);
+      // for (let y = 0; y < data.data.length; y++) {
+      //   for (let x = 0; x < data.data.length; x++) {
+      //     data.data[0] = 0;
+      //     data.data[1] = 255;
+      //     data.data[2] = 0;
+      //   }
+      // }
+      ctx?.putImageData(data, x, y);
     };
 
     this.mouseUpListener = (e: any) => {

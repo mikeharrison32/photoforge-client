@@ -1,21 +1,45 @@
-<h4>Properties</h4>
-
 <div class="props">
-  <span class="h-scale-label">W</span>
-  <app-input class="w-input"></app-input>
-  <div class="lock-scale-top-icon">
+  <span>W</span>
+  <app-input class="input"></app-input>
+  <div class="icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 4.5">
+      <defs>
+        <style>
+          .lock {
+            fill: none;
+            stroke: var(--spectrum-global-color-gray-500);
+            stroke-miterlimit: 10;
+          }
+        </style>
+      </defs>
+      <line class="lock" y1="0.5" x2="16.5" y2="0.5"></line>
+      <line class="lock" x1="16.5" x2="16.5" y2="4.5"></line>
+    </svg>
   </div>
-  <span class="h-move-label">X</span>
-  <app-input class="x-input"></app-input>
-  <span class="v-scale-label">H</span>
-  <app-input class="h-input"></app-input>
-  <div class="lock-scale-bottom-icon">
- 
-  </div>
-  <span class="v-move-label">Y</span>
-  <app-input class="y-input"></app-input>
 
-  <div class="icon lock-icon">
+  <span>X</span>
+  <app-input class="input"></app-input>
+  <span>H</span>
+  <app-input class="input"></app-input>
+  <div class="icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 7">
+      <defs>
+        <style>
+          .lock {
+            fill: none;
+            stroke: var(--spectrum-global-color-gray-500);
+            stroke-miterlimit: 10;
+          }
+        </style>
+      </defs>
+      <line class="lock" y1="4.5" x2="17" y2="4.5"></line>
+      <line class="lock" x1="16.5" x2="16.5" y2="4.5"></line>
+    </svg>
+  </div>
+  <span>Y</span>
+  <app-input class="input"></app-input>
+
+  <div class="icon">
     <svg
       role="img"
       fill="currentColor"
@@ -33,6 +57,7 @@
       ></path>
     </svg>
   </div>
+  <div class="icon">
     <div class="icon">
       <svg
         role="img"
@@ -241,4 +266,5 @@
         ></rect>
       </svg>
     </div>
+  </div>
 </div>

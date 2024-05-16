@@ -9,15 +9,17 @@ import { DataService } from '../../../core/services/data.service';
 export class ToolPropertiesComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
+  tools: any;
   constructor(private data: DataService) {}
-  selectedTool?: string;
+  selectedToolGroup?: string;
   ngOnInit() {
-    this.data.selectedTool.subscribe((tool) => (this.selectedTool = tool));
+    this.data.selectedToolGroup.subscribe(
+      (tool) => (this.selectedToolGroup = tool)
+    );
+    this.data.tools.subscribe((tools) => {
+      this.tools = tools;
+    });
   }
   ngAfterViewInit(): void {}
-  ngOnDestroy(): void {
-    this.data.selectedTool.unsubscribe();
-    // this.data.selectedLayers.unsubscribe();
-    this.data.canvas.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 }

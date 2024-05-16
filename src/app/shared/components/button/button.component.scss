@@ -1,11 +1,21 @@
-button {
-  font-size: 0.6rem;
+@import "/src/app/variables.scss";
+
+:host {
   border: none;
-  background: #2e2e2e;
+  background: $btn-background-1;
   color: #fff;
   padding: 0.2rem;
-}
-.button-disabled {
-  @extend button;
-  color: #6e6e6e;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: solid 1px $border-color-1;
+  justify-content: center;
+  border-radius: 5px;
+  cursor: pointer;
+  .icon {
+    display: flex;
+    svg {
+      width: 18px;
+    }
+  }
 }

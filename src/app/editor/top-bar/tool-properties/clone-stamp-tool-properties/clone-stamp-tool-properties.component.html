@@ -5,7 +5,10 @@
 </div>
 <div class="divider"></div>
 <div class="action-group">
-  <div class="action-btn">
+  <div
+    class="action-btn"
+    (click)="addAdjustment(Adjustment.BrightnessContrast)"
+  >
     <svg
       role="img"
       fill="currentColor"
@@ -94,7 +97,7 @@
     </svg>
     Brightness/Contrast
   </div>
-  <div class="action-btn">
+  <div class="action-btn" (click)="addAdjustment(Adjustment.HueSaturation)">
     <svg
       role="img"
       fill="currentColor"
@@ -114,7 +117,7 @@
     </svg>
     Hue/Saturation
   </div>
-  <div class="action-btn">
+  <div class="action-btn" (click)="addAdjustment(Adjustment.Exposure)">
     <svg
       role="img"
       fill="currentColor"
@@ -149,7 +152,7 @@
     </svg>
     Exposure
   </div>
-  <div class="action-btn">
+  <div class="action-btn" (click)="addAdjustment(Adjustment.Vibrance)">
     <svg
       role="img"
       fill="currentColor"
@@ -232,7 +235,7 @@
     </svg>
     Vibrance
   </div>
-  <div class="action-btn">
+  <div class="action-btn" (click)="addAdjustment(Adjustment.ColorBalance)">
     <svg
       role="img"
       fill="currentColor"

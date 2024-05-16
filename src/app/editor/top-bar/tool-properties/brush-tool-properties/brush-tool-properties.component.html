@@ -4,7 +4,7 @@
     <div
       class="action-btn"
       [class.active-action-btn]="activeTool == 'brush'"
-      (click)="activeTool = 'brush'"
+      (click)="setActiveTool('brush')"
     >
       <svg
         role="img"
@@ -38,7 +38,7 @@
     <div
       class="action-btn"
       [class.active-action-btn]="activeTool == 'eraser'"
-      (click)="activeTool = 'eraser'"
+      (click)="setActiveTool('eraser')"
     >
       <svg
         role="img"
@@ -68,7 +68,7 @@
     <div
       class="action-btn"
       [class.active-action-btn]="activeTool == 'gradient'"
-      (click)="activeTool = 'gradient'"
+      (click)="setActiveTool('gradient')"
     >
       <svg
         role="img"

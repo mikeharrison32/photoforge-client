@@ -42,8 +42,7 @@ export class LayerService {
           // displayElem,
           `${Math.random()}`,
           layer.name + ' Copy',
-          layer.projectId,
-          img
+          layer.projectId
         );
 
         this.data.layers.next([...this.data.layers.getValue(), newLayer]);

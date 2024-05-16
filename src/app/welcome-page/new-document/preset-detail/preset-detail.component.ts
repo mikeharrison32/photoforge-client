@@ -23,7 +23,7 @@ import { FormControl } from '@angular/forms';
 export class PresetDetailComponent implements OnInit {
   constructor(
     private api: ApiService,
-    private dataService: DataService,
+    private data: DataService,
     private router: Router
   ) {}
   @Input() activeTemplate!: Template;
@@ -56,12 +56,10 @@ export class PresetDetailComponent implements OnInit {
     this.advancedOptionsOpen = this.advancedOptionsOpen ? false : true;
   }
   onCloseBtnClick() {
-    this.closeBtnClicked.emit(true);
+    this.data.newMenuClick.next(false);
   }
   onCreateBtnClick() {
     this.createBtnClicked.emit(this.presets);
   }
-  ngOnInit() {
-    this.dataService.orientaion.subscribe((o) => (this.Orientation = o));
-  }
+  ngOnInit() {}
 }

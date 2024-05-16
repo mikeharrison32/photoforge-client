@@ -4,7 +4,7 @@
 ></app-layer-context-menu>
 
 <div class="layer" (click)="onLayerClick($event)" [class.selected]="selected">
-  <div class="toggle-visibility">
+  <div class="toggle-visibility" (click)="toggleLayerHidden()">
     <svg
       role="img"
       fill="currentColor"

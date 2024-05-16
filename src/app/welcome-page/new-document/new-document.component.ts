@@ -66,8 +66,8 @@ export class NewDocumentComponent implements OnInit {
           }
         : template;
   }
-  onCloseBtnClick(isClicked: boolean) {
-    this.closeBtnClicked.emit(true);
+  onCloseBtnClick(e: any) {
+    this.data.newMenuClick.next(false);
   }
   onCreateBtnClick(presets: ProjectPreset) {
     this.loadingService.startLoading('Creating project...');
@@ -80,7 +80,6 @@ export class NewDocumentComponent implements OnInit {
     this.api
       .createBlankProject(newProject)
       .then((project) => {
-        console.log(project);
         this.data.openedProjects.next(project);
         this.data.selectedProject.next(project);
         this.router.navigateByUrl(`/editor/${project.id}`);

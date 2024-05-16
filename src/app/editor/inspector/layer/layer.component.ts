@@ -21,7 +21,7 @@ import { LayerType } from 'src/app/types/layer';
   templateUrl: './layer.component.html',
   styleUrls: ['./layer.component.scss'],
 })
-export class LayerComponent implements OnInit, OnDestroy {
+export class LayerComponent implements OnInit {
   @ViewChild('layersContextMenu')
   layersContextMenu?: ElementRef;
   contextMenuActive: boolean = false;
@@ -41,10 +41,6 @@ export class LayerComponent implements OnInit, OnDestroy {
     } else if (this.layer instanceof TypeLayer) {
       this.imgSrc = 'assets/tools-icons/text-tool.svg';
     }
-  }
-  ngOnDestroy(): void {
-    // this.data.selectedLayers.unsubscribe();
-    // this.data.selectedAjLayers.unsubscribe();
   }
 
   @HostListener('document:click', ['$event'])
@@ -72,7 +68,6 @@ export class LayerComponent implements OnInit, OnDestroy {
     } else {
       this.layer?.lock();
     }
-    // this.onLockClick.emit(true);
   }
   toggleLayerHidden() {
     if (this.layer?.visible) {
@@ -85,45 +80,7 @@ export class LayerComponent implements OnInit, OnDestroy {
     e.preventDefault();
     this.contextMenuActive = true;
   }
-  groupFromLayer() {
-    // const layer = this.data.layers.value.find((l) => l.Id == this.layer?.Id!);
-    // if (layer && layer.GroupId != null) {
-    //   return;
-    // }
-    // let groupId = `rer${Math.random()}fea`;
-    // this.data.groups.value.push({
-    //   Id: groupId,
-    //   Title: `Group ${this.data.groups.value.length + 1}`,
-    // });
-    // layer!.GroupId = groupId;
-    // this.contextMenuActive = false;
-  }
-  duplicateLayer() {
-    // this.layerService.duplicateLayer(this.layer!);
-  }
-  layerMaskContextMenu(e: any) {
-    console.log('bo');
-    e.preventDefault();
-    this.contextMenuActive = false;
-  }
-  pastLayerStyle() {}
-  copyLayerStyle() {}
-  deleteLayer() {
-    this.data.selectedLayers.value.forEach((sl) => {
-      // this.layerService.deleteLayer(sl.Id);
-    });
-  }
-  getInstanceOf(layer?: Layer) {
-    if (layer instanceof PixelLayer) {
-      return 'pixel';
-    } else if (false) {
-      return 'shape';
-    }
-    return '';
-  }
+
   copySvg() {}
   copyCSS() {}
-  toggleMaskContextMenu() {
-    this.maskContextMenuActive = this.maskContextMenuActive ? false : true;
-  }
 }

@@ -180,16 +180,23 @@ void main() {
     renderer: Renderer2,
     id: string,
     name: string,
-    projectId: string,
-    img: any
+    projectId: string
   ) {
     super(renderer, data, id, name, projectId);
     this.canvas = document.createElement('canvas');
     this.canvas.classList.add('layer');
     this.type = 'pixel';
-
+    this.data = data;
     this.renderer.appendChild(this.elem, this.canvas);
 
+    //Draw the image for the first time
+  }
+
+  async insertImageData(data: ImageData, x: number, y: number) {
+    const ctx = await this.get2DContext();
+    ctx?.putImageData(data, x, y);
+  }
+  insertImage(img: any) {
     this.width = img.width;
     this.height = img.height;
     this.elem.style.width = img.width + 'px';
@@ -201,33 +208,18 @@ void main() {
     this.gl = this.canvas.getContext('webgl2');
 
     this.resizeCanvasToDisplaySize(this.canvas);
-    const displayScale = data.zoom.getValue() / 100;
+    const displayScale = this.data.zoom.getValue() / 100;
     this.resizer.setWidth(img.width * displayScale);
     this.resizer.setHeight(img.height * displayScale);
 
-    //Draw the image for the first time
     this.render();
-
-    // const pixels = this.readPixels(0, 0, 600, 600);
-    // this.insertPixels(pixels, 0, 0, 600, 600);
-
-    // let cx = 300;
-    // let cy = 300;
-    // let r = 1000;
-    // const array = new Uint8Array(100 * 100 * 4);
-    // for (let y = cy; y < r; y++) {
-    //   for (let x = cx; x < r; x++) {
-    //     this.insertPixels(array, x, y, 100, 100);
-    //   }
-    // }
-    // this.circle();
-    // this.render();
   }
 
   private resizeCanvasToDisplaySize(canvas: HTMLCanvasElement) {
     // Lookup the size the browser is displaying the canvas in CSS pixels.
     const displayWidth = parseInt(this.elem.style.width);
     const displayHeight = parseInt(this.elem.style.height);
+
     // Check if the canvas is not the same size.
     const needResize =
       canvas.width !== displayWidth || canvas.height !== displayHeight;
@@ -239,6 +231,27 @@ void main() {
     }
 
     return needResize;
+  }
+
+  get2DContext() {
+    this.canvas.remove();
+
+    this.canvas = document.createElement('canvas');
+    this.canvas.classList.add('layer');
+    this.renderer.appendChild(this.elem, this.canvas);
+
+    const ctx = this.canvas.getContext('2d');
+    const img = new Image();
+
+    this.resizeCanvasToDisplaySize(this.canvas);
+
+    return new Promise<CanvasRenderingContext2D>((resolve, reject) => {
+      img.src = this.src || '';
+      img.onload = () => {
+        ctx?.drawImage(img, 0, 0);
+        resolve(ctx!);
+      };
+    });
   }
 
   render() {

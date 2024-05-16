@@ -133,7 +133,7 @@ class ReactangularSelect {
           });
           selection.addFromPoints(points);
           data.currentSelection.next(selection);
-          data.selectedTool.next('moveTool');
+          data.selectedToolGroup.next('move');
           break;
       }
     });

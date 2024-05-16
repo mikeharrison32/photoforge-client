@@ -1,7 +1,15 @@
 <div class="slider">
   <div class="group">
     <span class="slider-name">{{ label }}</span>
-    <app-track (onHandleChange)="onTrackHandleChange($event)"></app-track>
+    <app-track
+      (onHandleChange)="onTrackHandleChange($event)"
+      [value]="value"
+    ></app-track>
   </div>
-  <input type="number" id="" [(ngModel)]="value" />
+  <input
+    type="number"
+    id=""
+    [(ngModel)]="value"
+    (change)="onInputChange($event)"
+  />
 </div>

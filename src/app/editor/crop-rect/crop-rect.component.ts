@@ -191,7 +191,7 @@ export class CropRectComponent implements AfterViewInit, OnDestroy {
             layer.elem.style.top = (-cropBoxTop + layer.y) / zoom + 'px';
           });
 
-          this.data.selectedTool.next('moveTool');
+          this.data.selectedToolGroup.next('sizePosition');
         }
       }
     });

@@ -1,21 +1,18 @@
 <app-move-tool-properties
-  *ngIf="selectedTool == 'moveTool'"
+  *ngIf="selectedToolGroup == 'sizePosition'"
 ></app-move-tool-properties>
 <app-rect-select-tool-properties
-  *ngIf="selectedTool == 'rectangularSelectTool'"
+  *ngIf="selectedToolGroup == 'select'"
 ></app-rect-select-tool-properties>
-<app-crop-tool-properties
-  *ngIf="selectedTool == 'cropTool'"
-></app-crop-tool-properties>
 <app-brush-tool-properties
-  *ngIf="selectedTool == 'brushTool'"
+  *ngIf="selectedToolGroup == 'paint'"
 ></app-brush-tool-properties>
 <app-clone-stamp-tool-properties
-  *ngIf="selectedTool == 'cloneStampTool'"
+  *ngIf="selectedToolGroup == 'adjust'"
 ></app-clone-stamp-tool-properties>
 <app-text-tool-properties
-  *ngIf="selectedTool == 'textTool'"
+  *ngIf="selectedToolGroup == 'text'"
 ></app-text-tool-properties>
 <app-shape-tool-properties
-  *ngIf="selectedTool == 'shapeTool'"
+  *ngIf="selectedToolGroup == 'shapes'"
 ></app-shape-tool-properties>

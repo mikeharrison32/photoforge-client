@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Input,
   Output,
   Renderer2,
   ViewChild,
@@ -17,14 +18,15 @@ export class TrackComponent implements AfterViewInit {
   @ViewChild('handle') handle?: ElementRef;
   @ViewChild('track') track?: ElementRef;
   @Output() onHandleChange = new EventEmitter<number>();
+  @Input() value?: number;
   constructor(private renderer: Renderer2) {}
   ngAfterViewInit(): void {
     const rect = this.handle?.nativeElement.getBoundingClientRect() as DOMRect;
-    console.log(this.handle?.nativeElement);
+    this.handle!.nativeElement.style.left = `${this.value}px`;
+
     let mousedown = false;
     this.renderer.listen(this.handle?.nativeElement, 'mousedown', (e) => {
       mousedown = true;
-      console.log('mousedown');
     });
     this.renderer.listen(document, 'mouseup', (e) => {
       mousedown = false;
@@ -36,8 +38,6 @@ export class TrackComponent implements AfterViewInit {
       }
 
       const x = e.clientX;
-      console.log(rect);
-      console.log(x);
       if (x < 1) {
         return;
       }

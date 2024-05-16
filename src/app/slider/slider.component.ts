@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-slider',
@@ -7,8 +7,15 @@ import { Component, Input } from '@angular/core';
 })
 export class SliderComponent {
   value: number = 0;
+  @Input() label?: string;
+  @Input() Image?: string;
+  @Output() onSliderChange = new EventEmitter<number>();
   onTrackHandleChange(value: number) {
     this.value = value;
+    this.onSliderChange.emit(value);
   }
-  @Input() label?: string;
+  onInputChange(e: any) {
+    console.log(e);
+    console.log(e.target.value);
+  }
 }

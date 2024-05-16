@@ -3,7 +3,7 @@
   <div
     class="action-btn"
     [class.active-action-btn]="activeTool == 'rect'"
-    (click)="activeTool = 'rect'"
+    (click)="setActiveTool('rect')"
   >
     <svg
       role="img"
@@ -26,7 +26,7 @@
   <div
     class="action-btn"
     [class.active-action-btn]="activeTool == 'ellipse'"
-    (click)="activeTool = 'ellipse'"
+    (click)="setActiveTool('ellipse')"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +47,7 @@
   <div
     class="action-btn"
     [class.active-action-btn]="activeTool == 'triangle'"
-    (click)="activeTool = 'triangle'"
+    (click)="setActiveTool('triangle')"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +69,7 @@
   <div
     class="action-btn"
     [class.active-action-btn]="activeTool == 'polygon'"
-    (click)="activeTool = 'polygon'"
+    (click)="setActiveTool('polygon')"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +91,7 @@
   <div
     class="action-btn"
     [class.active-action-btn]="activeTool == 'line'"
-    (click)="activeTool = 'line'"
+    (click)="setActiveTool('line')"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"

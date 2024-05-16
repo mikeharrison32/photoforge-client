@@ -41,6 +41,9 @@
   border: solid 2px #696969;
   box-sizing: border-box;
   border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .type-layer-thumbnail {
   width: 100%;

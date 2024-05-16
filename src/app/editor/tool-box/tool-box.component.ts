@@ -18,14 +18,14 @@ export class ToolBoxComponent implements OnInit, OnDestroy {
   fgColorPickerActive: boolean = false;
   bgColorPickerActive: boolean = false;
   constructor(private data: DataService) {}
-  selectedTool?: string;
-
+  selectedToolGroup?: string;
+  tools: any;
   get Shape() {
     return Shape;
   }
 
-  setSelectedTool(tool: string) {
-    this.data.selectedTool.next(tool);
+  setSelectedToolGroup(groupName: string) {
+    this.data.selectedToolGroup.next(groupName);
   }
   setSelectedShape(shape: Shape) {
     switch (shape) {
@@ -65,7 +65,12 @@ export class ToolBoxComponent implements OnInit, OnDestroy {
     }
   }
   ngOnInit() {
-    this.data.selectedTool.subscribe((tool) => (this.selectedTool = tool));
+    this.data.selectedToolGroup.subscribe(
+      (tool) => (this.selectedToolGroup = tool)
+    );
+    this.data.tools.subscribe((tools) => {
+      this.tools = tools;
+    });
   }
   restoreColors() {
     this.forgroundColor = '#fff';
@@ -99,7 +104,5 @@ export class ToolBoxComponent implements OnInit, OnDestroy {
       bg: this.backgroundColor,
     });
   }
-  ngOnDestroy() {
-    this.data.selectedTool.unsubscribe();
-  }
+  ngOnDestroy() {}
 }

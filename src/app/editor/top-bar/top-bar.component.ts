@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  Input,
   OnDestroy,
   OnInit,
   Output,
@@ -18,18 +19,16 @@ export class TopBarComponent implements OnInit, OnDestroy {
   selectedProject?: Project | null;
   zoom: number = this.data.zoom.getValue();
   zoomActions: boolean = false;
+  @Input() display?: HTMLElement;
   constructor(private data: DataService) {}
   ngOnInit(): void {
-    this.data.openedProjects.subscribe((projects) => {
-      this.project = projects[0];
+    this.data.openedProject.subscribe((project) => {
+      this.project = project!;
     });
     this.data.zoom.subscribe((zoom) => {
       this.zoom = zoom;
     });
   }
 
-  ngOnDestroy(): void {
-    this.data.selectedProject.unsubscribe();
-    this.data.projects.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 }

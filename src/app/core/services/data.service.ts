@@ -9,13 +9,20 @@ import { Path } from '../path';
 import { AdjustmentLayer } from '../layers/adjustment/adjustment_layer';
 import { Selection } from '../../core/selection';
 import { History } from '..';
+import { Tool } from 'src/app/enums/tool.enum';
+import { selectionToolType } from 'src/app/editor/top-bar/tool-properties/rect-select-tool-properties/selectionToolType';
+import { shapeToolTypes } from 'src/app/editor/top-bar/tool-properties/shape-tool-properties/shapeToolTypes';
+import { paintToolTypes } from 'src/app/editor/top-bar/tool-properties/brush-tool-properties/paintToolTypes';
+import { sizePositionToolTypes } from 'src/app/editor/top-bar/tool-properties/move-tool-properties/sizePositionToolTypes';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
+  selectionCanvas = new BehaviorSubject<HTMLCanvasElement | null>(null);
   displayElem = new BehaviorSubject<HTMLElement | null>(null);
-  selectedTool = new BehaviorSubject<string>('none');
+  displayContainer = new BehaviorSubject<HTMLElement | null>(null);
+  selectedToolGroup = new BehaviorSubject<string>('sizePosition');
   selectedLayers = new BehaviorSubject<Layer[]>([]);
   projects = new BehaviorSubject<Project[]>([]);
   openedProjects = new BehaviorSubject<Project[]>([]);
@@ -36,12 +43,44 @@ export class DataService {
   history = new BehaviorSubject<History>(new History());
   isMovingAllowed = new BehaviorSubject<boolean>(true);
   loadingLayers = new BehaviorSubject<boolean>(false);
+  openedProject = new BehaviorSubject<Project | null>(null);
+  tools = new BehaviorSubject<ToolGroups>({
+    sizePositionGroup: {
+      selectedTool: 'move',
+    },
+    paintGroup: {
+      selectedTool: 'brush',
+    },
+    selectGroup: {
+      selectedTool: 'rect',
+    },
+    shapeGroup: {
+      selectedTool: 'rect',
+    },
+  });
 }
-interface SelectionContextMenu {
-  isActive: boolean;
-  x: number;
-  y: number;
+
+interface ToolGroups {
+  sizePositionGroup: {
+    selectedTool: sizePositionToolTypes;
+  };
+  paintGroup: {
+    selectedTool: paintToolTypes;
+  };
+  selectGroup: {
+    selectedTool: selectionToolType;
+  };
+  shapeGroup: {
+    selectedTool: shapeToolTypes;
+  };
 }
+
+enum PaintTools {
+  Brush,
+  Eraser,
+  Gradient,
+}
+
 type Color = {
   fg: string;
   bg: string;
