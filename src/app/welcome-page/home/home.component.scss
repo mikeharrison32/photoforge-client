@@ -26,6 +26,54 @@
   %img {
     width: 1rem;
   }
+  .selectedProject {
+    border: solid 1px #e61c74;
+  }
+  .delete-warning {
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    left: 0;
+    margin: auto;
+    background-color: #4f4f4f;
+    border-radius: 5px;
+    color: #fff;
+    bottom: 0;
+    right: 0;
+    height: 16rem;
+    width: 32rem;
+    justify-content: center;
+    box-shadow: #ffffffa6 0 0 2px 0;
+    h2 {
+      font-size: 1.2rem;
+    }
+    .buttons {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      width: 100%;
+      justify-content: center;
+      margin-top: 2rem;
+      button {
+        border: none;
+        outline: none;
+        padding: 1rem;
+        border-radius: 5px;
+        color: #fff;
+        cursor: pointer;
+      }
+      .delete-btn {
+        background: red;
+      }
+      .cancel-btn {
+        background: transparent;
+        border: solid 1px;
+      }
+    }
+  }
   %img-container {
     position: absolute;
     right: 1rem;
@@ -146,12 +194,14 @@
         flex-wrap: wrap;
         gap: 0.3rem;
         .file {
+          border-radius: 5px;
           .file-image {
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             background-color: #4b4b4b;
+
             img {
               width: 100%;
               height: 100%;
@@ -197,10 +247,43 @@
         height: fit-content;
         width: 18rem;
         padding: 1rem;
-        cursor: pointer;
         background: #2a2a2a;
+        position: relative;
+        border-radius: 5px;
+        box-sizing: border-box;
+
+        .more-icon {
+          display: none;
+          align-items: center;
+          justify-content: center;
+          background: #fff;
+          width: 3rem;
+          border-radius: 4px;
+          height: 1.3rem;
+          position: absolute;
+          right: 1rem;
+          top: 0.4rem;
+          img {
+            width: 2rem;
+            filter: brightness(0.2);
+          }
+        }
+        &:hover {
+          .more-icon {
+            display: flex;
+          }
+        }
         .file-image {
+          cursor: pointer;
           height: 13rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          img {
+            width: 100%;
+            object-fit: cover;
+          }
         }
         h4 {
           margin-bottom: 0.3rem;
@@ -245,3 +328,4 @@
     }
   }
 }
+

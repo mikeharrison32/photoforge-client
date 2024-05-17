@@ -8,6 +8,7 @@ import { Project } from '../types/project';
 import { DataService } from '../core/services/data.service';
 import { StateService } from '../core/services/state.service';
 import { PixelLayer } from '../core/layers/pixel-layer';
+import { LoadingService } from '../core/services/loading.service';
 
 @Component({
   selector: 'app-welcome-page',
@@ -28,11 +29,10 @@ export class WelcomePageComponent implements OnInit {
     private api: ApiService,
     private data: DataService,
     private stateService: StateService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private loadingService: LoadingService
   ) {}
-  ngOnInit() {
-    this.data.showNav.next(false);
-  }
+  ngOnInit() {}
   setActiveElement(el: string) {
     this.selectedTab = el;
     this.activeTab = el;
@@ -44,34 +44,19 @@ export class WelcomePageComponent implements OnInit {
     this.createNewBtnClicked = true;
   }
   onOpenFileBtnChange(e: any) {
-    for (let file of e.target.files) {
-      const reader = new FileReader();
-      reader.onload = (event: any) => {
-        const imgObj = new Image();
-        imgObj.src = event.target.result;
-        imgObj.onload = () => {
-          const project: Project = {
-            Id: `${Math.random()}`,
-            Title: file.name,
-            UserId: 'dasd',
-            Width: imgObj.width,
-            Height: imgObj.height,
-          };
-          const pixelLayer = new PixelLayer(
-            this.data,
-            this.renderer,
-            `${Math.random()}`,
-            file.name,
-            project.Id,
-            imgObj
-          );
-          this.data.layers.next([...this.data.layers.getValue(), pixelLayer]);
-          this.data.projects.next([...this.data.projects.getValue(), project]);
-          this.data.selectedProject.next(project);
-          this.router.navigateByUrl('/editor');
-        };
-      };
-      reader.readAsDataURL(file);
-    }
+    this.loadingService.startLoading('Uploading Image...');
+    const file = e.target.files[0];
+    this.api
+      .createProjectByUpload(file)
+      .then((project: any) => {
+        this.loadingService.stopLoading();
+        this.data.openedProjects.next([project]);
+        this.data.selectedProject.next(project);
+        this.router.navigateByUrl(`/editor/${project.id}`);
+      })
+      .catch((err: any) => {
+        this.loadingService.stopLoading();
+        console.log(err);
+      });
   }
 }

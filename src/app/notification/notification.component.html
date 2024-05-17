@@ -6,7 +6,9 @@
     </span>
     <span (click)="onRemoveIconClick($event)" class="close-icon">&times;</span>
   </div>
-  <div class="details"></div>
+  <div class="details">
+    {{ options?.details }}
+  </div>
   <div class="buttons">
     <button
       class="closeBtn"

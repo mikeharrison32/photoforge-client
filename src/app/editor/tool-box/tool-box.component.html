@@ -1,190 +1,241 @@
-<aside class="tools">
-  <app-tool
-    ImgSrc="assets/tools-icons/move-tool.svg"
-    (click)="setSelectedTool('moveTool')"
-    [Active]="selectedTool == 'moveTool'"
-    [Desc]="'Move Tool'"
-    [Shortcut]="'M'"
-  ></app-tool>
-  <app-tool
-    ImgSrc="assets/tools-icons/rectangular-marquee-tool.svg"
-    (click)="setSelectedTool('rectangularSelectTool')"
-    [Active]="selectedTool == 'rectangularSelectTool'"
-    [Desc]="'Rectangular Select Tool'"
-    [Shortcut]="'R'"
-  ></app-tool>
-  <app-tool
-    ImgSrc="assets/tools-icons/lasso-tool.svg"
-    (click)="setSelectedTool('lassoTool')"
-    [Active]="selectedTool == 'lassoTool'"
-    [Desc]="'Lasso Tool'"
-    [Shortcut]="'L'"
+<app-tool
+  (click)="setSelectedToolGroup('sizePosition')"
+  [Active]="selectedToolGroup == 'sizePosition'"
+>
+  <div class="icon" *ngIf="tools.sizePositionGroup.selectedTool == 'move'">
+    <svg
+      role="img"
+      fill="currentColor"
+      viewBox="0 0 18 18"
+      id="SSelect18N-icon"
+      width="18"
+      height="18"
+      aria-hidden="true"
+      aria-label=""
+      focusable="false"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M4.252,1.027A.25.25,0,0,0,4,1.277V17.668a.25.25,0,0,0,.252.25.246.246,0,0,0,.175-.074L9.262,13h6.5a.25.25,0,0,0,.176-.427L4.427,1.1A.246.246,0,0,0,4.252,1.027Z"
+      ></path>
+    </svg>
+  </div>
+  <div class="icon" *ngIf="tools.sizePositionGroup.selectedTool == 'transform'">
+    <svg
+      role="img"
+      fill="currentColor"
+      viewBox="0 0 18 18"
+      id="SDistort18N-icon"
+      width="18"
+      height="18"
+      aria-hidden="true"
+      aria-label=""
+      focusable="false"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M15.075,11.733l-.76-4.051a1.77,1.77,0,0,0-2.6-2.4L6.754,3.712A1.856,1.856,0,0,0,6.775,3.5,1.775,1.775,0,1,0,4.11,5.027l-1.693,8.8A1.771,1.771,0,1,0,4.766,15.59l8.661-1.283a1.771,1.771,0,1,0,1.648-2.574ZM11.257,6.182A1.762,1.762,0,0,0,13.4,8.226l.7,3.75a1.761,1.761,0,0,0-.86,1.347L4.53,14.614a1.766,1.766,0,0,0-1.086-.826L5.082,5.267a1.76,1.76,0,0,0,1.273-.633Z"
+      ></path>
+    </svg>
+  </div>
+  <div class="icon" *ngIf="tools.sizePositionGroup.selectedTool == 'crop'">
+    <svg
+      role="img"
+      fill="currentColor"
+      viewBox="0 0 18 18"
+      id="SCrop18N-icon"
+      width="18"
+      height="18"
+      aria-hidden="true"
+      aria-label=""
+      focusable="false"
+    >
+      <path fill-rule="evenodd" d="M12,11h2V4.5a.5.5,0,0,0-.5-.5H7V6h5Z"></path>
+      <path
+        fill-rule="evenodd"
+        d="M6,12V1.5A.5.5,0,0,0,5.5,1h-1a.5.5,0,0,0-.5.5V4H1.5a.5.5,0,0,0-.5.5v1a.5.5,0,0,0,.5.5H4v7.5a.5.5,0,0,0,.5.5H12v2.5a.5.5,0,0,0,.5.5h1a.5.5,0,0,0,.5-.5V14h2.5a.5.5,0,0,0,.5-.5v-1a.5.5,0,0,0-.5-.5Z"
+      ></path>
+    </svg>
+  </div>
+</app-tool>
+<app-tool
+  (click)="setSelectedToolGroup('select')"
+  [Active]="selectedToolGroup == 'select'"
+>
+  <svg
+    role="img"
+    fill="currentColor"
+    viewBox="0 0 18 18"
+    id="SSelection18N-icon"
+    width="18"
+    height="18"
+    aria-hidden="true"
+    aria-label=""
+    focusable="false"
   >
-  </app-tool>
-  <!-- <app-tool
-    ImgSrc="assets/tools-icons/quick-selection-tool.svg"
-    (click)="setSelectedTool('quickSelectionTool')"
-    [Active]="selectedTool == 'quickSelectionTool'"
+    <rect fill-rule="evenodd" x="2" y="10" width="1" height="2.5"></rect>
+    <rect fill-rule="evenodd" x="2" y="6" width="1" height="2.5"></rect>
+    <path
+      fill-rule="evenodd"
+      d="M3,15V14H2v1.556A.444.444,0,0,0,2.445,16H4.5V15Z"
+    ></path>
+    <rect fill-rule="evenodd" x="6" y="15" width="2.5" height="1"></rect>
+    <rect fill-rule="evenodd" x="10" y="15" width="2.5" height="1"></rect>
+    <rect fill-rule="evenodd" x="15" y="5.5" width="1" height="2.5"></rect>
+    <rect fill-rule="evenodd" x="15" y="9.5" width="1" height="2.5"></rect>
+    <path
+      fill-rule="evenodd"
+      d="M15,13.5V15H14v1h1.5a.5.5,0,0,0,.5-.5v-2Z"
+    ></path>
+    <path
+      fill-rule="evenodd"
+      d="M15.556,2H13.5V3H15V4h1V2.444A.444.444,0,0,0,15.556,2Z"
+    ></path>
+    <rect fill-rule="evenodd" x="9.5" y="2" width="2.5" height="1"></rect>
+    <rect fill-rule="evenodd" x="5.5" y="2" width="2.5" height="1"></rect>
+    <path fill-rule="evenodd" d="M4,2H2.5a.5.5,0,0,0-.5.5v2H3V3H4Z"></path>
+  </svg>
+</app-tool>
+
+<app-tool
+  (click)="setSelectedToolGroup('paint')"
+  [Active]="selectedToolGroup == 'paint'"
+>
+  <div class="icon brush-tool" *ngIf="tools.paintGroup.selectedTool == 'brush'">
+    <svg
+      role="img"
+      fill="currentColor"
+      viewBox="0 0 18 18"
+      id="SBrush18N-icon"
+      width="18"
+      height="18"
+      aria-hidden="true"
+      aria-label=""
+      focusable="false"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M6.254,10.515a2.46,2.46,0,0,0-2.1.6,6.476,6.476,0,0,0-1.34,2.391,2.808,2.808,0,0,1-1.679,2.386.3.3,0,0,0-.171.356.45.45,0,0,0,.322.329c.293.073.627.142.989.2,1.3.205,3.74.369,5.4-.826a3.446,3.446,0,0,0,1.411-2.273A3.407,3.407,0,0,0,6.254,10.515Z"
+      ></path>
+      <path
+        fill-rule="evenodd"
+        d="M9.95,12.05c3.617-4.113,8.211-9.768,7.008-10.971S10.773,5.488,7.19,9.415A5.027,5.027,0,0,1,9.95,12.05Z"
+      ></path>
+    </svg>
+  </div>
+  <div
+    class="icon eraser-tool"
+    *ngIf="tools.paintGroup.selectedTool == 'eraser'"
   >
-  </app-tool> -->
-  <app-tool
-    ImgSrc="assets/tools-icons/crop-tool.svg"
-    (click)="setSelectedTool('cropTool')"
-    [Active]="selectedTool == 'cropTool'"
-    [Desc]="'Crop Tool'"
-    [Shortcut]="'C'"
+    <svg
+      role="img"
+      fill="currentColor"
+      viewBox="0 0 18 18"
+      id="SErase18N-icon"
+      width="18"
+      height="18"
+      aria-hidden="true"
+      aria-label=""
+      focusable="false"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M9.307,14.066a.5.5,0,0,0,.707,0l6.78-6.78a.5.5,0,0,0,0-.708L11.138.922a.5.5,0,0,0-.708,0L3.65,7.7a.5.5,0,0,0,0,.707L4,8.763.852,11.914a1,1,0,0,0,0,1.414l3.253,3.253A1.4,1.4,0,0,0,5.067,17c.053,0,.149,0,.149,0H16.75a.25.25,0,0,0,.25-.25v-.5a.25.25,0,0,0-.25-.25H6.666l2.287-2.288ZM5.448,15.8a.5.5,0,0,1-.707,0L1.559,12.621,4.711,9.47l3.535,3.535Z"
+      ></path>
+    </svg>
+  </div>
+</app-tool>
+<app-tool
+  (click)="setSelectedToolGroup('adjust')"
+  [Active]="selectedToolGroup == 'adjust'"
+>
+  <svg
+    role="img"
+    fill="currentColor"
+    viewBox="0 0 18 18"
+    id="SAdjustmentGeneral18N-icon"
+    width="18"
+    height="18"
+    aria-hidden="true"
+    aria-label=""
+    focusable="false"
   >
-  </app-tool>
-  <!-- <app-tool
-    ImgSrc="assets/tools-icons/color-picker.svg"
-    (click)="setSelectedTool('colorPickerTool')"
-    [Active]="selectedTool == 'colorPickerTool'"
+    <path
+      fill-rule="evenodd"
+      d="M9,2.05A6.95,6.95,0,1,0,15.95,9,6.95,6.95,0,0,0,9,2.05ZM3.1,9A5.9,5.9,0,0,1,13.172,4.828L4.828,13.172A5.881,5.881,0,0,1,3.1,9Z"
+    ></path>
+  </svg>
+</app-tool>
+
+<app-tool
+  (click)="setSelectedToolGroup('text')"
+  [Active]="selectedToolGroup == 'text'"
+>
+  <svg
+    role="img"
+    fill="currentColor"
+    viewBox="0 0 18 18"
+    id="SText18N-icon"
+    width="18"
+    height="18"
+    aria-hidden="true"
+    aria-label=""
+    focusable="false"
   >
-  </app-tool> -->
-  <!-- <app-tool
-    ImgSrc="assets/tools-icons/spot-healing-brush.svg"
-    (click)="setSelectedTool('spotHealingBrushTool')"
-    [Active]="selectedTool == 'spotHealingBrushTool'"
+    <path
+      fill-rule="evenodd"
+      d="M2.5,2a.5.5,0,0,0-.5.5v3a.5.5,0,0,0,.5.5h1A.5.5,0,0,0,4,5.5V4H8V14H6.5a.5.5,0,0,0-.5.5v1a.5.5,0,0,0,.5.5h5a.5.5,0,0,0,.5-.5v-1a.5.5,0,0,0-.5-.5H10V4h4V5.5a.5.5,0,0,0,.5.5h1a.5.5,0,0,0,.5-.5v-3a.5.5,0,0,0-.5-.5Z"
+    ></path>
+  </svg>
+</app-tool>
+
+<app-tool
+  (click)="setSelectedToolGroup('shapes')"
+  [Active]="selectedToolGroup == 'shapes'"
+>
+  <svg
+    role="img"
+    fill="currentColor"
+    viewBox="0 0 18 18"
+    id="SRectangle18N-icon"
+    width="18"
+    height="18"
+    aria-hidden="true"
+    aria-label=""
+    focusable="false"
   >
-  </app-tool> -->
-  <app-tool
-    ImgSrc="assets/tools-icons/brush-tool.svg"
-    (click)="setSelectedTool('brushTool')"
-    [Active]="selectedTool == 'brushTool'"
-    [Desc]="'Brush Tool'"
-    [Shortcut]="'B'"
-  >
-  </app-tool>
-  <app-tool
-    ImgSrc="assets/tools-icons/raster-tool.svg"
-    (click)="setSelectedTool('cloneStampTool')"
-    [Active]="selectedTool == 'cloneStampTool'"
-    [Desc]="'Clone Stamp Tool'"
-  >
-  </app-tool>
-  <app-tool
-    ImgSrc="assets/tools-icons/eraser-tool.svg"
-    (click)="setSelectedTool('eraserTool')"
-    [Active]="selectedTool == 'eraserTool'"
-    [Desc]="'Eraser Tool'"
-    [Shortcut]="'E'"
-  >
-  </app-tool>
-  <!-- <app-tool
-    ImgSrc="assets/tools-icons/water-drop-icon.svg"
-    (click)="setSelectedTool('blurTool')"
-    [Active]="selectedTool == 'blurTool'"
-  >
-  </app-tool> -->
-  <app-tool
-    ImgSrc="assets/tools-icons/gradient-tool.svg"
-    (click)="setSelectedTool('gradientTool')"
-    [Active]="selectedTool == 'gradientTool'"
-  >
-  </app-tool>
-  <!--
-  <app-tool
-    ImgSrc="assets/tools-icons/pen-tool.svg"
-    (click)="setSelectedTool('penTool')"
-    [Active]="selectedTool == 'penTool'"
-  >
-  </app-tool> -->
-  <app-tool
-    ImgSrc="assets/tools-icons/text-tool.svg"
-    (click)="setSelectedTool('textTool')"
-    [Active]="selectedTool == 'textTool'"
-    [Desc]="'Text Tool'"
-    [Shortcut]="'T'"
-  >
-  </app-tool>
-  <app-tool
-    ImgSrc="assets/tools-icons/pointer-tool.svg"
-    (click)="setSelectedTool('pathSelectionTool')"
-    [Active]="selectedTool == 'pathSelectionTool'"
-  >
-  </app-tool>
-  <app-tool
-    [ImgSrc]="shapeImgSrc"
-    (click)="setSelectedTool('shapeTool')"
-    [Active]="selectedTool == 'shapeTool'"
-    [hasChoices]="true"
-  >
-    <div tool-choices>
-      <div (click)="setSelectedShape(Shape.Rectangle)" class="tool-choice">
-        <img
-          src="assets/tools-icons/shape-tools-icons/rectangle-shape-tool.svg"
-        />
-        <span> Rectangle </span>
-      </div>
-      <div
-        (click)="setSelectedShape(Shape.RoundedRectangle)"
-        class="tool-choice"
-      >
-        <img
-          src="assets/tools-icons/shape-tools-icons/rounded-rectangle-shape-tool.svg"
-        />
-        Rounded Rectangle
-      </div>
-      <div (click)="setSelectedShape(Shape.Ellipse)" class="tool-choice">
-        <img
-          src="assets/tools-icons/shape-tools-icons/ellipse-shape-tool.svg"
-        />
-        Ellipse
-      </div>
-      <div (click)="setSelectedShape(Shape.Polygon)" class="tool-choice">
-        <img
-          src="assets/tools-icons/shape-tools-icons/polygon-shape-tool.svg"
-        />
-        Polygon
-      </div>
-      <div (click)="setSelectedShape(Shape.Line)" class="tool-choice">
-        <img src="assets/tools-icons/shape-tools-icons/line-shape-tool.svg" />
-        Line
-      </div>
-      <div class="tool-choice">
-        <img src="assets/tools-icons/shape-tools-icons/custom-shape-tool.svg" />
-        Custom Shape
-      </div>
+    <path
+      fill-rule="evenodd"
+      d="M1,2.5v13a.5.5,0,0,0,.5.5h15a.5.5,0,0,0,.5-.5V2.5a.5.5,0,0,0-.5-.5H1.5A.5.5,0,0,0,1,2.5ZM16,15H2V3H16Z"
+    ></path>
+  </svg>
+</app-tool>
+
+<div class="color-options">
+  <div class="colors-panel">
+    <div class="colors-panel-icons">
+      <img
+        src="assets/tools-icons/flip-colors-icon.svg"
+        (click)="restoreColors()"
+      />
+      <img
+        src="assets/tools-icons/two-arrows-icon.svg"
+        (click)="shiftColors()"
+      />
     </div>
-  </app-tool>
-  <app-tool
-    ImgSrc="assets/tools-icons/zoom-tool.svg"
-    (click)="setSelectedTool('zoomTool')"
-    [Active]="selectedTool == 'zoomTool'"
-  >
-  </app-tool>
-  <app-tool
-    ImgSrc="assets/tools-icons/hand-tool.svg"
-    (click)="setSelectedTool('handTool')"
-    [Active]="selectedTool == 'handTool'"
-  >
-  </app-tool>
-  <div class="color-options">
-    <div class="colors-panel">
-      <div class="colors-panel-icons">
-        <img
-          src="assets/tools-icons/flip-colors-icon.svg"
-          (click)="restoreColors()"
-        />
-        <img
-          src="assets/tools-icons/two-arrows-icon.svg"
-          (click)="shiftColors()"
-        />
+    <div class="colors">
+      <div class="foreground">
+        <app-color-picker
+          (colorChange)="setFgColor($event)"
+          [color]="forgroundColor"
+        ></app-color-picker>
       </div>
-      <div class="colors">
-        <div class="foreground">
-          <app-color-picker
-            (colorChange)="setFgColor($event)"
-            [color]="forgroundColor"
-          ></app-color-picker>
-        </div>
-        <div class="background">
-          <app-color-picker
-            (colorChange)="setBgColor($event)"
-            [color]="backgroundColor"
-          ></app-color-picker>
-        </div>
+      <div class="background">
+        <app-color-picker
+          (colorChange)="setBgColor($event)"
+          [color]="backgroundColor"
+        ></app-color-picker>
       </div>
     </div>
   </div>
-</aside>
+</div>

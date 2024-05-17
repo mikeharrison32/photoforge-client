@@ -1,29 +1,37 @@
-<div class="form">
-  <input
-    type="email"
-    placeholder="Enter your email here."
-    [formControl]="emailControl"
-    #email
-  />
-  <textarea
-    #message
-    [formControl]="messageControl"
-    name=""
-    id=""
-    cols="30"
-    rows="10"
-    placeholder="Your Message"
-  ></textarea>
-  <button (click)="sendEmail()">Send</button>
-  <div>
-    <span
-      ><a href="mailto:simenehmikiyas977@gmail.com"
-        >simenehmikiyas977@gmail.com</a
-      ></span
-    >
+<div class="container">
+  <div class="email-status">
+    <div class="email-sent" *ngIf="emailSent">Email Sent Successfuly.</div>
+    <div class="email failed">Email Was not sent.</div>
   </div>
-  <div class="loading" *ngIf="loading">
-    <div class="spiner"></div>
-    <p>Sending...</p>
-  </div>
+  <form class="form" (submit)="sendEmail($event)">
+    <input type="text" name="user_name" />
+    <input
+      type="email"
+      placeholder="Enter your email here."
+      [formControl]="emailControl"
+      #email
+      name="user_email"
+    />
+    <textarea
+      #message
+      [formControl]="messageControl"
+      name="message"
+      id=""
+      cols="30"
+      rows="10"
+      placeholder="Your Message"
+    ></textarea>
+    <input type="submit" value="Send" class="send-btn" />
+    <div>
+      <span
+        ><a href="mailto:simenehmikiyas977@gmail.com"
+          >simenehmikiyas977@gmail.com</a
+        ></span
+      >
+    </div>
+    <div class="loading" *ngIf="loading">
+      <div class="spiner"></div>
+      <p>Sending...</p>
+    </div>
+  </form>
 </div>

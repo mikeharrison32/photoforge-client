@@ -19,22 +19,15 @@ import { routeAnimations } from './animations';
   animations: [routeAnimations],
 })
 export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
-  showNav: boolean = false;
   constructor(
     private data: DataService,
     private api: ApiService,
     private router: Router,
     private context: ChildrenOutletContexts
   ) {}
-  ngOnInit() {
-    this.data.showNav.subscribe((showNav) => {
-      this.showNav = showNav;
-    });
-  }
+  ngOnInit() {}
   ngAfterViewInit(): void {}
-  ngOnDestroy(): void {
-    this.data.showNav.unsubscribe();
-  }
+  ngOnDestroy(): void {}
   getRouteAnimationData() {
     return this.context.getContext('primary')?.route?.snapshot.data?.[
       'animation'

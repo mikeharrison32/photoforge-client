@@ -1,314 +1,303 @@
-<header #menus>
-  <app-menu menuName="File">
-    <div class="options">
-      <ul>
-        <li (click)="onNewMenuClick()">New</li>
-        <li>
-          <input
-            #open
-            type="file"
-            (change)="onOpenFileOptionChange($event)"
-            multiple
-          />
-          Open
-        </li>
-        <li class="open-recent-option">
-          Open Recent
-          <img src="assets/arrow-right.svg" />
-          <div class="recent-projects">
-            <a href="ewfrwefewf" download> derr.jpg</a>
-            <p>derr.jpg</p>
-            <p>derr.jpg`vef ergr g35gt3f4r 43fr3r</p>
-            <p>derr.jpg</p>
-            <p>derr.jpg</p>
-            <p *ngFor="let rp of recentProjects" (click)="openProject(rp)">
-              {{ rp.Title }}
-            </p>
-          </div>
-        </li>
-        <div class="line"></div>
-        <li (click)="closeSelectedProject()">Close</li>
-        <li (click)="saveProject()">Save</li>
-        <li>Save As</li>
-        <li>Save for Web</li>
-        <li>Export As</li>
-        <div class="line"></div>
-        <li>
-          <input #open type="file" (change)="placeEmbedded($event)" multiple />
-          Place Embedded
-        </li>
-        <li>Place Linked</li>
-        <div class="line"></div>
-        <li>Print</li>
-        <li>Exit</li>
-      </ul>
-    </div>
-  </app-menu>
+<div class="app-menu" (click)="visible = visible ? false : true">
+  <svg
+    viewBox="0 0 12 12"
+    enable-background="new 0 0 12 12"
+    version="1.1"
+    xml:space="preserve"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    fill="#000000"
+  >
+    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+    <g
+      id="SVGRepo_tracerCarrier"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    ></g>
+    <g id="SVGRepo_iconCarrier">
+      <g>
+        <rect fill="#fafafa" height="1" width="11" x="0.5" y="5.5"></rect>
+        <rect fill="#fafafa" height="1" width="11" x="0.5" y="2.5"></rect>
+        <rect fill="#fafafa" height="1" width="11" x="0.5" y="8.5"></rect>
+      </g>
+    </g>
+  </svg>
+</div>
+<header #menus *ngIf="visible">
+  <span (click)="backToHome()">Back to home</span>
+  <div class="divider"></div>
+  <span (click)="onNewMenuClick()">New</span>
+  <span>
+    <input
+      #open
+      type="file"
+      (change)="onOpenFileOptionChange($event)"
+      multiple
+      class="open-file"
+    />
+    Open
+  </span>
+  <span (click)="saveProject()">Save</span>
+
+  <span>Save As</span>
+
+  <span>
+    <input
+      #open
+      type="file"
+      (change)="placeEmbedded($event)"
+      multiple
+      class="open-file"
+    />
+    Import
+  </span>
+  <div class="divider"></div>
   <app-menu menuName="Edit">
     <div class="options">
-      <ul>
-        <li (click)="undo()">Undo</li>
-        <li (click)="stepBackward()">Step Backward</li>
-        <li (click)="redo()">Redo</li>
-        <div class="line"></div>
-        <li (click)="cut()">Cut</li>
-        <li (click)="copySelectedObj()">Copy</li>
-        <li (click)="pasteObj()">Paste</li>
-        <!-- <li>Paste into</li> -->
-        <div class="line"></div>
-        <li (click)="clearProject()">Clear</li>
-        <div class="line"></div>
-        <li (click)="fill()">Fill</li>
-        <li (click)="stroke()">Stroke</li>
-        <!-- <div class="line"></div> -->
-        <!-- <li (click)="transform()" class="transform-menu">
+      <span (click)="undo()">Undo</span>
+      <span (click)="stepBackward()">Step Backward</span>
+      <span (click)="redo()">Redo</span>
+      <div class="line"></div>
+      <span (click)="cut()">Cut</span>
+      <span (click)="copySelectedObj()">Copy</span>
+      <span (click)="pasteObj()">Paste</span>
+      <!-- <span>Paste into</span> -->
+      <div class="line"></div>
+      <span (click)="clearProject()">Clear</span>
+      <div class="line"></div>
+      <span (click)="fill()">Fill</span>
+      <span (click)="stroke()">Stroke</span>
+      <!-- <div class="line"></div> -->
+      <!-- <span (click)="transform()" class="transform-menu">
           Transform
           <img src="assets/arrow-right.svg" />
           <div class="transform-options">
-            <ul>
-              <li>Scale</li>
-              <li>Rotate</li>
-              <li>Skew</li>
-              <li>Distort</li>
-              <li>Perspective</li>
-              <li>Warp</li>
+
+              <span>Scale</span>
+              <span>Rotate</span>
+              <span>Skew</span>
+              <span>Distort</span>
+              <span>Perspective</span>
+              <span>Warp</span>
               <div class="line"></div>
-              <li>Rotate 180&deg;</li>
-              <li>Rotate 90&deg; Clockwise</li>
-              <li>Rotate 90&deg; Counter Clockwise</li>
+              <span>Rotate 180&deg;</span>
+              <span>Rotate 90&deg; Clockwise</span>
+              <span>Rotate 90&deg; Counter Clockwise</span>
               <div class="line"></div>
-              <li>Flip Horizontal</li>
-              <li>Flip Vertical</li>
-            </ul>
+              <span>Flip Horizontal</span>
+              <span>Flip Vertical</span>
+
           </div>
-        </li> -->
-        <!-- <li>Warp</li> -->
-        <!-- <li>Liquify</li> -->
-        <!-- <li>Puppet-Warp</li> -->
-        <!-- <li>Content-Aware</li> -->
-        <!-- <div class="line"></div> -->
-        <!-- <li>Color Range</li> -->
-        <li>Preferences</li>
-      </ul>
+        </span> -->
+      <!-- <span>Warp</span> -->
+      <!-- <span>Liquify</span> -->
+      <!-- <span>Puppet-Warp</span> -->
+      <!-- <span>Content-Aware</span> -->
+      <!-- <div class="line"></div> -->
+      <!-- <span>Color Range</span> -->
+      <span>Preferences</span>
     </div>
   </app-menu>
   <app-menu menuName="Image">
     <div class="options">
-      <ul>
-        <li class="adjustments-menu">
-          Adjustments
-          <img src="assets/arrow-right.svg" />
-          <div class="adjustment-options">
-            <div class="ad_choices" #ad_choices>
-              <p (click)="addAdjustmentLayer(AdjustmentLayer.SolidColor)">
-                SolidColor
-              </p>
-              <p (click)="addAdjustmentLayer(AdjustmentLayer.Gradient)">
-                Gradient
-              </p>
-              <p (click)="addAdjustmentLayer(AdjustmentLayer.Pattern)">
-                Pattern
-              </p>
-              <p
-                (click)="addAdjustmentLayer(AdjustmentLayer.BrightnessContrast)"
-              >
-                BrightnessContrast
-              </p>
-              <p (click)="addAdjustmentLayer(AdjustmentLayer.Levels)">Levels</p>
-              <p (click)="addAdjustmentLayer(AdjustmentLayer.Curves)">Curves</p>
-              <p (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)">
-                Exposure
-              </p>
-              <p (click)="addAdjustmentLayer(AdjustmentLayer.Vibrance)">
-                Vibrance
-              </p>
-              <p (click)="addAdjustmentLayer(AdjustmentLayer.HueSaturation)">
-                HueSaturation
-              </p>
-              <p (click)="addAdjustmentLayer(AdjustmentLayer.ColorBalance)">
-                ColorBalance
-              </p>
-              <p (click)="addAdjustmentLayer(AdjustmentLayer.BlackWhite)">
-                BlackWhite
-              </p>
-              <p (click)="addAdjustmentLayer(AdjustmentLayer.PhotoFilter)">
-                PhotoFilter
-              </p>
-              <p (click)="addAdjustmentLayer(AdjustmentLayer.ChannelMixer)">
-                ChannelMixer
-              </p>
-              <p (click)="addAdjustmentLayer(AdjustmentLayer.ColorLookup)">
-                ColorLookup
-              </p>
-              <p (click)="addAdjustmentLayer(AdjustmentLayer.Invert)">Invert</p>
-              <p (click)="addAdjustmentLayer(AdjustmentLayer.Posterize)">
-                Posterize
-              </p>
-              <p (click)="addAdjustmentLayer(AdjustmentLayer.Threshold)">
-                Threshold
-              </p>
-              <p (click)="addAdjustmentLayer(AdjustmentLayer.GradientMap)">
-                GradientMap
-              </p>
-              <p (click)="addAdjustmentLayer(AdjustmentLayer.SelectiveColor)">
-                SelectiveColor
-              </p>
-            </div>
-          </div>
-        </li>
-        <div class="line"></div>
-        <!-- <li>Image Size</li> -->
-        <li>Canvas Size</li>
-        <div class="line"></div>
-        <li (click)="crop()">Crop</li>
-        <li (click)="rotateCanvas()">Rotate Canvas</li>
-        <div class="line"></div>
-        <li (click)="flipCanvas()">Flip Canvas</li>
-        <div class="line"></div>
-        <li (click)="autoTone()">Auto Tone</li>
-        <li (click)="autoContrast()">Auto Contrast</li>
-        <li (click)="autoColor()">Auto Color</li>
-        <div class="line"></div>
-        <li (click)="applyImage()">Apply Image</li>
-        <!-- <li>Calculations</li>
-        <li>HDR Toning</li>
-        <li>Variations</li> -->
-      </ul>
+      <app-menu [menuName]="'Adjustments'">
+        <div class="options">
+          <span (click)="addAdjustmentLayer(AdjustmentLayer.SolidColor)">
+            SolidColor
+          </span>
+          <span (click)="addAdjustmentLayer(AdjustmentLayer.Gradient)">
+            Gradient
+          </span>
+          <span (click)="addAdjustmentLayer(AdjustmentLayer.Pattern)">
+            Pattern
+          </span>
+          <span
+            (click)="addAdjustmentLayer(AdjustmentLayer.BrightnessContrast)"
+          >
+            BrightnessContrast
+          </span>
+          <span (click)="addAdjustmentLayer(AdjustmentLayer.Levels)"
+            >Levels</span
+          >
+          <span (click)="addAdjustmentLayer(AdjustmentLayer.Curves)"
+            >Curves</span
+          >
+          <span (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)">
+            Exposure
+          </span>
+          <span (click)="addAdjustmentLayer(AdjustmentLayer.Vibrance)">
+            Vibrance
+          </span>
+          <span (click)="addAdjustmentLayer(AdjustmentLayer.HueSaturation)">
+            HueSaturation
+          </span>
+          <span (click)="addAdjustmentLayer(AdjustmentLayer.ColorBalance)">
+            ColorBalance
+          </span>
+          <span (click)="addAdjustmentLayer(AdjustmentLayer.BlackWhite)">
+            BlackWhite
+          </span>
+          <span (click)="addAdjustmentLayer(AdjustmentLayer.PhotoFilter)">
+            PhotoFilter
+          </span>
+          <span (click)="addAdjustmentLayer(AdjustmentLayer.ChannelMixer)">
+            ChannelMixer
+          </span>
+          <span (click)="addAdjustmentLayer(AdjustmentLayer.ColorLookup)">
+            ColorLookup
+          </span>
+          <span (click)="addAdjustmentLayer(AdjustmentLayer.Invert)"
+            >Invert</span
+          >
+          <span (click)="addAdjustmentLayer(AdjustmentLayer.Posterize)">
+            Posterize
+          </span>
+          <span (click)="addAdjustmentLayer(AdjustmentLayer.Threshold)">
+            Threshold
+          </span>
+          <span (click)="addAdjustmentLayer(AdjustmentLayer.GradientMap)">
+            GradientMap
+          </span>
+          <span (click)="addAdjustmentLayer(AdjustmentLayer.SelectiveColor)">
+            SelectiveColor
+          </span>
+        </div>
+      </app-menu>
+      <span>Canvas Size</span>
+      <div class="line"></div>
+      <span (click)="crop()">Crop</span>
+      <span (click)="rotateCanvas()">Rotate Canvas</span>
+      <div class="line"></div>
+      <span (click)="flipCanvas()">Flip Canvas</span>
+      <div class="line"></div>
+      <span (click)="autoTone()">Auto Tone</span>
+      <span (click)="autoContrast()">Auto Contrast</span>
+      <span (click)="autoColor()">Auto Color</span>
+      <div class="line"></div>
+      <span (click)="applyImage()">Apply Image</span>
     </div>
   </app-menu>
   <app-menu menuName="Layer">
     <div class="options">
-      <ul>
-        <li (click)="createNewLayer()">New Layer</li>
-        <li (click)="newTypeLayer()">New Type Layer</li>
-        <li (click)="duplicateLayer()">Duplicate Layer</li>
-        <li (click)="deleteLayer()">Delete Layer</li>
-        <div class="line"></div>
-        <li>Layer Properties</li>
-        <!-- <li>Layer Style</li> -->
-        <li>Layer Mask</li>
-        <div class="line"></div>
-        <!-- <li (click)="groupLayers()">Group Layers</li> -->
-        <!-- <li (click)="unGroupLayers()">Ungroup Layers</li> -->
-        <!-- <div class="line"></div> -->
-        <li (click)="mergeLayers()">Merge Layers</li>
-        <div class="line"></div>
-        <li (click)="flattenImage()">Flatten Image</li>
-        <div class="line"></div>
-        <li (click)="arrange()">Arrange</li>
-        <li (click)="align()">Align</li>
-        <li (click)="distribute()">Distribute</li>
-        <div class="line"></div>
-        <li (click)="lockLayers()">Lock Layers</li>
-        <li (click)="createClippingMask()">Create Clipping Mask</li>
-        <div class="line"></div>
-        <li (click)="layerViaCopy()">Layer via Copy</li>
-        <li (click)="layerViaCut()">Layer via Cut</li>
-      </ul>
+      <span (click)="createNewLayer()">New Layer</span>
+      <span (click)="newTypeLayer()">New Type Layer</span>
+      <span (click)="duplicateLayer()">Duplicate Layer</span>
+      <span (click)="deleteLayer()">Delete Layer</span>
+      <div class="line"></div>
+      <span>Layer Properties</span>
+      <span>Layer Mask</span>
+      <div class="line"></div>
+      <span (click)="mergeLayers()">Merge Layers</span>
+      <div class="line"></div>
+      <span (click)="flattenImage()">Flatten Image</span>
+      <div class="line"></div>
+      <span (click)="arrange()">Arrange</span>
+      <span (click)="align()">Align</span>
+      <span (click)="distribute()">Distribute</span>
+      <div class="line"></div>
+      <span (click)="lockLayers()">Lock Layers</span>
+      <span (click)="createClippingMask()">Create Clipping Mask</span>
+      <div class="line"></div>
+      <span (click)="layerViaCopy()">Layer via Copy</span>
+      <span (click)="layerViaCut()">Layer via Cut</span>
     </div>
   </app-menu>
 
   <app-menu menuName="Select">
     <div class="options">
-      <ul>
-        <li (click)="selectAll()">All</li>
-        <li (click)="deselect()">Deselect</li>
-        <li (click)="reselect()">Reselect</li>
-        <div class="line"></div>
-        <li (click)="inverse()">Inverse</li>
-        <li>All Layers</li>
-        <li (click)="deselectLayers()">Deselect Layers</li>
-        <!-- <div class="line"></div> -->
-        <!-- <li (click)="loadSelection()">Load Selection</li> -->
-        <!-- <li (click)="saveSelection()">Save Selection</li> -->
-        <!-- <div class="line"></div> -->
-        <!-- <li (click)="modify()">Modify</li> -->
-        <!-- <li>Feather</li> -->
-        <!-- <li>Border</li> -->
-        <!-- <li (click)="transformSelection()">Transform Selection</li> -->
-        <!-- <li>Color Range</li> -->
-        <!-- <li>Focus Area</li> -->
-        <!-- <li>Refine Edge</li> -->
-        <!-- <li>Similar</li> -->
-        <!-- <li>Grow</li> -->
-        <!-- <li>Contract</li> -->
-        <!-- <div class="line"></div> -->
-        <!-- <li (click)="loadSelectionChannel()">Load Selection Channel</li> -->
-        <!-- <li (click)="saveSlectionChannel()">Save Selection Channel</li> -->
-      </ul>
+      <span (click)="selectAll()">All</span>
+      <span (click)="deselect()">Deselect</span>
+      <span (click)="reselect()">Reselect</span>
+      <div class="line"></div>
+      <span (click)="inverse()">Inverse</span>
+      <span>All Layers</span>
+      <span (click)="deselectLayers()">Deselect Layers</span>
+      <!-- <div class="line"></div> -->
+      <!-- <span (click)="loadSelection()">Load Selection</span> -->
+      <!-- <span (click)="saveSelection()">Save Selection</span> -->
+      <!-- <div class="line"></div> -->
+      <!-- <span (click)="modify()">Modify</span> -->
+      <!-- <span>Feather</span> -->
+      <!-- <span>Border</span> -->
+      <!-- <span (click)="transformSelection()">Transform Selection</span> -->
+      <!-- <span>Color Range</span> -->
+      <!-- <span>Focus Area</span> -->
+      <!-- <span>Refine Edge</span> -->
+      <!-- <span>Similar</span> -->
+      <!-- <span>Grow</span> -->
+      <!-- <span>Contract</span> -->
+      <!-- <div class="line"></div> -->
+      <!-- <span (click)="loadSelectionChannel()">Load Selection Channel</span> -->
+      <!-- <span (click)="saveSlectionChannel()">Save Selection Channel</span> -->
     </div>
   </app-menu>
-  <!-- <li (click)="onMenuClick(Menus.Filter)">
+  <!-- <span (click)="onMenuClick(Menus.Filter)">
     Filter
     <div class="options" *ngIf="selectedMenu == Menus.Filter" #menuOptions>
-      <ul>
-        <li (click)="addFilter(Filter.Blur)">Blur</li>
-        <li (click)="addFilter(Filter.Blur)">Distort</li>
-        <li (click)="addFilter(Filter.Noise)">Noise</li>
-        <li (click)="addFilter(Filter.Pixelate)">Pixelate</li>
-        <li (click)="addFilter(Filter.Blur)">Render</li>
-        <li (click)="addFilter(Filter.Blur)">Sharpen</li>
-        <li (click)="addFilter(Filter.Blur)">Stylize</li>
+
+        <span (click)="addFilter(Filter.Blur)">Blur</span>
+        <span (click)="addFilter(Filter.Blur)">Distort</span>
+        <span (click)="addFilter(Filter.Noise)">Noise</span>
+        <span (click)="addFilter(Filter.Pixelate)">Pixelate</span>
+        <span (click)="addFilter(Filter.Blur)">Render</span>
+        <span (click)="addFilter(Filter.Blur)">Sharpen</span>
+        <span (click)="addFilter(Filter.Blur)">Stylize</span>
         <div class="line"></div>
-        <li>Other Filters</li>
-        <li>Convert for Smart Filters</li>
-        <li>Camera Raw Filter</li>
-        <li>Filter Gallery</li>
+        <span>Other Filters</span>
+        <span>Convert for Smart Filters</span>
+        <span>Camera Raw Filter</span>
+        <span>Filter Gallery</span>
         <div class="line"></div>
-        <li>Adaptive Wide Angle</li>
-        <li>Lighting Effects</li>
-        <li>Lens Correction</li>
-        <li>Vanishing Point</li>
-      </ul>
+        <span>Adaptive Wide Angle</span>
+        <span>Lighting Effects</span>
+        <span>Lens Correction</span>
+        <span>Vanishing Point</span>
+
     </div>
-  </li> -->
+  </span> -->
   <app-menu menuName="View">
     <div class="options">
-      <ul>
-        <li (click)="zoomIn()">Zoom In</li>
-        <li (click)="zoomOut()">Zoom Out</li>
-        <div class="line"></div>
-        <li (click)="fitOnScreen()">Fit on Screen</li>
-        <!-- <li (click)="actualPixels()">Actual Pixels</li> -->
-        <li (click)="printSize()">Print Size</li>
-        <!-- <li (click)="show()">Show</li> -->
-        <!-- <li>Extras</li> -->
-        <!-- <li>3D</li> -->
-        <div class="line"></div>
-        <!-- <li>Proof Setup</li> -->
-        <!-- <li>Proof Colors</li> -->
-        <!-- <div class="line"></div> -->
-        <!-- <li>Gamut Warning</li> -->
-        <!-- <li>Pixel Aspect Ratio</li> -->
-        <!-- <div class="line"></div> -->
-        <!-- <li>New Guide</li> -->
-        <!-- <li>Clear Guides</li> -->
-        <!-- <li>Lock Guides</li> -->
-        <!-- <div class="line"></div> -->
-        <li>Snap</li>
-        <li (click)="rotateView()">Rotate View</li>
-        <li (click)="flipHorizontal()">Flip Horizontal</li>
-        <li (click)="flipVertical()">Flip Vertical</li>
-        <li (click)="revealAll()">Reveal All</li>
-      </ul>
+      <span (click)="zoomIn()">Zoom In</span>
+      <span (click)="zoomOut()">Zoom Out</span>
+      <div class="line"></div>
+      <span (click)="fitOnScreen()">Fit on Screen</span>
+      <!-- <span (click)="actualPixels()">Actual Pixels</span> -->
+      <span (click)="printSize()">Print Size</span>
+      <!-- <span (click)="show()">Show</span> -->
+      <!-- <span>Extras</span> -->
+      <!-- <span>3D</span> -->
+      <div class="line"></div>
+      <!-- <span>Proof Setup</span> -->
+      <!-- <span>Proof Colors</span> -->
+      <!-- <div class="line"></div> -->
+      <!-- <span>Gamut Warning</span> -->
+      <!-- <span>Pixel Aspect Ratio</span> -->
+      <!-- <div class="line"></div> -->
+      <!-- <span>New Guide</span> -->
+      <!-- <span>Clear Guides</span> -->
+      <!-- <span>Lock Guides</span> -->
+      <!-- <div class="line"></div> -->
+      <span>Snap</span>
+      <span (click)="rotateView()">Rotate View</span>
+      <span (click)="flipHorizontal()">Flip Horizontal</span>
+      <span (click)="flipVertical()">Flip Vertical</span>
+      <span (click)="revealAll()">Reveal All</span>
     </div>
   </app-menu>
   <app-menu menuName="Window">
     <div class="options">
-      <ul>
-        <!-- <li>Actions</li> -->
-        <li (click)="adjustmentsPanel()">
-          Adjustments <span *ngIf="settings.panals.adjustments">(true)</span>
-        </li>
-        <!-- <li (click)="brushesPanel()">Brushes</li> -->
-        <!-- <li (click)="characterPanel()">Character</li> -->
-        <!-- <li (click)="colorPanel()">Color</li> -->
-        <!-- <li >History</li> -->
-        <li (click)="layersPanel()">Layers</li>
-        <!-- <li (click)="librariesPanel()">Libraries</li> -->
-        <li (click)="propertiesPanel()">Properties</li>
-        <li (click)="swatchesPanel()">Swatches</li>
-      </ul>
+      <!-- <span>Actions</span> -->
+      <span (click)="adjustmentsPanel()">
+        Adjustments <span *ngIf="settings.panals.adjustments">(true)</span>
+      </span>
+      <!-- <span (click)="brushesPanel()">Brushes</span> -->
+      <!-- <span (click)="characterPanel()">Character</span> -->
+      <!-- <span (click)="colorPanel()">Color</span> -->
+      <!-- <span >History</span> -->
+      <span (click)="layersPanel()">Layers</span>
+      <!-- <span (click)="librariesPanel()">Libraries</span> -->
+      <span (click)="propertiesPanel()">Properties</span>
+      <span (click)="swatchesPanel()">Swatches</span>
     </div>
   </app-menu>
 </header>

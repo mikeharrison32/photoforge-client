@@ -14,6 +14,7 @@ class MoveTool {
     let rect: DOMRect;
     let zoom: number;
     let movingAllowed: boolean = data.isMovingAllowed.getValue();
+
     this.mouseDownListener = (e: any) => {
       rect = display.getBoundingClientRect();
       zoom = data.zoom.getValue() / 100;
@@ -31,10 +32,9 @@ class MoveTool {
         return;
       }
       if (layerToMove && !layerToMove.locked) {
-        layerToMove.moveTo(
-          (e.clientX - rect.left) / zoom,
-          (e.clientY - rect.top) / zoom
-        );
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        layerToMove.moveTo(x / zoom, y / zoom);
       }
     };
     this.mouseUpListener = (e: any) => {

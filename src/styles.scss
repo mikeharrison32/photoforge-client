@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+$primary-color-1: #323232;
 body {
   margin: 0;
   padding: 0;
@@ -8,11 +9,33 @@ body {
   overflow: hidden;
   width: 100vw;
 }
+
+* {
+  color: #ebebeb;
+}
+
 .crop-canvas,
 .lasso-canvas {
   position: absolute;
   width: 100%;
   height: 100%;
+}
+.textarea {
+  resize: none;
+  font-size: 2rem;
+  background: transparent;
+  width: auto;
+  height: auto;
+  display: flex;
+  position: absolute;
+  z-index: 100;
+  color: #fff;
+  /* flex-direction: row; */
+  align-items: center;
+  outline: blue;
+  left: 0;
+  top: 0;
+  border: solid;
 }
 
 .brush {
@@ -130,6 +153,7 @@ body {
   width: 100%;
   height: 100%;
   position: absolute;
+  z-index: 100;
 }
 .layer {
   width: 100%;

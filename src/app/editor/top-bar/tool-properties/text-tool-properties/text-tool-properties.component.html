@@ -1,36 +1,32 @@
-<div class="tool-propertie text-tool">
-  <img src="assets/tool-properties-icons/text-with-arrows.svg" />
-  <app-select
-    [Items]="[
-      'Dk Drop Dead Gorgeous',
-      'Gotham Black',
-      'Courier New, Courier, monospace',
-      'Franklin Gothic Medium, Arial Narrow, Arial, sans-serif',
-      'Times New Roman, Times, serif'
-    ]"
-    [selectedItem]="properties?.fontFamily"
-    (onSelectedItemChange)="selectFontFamiliy($event)"
-  ></app-select>
-  <app-select
-    [selectedItem]="properties?.fontStyle"
-    [Items]="['Regular', 'Italic']"
-    (onSelectedItemChange)="selectFontStyle($event)"
-  >
-  </app-select>
-  <img src="assets/tool-properties-icons/small-and-big-text.svg" />
-  <app-input
-    [Value]="properties?.size"
-    unit="px"
-    (onInputChange)="setTextSize($event)"
-  ></app-input>
-  <img src="assets/tool-properties-icons/double-a.svg" />
-  <app-select [Items]="['Sharp', 'Smooth']"></app-select>
-  <div class="group">
-    <img src="assets/tool-properties-icons/text-align-left.svg" />
-    <img src="assets/tool-properties-icons/text-align-center.svg" />
-    <img src="assets/tool-properties-icons/text-align-right.svg" />
-  </div>
-  <input type="color" name="" id="" (input)="setTextColor($event)" />
-  <img src="assets/tool-properties-icons/text-with-curved-arrow.svg" />
-  <img src="assets/tool-properties-icons/list-folder.svg" />
+<app-tool-bar-header headerName="Type"></app-tool-bar-header>
+<div class="action-group">
+  <button>
+    <div class="icon">
+      <svg
+        role="img"
+        fill="currentColor"
+        viewBox="0 0 18 18"
+        id="STextAdd18N-icon"
+        width="18"
+        height="18"
+        aria-hidden="true"
+        aria-label=""
+        focusable="false"
+      >
+        <path
+          fill-rule="evenodd"
+          d="m13.5,9.05c-2.45774,0-4.45,1.99226-4.45,4.45s1.99226,4.45,4.45,4.45,4.45-1.99232,4.45-4.45-1.99226-4.45-4.45-4.45Zm2.44995,5.2h-1.69995v1.70001c0,.13807-.11193.25-.25.25h-1c-.13807,0-.25-.11193-.25-.25v-1.70001h-1.69995c-.13807,0-.25-.11193-.25-.25v-1c0-.13807.11193-.25.25-.25h1.69995v-1.70001c0-.13807.11193-.25.25-.25h1c.13807,0,.25.11193.25.25v1.70001h1.69995c.13807,0,.25.11193.25.25v1c0,.13807-.11193.25-.25.25Z"
+        ></path>
+        <path
+          fill-rule="evenodd"
+          d="m8,13.54999V4h4v1.5c0,.27625.22388.5.5.5h1c.27612,0,.5-.22375.5-.5v-3c0-.2749-.2251-.5-.5-.5H.5c-.2749,0-.5.2251-.5.5v3c0,.27625.22388.5.5.5h1c.27612,0,.5-.22375.5-.5v-1.5h4v10h-1.5c-.27612,0-.5.22388-.5.5v1c0,.27625.22388.5.5.5h4.08618c-.37183-.73499-.58618-1.56445-.58618-2.45001Z"
+        ></path>
+      </svg>
+    </div>
+    Add Text
+  </button>
+
+  <button>Add a heading</button>
+  <button>Add a subheading</button>
+  <button>Add body text</button>
 </div>

@@ -5,14 +5,13 @@ import { Renderer2 } from '@angular/core';
 import { DataService } from '../services/data.service';
 export class TypeLayer extends Layer {
   app!: PIXI.Application;
-  textarea?: HTMLElement;
+  textarea?: HTMLTextAreaElement;
   properties: ITextToolOptions = {
     textAlign: 'left',
   };
   textElem!: HTMLElement;
   constructor(
     renderer: Renderer2,
-    // containerElem: HTMLElement,
     data: DataService,
     id: string,
     name: string,
@@ -24,22 +23,26 @@ export class TypeLayer extends Layer {
     this.type = 'type';
     this.textElem = this.renderer.createElement('p');
     this.textElem.textContent = text || 'Hello';
+    this.textElem.style.fontSize = (options?.fontSize || 87) + 'px';
     this.renderer.appendChild(this.elem, this.textElem);
     this.resizer.setWidth(this.elem.clientWidth);
     this.resizer.setHeight(this.elem.clientHeight);
 
-    this.elem.addEventListener('dblclick', (e) => {
+    renderer.listen(this.elem, 'dblclick', (e) => {
       // this.elem.style.opacity = '0';
-      const textarea = document.createElement('textarea');
-      textarea.value = this.textElem.textContent || '';
-      textarea.select();
-      textarea.classList.add('textarea');
-      const elemRect = this.elem.getBoundingClientRect();
-      textarea.style.left = elemRect.left + 'px';
-      textarea.style.top = elemRect.top + 'px';
+      if (!this.textarea) {
+        this.textarea = document.createElement('textarea');
+        this.textarea.style.fontSize = this.textElem.style.fontSize;
+        this.textarea.style.color = this.elem.style.color;
+        this.textarea.style.fontFamily = this.textElem.style.fontFamily;
+      }
+      this.textElem.style.opacity = '0';
+      this.textarea.value = this.textElem.textContent || '';
+      this.textarea.select();
+      this.textarea.classList.add('textarea');
       data.shortcutsEnabled.next(false);
-      let text = '';
-      textarea.oninput = (e) => {
+      let text = this.textarea.value;
+      this.textarea.oninput = (e) => {
         text = (e.target as any).value;
       };
       const finishTextInsertion = (e: any) => {
@@ -51,7 +54,8 @@ export class TypeLayer extends Layer {
         }
       };
       const disableTextEditing = () => {
-        textarea.remove();
+        this.textElem.style.opacity = '1';
+        this.textarea?.remove();
         document.removeEventListener('keydown', finishTextInsertion);
         document.removeEventListener('mousedown', checkForClickOutsideElem);
         data.shortcutsEnabled.next(true);
@@ -63,7 +67,13 @@ export class TypeLayer extends Layer {
       };
       document.addEventListener('keydown', finishTextInsertion);
       document.addEventListener('mousedown', checkForClickOutsideElem);
-      this.elem.appendChild(textarea);
+      renderer.appendChild(this.elem, this.textarea);
+    });
+    renderer.listen(document, 'click', (e) => {
+      const target = e.target;
+      if (!this.elem.contains(target) && this.textarea) {
+        this.textarea.remove();
+      }
     });
   }
 

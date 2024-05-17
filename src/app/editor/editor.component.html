@@ -1,16 +1,24 @@
-<app-menus></app-menus>
-<app-top-bar></app-top-bar>
+<div class="loading-document" *ngIf="loadingDocument">
+  <span>Loading Document</span>
+  <div class="loading-effect">
+    <div class="line"></div>
+  </div>
+</div>
+<app-top-bar [display]="display"></app-top-bar>
 <div class="main">
-  <app-tool-box></app-tool-box>
+  <div id="tools">
+    <app-tool-box></app-tool-box>
+    <app-tool-properties></app-tool-properties>
+  </div>
   <div class="image-display" id="image-display" #container>
     <div #cursor class="cursor" id="cursor"></div>
-    <div class="displayContainer">
-      <div
-        id="display"
-        #display
-        [style.opacity]="projects.length < 1 ? '0' : '1'"
-      ></div>
+    <div class="displayContainer" #displayContainer>
+      <div id="display" #display></div>
       <div id="resizers"></div>
+      <app-crop-rect
+        *ngIf="selectedTool == 'cropTool'"
+        [display]="display"
+      ></app-crop-rect>
     </div>
     <div
       #contextMenuRef
@@ -23,23 +31,7 @@
       </p>
     </div>
   </div>
-  <div class="zoom-bar">
-    <div class="level">
-      <app-input
-        [Value]="zoom"
-        [Max]="100"
-        [Min]="0"
-        [Floor]="true"
-        unit="%"
-        (onInputChange)="setZoom($event)"
-      ></app-input>
-    </div>
-  </div>
 
   <app-inspector></app-inspector>
 </div>
-<app-new-document
-  *ngIf="newDocumentActive"
-  (closeBtnClicked)="onNewDocumentCloseClick()"
-  (createBtnClicked)="onNewDocumentCreateClick()"
-></app-new-document>
+<app-new-document *ngIf="newDocumentActive"></app-new-document>

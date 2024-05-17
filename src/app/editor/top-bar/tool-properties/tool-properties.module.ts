@@ -22,6 +22,9 @@ import { ShapeToolPropertiesComponent } from './shape-tool-properties/shape-tool
 import { HandToolPropertiesComponent } from './hand-tool-properties/hand-tool-properties.component';
 import { ZoomToolPropertiesComponent } from './zoom-tool-properties/zoom-tool-properties.component';
 import { ToolPropertiesComponent } from './tool-properties.component';
+import { ToolBarHeaderComponent } from './tool-bar-header/tool-bar-header.component';
+import { DropDownComponent } from './drop-down/drop-down.component';
+import { SliderModule } from 'src/app/slider/slider.module';
 
 @NgModule({
   declarations: [
@@ -46,8 +49,10 @@ import { ToolPropertiesComponent } from './tool-properties.component';
     HandToolPropertiesComponent,
     ZoomToolPropertiesComponent,
     ToolPropertiesComponent,
+    ToolBarHeaderComponent,
+    DropDownComponent,
   ],
-  imports: [CommonModule, SharedModule],
+  imports: [CommonModule, SharedModule, SliderModule],
   exports: [
     BrushComponent,
     MoveToolPropertiesComponent,

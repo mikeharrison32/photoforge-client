@@ -1,268 +1,239 @@
-<div class="mini-panels" [dndDropzone]>
-  <div class="mini-panel">
-    <img src="assets/history-icon.svg" />
+<div class="group" @slideAnimation *ngIf="layersPanel || propertiesPanel">
+  <div class="layers-panel" *ngIf="layersPanel">
+    <div class="panel-header">
+      <h4>Layers</h4>
+    </div>
+    <div class="action-group">
+      <div class="action-btn">
+        <svg
+          role="img"
+          fill="currentColor"
+          viewBox="0 0 18 18"
+          id="SNew18N-icon"
+          width="18"
+          height="18"
+          aria-hidden="true"
+          aria-label=""
+          focusable="false"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M2,2H16V16H2ZM1.6,1a.6.6,0,0,0-.6.589V16.5a.5.5,0,0,0,.5.5H16.4a.6.6,0,0,0,.6-.589V1.6a.594.594,0,0,0-.588-.6H1.6Z"
+          ></path>
+          <path
+            fill-rule="evenodd"
+            d="M8.25,5A.25.25,0,0,0,8,5.25V8H5.25A.25.25,0,0,0,5,8.25v1.5a.25.25,0,0,0,.25.25H8v2.75a.25.25,0,0,0,.25.25h1.5a.25.25,0,0,0,.25-.25V10h2.75A.25.25,0,0,0,13,9.75V8.25A.25.25,0,0,0,12.75,8H10V5.25A.25.25,0,0,0,9.75,5Z"
+          ></path>
+        </svg>
+      </div>
+      <div class="action-btn">
+        <svg
+          role="img"
+          fill="currentColor"
+          viewBox="0 0 18 18"
+          id="SAdjustmentGeneral18N-icon"
+          width="18"
+          height="18"
+          aria-hidden="true"
+          aria-label=""
+          focusable="false"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M9,2.05A6.95,6.95,0,1,0,15.95,9,6.95,6.95,0,0,0,9,2.05ZM3.1,9A5.9,5.9,0,0,1,13.172,4.828L4.828,13.172A5.881,5.881,0,0,1,3.1,9Z"
+          ></path>
+        </svg>
+      </div>
+      <div class="action-btn">
+        <svg
+          role="img"
+          fill="currentColor"
+          viewBox="0 0 18 18"
+          id="SEffects18N-icon"
+          width="18"
+          height="18"
+          aria-hidden="true"
+          aria-label=""
+          focusable="false"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M17.267,6H15.615c-.1,0-.121.039-.182.118L12.1,9.426V9.4L10.718,6.079C10.7,6.02,10.677,6,10.6,6H6.018l.31-1.344c.585-2.647,1.8-3.115,2.76-3.115a8.885,8.885,0,0,1,1.5.375c.07.022.117-.023.141-.114l.3-1.324C11.056.409,11.01.341,10.939.3A7.958,7.958,0,0,0,9.117.041c-2.27,0-3.908,1.283-4.68,4.73L4.127,6H1.87a.127.127,0,0,0-.141.114L1.261,7.363l-.007.045c.007.009.038,0,.1.092H3.58C3.37,8.527,1.26,16.349.768,17.742c-.047.114,0,.182.094.182.187-.023,1.266.069,1.828,0,.117-.023.164-.046.187-.159.491-1.484,1.783-5.974,2.7-10.265h2.39c.052,0,1.02-.012,1.552-.063l1.41,2.811C9.7,11.6,8.161,13.474,6.892,14.863a.076.076,0,0,0,.04.137H8.663c.1,0,2.444-2.776,3.169-3.695h.02s2.01,3.7,2.091,3.7h1.632c.081,0,.121-.059.081-.137-.444-.939-1.929-3.362-2.494-4.537,1.129-1.212,3.2-3.113,4.166-4.189C17.388,6.079,17.368,6,17.267,6Z"
+          ></path>
+        </svg>
+      </div>
+      <div class="action-btn">
+        <svg
+          role="img"
+          fill="currentColor"
+          viewBox="0 0 18 18"
+          id="SLayerMask18N-icon"
+          width="18"
+          height="18"
+          aria-hidden="true"
+          aria-label=""
+          focusable="false"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M17.5,2H.5a.5.5,0,0,0-.5.5v13a.5.5,0,0,0,.5.5h17a.5.5,0,0,0,.5-.5V2.5A.5.5,0,0,0,17.5,2ZM8.97955,13.19318A4.19318,4.19318,0,1,1,13.17273,9,4.1932,4.1932,0,0,1,8.97955,13.19318Z"
+          ></path>
+        </svg>
+      </div>
+      <div class="action-btn">
+        <svg
+          role="img"
+          fill="currentColor"
+          viewBox="0 0 18 18"
+          id="SShowAllLayers18N-icon"
+          width="18"
+          height="18"
+          aria-hidden="true"
+          aria-label=""
+          focusable="false"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M13.80566,11.94849l-3.85839,2.2976a1.846,1.846,0,0,1-1.91114-.00976L4.19434,11.94849,2.20508,13.13306a.43071.43071,0,0,0,0,.73376l6.4563,3.84509a.64654.64654,0,0,0,.67224.00293l6.45813-3.84594a.43076.43076,0,0,0,.00342-.7356Z"
+          ></path>
+          <path
+            fill-rule="evenodd"
+            d="M13.80566,7.44849,9.94727,9.74609a1.846,1.846,0,0,1-1.91114-.00976L4.19434,7.44849,2.20508,8.63306a.43071.43071,0,0,0,0,.73376l6.4563,3.84509a.64654.64654,0,0,0,.67224.00293L15.79175,9.3689a.43076.43076,0,0,0,.00342-.7356Z"
+          ></path>
+          <path
+            fill-rule="evenodd"
+            d="M9,.19231a.6454.6454,0,0,0-.33864.09583l-6.45628,3.845a.43064.43064,0,0,0,0,.73368l6.45628,3.845a.646.646,0,0,0,.67229.003l6.45812-3.84594a.43082.43082,0,0,0,.00341-.73565L9.3389.28827A.64588.64588,0,0,0,9,.19231Z"
+          ></path>
+        </svg>
+      </div>
+      <div class="action-btn">
+        <svg
+          role="img"
+          fill="currentColor"
+          viewBox="0 0 18 18"
+          id="SDelete18N-icon"
+          width="18"
+          height="18"
+          aria-hidden="true"
+          aria-label=""
+          focusable="false"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M15.75,3H12V2a1,1,0,0,0-1-1H6A1,1,0,0,0,5,2V3H1.25A.25.25,0,0,0,1,3.25v.5A.25.25,0,0,0,1.25,4h1L3.457,16.548a.5.5,0,0,0,.5.452h9.092a.5.5,0,0,0,.5-.452L14.75,4h1A.25.25,0,0,0,16,3.75v-.5A.25.25,0,0,0,15.75,3ZM5.533,14.5A.5.5,0,0,1,5,14.034l-.535-8a.5.5,0,1,1,1-.067l.535,8A.5.5,0,0,1,5.533,14.5ZM9,14a.5.5,0,0,1-1,0V6A.5.5,0,0,1,9,6ZM11,3H6V2h5Zm1,11.034a.5.5,0,1,1-1-.067l.535-8a.5.5,0,1,1,1,.067Z"
+          ></path>
+        </svg>
+      </div>
+    </div>
+    <div class="blend-opacity">
+      <div class="label">Blend</div>
+      <app-select [Items]="blendingMods" class="blend-picker"></app-select>
+      <div class="label">Opacity</div>
+      <input type="text" />
+    </div>
+    <div class="divider"></div>
+    <app-layers></app-layers>
+  </div>
+  <div class="splitter"></div>
+  <app-layer-property *ngIf="propertiesPanel"></app-layer-property>
+</div>
+
+<div class="task-bar">
+  <div class="panel-actions">
+    <div
+      class="toggle-panel"
+      [class.active-panel]="layersPanel"
+      (click)="layersPanel = layersPanel ? false : true"
+    >
+      <svg
+        role="img"
+        fill="currentColor"
+        viewBox="0 0 18 18"
+        id="SLayerDetails18N-icon"
+        width="18"
+        height="18"
+        aria-hidden="true"
+        aria-label=""
+        focusable="false"
+      >
+        <rect
+          fill-rule="evenodd"
+          x="11"
+          y="16"
+          width="7"
+          height="1.5"
+          rx=".5"
+          ry=".5"
+        ></rect>
+        <path
+          fill-rule="evenodd"
+          d="m10,12.8443l-.77548.53809c-.13501.09369-.31403.09369-.44904,0l-4.91943-3.41345-2.92691,2.03107c-.07166.04974-.07166.1557,0,.20544l7.9249,5.4989c.08777.06091.20416.06091.29193,0l.85403-.59265v-4.2674Z"
+        ></path>
+        <polygon
+          fill-rule="evenodd"
+          points="15.62976 11 14.14395 9.96893 12.65799 11 15.62976 11"
+        ></polygon>
+        <path
+          fill-rule="evenodd"
+          d="m10,12.8443l-.77548.53809c-.13501.09369-.31403.09369-.44904,0l-4.91943-3.41345-2.92691,2.03107c-.07166.04974-.07166.1557,0,.20544l7.9249,5.4989c.08777.06091.20416.06091.29193,0l.85403-.59265v-4.2674Z"
+        ></path>
+        <polygon
+          fill-rule="evenodd"
+          points="15.62976 11 14.14395 9.96893 12.65799 11 15.62976 11"
+        ></polygon>
+        <rect
+          fill-rule="evenodd"
+          x="11"
+          y="13"
+          width="7"
+          height="1.5"
+          rx=".5"
+          ry=".5"
+        ></rect>
+        <path
+          fill-rule="evenodd"
+          d="m10,10c0-.55231.44772-1,1-1h1.74487l4.32632-3.00183c.07166-.04968.07166-.15564,0-.20538L9.15067.29712c-.09061-.06287-.21072-.06287-.30133,0L.9288,5.79279c-.07166.04974-.07166.1557,0,.20538l7.92053,5.49567c.09061.06287.21072.06287.30133,0l.84933-.58929v-.90454Z"
+        ></path>
+        <rect
+          fill-rule="evenodd"
+          x="11"
+          y="10"
+          width="7"
+          height="1.5"
+          rx=".5"
+          ry=".5"
+        ></rect>
+      </svg>
+    </div>
+    <div
+      class="toggle-panel"
+      [class.active-panel]="propertiesPanel"
+      (click)="propertiesPanel = propertiesPanel ? false : true"
+    >
+      <svg
+        role="img"
+        fill="currentColor"
+        viewBox="0 0 18 18"
+        id="SProperties18N-icon"
+        width="18"
+        height="18"
+        aria-hidden="true"
+        aria-label=""
+        focusable="false"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M16.75,3H7.95a2.5,2.5,0,0,0-4.9,0H1.25A.25.25,0,0,0,1,3.25v.5A.25.25,0,0,0,1.25,4h1.8a2.5,2.5,0,0,0,4.9,0h8.8A.25.25,0,0,0,17,3.75v-.5A.25.25,0,0,0,16.75,3ZM5.5,5A1.5,1.5,0,1,1,7,3.5,1.5,1.5,0,0,1,5.5,5Z"
+        ></path>
+        <path
+          fill-rule="evenodd"
+          d="M16.75,13H9.95a2.5,2.5,0,0,0-4.9,0H1.25a.25.25,0,0,0-.25.25v.5a.25.25,0,0,0,.25.25h3.8a2.5,2.5,0,0,0,4.9,0h6.8a.25.25,0,0,0,.25-.25v-.5A.25.25,0,0,0,16.75,13ZM7.5,15A1.5,1.5,0,1,1,9,13.5,1.5,1.5,0,0,1,7.5,15Z"
+        ></path>
+        <path
+          fill-rule="evenodd"
+          d="M1,8.25v.5A.25.25,0,0,0,1.25,9h8.8a2.5,2.5,0,0,0,4.9,0h1.8A.25.25,0,0,0,17,8.75v-.5A.25.25,0,0,0,16.75,8h-1.8a2.5,2.5,0,0,0-4.9,0H1.25A.25.25,0,0,0,1,8.25ZM11,8.5A1.5,1.5,0,1,1,12.5,10,1.5,1.5,0,0,1,11,8.5Z"
+        ></path>
+      </svg>
+    </div>
   </div>
 </div>
-<!-- <app-panel
-  [Tabs]="['Color', 'Swatches', 'Gradients', 'Patterns']"
-  [dndDraggable]
->
-  <div panelBody-1>
-    <h4>Color</h4>
-  </div>
-  <div panelBody-2>
-    <h4>Swatches</h4>
-  </div>
-  <div panelBody-3>
-    <h4>Gradients</h4>
-  </div>
-  <div panelBody-4>
-    <h4>Patterns</h4>
-  </div>
-</app-panel> -->
-<app-panel [Tabs]="['Properties', 'Adjustments']">
-  <div class="properties" panelBody-1>
-    <app-layer-property></app-layer-property>
-  </div>
-  <div class="adjustments" panelBody-2>
-    <p>Add an adjustment</p>
-    <div class="icons">
-      <img
-        width="20"
-        src="assets/adjustments-icons/brightness-icon.svg"
-        (click)="addAdjustmentLayer(AdjustmentLayer.BrightnessContrast)"
-      />
-      <img
-        width="20"
-        src="assets/adjustments-icons/channel-mixer.svg"
-        (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
-      />
-      <img
-        width="20"
-        src="assets/adjustments-icons/color-balance.svg"
-        (click)="addAdjustmentLayer(AdjustmentLayer.ColorBalance)"
-      />
-      <img
-        width="20"
-        src="assets/adjustments-icons/color-lookup.svg"
-        (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
-      />
-      <img
-        width="20"
-        src="assets/adjustments-icons/curves.svg"
-        (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
-      />
-      <img
-        width="20"
-        (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
-        src="assets/adjustments-icons/exposure.svg"
-      />
-      <img
-        width="20"
-        src="assets/adjustments-icons/gradient-map.svg"
-        (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
-      />
-      <img
-        width="20"
-        src="assets/adjustments-icons/hue-saturation.svg"
-        (click)="addAdjustmentLayer(AdjustmentLayer.HueSaturation)"
-      />
-      <img
-        width="20"
-        src="assets/adjustments-icons/levels.svg"
-        (click)="addAdjustmentLayer(AdjustmentLayer.Levels)"
-      />
-      <img
-        width="20"
-        src="assets/adjustments-icons/photo-filter.svg"
-        (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
-      />
-      <img
-        width="20"
-        src="assets/adjustments-icons/posterize.svg"
-        (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
-      />
-      <img
-        width="20"
-        src="assets/adjustments-icons/selective-color.svg"
-        (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
-      />
-      <img
-        width="20"
-        src="assets/adjustments-icons/threshold.svg"
-        (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)"
-      />
-      <img
-        width="20"
-        src="assets/adjustments-icons/vibrance.svg"
-        (click)="addAdjustmentLayer(AdjustmentLayer.Vibrance)"
-      />
-      <img
-        width="20"
-        src="assets/adjustments-icons/black-white.svg"
-        (click)="addAdjustmentLayer(AdjustmentLayer.BlackWhite)"
-      />
-    </div>
-  </div>
-</app-panel>
-<app-panel [Tabs]="['Layers', 'Channels', 'Paths']">
-  <div class="layers-panel" panelBody-1>
-    <div class="layer-properties">
-      <div class="layer-property">
-        <app-select [Items]="['Kind']" class="layer-kind"></app-select>
-
-        <img width="20" src="assets/image-icon.svg" />
-        <img width="20" src="assets/half-circle.svg" />
-        <img width="20" src="assets/tools-icons/text-tool.svg" />
-        <img width="20" src="assets/rectangular-select.svg" />
-      </div>
-      <div class="layer-property">
-        <app-select
-          class="blendingMode"
-          [Items]="blendingMods"
-          (onSelectedItemChange)="onBlendingModeChange($event)"
-        ></app-select>
-        <div class="opacity">
-          <p>Opacity:</p>
-          <app-input
-            [Value]="100"
-            (onInputChange)="onOpacityChange($event)"
-            [unit]="'%'"
-            [hasVolume]="true"
-          ></app-input>
-        </div>
-      </div>
-      <div class="layer-property">
-        <p>Lock:</p>
-        <img width="20" src="assets/rec-net.svg" />
-        <img
-          width="20"
-          src="assets/tools-icons/brush-tool.svg"
-          [class.active]="brushLocked"
-          (click)="toggleBrushLocked()"
-        />
-        <img
-          width="20"
-          src="assets/tools-icons/move-tool.svg"
-          [class.active]="movingLocked"
-          (click)="toggleMovingLocked()"
-        />
-        <img width="20" src="assets/file-streched.svg" />
-        <img width="20" style="width: 0.5rem" src="assets/lock-fill.svg" />
-        <div class="fill">
-          <p>Fill:</p>
-          <app-input [Value]="100" [unit]="'%'" [hasVolume]="true"></app-input>
-        </div>
-      </div>
-    </div>
-    <app-layers></app-layers>
-    <div class="layer-options">
-      <div *ngIf="ad_choices_active">
-        <div class="ad_choices" #ad_choices>
-          <p (click)="addAdjustmentLayer(AdjustmentLayer.SolidColor)">
-            SolidColor
-          </p>
-          <p (click)="addAdjustmentLayer(AdjustmentLayer.Gradient)">Gradient</p>
-          <p (click)="addAdjustmentLayer(AdjustmentLayer.Pattern)">Pattern</p>
-          <p (click)="addAdjustmentLayer(AdjustmentLayer.BrightnessContrast)">
-            BrightnessContrast
-          </p>
-          <p (click)="addAdjustmentLayer(AdjustmentLayer.Levels)">Levels</p>
-          <p (click)="addAdjustmentLayer(AdjustmentLayer.Curves)">Curves</p>
-          <p (click)="addAdjustmentLayer(AdjustmentLayer.Exposure)">Exposure</p>
-          <p (click)="addAdjustmentLayer(AdjustmentLayer.Vibrance)">Vibrance</p>
-          <p (click)="addAdjustmentLayer(AdjustmentLayer.HueSaturation)">
-            HueSaturation
-          </p>
-          <p (click)="addAdjustmentLayer(AdjustmentLayer.ColorBalance)">
-            ColorBalance
-          </p>
-          <p (click)="addAdjustmentLayer(AdjustmentLayer.BlackWhite)">
-            BlackWhite
-          </p>
-          <p (click)="addAdjustmentLayer(AdjustmentLayer.PhotoFilter)">
-            PhotoFilter
-          </p>
-          <p (click)="addAdjustmentLayer(AdjustmentLayer.ChannelMixer)">
-            ChannelMixer
-          </p>
-          <p (click)="addAdjustmentLayer(AdjustmentLayer.ColorLookup)">
-            ColorLookup
-          </p>
-          <p (click)="addAdjustmentLayer(AdjustmentLayer.Invert)">Invert</p>
-          <p (click)="addAdjustmentLayer(AdjustmentLayer.Posterize)">
-            Posterize
-          </p>
-          <p (click)="addAdjustmentLayer(AdjustmentLayer.Threshold)">
-            Threshold
-          </p>
-          <p (click)="addAdjustmentLayer(AdjustmentLayer.GradientMap)">
-            GradientMap
-          </p>
-          <p (click)="addAdjustmentLayer(AdjustmentLayer.SelectiveColor)">
-            SelectiveColor
-          </p>
-        </div>
-      </div>
-      <ul>
-        <img
-          width="20"
-          src="assets/tool-properties-icons/link-icon.svg"
-          alt=""
-        />
-        <img width="20" src="assets/fx-icon.svg" alt="" />
-        <img
-          width="20"
-          src="assets/middle-dark-icon.svg"
-          (click)="addLayerMask()"
-        />
-        <img
-          width="20"
-          src="assets/half-dark-circle-icon.svg"
-          (click)="toggleAdChoices()"
-        />
-        <img
-          width="20"
-          src="assets/group-icon.svg"
-          (click)="createNewGroup()"
-        />
-        <img
-          width="20"
-          src="assets/rectangular-add-icon.svg"
-          (click)="createNewLayer()"
-        />
-        <img width="20" src="assets/trash-icon.svg" (click)="deleteLayer()" />
-      </ul>
-    </div>
-  </div>
-  <div class="channels" panelBody-2>
-    <div *ngIf="selectedLayers[0]">
-      <app-channel
-        name="RGB"
-        [layer]="selectedLayers[0]"
-        (onVisibleChange)="onRGBChannelVisibleChange($event)"
-      ></app-channel>
-      <app-channel
-        name="Red"
-        [layer]="selectedLayers[0]"
-        (onVisibleChange)="onRedChannelVisibleChange($event)"
-      ></app-channel>
-      <app-channel
-        name="Green"
-        [layer]="selectedLayers[0]"
-        (onVisibleChange)="onGreenChannelVisibleChange($event)"
-      ></app-channel>
-      <app-channel
-        name="Blue"
-        [layer]="selectedLayers[0]"
-        (onVisibleChange)="onBlueChannelVisibleChange($event)"
-      ></app-channel>
-    </div>
-    <div *ngIf="!selectedLayers[0]">
-      <span>Select a pixel layer to see its channels</span>
-    </div>
-  </div>
-  <div class="paths" panelBody-3>
-    <h3>Paths</h3>
-  </div>
-</app-panel>

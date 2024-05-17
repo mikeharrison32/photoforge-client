@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  Input,
   OnDestroy,
   OnInit,
   Output,
@@ -14,56 +15,20 @@ import { Project } from 'src/app/types/project';
   styleUrls: ['./top-bar.component.scss'],
 })
 export class TopBarComponent implements OnInit, OnDestroy {
-  projects: Project[] = [];
+  project?: Project;
   selectedProject?: Project | null;
+  zoom: number = this.data.zoom.getValue();
+  zoomActions: boolean = false;
+  @Input() display?: HTMLElement;
   constructor(private data: DataService) {}
   ngOnInit(): void {
-    this.data.projects.subscribe((project) => {
-      this.projects = project;
+    this.data.openedProject.subscribe((project) => {
+      this.project = project!;
     });
-    this.data.selectedProject.subscribe((project) => {
-      this.selectedProject = project;
+    this.data.zoom.subscribe((zoom) => {
+      this.zoom = zoom;
     });
-    this.setSelectedProject(this.projects[0]);
   }
-  setSelectedProject(project: Project) {
-    this.data.selectedProject.next(project);
-  }
-  closeProject(id: string) {
-    const currentProjectsValue = this.data.projects.getValue();
-    const updatedProjectsValue: Project[] = [];
-    const currentLayersValue = this.data.layers.getValue();
-    const updatedLayersValue: Layer[] = [];
 
-    currentProjectsValue.forEach((p) => {
-      if (p.Id != id) {
-        updatedProjectsValue.push(p);
-      }
-    });
-
-    currentLayersValue.forEach((layer) => {
-      if (layer.projectId != id) {
-        updatedLayersValue.push(layer);
-      }
-    });
-
-    this.data.layers.getValue().forEach((layer) => {
-      if (layer.projectId == id) {
-        layer.remove();
-      }
-    });
-    this.data.projects.next(updatedProjectsValue);
-    this.data.layers.next(updatedLayersValue);
-    this.data.selectedLayers.next([]);
-
-    if (this.data.projects.value.length > 0) {
-      this.data.selectedProject.next(this.data.projects.value[0]);
-    } else {
-      this.data.selectedProject.next(null);
-    }
-  }
-  ngOnDestroy(): void {
-    this.data.selectedProject.unsubscribe();
-    this.data.projects.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 }

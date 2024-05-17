@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DataService } from 'src/app/core/services/data.service';
+import { ShapeToolService } from 'src/app/core/services/shape-tool.service';
 import { shapeTool } from 'src/app/core/tools';
 import { Shape } from 'src/app/enums/shapes';
 import { ShapeToolProperties } from 'src/app/types/tool';
+import { shapeToolTypes } from './shapeToolTypes';
 @Component({
   selector: 'app-shape-tool-properties',
   templateUrl: './shape-tool-properties.component.html',
@@ -10,11 +12,20 @@ import { ShapeToolProperties } from 'src/app/types/tool';
 })
 export class ShapeToolPropertiesComponent implements OnInit, OnDestroy {
   shapeProps?: ShapeToolProperties;
-  get Shape() {
-    return Shape;
+  activeTool: shapeToolTypes = 'rect';
+
+  constructor(
+    private data: DataService,
+    private shapeToolService: ShapeToolService
+  ) {}
+  ngOnInit(): void {
+    this.activeTool = this.data.tools.getValue().shapeGroup.selectedTool;
   }
-  constructor(private data: DataService) {}
-  ngOnInit(): void {}
+  setActiveTool(tool: shapeToolTypes) {
+    this.activeTool = tool;
+    this.data.tools.getValue().shapeGroup.selectedTool = tool;
+    this.shapeToolService.configure(tool);
+  }
 
   onFillColorChange(e: any) {
     shapeTool.properties.fill = e.target.value;

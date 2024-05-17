@@ -14,7 +14,5 @@ export class GetStartedComponent implements AfterViewInit {
     private notification: NotificationService,
     private data: DataService
   ) {}
-  ngAfterViewInit(): void {
-    this.data.showNav.next(true);
-  }
+  ngAfterViewInit(): void {}
 }

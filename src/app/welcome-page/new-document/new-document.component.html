@@ -72,7 +72,11 @@
   <div *ngSwitchCase="'Web'" class="template-tab"></div>
   <div *ngSwitchCase="'Mobile'" class="template-tab"></div>
   <div *ngSwitchCase="'FilmAndVideo'" class="template-tab"></div>
+  <div class="loading">
+    <h1>Loading Templates...</h1>
+  </div>
 </div>
+
 <app-preset-detail
   [activeTemplate]="activeTemplate"
   (closeBtnClicked)="onCloseBtnClick($event)"

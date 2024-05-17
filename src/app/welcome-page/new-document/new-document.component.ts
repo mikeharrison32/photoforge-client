@@ -8,12 +8,15 @@ import {
   Output,
 } from '@angular/core';
 import { Template } from './types/template.type';
-import { templates } from './mock_data/templates';
 import { TemplateType } from './enums/templateType.enum';
 import { ProjectPreset } from 'src/app/types/project';
 import { DataService } from 'src/app/core/services/data.service';
 import { Router } from '@angular/router';
 import { newDocAnimation } from 'src/app/animations';
+import { ApiService } from 'src/app/core/services/api.service';
+import { LoadingService } from 'src/app/core/services/loading.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
+import { templates } from './mock_data/templates';
 
 @Component({
   selector: 'app-new-document',
@@ -25,22 +28,20 @@ export class NewDocumentComponent implements OnInit {
   selectedTemplateType: string = 'Recent';
   @Output() closeBtnClicked = new EventEmitter<boolean>();
   @Output() createBtnClicked = new EventEmitter<boolean>();
-  constructor(private data: DataService, private router: Router) {}
-  recentTemplates: Template[] = templates.filter(
-    (t) => t.type == TemplateType.Recent
-  );
-  savedTemplates: Template[] = templates.filter(
-    (t) => t.type == TemplateType.Saved
-  );
-  photoTemplates: Template[] = templates.filter(
-    (t) => t.type == TemplateType.Photo
-  );
-  printTemplates: Template[] = templates.filter(
-    (t) => t.type == TemplateType.Print
-  );
-  artAndIllustrationTemplates: Template[] = templates.filter(
-    (t) => t.type == TemplateType.ArtAndIllustration
-  );
+  templates: any[] = [];
+  loadingTemplates: boolean = false;
+  constructor(
+    private data: DataService,
+    private router: Router,
+    private api: ApiService,
+    private loadingService: LoadingService,
+    private notificationService: NotificationService
+  ) {}
+  recentTemplates: Template[] = templates;
+  savedTemplates: Template[] = [];
+  photoTemplates: Template[] = [];
+  printTemplates: Template[] = [];
+  artAndIllustrationTemplates: Template[] = [];
   webTemplates: Template[] = [];
   mobileTemplates: Template[] = [];
   filmAndVideoTemplates: Template[] = [];
@@ -65,22 +66,49 @@ export class NewDocumentComponent implements OnInit {
           }
         : template;
   }
-  onCloseBtnClick(isClicked: boolean) {
-    this.closeBtnClicked.emit(true);
+  onCloseBtnClick(e: any) {
+    this.data.newMenuClick.next(false);
   }
   onCreateBtnClick(presets: ProjectPreset) {
+    this.loadingService.startLoading('Creating project...');
     const newProject = {
-      Id: `${Math.random()}`,
-      UserId: '42ds',
-      ...presets,
+      name: presets.Title,
+      width: presets.Width,
+      height: presets.Height,
     };
-    this.data.projects.value.push(newProject);
-    this.data.selectedProject.next(newProject);
-    this.router.navigateByUrl('/editor');
-    this.createBtnClicked.emit(true);
+
+    this.api
+      .createBlankProject(newProject)
+      .then((project) => {
+        this.data.openedProjects.next(project);
+        this.data.selectedProject.next(project);
+        this.router.navigateByUrl(`/editor/${project.id}`);
+        this.loadingService.stopLoading();
+      })
+      .catch((err) => {
+        this.loadingService.stopLoading();
+        this.notificationService.createNotification({
+          title: "Couldn't create layer.",
+          details: 'The server might be down.',
+          // quitAfter: 5000,
+        });
+        console.log(err);
+      });
   }
 
   ngOnInit() {
+    this.templates = templates;
     this.activeTemplate = this.recentTemplates[0];
+    // this.loadingTemplates = true;
+    // this.api
+    //   .getTemplates()
+    //   .then((templates: any) => {
+    //     this.templates = templates;
+    //     this.loadingTemplates = false;
+    //   })
+    //   .catch((err) => {
+    //     this.loadingTemplates = false;
+    //     console.log(err);
+    //   });
   }
 }

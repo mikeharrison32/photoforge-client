@@ -1,52 +1,270 @@
-<div class="pixel-layer">
-  <div class="description">
-    <img src="assets/pic-icon.svg" />
-    <p>Pixel Layer Properies</p>
+<div class="props">
+  <span>W</span>
+  <app-input class="input"></app-input>
+  <div class="icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 4.5">
+      <defs>
+        <style>
+          .lock {
+            fill: none;
+            stroke: var(--spectrum-global-color-gray-500);
+            stroke-miterlimit: 10;
+          }
+        </style>
+      </defs>
+      <line class="lock" y1="0.5" x2="16.5" y2="0.5"></line>
+      <line class="lock" x1="16.5" x2="16.5" y2="4.5"></line>
+    </svg>
   </div>
-  <div class="grid">
-    <div class="row">
-      <div class="value">
-        <p>W:</p>
-        <app-input
-          class="input"
-          unit="px"
-          [Value]="selectedLayer.canvas.clientWidth || 0"
-          [Disabled]="selectedLayer.locked"
-          (onInputChange)="onWidthChange($event)"
-        ></app-input>
-      </div>
-      <div class="value">
-        <p>H:</p>
-        <app-input
-          class="input"
-          unit="px"
-          [Disabled]="selectedLayer.locked"
-          [Value]="selectedLayer.canvas.clientHeight || 0"
-          (onInputChange)="onHeightChange($event)"
-        ></app-input>
-      </div>
+
+  <span>X</span>
+  <app-input class="input"></app-input>
+  <span>H</span>
+  <app-input class="input"></app-input>
+  <div class="icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 7">
+      <defs>
+        <style>
+          .lock {
+            fill: none;
+            stroke: var(--spectrum-global-color-gray-500);
+            stroke-miterlimit: 10;
+          }
+        </style>
+      </defs>
+      <line class="lock" y1="4.5" x2="17" y2="4.5"></line>
+      <line class="lock" x1="16.5" x2="16.5" y2="4.5"></line>
+    </svg>
+  </div>
+  <span>Y</span>
+  <app-input class="input"></app-input>
+
+  <div class="icon">
+    <svg
+      role="img"
+      fill="currentColor"
+      viewBox="0 0 18 18"
+      id="SLockClosed18N-icon"
+      width="18"
+      height="18"
+      aria-hidden="true"
+      aria-label=""
+      focusable="false"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M14.5,8H14V7A5,5,0,0,0,4,7V8H3.5a.5.5,0,0,0-.5.5v8a.5.5,0,0,0,.5.5h11a.5.5,0,0,0,.5-.5v-8A.5.5,0,0,0,14.5,8ZM6,7a3,3,0,0,1,6,0V8H6Zm4,6.111V14.5a.5.5,0,0,1-.5.5h-1a.5.5,0,0,1-.5-.5V13.111a1.5,1.5,0,1,1,2,0Z"
+      ></path>
+    </svg>
+  </div>
+  <div class="icon">
+    <div class="icon">
+      <svg
+        role="img"
+        fill="currentColor"
+        viewBox="0 0 18 18"
+        id="SRotateCCWBold18N-icon"
+        width="18"
+        height="18"
+        aria-hidden="true"
+        aria-label=""
+        focusable="false"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M9,1A8.01574,8.01574,0,0,0,2.32178,4.6142L.5,3.76068A.3429.3429,0,0,0,.23462,3.747a.35121.35121,0,0,0-.21216.44977L1.52661,8.3526a.25057.25057,0,0,0,.29419.13776l4.15576-1.504a.3503.3503,0,0,0,.20972-.45081.34291.34291,0,0,0-.18042-.19525L4.16748,5.479a5.98537,5.98537,0,1,1-.08057,6.9585A.99972.99972,0,1,0,2.4502,13.58594,7.99819,7.99819,0,1,0,9,1Z"
+        ></path>
+      </svg>
     </div>
-    <div class="row">
-      <div class="value">
-        <p>X:</p>
-        <app-input
-          class="input"
-          [Disabled]="selectedLayer.locked"
-          unit="px"
-          [Value]="0"
-          (onInputChange)="onXChange($event)"
-        ></app-input>
-      </div>
-      <div class="value">
-        <p>Y:</p>
-        <app-input
-          class="input"
-          unit="px"
-          [Disabled]="selectedLayer.locked"
-          [Value]="0"
-          (onInputChange)="onYChange($event)"
-        ></app-input>
-      </div>
+    <div class="icon">
+      <svg
+        role="img"
+        fill="currentColor"
+        viewBox="0 0 18 18"
+        id="SRotateCWBold18N-icon"
+        width="18"
+        height="18"
+        aria-hidden="true"
+        aria-label=""
+        focusable="false"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M8.99994,1a8.01574,8.01574,0,0,1,6.67822,3.6142l1.82178-.85352a.3429.3429,0,0,1,.26538-.01367.35121.35121,0,0,1,.21216.44977L16.47333,8.3526a.25057.25057,0,0,1-.29419.13776l-4.15576-1.504a.3503.3503,0,0,1-.20972-.45081.34291.34291,0,0,1,.18042-.19525L13.83246,5.479a5.98537,5.98537,0,1,0,.08057,6.9585.99972.99972,0,1,1,1.63672,1.14844A7.99819,7.99819,0,1,1,8.99994,1Z"
+        ></path>
+      </svg>
+    </div>
+    <div class="icon">
+      <svg
+        role="img"
+        fill="currentColor"
+        viewBox="0 0 18 18"
+        id="SFlipHorizontal18N-icon"
+        width="18"
+        height="18"
+        aria-hidden="true"
+        aria-label=""
+        focusable="false"
+      >
+        <rect
+          fill-rule="evenodd"
+          x="8"
+          y="1"
+          width="1"
+          height="1"
+          rx="0.25"
+        ></rect>
+        <rect
+          fill-rule="evenodd"
+          x="8"
+          y="3"
+          width="1"
+          height="1"
+          rx="0.25"
+        ></rect>
+        <rect
+          fill-rule="evenodd"
+          x="8"
+          y="5"
+          width="1"
+          height="1"
+          rx="0.25"
+        ></rect>
+        <rect
+          fill-rule="evenodd"
+          x="8"
+          y="7"
+          width="1"
+          height="1"
+          rx="0.25"
+        ></rect>
+        <rect
+          fill-rule="evenodd"
+          x="8"
+          y="9"
+          width="1"
+          height="1"
+          rx="0.25"
+        ></rect>
+        <rect
+          fill-rule="evenodd"
+          x="8"
+          y="11"
+          width="1"
+          height="1"
+          rx="0.25"
+        ></rect>
+        <rect
+          fill-rule="evenodd"
+          x="8"
+          y="13"
+          width="1"
+          height="1"
+          rx="0.25"
+        ></rect>
+        <rect
+          fill-rule="evenodd"
+          x="8"
+          y="15"
+          width="1"
+          height="1"
+          rx="0.25"
+        ></rect>
+        <path
+          fill-rule="evenodd"
+          d="M15.138,14.351,10.1,8.9a.506.506,0,0,1,0-.715l5.036-5.534A.5.5,0,0,1,16,3.006V13.994A.5.5,0,0,1,15.138,14.351Z"
+        ></path>
+        <path
+          fill-rule="evenodd"
+          d="M1.923,4.039,6.006,8.461,1.923,12.95ZM1.522,2.5a.5.5,0,0,0-.508.506V13.994a.5.5,0,0,0,.508.506.5.5,0,0,0,.354-.149L6.912,8.817a.506.506,0,0,0,0-.715L1.876,2.649A.5.5,0,0,0,1.522,2.5Z"
+        ></path>
+      </svg>
+    </div>
+    <div class="icon">
+      <svg
+        role="img"
+        fill="currentColor"
+        viewBox="0 0 18 18"
+        id="SFlipVertical18N-icon"
+        width="18"
+        height="18"
+        aria-hidden="true"
+        aria-label=""
+        focusable="false"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M2.649,15.124,8.1,10.088a.505.505,0,0,1,.714,0l5.534,5.036a.5.5,0,0,1-.357.862H3.006A.5.5,0,0,1,2.649,15.124Z"
+        ></path>
+        <path
+          fill-rule="evenodd"
+          d="M12.961,1.909,8.539,5.993,4.05,1.909Zm1.539-.4A.5.5,0,0,0,13.994,1H3.006a.5.5,0,0,0-.506.509.493.493,0,0,0,.149.353L8.184,6.9a.505.505,0,0,0,.714,0l5.453-5.036A.493.493,0,0,0,14.5,1.509Z"
+        ></path>
+        <rect
+          fill-rule="evenodd"
+          x="1"
+          y="8"
+          width="1"
+          height="1"
+          rx="0.25"
+        ></rect>
+        <rect
+          fill-rule="evenodd"
+          x="3"
+          y="8"
+          width="1"
+          height="1"
+          rx="0.25"
+        ></rect>
+        <rect
+          fill-rule="evenodd"
+          x="5"
+          y="8"
+          width="1"
+          height="1"
+          rx="0.25"
+        ></rect>
+        <rect
+          fill-rule="evenodd"
+          x="7"
+          y="8"
+          width="1"
+          height="1"
+          rx="0.25"
+        ></rect>
+        <rect
+          fill-rule="evenodd"
+          x="9"
+          y="8"
+          width="1"
+          height="1"
+          rx="0.25"
+        ></rect>
+        <rect
+          fill-rule="evenodd"
+          x="11"
+          y="8"
+          width="1"
+          height="1"
+          rx="0.25"
+        ></rect>
+        <rect
+          fill-rule="evenodd"
+          x="13"
+          y="8"
+          width="1"
+          height="1"
+          rx="0.25"
+        ></rect>
+        <rect
+          fill-rule="evenodd"
+          x="15"
+          y="8"
+          width="1"
+          height="1"
+          rx="0.25"
+        ></rect>
+      </svg>
     </div>
   </div>
 </div>

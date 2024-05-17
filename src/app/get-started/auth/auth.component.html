@@ -6,25 +6,34 @@
 <div class="form">
   <img src="assets/auth-icon.svg" alt="auth-icon" />
   <h2>{{ authStatus == AuthStatus.SignUp ? "Sign Up" : "Sign In" }}</h2>
-  <input
-    #username
-    type="text"
-    [formControl]="userNameControl"
-    placeholder="username..."
-  />
-  <input
-    #password
-    type="password"
-    [formControl]="passwordControl"
-    placeholder="password..."
-  />
-  <input
-    #confirmPassword
-    *ngIf="authStatus == AuthStatus.SignUp"
-    type="password"
-    [formControl]="confirmPasswordControl"
-    placeholder="confirm password..."
-  />
+
+  <div class="input">
+    <label for="email">Email</label>
+    <input
+      #username
+      type="email"
+      [formControl]="userNameControl"
+      placeholder="example@domain.com"
+    />
+  </div>
+  <div class="input">
+    <label for="password">Password</label>
+    <input
+      #password
+      type="password"
+      [formControl]="passwordControl"
+      placeholder="Enter a strong password"
+    />
+  </div>
+  <div class="input" *ngIf="authStatus == AuthStatus.SignUp">
+    <label for="password">Confirm</label>
+    <input
+      #confirmPassword
+      type="password"
+      [formControl]="confirmPasswordControl"
+      placeholder="Confirm your password"
+    />
+  </div>
   <div class="buttons">
     <button
       *ngIf="authStatus == AuthStatus.SignUp"
@@ -84,9 +93,9 @@
     *ngIf="authStatus == AuthStatus.Login"
     (click)="authStatus = AuthStatus.SignUp"
   >
-    don't have an account? sing up
+    don't have an account? Sign up
   </p>
-  <a routerLink="/start">Skip</a>
+  <a routerLink="/start" class="skip-btn">Skip for now</a>
 </div>
 
 <div class="loading" *ngIf="isLoading">

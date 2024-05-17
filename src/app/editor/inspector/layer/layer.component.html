@@ -2,59 +2,69 @@
   [Active]="contextMenuActive"
   [layer]="layer"
 ></app-layer-context-menu>
-<div
-  [ngClass]="selected ? 'active-layer' : 'layer'"
-  (contextmenu)="onLayerRightClick($event)"
-  (click)="onLayerClick($event)"
->
-  <div class="eye-ball">
-    <img
-      [style.opacity]="layer?.visible ? '1' : '0'"
-      src="assets/eye-ball.svg"
-      (click)="toggleLayerHidden()"
-    />
+
+<div class="layer" (click)="onLayerClick($event)" [class.selected]="selected">
+  <div class="toggle-visibility" (click)="toggleLayerHidden()">
+    <svg
+      role="img"
+      fill="currentColor"
+      viewBox="0 0 18 18"
+      id="SVisibility18N-icon"
+      width="18"
+      height="18"
+      aria-hidden="true"
+      aria-label=""
+      focusable="false"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M12.306,4.29A7.491,7.491,0,0,0,9,3.468c-4.332,0-7.875,4.313-7.875,5.712,0,1.5,3.729,5.352,7.843,5.352,4.148,0,7.907-3.853,7.907-5.352C16.875,8,14.768,5.51,12.306,4.29ZM9,13.612A4.612,4.612,0,1,1,13.612,9,4.613,4.613,0,0,1,9,13.612Z"
+      ></path>
+      <path
+        fill-rule="evenodd"
+        d="M10.333,9.042A1.333,1.333,0,0,1,9,7.708a1.315,1.315,0,0,1,.675-1.134A2.429,2.429,0,0,0,9,6.469,2.531,2.531,0,1,0,11.531,9a2.367,2.367,0,0,0-.087-.6A1.313,1.313,0,0,1,10.333,9.042Z"
+      ></path>
+    </svg>
   </div>
-  <div class="layer-image" (click)="maskSelected = false">
-    <div class="image">
-      <img [src]="imgSrc" *ngIf="imgSrc && imgSrc.length > 0" />
-      <canvas
-        style="width: 100%; height: 100%; background: #fff"
-        *ngIf="!imgSrc || imgSrc.length < 1"
-      ></canvas>
-      <div class="shape-icon" *ngIf="layer?.type == 'shape'">
-        <img src="assets/rectangular-select.svg" />
+  <div class="thumbnail" #thumbnail>
+    <div class="type-layer-thumbnail" *ngIf="layer?.type == 'type'">
+      <div class="badge">
+        <svg
+          role="img"
+          fill="currentColor"
+          viewBox="0 0 16 16"
+          id="SBadgeType16N-icon"
+          width="16"
+          height="16"
+          aria-hidden="true"
+          aria-label=""
+          focusable="false"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M4.937,5a.438.438,0,0,0-.437.438V6.75h.875V5.875h1.75v5.25H6.469a.219.219,0,0,0-.219.219v.437A.219.219,0,0,0,6.469,12H9.531a.219.219,0,0,0,.219-.219v-.437a.219.219,0,0,0-.219-.219H8.875V5.875h1.75V6.75H11.5V5.438A.438.438,0,0,0,11.063,5Z"
+          ></path>
+        </svg>
+      </div>
+      <div class="icon">
+        <svg
+          role="img"
+          fill="currentColor"
+          viewBox="0 0 18 18"
+          id="SText18N-icon"
+          width="18"
+          height="18"
+          aria-hidden="true"
+          aria-label=""
+          focusable="false"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M2.5,2a.5.5,0,0,0-.5.5v3a.5.5,0,0,0,.5.5h1A.5.5,0,0,0,4,5.5V4H8V14H6.5a.5.5,0,0,0-.5.5v1a.5.5,0,0,0,.5.5h5a.5.5,0,0,0,.5-.5v-1a.5.5,0,0,0-.5-.5H10V4h4V5.5a.5.5,0,0,0,.5.5h1a.5.5,0,0,0,.5-.5v-3a.5.5,0,0,0-.5-.5Z"
+          ></path>
+        </svg>
       </div>
     </div>
-    <div *ngIf="selected" class="active-layer-wrapper">
-      <img src="assets/img-wrapper.svg" />
-    </div>
   </div>
-  <img
-    src="assets/tool-properties-icons/link-icon.svg"
-    class="link-icon"
-    *ngIf="false"
-  />
-  <div
-    class="layer-mask"
-    *ngIf="false"
-    (click)="maskSelected = true"
-    (contextmenu)="toggleMaskContextMenu()"
-  >
-    <!-- <div class="mask-context-menu" (click)="toggleMaskContextMenu()">
-      <p>Delete Layer Mask</p>
-      <p>Apply Layer Mask</p>
-      <hr />
-      <p>Add Mask Selection</p>
-    </div> -->
-    <div class="mask"></div>
-    <div *ngIf="maskSelected" class="active-layer-wrapper">
-      <img src="assets/img-wrapper.svg" />
-    </div>
-  </div>
-  <p class="layer-title">{{ layer?.name }}</p>
-  <img
-    [ngClass]="layer?.locked ? 'lock' : 'lock-icon-hidden'"
-    src="assets/lock-icon.svg"
-    (click)="toggleLayerLocked()"
-  />
+  <span class="layer-name">{{ layer?.name }}</span>
 </div>

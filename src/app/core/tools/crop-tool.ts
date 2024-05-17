@@ -1,10 +1,8 @@
-import { Canvas } from '../canvas';
 import { Corner } from '../corner';
-import { DraggableBehaviour } from '../draggable-behavior';
-import { MouseDragEvent } from '../event';
-import { fabric } from 'fabric';
 import * as PIXI from 'pixi.js-legacy';
 import { DataService } from '../services/data.service';
+import { Renderer2 } from '@angular/core';
+
 export class CropTool {
   readonly type: string = 'cropTool';
   properties?: ICropToolProperties;
@@ -26,44 +24,47 @@ export class CropTool {
   cornerWidth: number = 30;
   cornerHeight: number = 5;
   cropRect?: { x: number; y: number; width: number; height: number };
-  configure(display: HTMLElement, data: DataService) {
+
+  configure(display: HTMLElement, data: DataService, renderer: Renderer2) {
     if (this.cropCanvas) {
       return;
     }
-    this.cropCanvas = new PIXI.Application({
-      resizeTo: display.parentElement!,
-      background: 'transparent',
-      backgroundAlpha: 0,
-      antialias: true,
-      resolution: 1,
-    });
+    if (!this.cropCanvas) {
+      this.cropCanvas = new PIXI.Application({
+        resizeTo: display.parentElement!,
+        background: 'transparent',
+        backgroundAlpha: 0,
+        antialias: true,
+        resolution: 1,
+      });
+    }
     this.display = display;
+
     this.cropRect = {
       x: 10,
       y: 10,
-      width: this.cropCanvas.screen.width - 20,
-      height: this.cropCanvas.screen.height - 20,
+      width: this.cropCanvas.screen.width - 10,
+      height: this.cropCanvas.screen.height - 10,
     };
-    this.cropCanvas.stage.eventMode = 'static';
-    this.createCropBorder(this.cropRect);
-    (this.cropCanvas.view as any).classList.add('crop-canvas');
-    display.parentElement?.appendChild(this.cropCanvas.view as any);
 
-    document.addEventListener('keydown', (e) => {
-      if (e.code == 'Enter') {
-        const zoom = data.zoom.getValue() / 100;
-        display.style.width = this.cropRect!.width * zoom + 'px';
-        display.style.height = this.cropRect!.height * zoom + 'px';
-      }
-    });
+    this.cropCanvas.stage.eventMode = 'static';
+
+    this.createCropBorder(this.cropRect);
+
+    renderer.addClass(this.cropCanvas.view, 'crop-canvas');
+    renderer.appendChild(display.parentElement, this.cropCanvas.view);
+
+    this.setupKeyDownListener(data, display);
 
     this.texture = PIXI.RenderTexture.create({
       width: this.cropCanvas?.view.width,
       height: this.cropCanvas?.view.height,
     });
+
     this.drawingSurface = new PIXI.Sprite(this.texture);
-    this.cropCanvas.stage.addChild(this.drawingSurface);
     this.drawingSurface.eventMode = 'static';
+
+    this.cropCanvas.stage.addChild(this.drawingSurface);
 
     this.createTopLeftCorner({ ...this.cropRect });
     this.createTopRightCorner({
@@ -75,8 +76,8 @@ export class CropTool {
       y: this.cropRect.y + this.cropRect.height - this.cornerWidth + 6,
     });
     this.createBottomRightCorner({
-      x: this.cropRect.x + this.cropRect.width - 26,
-      y: this.cropRect.y + this.cropRect.height - 26,
+      x: this.cropRect.x + this.cropRect.width,
+      y: this.cropRect.y + this.cropRect.height,
     });
     this.createMiddleTopCorner({
       x: this.cropRect.x + this.cropRect.width / 2 - this.cornerWidth / 2,
@@ -98,6 +99,16 @@ export class CropTool {
     this.createCropOverlay(this.cropRect);
   }
 
+  private setupKeyDownListener(data: DataService, display: HTMLElement) {
+    document.addEventListener('keydown', (e) => {
+      if (e.code == 'Enter') {
+        const zoom = data.zoom.getValue() / 100;
+        display.style.width = this.cropRect!.width * zoom + 'px';
+        display.style.height = this.cropRect!.height * zoom + 'px';
+      }
+    });
+  }
+
   update() {
     this.cropCanvas!.screen.width = this.display!.parentElement!.clientWidth;
     this.cropCanvas!.screen.height = this.display!.parentElement!.clientHeight;
@@ -108,12 +119,10 @@ export class CropTool {
     width: number;
     height: number;
   }) {
-    if (this.cropOverlay) {
-      this.cropCanvas?.stage.removeChild(this.cropOverlay);
-      this.cropOverlay.destroy(true);
-      delete this.cropOverlay;
+    if (!this.cropOverlay) {
+      this.cropOverlay = new PIXI.Graphics();
+      this.cropCanvas?.stage.addChildAt(this.cropOverlay, 0);
     }
-    this.cropOverlay = new PIXI.Graphics();
     this.cropOverlay.clear();
     this.cropOverlay.beginFill('#747474b8');
     this.cropOverlay.drawRect(
@@ -127,7 +136,7 @@ export class CropTool {
     this.cropOverlay.beginHole();
     this.cropOverlay.drawRect(rect.x, rect.y, rect.width, rect.height);
     this.cropOverlay.endHole();
-    this.cropCanvas?.stage.addChildAt(this.cropOverlay, 0);
+    this.cropCanvas?.render();
   }
 
   private createCropBorder(rect: {
@@ -207,11 +216,11 @@ export class CropTool {
   }
 
   private createMiddleRightCorner(pos: { x: number; y: number }) {
-    if (this.mrCorner) {
-      this.cropCanvas?.stage.removeChild(this.mrCorner);
-      this.mrCorner.destroy();
+    if (!this.mrCorner) {
+      this.mrCorner = new PIXI.Graphics();
+      this.cropCanvas?.stage.addChild(this.mrCorner);
     }
-    this.mrCorner = new PIXI.Graphics();
+    this.mrCorner.clear();
     this.mrCorner.beginFill('#fff', 1);
     this.mrCorner.drawRoundedRect(0, 0, this.cornerHeight, this.cornerWidth, 5);
     this.mrCorner.position.set(pos.x - 4, pos.y - 4);
@@ -219,7 +228,6 @@ export class CropTool {
     this.mrCorner.eventMode = 'static';
     this.setCursorOfObject(this.mrCorner, 'e-resize');
 
-    this.cropCanvas?.stage.addChild(this.mrCorner);
     let mousedown = false;
     this.mrCorner?.addEventListener('mousedown', (e) => {
       mousedown = true;
@@ -237,16 +245,16 @@ export class CropTool {
       if (!mousedown) {
         return;
       }
-      // this.mrCorner?.position.set(e.global.x - 4, this.mrCorner.position.y);
-      // // this.trCorner?.position.set(this.cropRect!.width - 26, e.global.y - 4);
-      // this.trCorner?.position.set(e.global.x - 4, this.trCorner.position.y);
+      this.mrCorner?.position.set(e.global.x, this.mrCorner.position.y);
+      // this.trCorner?.position.set(this.cropRect!.width - 26, e.global.y - 4);
+      this.trCorner?.position.set(e.global.x, this.trCorner.position.y);
 
-      // this.createCropBorder({
-      //   x: this.cropRect!.x,
-      //   y: this.cropRect!.y,
-      //   width: this.cropRect!.width - e.global.x,
-      //   height: this.cropRect!.height,
-      // });
+      this.createCropBorder({
+        x: this.cropRect!.x,
+        y: this.cropRect!.y,
+        width: this.cropRect!.width - e.global.x,
+        height: this.cropRect!.height,
+      });
     });
   }
 

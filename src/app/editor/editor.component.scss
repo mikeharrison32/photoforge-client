@@ -1,12 +1,56 @@
 $dark_gray: #1d1d1d;
 $light_gray: #3a3a3a;
+@import "../variables.scss";
 :host {
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
-  background: $dark_gray;
+  background: $backgourd-color-2;
 
+  .loading-document {
+    position: absolute;
+    z-index: 100000;
+    width: 18rem;
+
+    height: 5rem;
+    background-color: rgb(85 85 85);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    justify-content: center;
+    overflow: hidden;
+    margin: 10px auto;
+    .loading-effect {
+      width: 100%;
+      height: 2rem;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      @keyframes lineAni {
+        from {
+          right: 100%;
+        }
+        to {
+          right: -30%;
+        }
+      }
+      .line {
+        position: absolute;
+        width: 86px;
+        height: 2px;
+        background-color: silver;
+        animation: lineAni 1s infinite;
+      }
+    }
+  }
+
+  #tools {
+    display: flex;
+  }
   .main {
     display: flex;
     width: auto;
@@ -14,7 +58,7 @@ $light_gray: #3a3a3a;
     .image-display {
       width: 100%;
       height: 100%;
-      margin-top: 1.5rem;
+
       display: grid;
       align-items: center;
       justify-content: center;
@@ -22,6 +66,10 @@ $light_gray: #3a3a3a;
       overflow: scroll;
       // cursor: none;
       scale: 1;
+      cursor: url('data:image/svg+xml;utf8,<svg id="cursor" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><defs><style>.move-1 {fill: %23fff;opacity: 0.65;isolation: isolate;} </style></defs><path d="M1,1V17.4a.25.25,0,0,0,.427.177L6,13h6.4a.25.25,0,0,0,.177-.427Z"/><path class="move-1" d="M13.246,11.832,1.707.293A1,1,0,0,0,1,0H.75A.75.75,0,0,0,0,.75V17.321a1.316,1.316,0,0,0,1.093,1.316,1.241,1.241,0,0,0,1.041-.357L6.414,14H12.4a1.251,1.251,0,0,0,1.24-1.078A1.292,1.292,0,0,0,13.246,11.832ZM12.4,13H6L1.427,17.573a.245.245,0,0,1-.175.074A.25.25,0,0,1,1,17.4V1L12.573,12.573A.25.25,0,0,1,12.4,13Z"/><path class="move-1" d="M24.071,19.136,21.05,16.29a1.247,1.247,0,0,0-1.083-.257,1.257,1.257,0,0,0-.257-1.083l-2.846-3.021a.5.5,0,0,0-.707-.022l-.021.022L13.29,14.95a1.252,1.252,0,0,0-.256,1.084,1.245,1.245,0,0,0-1.084.256L8.929,19.136a.5.5,0,0,0-.022.707l.022.021L11.95,22.71a1.245,1.245,0,0,0,1.084.256,1.252,1.252,0,0,0,.256,1.084l2.846,3.021a.5.5,0,0,0,.707.022l.021-.022L19.71,24.05a1.252,1.252,0,0,0,.256-1.084,1.245,1.245,0,0,0,1.084-.256l3.021-2.846a.5.5,0,0,0,.022-.707ZM13.956,16.964A1.214,1.214,0,0,0,14.25,17H15v1H14v-.677a1.5,1.5,0,0,0-.044-.359Zm5.088,5.072A1.22,1.22,0,0,0,18.75,22H18V21h1v.679A1.485,1.485,0,0,0,19.044,22.036Zm1.366-.094a.25.25,0,0,1-.41-.191h0V20H17v3h1.75a.25.25,0,0,1,.25.25.254.254,0,0,1-.058.16L16.5,26l-2.442-2.59A.25.25,0,0,1,14.25,23H16V20H13v1.75a.25.25,0,0,1-.25.25h0a.249.249,0,0,1-.159-.058L10,19.5l2.59-2.442a.25.25,0,0,1,.41.191h0V19h3V16H14.25a.25.25,0,0,1-.25-.25.254.254,0,0,1,.058-.16L16.5,13l2.442,2.59a.25.25,0,0,1-.192.41H17v3h3V17.25a.25.25,0,0,1,.25-.25h0a.249.249,0,0,1,.159.058L23,19.5Zm-6.454.094A1.493,1.493,0,0,0,14,21.678V21h1v1h-.75A1.214,1.214,0,0,0,13.956,22.036Zm5.077-5.069A1.229,1.229,0,0,0,19,17.25V18H18V17h.75A1.229,1.229,0,0,0,19.033,16.967Z"/><path id="Blackfill2" d="M16.5,13l-2.442,2.59a.25.25,0,0,0,.192.41H16v3H13V17.25a.25.25,0,0,0-.25-.25.254.254,0,0,0-.16.058L10,19.5l2.59,2.442A.25.25,0,0,0,13,21.75V20h3v3H14.25a.25.25,0,0,0-.25.25.254.254,0,0,0,.058.16L16.5,26l2.442-2.59A.25.25,0,0,0,18.75,23H17V20h3v1.75a.25.25,0,0,0,.25.25.254.254,0,0,0,.16-.058L23,19.5l-2.59-2.442a.25.25,0,0,0-.41.192V19H17V16h1.75a.25.25,0,0,0,.25-.25.254.254,0,0,0-.058-.16Z"/></svg>')
+          1 1,
+        auto;
+
       .crop-canvas,
       .lasso-canvas {
         position: absolute;
@@ -38,6 +86,7 @@ $light_gray: #3a3a3a;
         justify-content: center;
         position: relative;
       }
+
       #display {
         width: 95%;
         height: 78%;
@@ -50,20 +99,6 @@ $light_gray: #3a3a3a;
         scale: 1;
         background: #fff;
         position: absolute;
-        .textarea {
-          resize: none;
-          font-size: 2rem;
-          background: transparent;
-          width: auto;
-          height: auto;
-          display: flex;
-          position: absolute;
-          z-index: 100000000000;
-          color: #fff;
-          /* flex-direction: row; */
-          align-items: center;
-          outline: blue;
-        }
 
         .layer {
           position: absolute;
@@ -83,23 +118,6 @@ $light_gray: #3a3a3a;
       }
       &::-webkit-scrollbar-thumb {
         background: #565656;
-      }
-    }
-    .zoom-bar {
-      padding-left: 3rem;
-      width: 100%;
-      font-size: 0.7rem;
-      color: #b6b6b6;
-
-      height: 0.8rem;
-      position: absolute;
-      bottom: 0;
-      background: #3a3a3a;
-      border: #4a4a4a solid 1px;
-      display: flex;
-      align-items: center;
-      .level {
-        width: 3rem;
       }
     }
   }

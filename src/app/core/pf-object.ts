@@ -6,6 +6,8 @@ export class PfObject {
   resizer!: Resizer;
   elem!: HTMLElement;
   data!: DataService;
+    x: number = 0;
+  y: number = 0;
   constructor(
     protected renderer: Renderer2,
     // container: HTMLElement,
@@ -21,6 +23,8 @@ export class PfObject {
     let zoom = this.data.zoom.getValue() / 100;
     this.elem.style.left = x + 'px';
     this.elem.style.top = y + 'px';
+    this.x = x 
+    this.y = y 
     this.resizer.moveTo(x * zoom, y * zoom);
   }
   remove() {

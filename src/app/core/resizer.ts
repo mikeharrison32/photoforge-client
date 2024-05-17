@@ -17,6 +17,7 @@ export class Resizer {
   targetObject!: HTMLElement;
   data!: DataService;
   locked: boolean = false;
+  enabled: boolean = false;
   constructor(
     private renderer: Renderer2,
     targetObject: HTMLElement,
@@ -45,24 +46,6 @@ export class Resizer {
     if (options?.tr) {
       this.tr_corner = new Corner(this.elem);
       this.tr_corner.getElem().style.cursor = 'ne-resize';
-
-      // let mousedown = false;
-      // this.tr_corner.getElem().addEventListener('mousedown', (e) => {
-
-      //   mousedown = true;
-      // });
-      // document.addEventListener('mouseup', (e) => {
-      //   mousedown = false;
-      // });
-      // document.addEventListener('mousemove', (e) => {
-      //   if (!mousedown) {
-      //     return;
-      //   }
-      //   console.log('trcorn');
-      //   const targetObjRect = targetObject.getBoundingClientRect();
-      //   targetObject.style.width = `${e.clientX - targetObjRect.left}px`;
-      //   targetObject.style.height = `${e.clientY - -targetObjRect.top}px`;
-      // });
     }
     if (options?.tl) {
       this.tl_corner = new Corner(this.elem);
@@ -93,17 +76,10 @@ export class Resizer {
       this.bl_corner.getElem().style.cursor = 'ne-resize';
     }
 
-    // this.makeElemDraggable();
     this.disable();
-    //place the corner inside the elem provided
   }
   update() {
     const zoom = this.data.zoom.getValue() / 100;
-
-    const targetObjRect = this.targetObject.getBoundingClientRect();
-    // this.elem.style.transform = `translate(${targetObjRect.left}px, ${targetObjRect.top}px)`;
-    // this.elem.style.left = targetObjRect.left * zoom + 'px';
-    // this.elem.style.top = targetObjRect.top * zoom + 'px';
     this.setWidth(this.targetObject.clientWidth * zoom);
     this.setHeight(this.targetObject.clientHeight * zoom);
   }
@@ -132,12 +108,14 @@ export class Resizer {
   }
   disable() {
     this.elem.style.display = 'none';
+    this.enabled = false;
   }
   enable() {
     console.log('enabling');
     this.elem.style.display = 'block';
     this.update();
     this.updateCorners();
+    this.enabled = true;
   }
   setWidth(width: number) {
     console.log('updateing width');

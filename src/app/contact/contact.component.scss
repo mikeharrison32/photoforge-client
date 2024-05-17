@@ -5,7 +5,17 @@
   align-items: center;
   justify-content: center;
   color: #fff;
-  background: #161616;
+  background: #fff;
+  .email-status {
+    width: 100%;
+    color: #fff;
+    .email-sent {
+      background: green;
+    }
+    .email-failed {
+      background: red;
+    }
+  }
   .form {
     width: 26rem;
     display: flex;
@@ -48,9 +58,9 @@
       border: none;
       padding: 1rem;
       border-radius: 3px;
-      color: #fff;
+      color: #000;
     }
-    button {
+    .send-btn {
       outline: none;
       background: #ff5a5a;
       cursor: pointer;

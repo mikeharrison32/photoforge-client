@@ -1,12 +1,10 @@
-$dark_gray: #1d1d1d;
-$light_gray: #3a3a3a;
+@import "../../../variables.scss";
 .tool {
-  margin: 0;
-  padding: 0;
   cursor: pointer;
   position: relative;
   border-radius: 2px;
   display: flex;
+  padding: 4px;
   .desc {
     display: none;
     position: absolute;
@@ -71,7 +69,7 @@ $light_gray: #3a3a3a;
     border: solid 1px #1d1d1d;
   }
   .tool-icon {
-    width: 0.7rem;
+    width: 1rem;
     margin-inline: 0.4rem;
     margin-block: 0.21rem;
   }
@@ -79,12 +77,10 @@ $light_gray: #3a3a3a;
 
 .active-tool {
   @extend .tool;
-  box-shadow: $light_gray 0 0 1px 0;
-  background: $dark_gray;
+  background: $backgourd-color-1;
   border-radius: 2px;
   &:hover {
     border-radius: 2px;
     box-shadow: #b5b5b5 0 0 1px 0;
-    background: $dark_gray;
   }
 }

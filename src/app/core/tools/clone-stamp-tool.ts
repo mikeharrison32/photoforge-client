@@ -54,7 +54,6 @@ export class CloneStampTool {
     this.secondBrush?.elem?.remove();
     delete this.firstBrush;
     delete this.secondBrush;
-    display.parentElement!.style.cursor = 'default';
   }
 }
 

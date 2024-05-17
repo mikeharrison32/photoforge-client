@@ -1,4 +1,51 @@
+@import "/src/app/variables.scss";
+
 :host {
   position: relative;
   z-index: 1000;
+}
+.menu-items {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: inherit;
+  transition: 1s;
+  z-index: 100;
+  animation: slide 500ms 1;
+}
+
+@keyframes slide {
+  from {
+    opacity: 0;
+    transform: translateX(-36px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+.menu-title {
+  padding: 4px;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  cursor: pointer;
+  &:hover {
+    background: $menu-hover-bg;
+  }
+}
+
+.menu {
+}
+.menu:hover > .menu-items {
+  display: block;
+}
+
+.arrow-right {
+  svg {
+    width: 12px;
+  }
 }

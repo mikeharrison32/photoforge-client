@@ -1,48 +1,118 @@
-<app-select [Items]="['Shape']"></app-select>
-<div class="input">
-  <span>Fill: </span>
-  <input type="color" name="" id="" (change)="onFillColorChange($event)" />
+<app-tool-bar-header headerName="Shapes"></app-tool-bar-header>
+<div class="action-group">
+  <div
+    class="action-btn"
+    [class.active-action-btn]="activeTool == 'rect'"
+    (click)="setActiveTool('rect')"
+  >
+    <svg
+      role="img"
+      fill="currentColor"
+      viewBox="0 0 18 18"
+      id="SRectangle18N-icon"
+      width="18"
+      height="18"
+      aria-hidden="true"
+      aria-label=""
+      focusable="false"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M1,2.5v13a.5.5,0,0,0,.5.5h15a.5.5,0,0,0,.5-.5V2.5a.5.5,0,0,0-.5-.5H1.5A.5.5,0,0,0,1,2.5ZM16,15H2V3H16Z"
+      ></path>
+    </svg>
+    Rectangle
+  </div>
+  <div
+    class="action-btn"
+    [class.active-action-btn]="activeTool == 'ellipse'"
+    (click)="setActiveTool('ellipse')"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 36 36"
+      role="img"
+      fill="currentColor"
+      height="24"
+      width="24"
+      aria-hidden="false"
+      aria-label="Ellipse"
+    >
+      <path
+        d="M18 5.931c8.883 0 16.11 5.414 16.11 12.069S26.883 30.069 18 30.069 1.89 24.655 1.89 18 9.117 5.931 18 5.931Zm0-1.781C8.114 4.15.1 10.351.1 18S8.114 31.85 18 31.85 35.9 25.649 35.9 18 27.886 4.15 18 4.15Z"
+      ></path>
+    </svg>
+    Ellipse
+  </div>
+  <div
+    class="action-btn"
+    [class.active-action-btn]="activeTool == 'triangle'"
+    (click)="setActiveTool('triangle')"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      role="img"
+      viewBox="0 0 24 24"
+      aria-hidden="false"
+      aria-label="Triangle"
+      height="24"
+      width="24"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M21.7,21.3H1.9c-0.3,0-0.5-0.1-0.6-0.4s-0.1-0.5,0-0.7L11.5,2.8c0.1-0.2,0.3-0.4,0.6-0.3c0.3,0,0.5,0.1,0.6,0.4l9.6,17.4c0.1,0.2,0.1,0.5,0,0.7C22.2,21.2,22,21.3,21.7,21.3z M3.1,19.9h17.4L12.1,4.6L3.1,19.9z"
+      ></path>
+    </svg>
+    Triangle
+  </div>
+  <div
+    class="action-btn"
+    [class.active-action-btn]="activeTool == 'polygon'"
+    (click)="setActiveTool('polygon')"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 36 36"
+      role="img"
+      fill="currentColor"
+      height="24"
+      width="24"
+      aria-hidden="false"
+      aria-label="Polygon"
+    >
+      <path
+        d="M34.61 17.53 26.942 4.565A1.077 1.077 0 0 0 26 4H10.046a1.077 1.077 0 0 0-.946.561l-7.708 12.9a1.079 1.079 0 0 0 0 1.03L9.1 31.438a1.079 1.079 0 0 0 .946.562H26a1.078 1.078 0 0 0 .947-.563l7.666-12.881a1.079 1.079 0 0 0-.003-1.026ZM25.447 30H10.6L3.388 17.98 10.593 6h14.851l7.169 12.04Z"
+      ></path>
+    </svg>
+    Polygon
+  </div>
+
+  <div
+    class="action-btn"
+    [class.active-action-btn]="activeTool == 'line'"
+    (click)="setActiveTool('line')"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 36 36"
+      role="img"
+      fill="currentColor"
+      height="24"
+      width="24"
+      aria-hidden="false"
+      aria-label="Line"
+    >
+      <rect
+        height="2"
+        rx=".5"
+        ry=".5"
+        transform="rotate(-45 18 18)"
+        width="39.598"
+        x="-1.799"
+        y="17"
+      ></rect>
+    </svg>
+    Line
+  </div>
 </div>
-<div class="input">
-  <span>Stroke:</span>
-  <input type="color" name="" id="" (change)="onStrokeChange($event)" />
-</div>
-<app-input
-  [Value]="shapeProps?.strokeWidth"
-  unit="pixel"
-  (onInputChange)="onStrokeWidthChange($event)"
-></app-input>
-<select name="" id="">
-  <option value="----">----</option>
-</select>
-<div class="input">
-  <span>W:</span>
-  <app-input [Value]="shapeProps?.width" unit="pixel"></app-input>
-</div>
-<img src="assets/tool-properties-icons/link-icon.svg" class="link-icon" />
-<div class="input">
-  <span>H:</span>
-  <app-input [Value]="shapeProps?.height" unit="pixel"></app-input>
-</div>
-<div class="icons">
-  <img src="assets/tool-properties-icons/rectangle.svg" />
-  <img src="assets/tool-properties-icons/align-left.svg" />
-  <img src="assets/tool-properties-icons/stack-up.svg" />
-  <img src="assets/tool-properties-icons/setting-icon.svg" />
-</div>
-<div *ngIf="shapeProps?.shape == Shape.RoundedRectangle" class="input">
-  <span>Radius:</span>
-  <app-input
-    [Value]="shapeProps?.radius"
-    unit="pixel"
-    (onInputChange)="onRadiusChange($event)"
-  ></app-input>
-</div>
-<div *ngIf="shapeProps?.shape == Shape.Polygon" class="input">
-  <span>Sides: </span>
-  <app-input
-    [Value]="shapeProps?.radius"
-    (onInputChange)="onRadiusChange($event)"
-  ></app-input>
-</div>
-<app-checkbox [text]="'Align Edges'"></app-checkbox>

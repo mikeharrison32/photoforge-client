@@ -35,33 +35,277 @@
   </ul>
 </div>
 <div
-  [ngClass]="selected ? 'active-layer' : 'layer'"
+  class="layer"
+  [class.selected]="selected"
   (contextmenu)="onLayerRightClick($event)"
   (click)="setSelectedAdjustmentLayer($event)"
 >
-  <div class="eye-ball">
-    <img
-      [style]="adjustment?.visible ? 'opacity: 1;' : 'opacity:0;'"
-      src="assets/eye-ball.svg"
-      (click)="toggleLayerHidden()"
-    />
+  <div class="toggle-visibility" (click)="toggleLayerHidden()">
+    <svg
+      role="img"
+      fill="currentColor"
+      viewBox="0 0 18 18"
+      id="SVisibility18N-icon"
+      width="18"
+      height="18"
+      aria-hidden="true"
+      aria-label=""
+      focusable="false"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M12.306,4.29A7.491,7.491,0,0,0,9,3.468c-4.332,0-7.875,4.313-7.875,5.712,0,1.5,3.729,5.352,7.843,5.352,4.148,0,7.907-3.853,7.907-5.352C16.875,8,14.768,5.51,12.306,4.29ZM9,13.612A4.612,4.612,0,1,1,13.612,9,4.613,4.613,0,0,1,9,13.612Z"
+      ></path>
+      <path
+        fill-rule="evenodd"
+        d="M10.333,9.042A1.333,1.333,0,0,1,9,7.708a1.315,1.315,0,0,1,.675-1.134A2.429,2.429,0,0,0,9,6.469,2.531,2.531,0,1,0,11.531,9a2.367,2.367,0,0,0-.087-.6A1.313,1.313,0,0,1,10.333,9.042Z"
+      ></path>
+    </svg>
   </div>
-  <div class="layer-image" (click)="maskSelected = false">
-    <img src="assets/half-dark-circle-icon.svg" />
-    <div class="active-layer-wrapper" *ngIf="selected && !maskSelected">
-      <img src="assets/img-wrapper.svg" />
+  <div class="thumbnail">
+    <div [ngSwitch]="adjustment?.type">
+      <div class="icon" *ngSwitchCase="'brightnessContrast'">
+        <svg
+          role="img"
+          fill="currentColor"
+          viewBox="0 0 32 32"
+          id="SBrightnessContrast32N-icon"
+          width="32"
+          height="32"
+          aria-hidden="true"
+          aria-label=""
+          focusable="false"
+        >
+          <rect
+            fill-rule="evenodd"
+            x="14.933"
+            y="0.993"
+            width="2.133"
+            height="5"
+            rx="0.516"
+          ></rect>
+          <rect
+            fill-rule="evenodd"
+            x="14.933"
+            y="25.993"
+            width="2.133"
+            height="5"
+            rx="0.516"
+          ></rect>
+          <rect
+            fill-rule="evenodd"
+            x="2.433"
+            y="13.493"
+            width="2.133"
+            height="5"
+            rx="0.516"
+            transform="translate(-12.493 19.493) rotate(-90)"
+          ></rect>
+          <rect
+            fill-rule="evenodd"
+            x="27.433"
+            y="13.493"
+            width="2.133"
+            height="5"
+            rx="0.516"
+            transform="translate(12.507 44.493) rotate(-90)"
+          ></rect>
+          <rect
+            fill-rule="evenodd"
+            x="6.094"
+            y="22.332"
+            width="2.133"
+            height="5"
+            rx="0.516"
+            transform="translate(-5.334 47.454) rotate(-135)"
+          ></rect>
+          <rect
+            fill-rule="evenodd"
+            x="23.772"
+            y="4.654"
+            width="2.133"
+            height="5"
+            rx="0.516"
+            transform="translate(37.344 29.777) rotate(-135)"
+          ></rect>
+          <rect
+            fill-rule="evenodd"
+            x="23.772"
+            y="22.332"
+            width="2.133"
+            height="5"
+            rx="0.516"
+            transform="translate(59.961 24.827) rotate(135)"
+          ></rect>
+          <rect
+            fill-rule="evenodd"
+            x="6.094"
+            y="4.654"
+            width="2.133"
+            height="5"
+            rx="0.516"
+            transform="translate(17.284 7.149) rotate(135)"
+          ></rect>
+          <path
+            fill-rule="evenodd"
+            d="M16,7.993a8,8,0,1,0,8,8A8,8,0,0,0,16,7.993Zm0,14v-12a6,6,0,1,1,0,12Z"
+          ></path>
+        </svg>
+      </div>
+      <div class="icon" *ngSwitchCase="'hueSaturationLightnees'">
+        <svg
+          role="img"
+          fill="currentColor"
+          viewBox="0 0 32 32"
+          id="SHueAndSat32N-icon"
+          width="32"
+          height="32"
+          aria-hidden="true"
+          aria-label=""
+          focusable="false"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M11,26H27V6H11ZM28,4a1,1,0,0,1,1,1V27a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V5A1,1,0,0,1,4,4Z"
+          ></path>
+          <rect x="11" y="6" width="8" height="20" opacity="0.5"></rect>
+        </svg>
+      </div>
+      <div class="icon" *ngSwitchCase="'exposure'">
+        <svg
+          role="img"
+          fill="currentColor"
+          viewBox="0 0 32 32"
+          id="SExposure32N-icon"
+          width="32"
+          height="32"
+          aria-hidden="true"
+          aria-label=""
+          focusable="false"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10.6,12.42,21.586,4.441A12.759,12.759,0,0,0,8.4,5.652Z"
+          ></path>
+          <path
+            fill-rule="evenodd"
+            d="M17.7,9.735l4.273,3.1,6.745,4.9A12.67,12.67,0,0,0,23.461,5.551Z"
+          ></path>
+          <path
+            fill-rule="evenodd"
+            d="M16.059,28.847,18.284,22H4.641A12.843,12.843,0,0,0,16,28.85C16.02,28.85,16.039,28.847,16.059,28.847Z"
+          ></path>
+          <path
+            fill-rule="evenodd"
+            d="M10.964,20,6.765,7.077A12.8,12.8,0,0,0,3.793,20Z"
+          ></path>
+          <path
+            fill-rule="evenodd"
+            d="M22.448,15.655l-4.22,12.989a12.856,12.856,0,0,0,10.025-8.771Z"
+          ></path>
+        </svg>
+      </div>
+      <div class="icon" *ngSwitchCase="'vibrance'">
+        <svg
+          role="img"
+          fill="currentColor"
+          viewBox="0 0 32 32"
+          id="SVibrance32N-icon"
+          width="32"
+          height="32"
+          aria-hidden="true"
+          aria-label=""
+          focusable="false"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M28.355,5.98l-6.177,10.7L16,27.38,9.822,16.68,3.645,5.98h24.71M30.153,4H1.847a.845.845,0,0,0-.732,1.268L8.191,17.525l7.077,12.257a.845.845,0,0,0,1.464,0l7.077-12.257L30.885,5.268A.845.845,0,0,0,30.153,4Z"
+          ></path>
+          <path
+            d="M20.07,13.73a4.049,4.049,0,1,0-4.049,4.049h0A4.051,4.051,0,0,0,20.07,13.73Z"
+            opacity="0.07"
+          ></path>
+          <path
+            d="M16.016,8.469a5.255,5.255,0,1,0,5.254,5.255,5.254,5.254,0,0,0-5.254-5.255Zm0,9.31a4.051,4.051,0,1,1,4.049-4.052v0A4.049,4.049,0,0,1,16.016,17.779Z"
+            opacity="0.18"
+          ></path>
+          <path
+            d="M16.016,7.207a6.523,6.523,0,1,0,.006,0Zm0,11.782a5.255,5.255,0,1,1,5.254-5.255h0A5.254,5.254,0,0,1,16.016,18.989Z"
+            opacity="0.28"
+          ></path>
+          <path
+            d="M17.062,5.98H14.97a7.822,7.822,0,0,0-6.781,7.75v.13l3.794,6.572a7.769,7.769,0,0,0,8,.029L23.84,13.8V13.73A7.823,7.823,0,0,0,17.062,5.98ZM16.016,20.251a6.523,6.523,0,1,1,6.522-6.524v0A6.522,6.522,0,0,1,16.016,20.251Z"
+            opacity="0.38"
+          ></path>
+          <path
+            d="M14.97,5.98H11.2a9.134,9.134,0,0,0-4.135,5.926L8.2,13.86v-.13A7.822,7.822,0,0,1,14.97,5.98Z"
+            opacity="0.5"
+          ></path>
+          <path
+            d="M11.989,20.432l1.127,1.952a9.05,9.05,0,0,0,5.761.014l1.115-1.935A7.77,7.77,0,0,1,11.989,20.432Z"
+            opacity="0.5"
+          ></path>
+          <path
+            d="M20.83,5.98H17.064a7.822,7.822,0,0,1,6.779,7.75V13.8l1.116-1.934A9.124,9.124,0,0,0,20.83,5.98Z"
+            opacity="0.5"
+          ></path>
+          <path
+            d="M22.958,5.98H20.83a9.123,9.123,0,0,1,4.126,5.885l.89-1.546A10.389,10.389,0,0,0,22.958,5.98Z"
+            opacity="0.6"
+          ></path>
+          <path
+            d="M11.2,5.98H9.075a10.41,10.41,0,0,0-2.9,4.376l.9,1.546A9.133,9.133,0,0,1,11.2,5.98Z"
+            opacity="0.6"
+          ></path>
+          <path
+            d="M9.073,5.98H7.243a11.782,11.782,0,0,0-1.272,1.7L5.245,8.762l.927,1.607A10.4,10.4,0,0,1,9.073,5.98Z"
+            opacity="0.75"
+          ></path>
+          <path
+            d="M24.789,5.98h-1.83a10.4,10.4,0,0,1,2.889,4.341l.887-1.538-.674-1.109A11.729,11.729,0,0,0,24.789,5.98Z"
+            opacity="0.75"
+          ></path>
+          <path
+            d="M7.243,5.98h-3.6L5.234,8.741l.731-1.067A11.769,11.769,0,0,1,7.243,5.98Z"
+            opacity="0.9"
+          ></path>
+          <path
+            d="M26.061,7.674l.675,1.109,1.618-2.8H24.789A11.729,11.729,0,0,1,26.061,7.674Z"
+            opacity="0.9"
+          ></path>
+          <path
+            d="M16,24.244a10.61,10.61,0,0,1-1.916-.182l.9,1.562c.335.028.672.051,1.014.051s.679-.023,1.014-.051l.9-1.562A10.61,10.61,0,0,1,16,24.244Z"
+            opacity="0.75"
+          ></path>
+          <path
+            d="M16,27.38l1.014-1.756c-.335.028-.671.051-1.013.051s-.679-.023-1.014-.051"
+            opacity="0.9"
+          ></path>
+          <path
+            d="M13.116,22.384a9.05,9.05,0,0,0,5.761.014l-.961,1.664a10.176,10.176,0,0,1-3.832,0Z"
+            opacity="0.6"
+          ></path>
+        </svg>
+      </div>
+      <div class="icon" *ngSwitchCase="'colorBalance'">
+        <svg
+          role="img"
+          fill="currentColor"
+          viewBox="0 0 32 32"
+          id="SColorBalance32N-icon"
+          width="32"
+          height="32"
+          aria-hidden="true"
+          aria-label=""
+          focusable="false"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M25.936,8.993H28a1,1,0,0,0,0-2H19.181a3.328,3.328,0,0,0-6.362,0H4a1,1,0,0,0-1,1,.987.987,0,0,0,1,.984H6.062C4.266,11.743,1,19.453,1,21.493a5.766,5.766,0,0,0,6,5.5,5.766,5.766,0,0,0,6-5.5c0-2.015-3.269-9.729-5.064-12.5h4.883a3.318,3.318,0,0,0,6.351-.011h4.881C22.255,11.748,19,19.453,19,21.493a5.766,5.766,0,0,0,6,5.5,5.766,5.766,0,0,0,6-5.5C31,19.478,27.731,11.764,25.936,8.993Zm-22.921,11A60.1,60.1,0,0,1,7,10.716a60.2,60.2,0,0,1,3.986,9.277ZM16,9.893a1.9,1.9,0,1,1,1.9-1.9A1.9,1.9,0,0,1,16,9.893Zm5.015,10.1A60.1,60.1,0,0,1,25,10.716a60.2,60.2,0,0,1,3.986,9.277Z"
+          ></path>
+        </svg>
+      </div>
     </div>
   </div>
-  <img
-    src="assets/tool-properties-icons/link-icon.svg"
-    class="link-icon"
-    *ngIf="true"
-  />
-  <div class="layer-mask" *ngIf="true" (click)="maskSelected = true">
-    <div class="mask"></div>
-    <div *ngIf="maskSelected" class="active-layer-wrapper">
-      <img src="assets/img-wrapper.svg" />
-    </div>
-  </div>
-  <p class="layer-title">{{ adjustment?.name }}</p>
+  <span class="layer-name">{{ adjustment?.name }}</span>
 </div>

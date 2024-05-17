@@ -1,9 +1,9 @@
 export type Project = {
   Id: string;
   UserId: string;
-  Title: string;
-  Width?: number;
-  Height?: number;
+  name: string;
+  width?: number;
+  height?: number;
   Unit?: string;
   Resolution?: Record<string, string>;
   ColorMode?: Record<string, string>;
@@ -20,7 +20,7 @@ export type ProjectPreset = {
   Width: number;
   Height: number;
   Unit: string;
-  Resolution: Record<string, string>;
+  Resolution: number;
   ColorMode: Record<string, string>;
   ColorProfile: string;
   PixelAspectRatio: string;

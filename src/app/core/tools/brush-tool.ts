@@ -80,8 +80,8 @@ export class BrushTool {
       const zoom = data.zoom.getValue() / 100;
 
       mask.reveal(
-        (e.clientX - layerRect.left) / zoom,
-        (e.clientY - layerRect.top) / zoom,
+        Math.floor((e.clientX - layerRect.left) / zoom),
+        Math.floor((e.clientY - layerRect.top) / zoom),
         30
       );
     };
@@ -95,7 +95,6 @@ export class BrushTool {
       const container = displayContainer.parentElement;
       if (container) {
         container.removeEventListener('mousedown', this.mouseDownListener);
-        container.style.cursor = 'default';
       }
     }
     document.removeEventListener('mousemove', this.mouseMoveListener);

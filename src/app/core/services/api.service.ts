@@ -23,81 +23,89 @@ export class ApiService {
     //   `Bearer ${this.tokenService.getAccessToken()}`
     // );
     const RETRY_COUNT = new HttpContextToken(() => 3);
-    const result = this.http.get(
-      `${environments.development.apiUrl}/projects`,
-      { context: new HttpContext().set(RETRY_COUNT, 5) }
+    const result = this.http.get(`${environments.apiUrl}/projects`, {
+      context: new HttpContext().set(RETRY_COUNT, 5),
+    });
+    return firstValueFrom(result);
+  }
+  getProject(id: string) {
+    const result = this.http.get(`${environments.apiUrl}/projects/${id}`);
+    return firstValueFrom(result);
+  }
+
+  uploadLayer(projectId: string, file: File) {
+    const formData = new FormData();
+    formData.append('image', file);
+    const result = this.http.post(
+      `${environments.apiUrl}/layers/upload/${projectId}`,
+      formData
     );
     return firstValueFrom(result);
   }
-  createBlankProject(presets: ProjectPreset): Observable<any> {
-    const body = presets;
-    const headers = new HttpHeaders()
-      .set('Authorization', `Bearer ${this.tokenService.getAccessToken()}`)
-      .set('Content-Type', 'application/json');
-    return this.http.post<any>(
-      `${environments.development.apiUrl}/projects/create-blank`,
-      JSON.stringify(body),
-      { headers }
+  getTemplates() {
+    const result = firstValueFrom(
+      this.http.get(`${environments.apiUrl}/templates`)
     );
+    return result;
   }
-  createProjectByUpload(file: File): Observable<any> {
+  createBlankProject(presets: any) {
+    // const headers = new HttpHeaders()
+    //   .set('Authorization', `Bearer ${this.tokenService.getAccessToken()}`)
+    //   .set('Content-Type', 'application/json');
+    const result = this.http.post<any>(
+      `${environments.apiUrl}/projects/create`,
+      presets
+      // { headers }
+    );
+
+    return firstValueFrom(result);
+  }
+  createProjectByUpload(file: File) {
     const image = new FormData();
-    image.append('File', file);
+    console.log(file);
+    image.append('image', file);
     // const headers = new HttpHeaders().set(
     //   'Authorization',
     //   `Bearer ${this.tokenService.getAccessToken()}`
     // );
-    return this.http.post<any>(
-      `${environments.development.apiUrl}/projects/upload`,
+    const result = this.http.post<any>(
+      `${environments.apiUrl}/projects/upload`,
       image
     );
+    return firstValueFrom(result);
   }
   updateProject() {}
-  getLayers() {
+  getLayers(projectId: string) {
     const result = this.http.get<any>(
-      `${environments.development.apiUrl}/layers`
+      `${environments.apiUrl}/projects/${projectId}/layers`
     );
     return firstValueFrom(result);
   }
-  layerFromSelectionViaCopy(
-    layerId: string,
-    projectId: string,
-    pixels: IPixel[]
-  ) {
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    const result = this.http.post<any>(
-      `${environments.development.apiUrl}/layers/${projectId}/${layerId}/selection/layer-via-copy`,
-      JSON.stringify({
-        Pixels: pixels,
-      }),
-      { headers }
-    );
-    console.log({ Pixels: pixels });
-    return firstValueFrom(result);
-  }
-  layerFromSelectionViaCut(
-    layerId: string,
-    projectId: string,
-    pixels: IPixel[]
-  ) {
-    const result = this.http.post<any>(
-      `${environments.development.apiUrl}/layers/selection/layer-via-cut`,
-      {
-        layerId: layerId,
-        projectId: projectId,
-        pixels: pixels,
-      }
-    );
-    return firstValueFrom(result);
-  }
+
   createBlankLayer(projectId: string) {
     const result = this.http.post<any>(
-      `${environments.development.apiUrl}/layers/${projectId}/create-blank`,
+      `${environments.apiUrl}/layers/${projectId}/create-blank`,
       {}
     );
     return firstValueFrom(result);
   }
-  deleteProject() {}
+  deleteProject(projectId: string) {
+    return firstValueFrom(
+      this.http.delete(`${environments.apiUrl}/projects/${projectId}`)
+    );
+  }
 
   saveProject() {}
+
+  layerViaCopy(projectId: string, layerId: string, points: number[]) {
+    const data = {
+      points,
+    };
+    return firstValueFrom(
+      this.http.post(
+        `${environments.apiUrl}/layers/${projectId}/${layerId}/selection/layer-via-copy`,
+        data
+      )
+    );
+  }
 }

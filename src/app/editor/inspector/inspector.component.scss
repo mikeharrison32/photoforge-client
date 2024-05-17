@@ -1,193 +1,127 @@
-$dark_gray: #282828;
-$light_gray: #3a3a3a;
+@import "/src/app/variables.scss";
 
 :host {
-  width: 25rem;
   height: auto;
   position: relative;
-  margin-top: 0.3rem;
-  background: $light_gray;
   display: flex;
-  flex-direction: column;
-  z-index: 10000000000;
-  select {
-    background: transparent;
-    color: #bababa;
-    font-size: 0.6rem;
-    outline: none;
-    border-radius: 2px;
-    background: $dark_gray;
-    box-shadow: $light_gray 0 0 2px 0;
-  }
-  .properties {
-  }
-  .channels {
-    span {
-      box-sizing: border-box;
-      padding: 1rem;
-      display: flex;
-      color: #c6c6c6;
-    }
-  }
-  .adjustments {
-    margin-bottom: 1rem;
-    .icons {
-      display: flex;
-      width: 10rem;
-      gap: 1rem;
-      margin-left: 1rem;
-      flex-wrap: wrap;
-    }
-    p {
-      font-size: 0.6rem;
-      color: #b9b9b9;
-    }
-  }
-  .mini-panels {
-    background: $light_gray;
-    width: 1.6rem;
+  z-index: 10;
+  .group {
     height: 100%;
-    position: absolute;
-    left: 0;
-    z-index: 10;
-    border-inline: solid 3px $dark_gray;
-    .mini-panel {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding-block: 0.43rem;
-      border-block: solid 2px #282828;
-      padding-top: 0.8rem;
-      &::before {
-        content: "";
-        display: block;
-        width: 87%;
-        position: absolute;
-        top: 5px;
-        height: 5px;
-        background: #343434;
-        border-radius: 5px;
-      }
-    }
+    background: #323232;
+    position: relative;
   }
-  img {
-    width: 0.9rem;
-    cursor: pointer;
+  .task-bar {
+    width: 3rem;
+    background: #323232;
+    height: 100%;
+    margin-left: 2px;
   }
 
   .layers-panel {
     width: 100%;
-    height: 100%;
     // padding-left: 2rem;
-    .layer-properties {
-      width: 100%;
-      margin-top: 0.4rem;
-      .layer-property {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        gap: 0.3rem;
-        margin-block: 0.4rem;
-        position: relative;
-        // padding-right: 1rem;
-        box-sizing: border-box;
-        img.active {
-          background: #252525;
-        }
-        img {
-          padding: 0.1rem;
-        }
-        p {
-          font-size: 0.6rem;
-          margin-right: 0.3rem;
-          margin-block: 0;
-          color: #a9a9a9;
-        }
-        .layer-kind {
-          width: 4rem;
-          // margin-right: auto;
-        }
-        .blendingMode {
-          width: 6rem;
-          margin-right: auto;
-        }
-        .fill {
-          display: flex;
-          align-items: center;
-          position: absolute;
-          right: 0;
-          margin-right: 1rem;
-        }
-        .appearance {
-          width: 100%;
-        }
-        .opacity {
-          display: flex;
-          align-items: center;
-          margin-right: 1rem;
-        }
-      }
-    }
-    .layers {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      overflow-y: scroll;
-      &::-webkit-scrollbar-corner {
-        background: transparent;
-      }
-      &::-webkit-scrollbar {
-        background: transparent;
-        width: 0.5rem;
-      }
-      &::-webkit-scrollbar-thumb {
-        background: #565656;
-        border-radius: 50px;
-      }
-    }
-    .layer-options {
-      width: 100%;
-      height: 1.6rem;
-      align-items: center;
-      background: #464646;
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      display: flex;
-      justify-content: flex-end;
-      .ad_choices {
-        position: absolute;
-        bottom: 1.5rem;
-        left: 3rem;
-        z-index: 1000;
-        display: flex;
-        flex-direction: column;
-        background: #e1e1e1;
-        padding-block: 0.5rem;
+  }
+}
 
-        color: #000;
-        border-radius: 2px;
+.splitter {
+  width: 100%;
+  height: 2px;
+  background-color: $backgourd-color-2;
+}
+.panel-header,
+.action-group,
+.blend-opacity,
+.panel-actions {
+  display: flex;
+  align-items: center;
+}
+.label {
+  font-size: 12px;
+  padding: 4px 0 5px;
+  color: #d1d1d1;
+  width: 100%;
+  display: flex;
+}
+.panel-header {
+  h4 {
+    padding: 16px;
+    margin: 0;
+    margin-bottom: 8px;
+  }
+}
+.divider {
+  width: calc(100% - 32px);
+  margin: 0 16px;
+  background: #1d1d1d;
+  min-height: 1px;
+}
 
-        p {
-          margin: 0;
-          cursor: pointer;
-          font-size: 0.7rem;
-          padding-inline: 0.6rem;
-          padding-block: 0.1rem;
-          &:hover {
-            color: #fff;
-            background: linear-gradient(45deg, #ff06a8, red);
-          }
-        }
-      }
-      ul {
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
-        margin-right: 1rem;
-      }
+.layers {
+  margin: 8px 0;
+}
+
+.active-panel {
+  background: #c7c7c7;
+  svg > * {
+    color: #000;
+  }
+}
+
+.project-name,
+.brand {
+  cursor: pointer;
+}
+
+.project-name {
+  margin-right: 8px;
+}
+.toggle-panel {
+  padding: 4px;
+  border-radius: 2px;
+  &:hover {
+    background: #3f3f3f;
+  }
+}
+
+.panel-actions {
+  width: 100%;
+  justify-content: center;
+  margin-top: 8px;
+  padding: 4px;
+  flex-direction: column;
+  gap: 8px;
+  box-sizing: border-box;
+}
+
+.blend-opacity {
+  padding: 0 16px;
+  margin-bottom: 8px;
+  .label {
+    margin-right: 8px;
+  }
+  .blend-picker {
+    margin-right: 8px;
+  }
+  input {
+    padding: 5px 11px 8px;
+    border: solid 1px $border-color-1;
+    border-radius: 4px;
+    background: #1d1d1d;
+    width: 73px;
+    padding: 5px 11px 8px;
+    color: #ebebeb;
+  }
+}
+.action-group {
+  gap: 20px;
+  padding: 0 16px;
+  margin-bottom: 8px;
+  .action-btn {
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    &:hover {
+      background: $action-btn-hover-background;
     }
   }
 }
