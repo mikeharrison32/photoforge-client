@@ -7,7 +7,7 @@ import {
 import { Injectable } from '@angular/core';
 import { TokenService } from './token.service';
 import { Project, ProjectPreset } from 'src/app/types/project';
-import { environments } from 'src/environments/environments';
+import { environments } from '../../../../environments';
 import { Observable, firstValueFrom } from 'rxjs';
 import { IPixel } from 'src/app/types/pixel';
 

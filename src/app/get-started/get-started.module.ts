@@ -7,7 +7,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppModule } from '../app.module';
 import { NavBarModule } from '../nav-bar/nav-bar.module';
-
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 @NgModule({
   declarations: [GetStartedComponent, AuthComponent],
   imports: [
@@ -29,6 +30,8 @@ import { NavBarModule } from '../nav-bar/nav-bar.module';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     NavBarModule,
+    MatInputModule,
+    MatFormFieldModule,
   ],
   exports: [],
 })
