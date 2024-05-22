@@ -235,6 +235,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   ngAfterViewInit() {
     //if clicked on a selection display the selection context menu
+
     document.addEventListener('contextmenu', (e) => {
       e.preventDefault();
       const selectionElem = this.data.currentSelection.getValue()?.view;

@@ -1,12 +1,63 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Renderer2 } from '@angular/core';
 import { Layer } from '../layers/layer';
 import { DataService } from './data.service';
+import { ToolService } from './tool.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MoveToolService {
-  constructor(private data: DataService) {}
+  private mouseDownListenter?: () => void;
+  private mouseUpListenter?: () => void;
+  private mouseMoveListenter?: () => void;
+  constructor(private data: DataService, private toolService: ToolService) {}
+  configure(display: HTMLElement, renderer: Renderer2) {
+    this.toolService.disconfigureTools();
+    let mousedown = false;
+    let rect: DOMRect;
+    let zoom: number;
+    let layerToMove: Layer;
+    this.mouseDownListenter = renderer.listen(display, 'mousedown', (e) => {
+      mousedown = true;
+      rect = display.getBoundingClientRect();
+      zoom = this.data.zoom.getValue() / 100;
+      const layers = this.data.layers.getValue();
+
+      for (let i = 0; i < layers.length; i++) {
+        const layer = layers[i];
+        if (layer.contains(e.target)) {
+          layerToMove = layer;
+        }
+      }
+    });
+    this.mouseUpListenter = renderer.listen(document, 'mouseup', (e) => {
+      mousedown = false;
+    });
+    this.mouseMoveListenter = renderer.listen(document, 'mousemove', (e) => {
+      if (!mousedown) {
+        return;
+      }
+      const x = (e.clientX - rect.left) / zoom;
+      const y = (e.clientY - rect.top) / zoom;
+
+      if (!layerToMove) {
+        return;
+      }
+
+      layerToMove.moveTo(x, y);
+    });
+  }
+  disconfigure() {
+    if (this.mouseDownListenter) {
+      this.mouseDownListenter();
+    }
+    if (this.mouseMoveListenter) {
+      this.mouseMoveListenter();
+    }
+    if (this.mouseUpListenter) {
+      this.mouseUpListenter();
+    }
+  }
   centerSelectedObjVertical() {
     const selectedLayers = this.data.selectedLayers.getValue();
     selectedLayers.forEach((layer) => {

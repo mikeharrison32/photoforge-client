@@ -6,7 +6,7 @@ export class PfObject {
   resizer!: Resizer;
   elem!: HTMLElement;
   data!: DataService;
-    x: number = 0;
+  x: number = 0;
   y: number = 0;
   constructor(
     protected renderer: Renderer2,
@@ -23,8 +23,8 @@ export class PfObject {
     let zoom = this.data.zoom.getValue() / 100;
     this.elem.style.left = x + 'px';
     this.elem.style.top = y + 'px';
-    this.x = x 
-    this.y = y 
+    this.x = x;
+    this.y = y;
     this.resizer.moveTo(x * zoom, y * zoom);
   }
   remove() {
@@ -41,6 +41,10 @@ export class PfObject {
     this.elem.style.height = `${height}px`;
   }
   contains(elem: HTMLElement) {
-    return this.elem.contains(elem) || this.resizer.elem.contains(elem);
+    if (this.elem.contains(elem) || this.resizer.elem.contains(elem)) {
+      return true;
+    }
+
+    return false;
   }
 }
