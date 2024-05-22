@@ -6,8 +6,17 @@ import { ShapeToolService } from './shape-tool.service';
 })
 export class ToolService {
   renderer?: Renderer2;
+  tools: any[] = [];
   constructor() {}
+  register(tool: any) {
+    if (!this.tools.includes(tool)) {
+      this.tools = tool;
+    }
+  }
   disconfigureTools() {
-    // this.shapeToolService.disconfigure();
+    for (let i = 0; i < this.tools.length; i++) {
+      const tool = this.tools[i];
+      tool.disconfigure();
+    }
   }
 }

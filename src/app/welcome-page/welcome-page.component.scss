@@ -1,3 +1,5 @@
+@import "../variables.scss";
+
 %btn {
   padding: 0.4rem;
   width: 7rem;
@@ -26,7 +28,7 @@
     top: 0;
     align-items: center;
     padding-block: 0.2rem;
-    background-color: #3a3a3a;
+    background-color: $primary-color;
     justify-content: space-between;
     .logo {
       display: flex;

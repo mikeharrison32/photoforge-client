@@ -1,10 +1,12 @@
 <app-move-tool-properties
   *ngIf="selectedToolGroup == 'sizePosition'"
+  [display]="display"
 ></app-move-tool-properties>
 <app-rect-select-tool-properties
   *ngIf="selectedToolGroup == 'select'"
 ></app-rect-select-tool-properties>
 <app-brush-tool-properties
+  [display]="display"
   *ngIf="selectedToolGroup == 'paint'"
 ></app-brush-tool-properties>
 <app-clone-stamp-tool-properties

@@ -1,4 +1,10 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  OnDestroy,
+  Input,
+} from '@angular/core';
 import { DataService } from '../../../core/services/data.service';
 
 @Component({
@@ -9,6 +15,7 @@ import { DataService } from '../../../core/services/data.service';
 export class ToolPropertiesComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
+  @Input() display!: HTMLElement;
   tools: any;
   constructor(private data: DataService) {}
   selectedToolGroup?: string;

@@ -2,14 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { GetStartedComponent } from './get-started.component';
-import { AuthComponent } from './auth/auth.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppModule } from '../app.module';
 import { NavBarModule } from '../nav-bar/nav-bar.module';
-
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './login/login.component';
 @NgModule({
-  declarations: [GetStartedComponent, AuthComponent],
+  declarations: [GetStartedComponent, SignupComponent, LoginComponent],
   imports: [
     CommonModule,
     RouterModule.forChild([
@@ -20,15 +22,23 @@ import { NavBarModule } from '../nav-bar/nav-bar.module';
         // data: { animation: 'GetStartedPage' },
       },
       {
-        path: 'auth',
-        title: 'Authentication - Photoforge',
-        component: AuthComponent,
+        path: 'signup',
+        title: 'SignUp - Photoforge',
+        component: SignupComponent,
+        data: { animation: 'AuthPage' },
+      },
+      {
+        path: 'login',
+        title: 'Login - Photoforge',
+        component: LoginComponent,
         data: { animation: 'AuthPage' },
       },
     ]),
     ReactiveFormsModule,
     BrowserAnimationsModule,
     NavBarModule,
+    MatInputModule,
+    MatFormFieldModule,
   ],
   exports: [],
 })
