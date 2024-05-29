@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { environments } from 'environments';
 
 @Injectable({
   providedIn: 'root',
@@ -8,37 +9,28 @@ import { Router } from '@angular/router';
 export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
-  signup(Username: string | null, Password: string | null) {
+  signUp(email: string, password: string) {
     const body = {
-      userName: Username,
-      password: Password,
+      email,
+      password,
     };
     const headers = {
       'Content-Type': 'application/json',
     };
-    this.http.post('http://localhost:5072/api/signup/', JSON.stringify(body), {
+    return this.http.post(`${environments.apiUrl}/register`, body, {
       headers,
     });
   }
-  login(Username: string | null, Password: string | null) {
-    const body = `client_id=photo-forge&client_name=PhotoForge&grant_type=password&scopes=projects%20offline_access&userName=${Username}&password=${Password}`;
+  logIn(email: string | null, password: string | null) {
+    const body = {
+      email,
+      password,
+    };
+    const headers = {
+      'Content-Type': 'application/json',
+    };
 
-    const headers = new HttpHeaders().set(
-      'Content-Type',
-      'application/x-www-form-urlencoded'
-    );
-
-    this.http
-      .post('http://localhost:5072/connect/token', body, { headers })
-      .subscribe({
-        next: (res) => {
-          console.log(res);
-          localStorage.setItem('access_token', (res as any).access_token);
-          localStorage.setItem('refresh_token', (res as any).refresh_token);
-          this.router.navigateByUrl('/');
-        },
-        error: (err) => console.log(err),
-      });
+    return this.http.post(`${environments.apiUrl}/login`, body, { headers });
   }
   logout() {
     localStorage.removeItem('access_token');

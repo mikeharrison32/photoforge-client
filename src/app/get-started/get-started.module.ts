@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { GetStartedComponent } from './get-started.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppModule } from '../app.module';
 import { NavBarModule } from '../nav-bar/nav-bar.module';
@@ -39,6 +39,7 @@ import { LoginComponent } from './login/login.component';
     NavBarModule,
     MatInputModule,
     MatFormFieldModule,
+    FormsModule,
   ],
   exports: [],
 })

@@ -1,5 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
+import { map, pipe, tap } from 'rxjs';
 import { ApiService } from 'src/app/core/services/api.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { LoadingService } from 'src/app/core/services/loading.service';
@@ -84,34 +85,22 @@ export class HomeComponent implements OnInit {
   private loadProjects() {
     this.api
       .getProjects()
-      .then((data: any) => {
-        this.projects = data;
-        this.data.projects.next(data);
-        for (let i = 0; i < this.projects.length; i++) {
-          const project = this.projects[i];
-          this.api
-            .getLayers(project.id)
-            .then((layers) => {
-              this.layers.push(...layers);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
-        this.loading = false;
-      })
-      .catch((err) => {
-        console.log(err);
-        this.loading = false;
-      })
-      .then(() => {
-        console.log(this.layers);
+      .pipe(map((res) => res))
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+        },
+        error: (err) => {
+          console.log(err.status);
+          if (err.status == 401) {
+          }
+        },
       });
   }
 
   async loadRecentProjects() {
     const projects = (await this.api.getProjects()) as any;
-    this.projects = projects;
+    return projects;
   }
 
   getImageUrl(project: any) {
