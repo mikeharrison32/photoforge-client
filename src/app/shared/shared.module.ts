@@ -12,6 +12,8 @@ import { GroupFolderComponent } from './components/group-folder/group-folder.com
 import { ColorPickerComponent } from './components/color-picker/color-picker.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { InfoDirective } from './directives/info.directive';
+import { DraggableDirective } from './directives/draggable.directive';
+import { ClickOutsideDirective } from './directives/clickOutside.directive';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { InfoDirective } from './directives/info.directive';
     GroupFolderComponent,
     ColorPickerComponent,
     InfoDirective,
+    ClickOutsideDirective,
+    DraggableDirective,
   ],
   imports: [CommonModule, HttpClientModule, FormsModule, ColorPickerModule],
   providers: [],

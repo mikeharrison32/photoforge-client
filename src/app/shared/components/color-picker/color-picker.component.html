@@ -3,7 +3,7 @@
   [style.background]="color"
   (click)="Active = true"
 ></div>
-<div *ngIf="Active" class="color-editor">
+<div *ngIf="Active" class="color-editor" appDraggable>
   <div class="title">
     <span>Color Picker</span>
   </div>

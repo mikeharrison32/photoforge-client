@@ -37,7 +37,7 @@ export class TrackComponent implements AfterViewInit {
         return;
       }
 
-      const x = e.clientX;
+      const x = e.clientX - rect.left;
       if (x < 1) {
         return;
       }

@@ -4,8 +4,14 @@
   box-sizing: border-box;
 }
 
-svg {
+svg > * {
   width: 24px;
+  color: #ebebeb;
+}
+h2,
+p,
+button,
+span {
   color: #ebebeb;
 }
 

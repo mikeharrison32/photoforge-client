@@ -25,7 +25,6 @@ import { ToolPropertiesComponent } from './tool-properties.component';
 import { ToolBarHeaderComponent } from './tool-bar-header/tool-bar-header.component';
 import { DropDownComponent } from './drop-down/drop-down.component';
 import { SliderModule } from 'src/app/slider/slider.module';
-
 @NgModule({
   declarations: [
     BrushComponent,
