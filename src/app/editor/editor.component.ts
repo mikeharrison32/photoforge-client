@@ -37,6 +37,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { LoadingService } from '../core/services/loading.service';
 import { ToolService } from '../core/services/tool.service';
+import { CropToolService } from '../core/services/crop-tool.service';
+import { TokenService } from '../core/services/token.service';
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
@@ -56,17 +58,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('rectSelectContextMenu') rectSelectContextMenu?: ElementRef;
   shortcutsRenderFunc = (): void => {};
   shortcutsEnabled?: boolean = true;
-  tools: any[] = [
-    brushTool,
-    shapeTool,
-    rectangularSelect,
-    lassoTool,
-    cloneStampTool,
-    textTool,
-    eraserTool,
-    moveTool,
-    penTool,
-  ];
+
   @ViewChild('display') display?: ElementRef;
   @ViewChild('displayContainer') displayContainer?: ElementRef;
 
@@ -77,6 +69,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   loadingLayers: boolean = false;
   loadingDocument: boolean = false;
   openedProject?: Project | null;
+  cropToolActive: boolean = false;
   constructor(
     private data: DataService,
     private renderer: Renderer2,
@@ -86,7 +79,9 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     private api: ApiService,
     private activatedRoute: ActivatedRoute,
     private http: HttpClient,
-    private toolService: ToolService
+    private toolService: ToolService,
+    private cropToolService: CropToolService,
+    private tokenService: TokenService
   ) {
     toolService.renderer = renderer;
   }
@@ -96,6 +91,10 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.data.shortcutsEnabled.subscribe((se) => {
       this.shortcutsEnabled = se;
+    });
+
+    this.cropToolService.configured.subscribe((isConfigured) => {
+      this.cropToolActive = isConfigured;
     });
 
     this.data.layers.subscribe((layers) => {
@@ -144,7 +143,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.api
       .getProject(projectId)
       .then((project: any) => {
-        project = project[0];
+        console.log(project);
         const serializedProject: Project = {
           Id: project.id,
           UserId: '',
@@ -157,6 +156,9 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
       .catch((err) => {
         this.loadingDocument = false;
         console.log(err);
+        if (err.status == 401) {
+          this.tokenService.refereshToken();
+        }
       });
   }
 
@@ -261,6 +263,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.addShortcuts();
 
+    //load project
     const params = this.activatedRoute.snapshot.params as any;
     this.loadProject(params.projectId);
     this.loadLayers(params.projectId);
@@ -539,11 +542,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   onRectSelectRightClick(e: any) {
     e.preventDefault();
   }
-  disconfigureTools() {
-    this.tools.forEach((tool) => {
-      tool.disconfigure(this.display?.nativeElement);
-    });
-  }
+  disconfigureTools() {}
 
   onNewDocumentCloseClick() {
     this.data.newMenuClick.next(false);

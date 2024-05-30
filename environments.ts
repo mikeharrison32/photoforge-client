@@ -14,7 +14,7 @@ export const environments = {
   production: {
     apiUrl: 'http://Photoforge.com',
   },
-  apiUrl: 'http://localhost:5274',
+  apiUrl: 'http://localhost:5000',
 };
 
 type Enviroments = {

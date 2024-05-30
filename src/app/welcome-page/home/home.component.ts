@@ -88,9 +88,12 @@ export class HomeComponent implements OnInit {
       .pipe(map((res) => res))
       .subscribe({
         next: (data) => {
+          this.projects = data as any;
           console.log(data);
+          this.loading = false;
         },
         error: (err) => {
+          this.loading = false;
           console.log(err.status);
           if (err.status == 401) {
           }

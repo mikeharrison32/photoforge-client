@@ -29,8 +29,26 @@ export class ApiService {
   }
 
   getProject(id: string) {
-    const result = this.http.get(`${environments.apiUrl}/projects/${id}`);
-    return firstValueFrom(result);
+    let promise = new Promise((resolve, reject) => {
+      const headers = new HttpHeaders().set(
+        'Authorization',
+        `Bearer ${this.tokenService.getAccessToken()}`
+      );
+      this.http
+        .get(`${environments.apiUrl}/projects/${id}`, {
+          headers,
+        })
+        .subscribe({
+          next: (value) => resolve(value),
+          error: (err) => {
+            if (err.status == 401) {
+              this.tokenService.refereshToken();
+              reject('try agian');
+            }
+          },
+        });
+    });
+    return promise;
   }
 
   uploadLayer(projectId: string, file: File) {
@@ -54,13 +72,13 @@ export class ApiService {
     return result;
   }
   createBlankProject(presets: any) {
-    // const headers = new HttpHeaders()
-    //   .set('Authorization', `Bearer ${this.tokenService.getAccessToken()}`)
-    //   .set('Content-Type', 'application/json');
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${this.tokenService.getAccessToken()}`)
+      .set('Content-Type', 'application/json');
     const result = this.http.post<any>(
       `${environments.apiUrl}/projects/create`,
-      presets
-      // { headers }
+      presets,
+      { headers }
     );
 
     return firstValueFrom(result);
@@ -81,10 +99,26 @@ export class ApiService {
   }
   updateProject() {}
   getLayers(projectId: string) {
-    const result = this.http.get<any>(
-      `${environments.apiUrl}/projects/${projectId}/layers`
-    );
-    return firstValueFrom(result);
+    let promise = new Promise((resolve, reject) => {
+      const headers = new HttpHeaders().set(
+        'Authorization',
+        `Bearer ${this.tokenService.getAccessToken()}`
+      );
+      this.http
+        .get(`${environments.apiUrl}/projects/${projectId}/layers`, {
+          headers,
+        })
+        .subscribe({
+          next: (value) => resolve(value),
+          error: (err) => {
+            if (err.status == 401) {
+              this.tokenService.refereshToken();
+              reject('try agian');
+            }
+          },
+        });
+    });
+    return promise;
   }
 
   createBlankLayer(projectId: string) {

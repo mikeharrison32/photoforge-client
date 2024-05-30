@@ -15,10 +15,7 @@
     <div class="displayContainer" #displayContainer>
       <div id="display" #display></div>
       <div id="resizers"></div>
-      <app-crop-rect
-        *ngIf="selectedTool == 'cropTool'"
-        [display]="display"
-      ></app-crop-rect>
+      <app-crop-rect *ngIf="cropToolActive" [display]="display"></app-crop-rect>
     </div>
     <div
       #contextMenuRef

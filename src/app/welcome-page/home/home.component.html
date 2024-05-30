@@ -56,7 +56,7 @@
         <img src="assets/tools-icons/more-icon.svg" alt="more icon" />
       </div>
       <div class="file-image" (dblclick)="openProject(project)">
-        <img [src]="getImageUrl(project)" alt="" />
+        <img [src]="project.thumbnailUrl" alt="" />
       </div>
       <h4>{{ project.name }}</h4>
       <p>{{ project.modifyedAt | date }}</p>

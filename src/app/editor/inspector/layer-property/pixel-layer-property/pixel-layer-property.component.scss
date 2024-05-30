@@ -5,29 +5,38 @@ h4 {
   padding: 0 12px;
 }
 .props {
-  display: grid;
-  grid-template-columns: repeat(4, 0.1fr);
-  padding: 12px;
-  gap: 11px;
-  font-size: 12px;
-  grid-template-areas: "hscalelabel hscaleinput lockicon2 vscalelabel vscaleinput"
-  ". . . lock . ."
-  "hmovelable xinput lockicon1 vmovelabel yinput"
-  ;  
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  box-sizing: border-box;
+  gap: 12px;
+}
+.row,
+.icons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.row {
+  div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
 }
 .input {
   width: 5rem;
 }
 
-.lock-scale-top-icon{
+.lock-scale-top-icon {
   width: 10px;
   height: 2px;
-  background: #505050;  
+  background: #505050;
   position: relative;
   grid-area: lockicon2;
-  &::before{
+  &::before {
     display: block;
-    content: '';
+    content: "";
     width: 2px;
     height: 10px;
     position: absolute;
@@ -37,15 +46,15 @@ h4 {
   }
 }
 .lock-scale-bottom-icon {
-    width: 10px;
+  width: 10px;
   height: 2px;
-  background: #505050;  
+  background: #505050;
   position: relative;
   grid-area: lockicon1;
 
-  &::before{
+  &::before {
     display: block;
-    content: '';
+    content: "";
     width: 2px;
     height: 10px;
     position: absolute;
@@ -64,14 +73,12 @@ h4 {
 }
 .y-input {
   grid-area: yinput;
-
 }
 .w-input {
   gird-area: hscaleinput;
 }
 .h-input {
   grid-area: vscaleinput;
-
 }
 
 .h-scale-label {
@@ -80,20 +87,16 @@ h4 {
 
 .h-move-label {
   grid-area: hmovelable;
-
 }
 
 .v-scale-label {
   grid-area: vscalelabel;
-
 }
 
 .v-move-label {
   grid-area: vmovelabel;
-
 }
 
 .lock-icon {
   grid-area: lock;
-
 }
