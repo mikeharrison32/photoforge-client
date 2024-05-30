@@ -16,29 +16,34 @@ import { IPixel } from 'src/app/types/pixel';
 })
 export class ApiService {
   constructor(private http: HttpClient, private tokenService: TokenService) {}
+
   getProjects() {
-    // let projects: Project[] = [];
-    // const headers = new HttpHeaders().set(
-    //   'Authorization',
-    //   `Bearer ${this.tokenService.getAccessToken()}`
-    // );
-    const RETRY_COUNT = new HttpContextToken(() => 3);
-    const result = this.http.get(`${environments.apiUrl}/projects`, {
-      context: new HttpContext().set(RETRY_COUNT, 5),
+    let projects: Project[] = [];
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${this.tokenService.getAccessToken()}`
+    );
+    return this.http.get(`${environments.apiUrl}/projects`, {
+      headers,
     });
-    return firstValueFrom(result);
   }
+
   getProject(id: string) {
     const result = this.http.get(`${environments.apiUrl}/projects/${id}`);
     return firstValueFrom(result);
   }
 
   uploadLayer(projectId: string, file: File) {
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${this.tokenService.getAccessToken()}`
+    );
     const formData = new FormData();
     formData.append('image', file);
     const result = this.http.post(
       `${environments.apiUrl}/layers/upload/${projectId}`,
-      formData
+      formData,
+      { headers }
     );
     return firstValueFrom(result);
   }
@@ -61,18 +66,18 @@ export class ApiService {
     return firstValueFrom(result);
   }
   createProjectByUpload(file: File) {
-    const image = new FormData();
-    console.log(file);
-    image.append('image', file);
-    // const headers = new HttpHeaders().set(
-    //   'Authorization',
-    //   `Bearer ${this.tokenService.getAccessToken()}`
-    // );
-    const result = this.http.post<any>(
-      `${environments.apiUrl}/projects/upload`,
-      image
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${this.tokenService.getAccessToken()}`
     );
-    return firstValueFrom(result);
+    const image = new FormData();
+    image.append('image', file);
+
+    return this.http.post<any>(
+      `${environments.apiUrl}/projects/upload`,
+      image,
+      { headers }
+    );
   }
   updateProject() {}
   getLayers(projectId: string) {

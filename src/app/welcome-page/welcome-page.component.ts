@@ -32,7 +32,12 @@ export class WelcomePageComponent implements OnInit {
     private renderer: Renderer2,
     private loadingService: LoadingService
   ) {}
-  ngOnInit() {}
+  ngOnInit() {
+    const data = this.jwtHelper.decodeToken(
+      this.tokenService.getAccessToken()!
+    );
+    console.log(data);
+  }
   setActiveElement(el: string) {
     this.selectedTab = el;
     this.activeTab = el;
@@ -46,17 +51,17 @@ export class WelcomePageComponent implements OnInit {
   onOpenFileBtnChange(e: any) {
     this.loadingService.startLoading('Uploading Image...');
     const file = e.target.files[0];
-    this.api
-      .createProjectByUpload(file)
-      .then((project: any) => {
+    this.api.createProjectByUpload(file).subscribe({
+      next: (project: any) => {
         this.loadingService.stopLoading();
         this.data.openedProjects.next([project]);
         this.data.selectedProject.next(project);
         this.router.navigateByUrl(`/editor/${project.id}`);
-      })
-      .catch((err: any) => {
+      },
+      error: (err) => {
         this.loadingService.stopLoading();
         console.log(err);
-      });
+      },
+    });
   }
 }

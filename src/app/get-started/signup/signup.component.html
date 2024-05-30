@@ -1,10 +1,14 @@
 <div class="box">
   <h1>Sign Up</h1>
   <div class="logo"></div>
-  <input type="text" placeholder="Email" />
-  <input type="text" placeholder="password" />
-  <input type="text" placeholder="confirm password" />
-  <button>Sign Up</button>
+  <input type="email" placeholder="Email" [(ngModel)]="email" />
+  <input type="password" placeholder="password" [(ngModel)]="password" />
+  <input
+    type="password"
+    placeholder="confirm password"
+    [(ngModel)]="confirm_password"
+  />
+  <button (click)="singUp()">Sign Up</button>
   <a routerLink="/login">Already have an account? Login.</a>
   <a routerLink="/start">Skip</a>
 </div>
