@@ -84,7 +84,7 @@ export class ApiService {
 
   createBlankLayer(projectId: string) {
     const result = this.http.post<any>(
-      `${environments.apiUrl}/layers/${projectId}/create-blank`,
+      `${environments.apiUrl}/layers/create/${projectId}`,
       {}
     );
     return firstValueFrom(result);
