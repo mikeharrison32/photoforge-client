@@ -103,16 +103,16 @@
         </div>
       </div>
       <div class="zoom-actions" *ngIf="zoomActions">
-        <span
+        <span (click)="zoomIn()"
           >Zoom in
           <kbd>Ctrl + +</kbd>
         </span>
-        <span
+        <span (click)="zoomOut()"
           >Zoom out
           <kbd>Ctrl + -</kbd>
         </span>
         <div class="h-divider"></div>
-        <span>100%</span>
+        <span (click)="fullZoom()">100%</span>
         <span>200%</span>
         <span>Fit to screen</span>
         <span>Fill screen</span>
@@ -138,6 +138,10 @@
           ></path>
         </svg>
       </div>
+    </div>
+    <div class="account">
+      <div class="icon"></div>
+      <div class="account-settings"></div>
     </div>
   </div>
 </div>

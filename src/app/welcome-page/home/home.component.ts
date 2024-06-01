@@ -88,8 +88,18 @@ export class HomeComponent implements OnInit {
       .pipe(map((res) => res))
       .subscribe({
         next: (data) => {
-          this.projects = data as any;
-          console.log(data);
+          // this.projects = data as any;
+          (data as any).forEach((project: any) => {
+            this.api
+              .getLayers(project.id)
+              .then((layers: any) => {
+                this.layers.push(...layers);
+                this.projects.push(project);
+              })
+              .catch((err: any) => {
+                console.log(err);
+              });
+          });
           this.loading = false;
         },
         error: (err) => {

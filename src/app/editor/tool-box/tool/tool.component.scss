@@ -77,7 +77,7 @@
 
 .active-tool {
   @extend .tool;
-  background: $backgourd-color-1;
+  background: $background-color-1;
   border-radius: 2px;
   &:hover {
     border-radius: 2px;

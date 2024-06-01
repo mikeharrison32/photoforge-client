@@ -43,6 +43,7 @@ export class WelcomePageComponent implements OnInit {
     this.activeTab = el;
   }
   onCloseBtnClick(e: any) {
+    console.log('close cli');
     this.createNewBtnClicked = false;
   }
   displayNewDocument() {

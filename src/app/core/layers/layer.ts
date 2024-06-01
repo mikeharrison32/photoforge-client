@@ -10,6 +10,8 @@ export class Layer extends PfObject {
   active: boolean = false;
   visible: boolean = true;
   locked: boolean = false;
+  width: number = 100;
+  height: number = 100;
 
   constructor(
     renderer: Renderer2,

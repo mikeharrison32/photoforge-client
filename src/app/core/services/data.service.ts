@@ -10,10 +10,10 @@ import { AdjustmentLayer } from '../layers/adjustment/adjustment_layer';
 import { Selection } from '../../core/selection';
 import { History } from '..';
 import { Tool } from 'src/app/enums/tool.enum';
-import { selectionToolType } from 'src/app/editor/top-bar/tool-properties/rect-select-tool-properties/selectionToolType';
+import { selectionToolType } from 'src/app/editor/top-bar/tool-properties/selection-properties/selectionToolType';
 import { shapeToolTypes } from 'src/app/editor/top-bar/tool-properties/shape-tool-properties/shapeToolTypes';
-import { paintToolTypes } from 'src/app/editor/top-bar/tool-properties/brush-tool-properties/paintToolTypes';
-import { sizePositionToolTypes } from 'src/app/editor/top-bar/tool-properties/move-tool-properties/sizePositionToolTypes';
+import { paintToolTypes } from 'src/app/editor/top-bar/tool-properties/paint-properties/paintToolTypes';
+import { sizePositionToolTypes } from 'src/app/editor/top-bar/tool-properties/size-postion-properties/sizePositionToolTypes';
 
 @Injectable({
   providedIn: 'root',

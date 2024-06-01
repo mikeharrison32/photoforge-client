@@ -10,17 +10,17 @@ export class ColorBalanceComponent {
   @Input() adjustmentLayer?: ColorBalance;
   onCbRedChange(value: number) {
     this.adjustmentLayer?.set({
-      red: value,
+      red: value / 100,
     });
   }
   onCbBlueChange(value: number) {
     this.adjustmentLayer?.set({
-      blue: value,
+      blue: value / 100,
     });
   }
   onCbGreenChange(value: number) {
     this.adjustmentLayer?.set({
-      green: value,
+      green: value / 100,
     });
   }
 }

@@ -1,4 +1,4 @@
-@import "/src/app/variables.scss";
+@import "../../variables.scss";
 
 :host {
   width: 100%;
@@ -8,6 +8,15 @@
   margin-bottom: 2px;
 }
 
+.account {
+  .icon {
+    width: 1.4rem;
+    height: 1.4rem;
+    background-color: $background-color-1;
+    border-radius: 50px;
+    cursor: pointer;
+  }
+}
 .arrow-down {
   svg {
     width: 12px;

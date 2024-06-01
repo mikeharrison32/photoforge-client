@@ -17,6 +17,10 @@ export class MoveToolService {
     let rect: DOMRect;
     let zoom: number;
     let layerToMove: Layer;
+    let startX = 0;
+    let startY = 0;
+    let initialX = 0;
+    let initialY = 0;
     this.mouseDownListenter = renderer.listen(display, 'mousedown', (e) => {
       mousedown = true;
       rect = display.getBoundingClientRect();
@@ -29,6 +33,8 @@ export class MoveToolService {
           layerToMove = layer;
         }
       }
+      startX = e.clientX - initialX;
+      startY = e.clientY - initialY;
     });
     this.mouseUpListenter = renderer.listen(document, 'mouseup', (e) => {
       mousedown = false;
@@ -37,14 +43,16 @@ export class MoveToolService {
       if (!mousedown) {
         return;
       }
-      const x = (e.clientX - rect.left) / zoom;
-      const y = (e.clientY - rect.top) / zoom;
+      const x = (e.clientX - startX - rect.left) / zoom;
+      const y = (e.clientY - startY - rect.top) / zoom;
 
       if (!layerToMove) {
         return;
       }
+      initialX = e.clientX - startX;
+      initialY = e.clientY - startY;
 
-      layerToMove.moveTo(x, y);
+      layerToMove.moveTo(initialX / zoom, initialY / zoom);
     });
   }
   disconfigure() {

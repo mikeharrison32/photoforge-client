@@ -83,6 +83,7 @@ export class ApiService {
 
     return firstValueFrom(result);
   }
+
   createProjectByUpload(file: File) {
     const headers = new HttpHeaders().set(
       'Authorization',
@@ -129,8 +130,14 @@ export class ApiService {
     return firstValueFrom(result);
   }
   deleteProject(projectId: string) {
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${this.tokenService.getAccessToken()}`
+    );
     return firstValueFrom(
-      this.http.delete(`${environments.apiUrl}/projects/${projectId}`)
+      this.http.delete(`${environments.apiUrl}/projects/${projectId}`, {
+        headers,
+      })
     );
   }
 

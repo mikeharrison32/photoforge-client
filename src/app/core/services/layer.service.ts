@@ -14,22 +14,17 @@ import { TypeLayer } from '../layers/type-layer';
 })
 export class LayerService {
   constructor(private data: DataService) {}
-  createTypeLayer(text?: string, projectId?: string) {
-    // const displayElem = this.data.displayElem.getValue();
-    // let lastIndex =
-    //   this.data.layers.getValue().filter((lr) => lr instanceof TypeLayer)
-    //     .length + 1;
-    // const textLayer = new TypeLayer(
-    //   this.renderer,
-    //   displayElem!,
-    //   `${Math.random()}`,
-    //   'Type layer ' + lastIndex,
-    //   this.data.selectedProject.getValue()?.Id || projectId || 'aaa',
-    //   text
-    // );
-    // this.data.layers.next([...this.data.layers.getValue(), textLayer]);
-  }
 
+  newLayer(renderer: Renderer2) {
+    const layer = new PixelLayer(
+      this.data,
+      renderer,
+      `${Math.random()}`,
+      'Layer 1',
+      this.data.openedProject.getValue()?.Id || ''
+    );
+    this.data.layers.next([...this.data.layers.getValue(), layer]);
+  }
   duplicateLayer(renderer: Renderer2, layer: Layer) {
     if (layer instanceof PixelLayer) {
       const displayElem = this.data.displayElem.getValue();

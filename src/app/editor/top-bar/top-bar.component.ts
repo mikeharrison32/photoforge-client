@@ -30,5 +30,15 @@ export class TopBarComponent implements OnInit, OnDestroy {
     });
   }
 
+  zoomIn() {
+    this.data.zoom.next(this.data.zoom.getValue() + 2);
+  }
+  zoomOut() {
+    this.data.zoom.next(this.data.zoom.getValue() - 2);
+  }
+  fullZoom() {
+    this.data.zoom.next(100);
+  }
+
   ngOnDestroy(): void {}
 }

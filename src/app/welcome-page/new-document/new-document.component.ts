@@ -67,6 +67,7 @@ export class NewDocumentComponent implements OnInit {
         : template;
   }
   onCloseBtnClick(e: any) {
+    this.closeBtnClicked.emit(true);
     this.data.newMenuClick.next(false);
   }
   onCreateBtnClick(presets: ProjectPreset) {

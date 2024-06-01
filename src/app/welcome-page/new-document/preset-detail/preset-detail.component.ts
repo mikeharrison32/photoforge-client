@@ -56,7 +56,9 @@ export class PresetDetailComponent implements OnInit {
     this.advancedOptionsOpen = this.advancedOptionsOpen ? false : true;
   }
   onCloseBtnClick() {
-    this.data.newMenuClick.next(false);
+    console.log('cli');
+    this.closeBtnClicked.emit(true);
+    // this.data.newMenuClick.next(false);
   }
   onCreateBtnClick() {
     this.createBtnClicked.emit(this.presets);

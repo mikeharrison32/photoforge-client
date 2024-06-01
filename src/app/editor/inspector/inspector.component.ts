@@ -7,6 +7,7 @@ import {
   ViewChild,
   ElementRef,
   Input,
+  Renderer2,
 } from '@angular/core';
 import { DataService } from 'src/app/core/services/data.service';
 import { fabric } from 'fabric';
@@ -80,7 +81,8 @@ export class InspectorComponent implements OnInit, OnDestroy {
     private layerService: LayerService,
     private notification: NotificationService,
     private api: ApiService,
-    private adjustmentService: AdjustmentService
+    private adjustmentService: AdjustmentService,
+    private renderer: Renderer2
   ) {}
 
   ngOnInit() {
@@ -122,26 +124,8 @@ export class InspectorComponent implements OnInit, OnDestroy {
     //   this.layerService.deleteLayer(sl.Id);
     // });
   }
-  createNewLayer() {
-    this.notification.createNotification({
-      title: 'Createing a blank layer...',
-    });
-    this.api
-      .createBlankLayer(this.data.selectedProject.value?.Id!)
-      .then((res) => {
-        console.log(res);
-        this.notification.createNotification({
-          title: 'layer successfully created.',
-        });
-      })
-      .catch((err) => {
-        this.notification.createNotification({
-          title: "Couldn't create blank layer.",
-        });
-        console.log(err);
-      });
-    // this.layerService.createNewLayer('Layer', LayerType.Pixel);
-    this.notification.hideNotification();
+  newLayer() {
+    this.layerService.newLayer(this.renderer);
   }
 
   onOpacityChange(value: any) {

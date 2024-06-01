@@ -348,9 +348,7 @@ export class MenusComponent implements OnInit, OnDestroy {
   //   throw new Error('Method not implemented.');
   // }
 
-  newTypeLayer() {
-    this.layerService.createTypeLayer('Lorem Ipsum');
-  }
+  newTypeLayer() {}
   layerViaCut() {
     throw new Error('Method not implemented.');
   }

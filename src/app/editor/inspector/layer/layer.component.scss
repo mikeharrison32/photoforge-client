@@ -1,6 +1,8 @@
 @import "/src/app/variables.scss";
 
 :host {
+  width: 18rem;
+  display: flex;
 }
 
 .layer {
@@ -17,16 +19,16 @@
 .layer.selected {
   background: rgb(161 161 161 / 24%);
   .thumbnail {
-    border: solid 2px $backgourd-color-1;
+    border: solid 2px $background-color-1;
   }
   .type-layer-thumbnail {
     svg > * {
-      color: $backgourd-color-1;
+      color: $background-color-1;
     }
     .badge {
-      border: $backgourd-color-1 2px solid;
+      border: $background-color-1 2px solid;
       svg > * {
-        color: $backgourd-color-1;
+        color: $background-color-1;
       }
     }
   }

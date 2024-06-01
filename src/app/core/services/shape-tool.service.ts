@@ -22,6 +22,11 @@ export class ShapeToolService {
       }
     );
   }
+  addRect() {}
+  addEllipse() {}
+  addTriangle() {}
+  addPolygon() {}
+  addLine() {}
   disconfigure() {
     if (this.mousedownListener) {
       this.mousedownListener();

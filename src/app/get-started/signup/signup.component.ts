@@ -17,8 +17,10 @@ export class SignupComponent {
   constructor(private authService: AuthService, private router: Router) {}
   singUp() {
     //TODO:check email validation and password confirmation
+    this.loading = true;
     this.authService.signUp(this.email, this.password).subscribe({
       next: (value) => {
+        this.loading = false;
         this.router.navigateByUrl('/login');
       },
       error: (err) => {

@@ -1,5 +1,7 @@
-import { OnDestroy, Component, OnInit } from '@angular/core';
+import { OnDestroy, Component, OnInit, Renderer2 } from '@angular/core';
 import { DataService } from 'src/app/core/services/data.service';
+import { TextToolService } from 'src/app/core/services/text-tool.service';
+import { ToolService } from 'src/app/core/services/tool.service';
 import { textTool } from 'src/app/core/tools';
 import { TextToolProperties } from 'src/app/types/tool';
 
@@ -10,8 +12,18 @@ import { TextToolProperties } from 'src/app/types/tool';
 })
 export class TextToolPropertiesComponent implements OnInit, OnDestroy {
   properties?: TextToolProperties;
-  constructor(private data: DataService) {}
-  ngOnInit(): void {}
+  constructor(
+    private data: DataService,
+    private renderer: Renderer2,
+    private toolService: ToolService,
+    private textToolService: TextToolService
+  ) {}
+  ngOnInit(): void {
+    this.toolService.register(this.textToolService);
+  }
+  addText() {
+    this.textToolService.addText('Hello', this.renderer, this.data);
+  }
   selectFontStyle(value: any) {}
   selectFontFamiliy(value: any) {}
   setTextSize(value: any) {}

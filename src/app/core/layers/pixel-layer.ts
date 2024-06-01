@@ -20,13 +20,11 @@ import { Mask } from '..';
 export class PixelLayer extends Layer {
   pixels?: Uint8Array;
   src?: string;
-  width!: number;
-  height!: number;
   private fragmentShaderSource = `
   uniform sampler2D textureSampler;
   precision highp float;
   varying vec2 texCoords;
-  uniform float u_brightnees;
+  uniform float u_brightness;
   uniform float u_contrast;
   uniform float u_vibrance;
   uniform float u_saturation;
@@ -40,112 +38,95 @@ export class PixelLayer extends Layer {
   uniform float u_cb_green;
   uniform float u_cb_blue;
 
-
   uniform vec2 u_resolution;  // Canvas resolution
   uniform vec2 u_center;      // Center of the circle
   uniform float u_radius;     // Radius of the circle
 
+  vec3 adjustBrightness(vec3 color, float brightness) {
+      return color + brightness;
+  }
 
+  vec3 adjustContrast(vec3 color, float contrast) {
+      return 0.5 + (contrast + 1.0) * (color - 0.5);
+  }
 
+  void adjustVibrance(inout vec3 color, float vibrance) {
+      float average = (color.r + color.g + color.b) / 3.0;
+      float maxColor = max(max(color.r, color.g), color.b);
+      float colorVariance = maxColor - average;
+      float adjustment = (1.0 - colorVariance) * vibrance;
 
-vec3 adjustBrightness(vec3 color, float brightness) {
-    return color + brightness;
-}
+      color = mix(vec3(average), color, adjustment);
+  }
 
-vec3 adjustContrast(vec3 color, float contrast) {
-  return 0.5 + (contrast + 1.0) * (color.rgb - 0.5);
-}
+  void hueShift(inout vec3 color, float shift) {
+      float chromaMax = max(color.r, max(color.g, color.b));
+      float chromaMin = min(color.r, min(color.g, color.b));
+      float chromaDelta = chromaMax - chromaMin;
 
-// Define a function-like snippet for vibrance adjustment
-void adjustVibrance(inout vec3 color, float vibrance) {
-    float average = (color.r + color.g + color.b) / 3.0;
-    float maxColor = max(max(color.r, color.g), color.b);
-    float colorVariance = maxColor - average;
-    float adjustment = (1.0 - colorVariance) * vibrance;
+      float hue = 0.0;
+      if (chromaDelta != 0.0) {
+          if (chromaMax == color.r) {
+              hue = mod((color.g - color.b) / chromaDelta, 6.0);
+          } else if (chromaMax == color.g) {
+              hue = ((color.b - color.r) / chromaDelta) + 2.0;
+          } else {
+              hue = ((color.r - color.g) / chromaDelta) + 4.0;
+          }
+      }
+      hue = hue / 6.0;
+      hue = mod(hue + shift, 1.0);
 
-    color = mix(vec3(average), color, adjustment);
-}
+      float c = (1.0 - abs(2.0 * chromaMax - 1.0));
+      float x = c * (1.0 - abs(mod(hue * 6.0, 2.0) - 1.0));
+      float m = chromaMax - c * 0.5;
+      if (0.0 <= hue && hue < 1.0/6.0) {
+          color = vec3(c, x, 0.0);
+      } else if (1.0/6.0 <= hue && hue < 2.0/6.0) {
+          color = vec3(x, c, 0.0);
+      } else if (2.0/6.0 <= hue && hue < 3.0/6.0) {
+          color = vec3(0.0, c, x);
+      } else if (3.0/6.0 <= hue && hue < 4.0/6.0) {
+          color = vec3(0.0, x, c);
+      } else if (4.0/6.0 <= hue && hue < 5.0/6.0) {
+          color = vec3(x, 0.0, c);
+      } else {
+          color = vec3(c, 0.0, x);
+      }
+      color += vec3(m);
+  }
 
-// Define a function-like snippet for hue shifting
-void hueShift(inout vec3 color, float shift) {
-    // Convert RGB to HSL
-    float chromaMax = max(color.r, max(color.g, color.b));
-    float chromaMin = min(color.r, min(color.g, color.b));
-    float chromaDelta = chromaMax - chromaMin;
-    float hue = 0.0;
-    if (chromaDelta == 0.0) {
-        hue = 0.0;
-    } else if (chromaMax == color.r) {
-        hue = mod((color.g - color.b) / chromaDelta, 6.0);
-    } else if (chromaMax == color.g) {
-        hue = ((color.b - color.r) / chromaDelta) + 2.0;
-    } else {
-        hue = ((color.r - color.g) / chromaDelta) + 4.0;
-    }
-    hue = hue / 6.0;
-    hue = mod(hue + shift, 1.0);
+  vec3 adjustSaturation(vec3 color, float saturation) {
+      const vec3 luminanceWeighting = vec3(0.2126, 0.7152, 0.0722);
+      vec3 grayscaleColor = vec3(dot(color, luminanceWeighting));
+      return mix(grayscaleColor, color, 1.0 + saturation);
+  }
 
-    // Convert HSL back to RGB
-    float c = (1.0 - abs(2.0 * color.r - 1.0));
-    float x = c * (1.0 - abs(mod(hue * 6.0, 2.0) - 1.0));
-    float m = color.r - 0.5 * c;
-    if (0.0 <= hue && hue < 1.0/6.0) {
-        color = vec3(c, x, 0.0);
-    } else if (1.0/6.0 <= hue && hue < 2.0/6.0) {
-        color = vec3(x, c, 0.0);
-    } else if (2.0/6.0 <= hue && hue < 3.0/6.0) {
-        color = vec3(0.0, c, x);
-    } else if (3.0/6.0 <= hue && hue < 4.0/6.0) {
-        color = vec3(0.0, x, c);
-    } else if (4.0/6.0 <= hue && hue < 5.0/6.0) {
-        color = vec3(x, 0.0, c);
-    } else {
-        color = vec3(c, 0.0, x);
-    }
-    color += vec3(m);
-}
+  void adjustExposure(inout vec3 color, float exposure, float offset, float gamma) {
+      color = color * pow(2.0, exposure);
+      color += offset;
+      color = pow(color, vec3(1.0 / gamma));
+  }
 
-vec3 adjustSaturation(vec3 color, float saturation) {
-  // WCAG 2.1 relative luminance base
-  const vec3 luminanceWeighting = vec3(0.2126, 0.7152, 0.0722);
-  vec3 grayscaleColor = vec3(dot(color, luminanceWeighting));
-  return mix(grayscaleColor, color, 1.0 + saturation);
-}
+  void adjustColorBalance(inout vec3 color, float redBalance, float greenBalance, float blueBalance) {
+      color.r *= redBalance;
+      color.g *= greenBalance;
+      color.b *= blueBalance;
+  }
 
+  void main() {
+      vec4 color = texture2D(textureSampler, texCoords);
+      color.rgb = adjustBrightness(color.rgb, u_brightness);
+      color.rgb = adjustContrast(color.rgb, u_contrast);
+      color.rgb = adjustSaturation(color.rgb, u_saturation);
+      // adjustVibrance(color.rgb, u_vibrance);
+      // hueShift(color.rgb, u_hue);
+      adjustExposure(color.rgb, u_exposure, u_exposure_offset, u_gamma);
+      adjustColorBalance(color.rgb, u_cb_red, u_cb_green, u_cb_blue);
+      gl_FragColor = vec4(clamp(color.rgb, 0.0, 1.0), color.a);
+  }
+`;
 
-// Define a function-like snippet for exposure adjustment with offset and gamma correction
-void adjustExposure(inout vec3 color, float exposure, float offset, float gamma) {
-    // Apply exposure adjustment
-    color = color * pow(2.0, exposure);
-
-    // Apply offset
-    color += offset;
-
-    // Apply gamma correction
-    color = pow(color, vec3(1.0 / gamma));
-}
-
-
-// Define a function-like snippet for color balance adjustment
-void adjustColorBalance(inout vec3 color, float redBalance, float greenBalance, float blueBalance) {
-    // Apply color balance adjustment
-    color.r *= redBalance;
-    color.g *= greenBalance;
-    color.b *= blueBalance;
-}
-
-void main() {
-    vec4 color = texture2D(textureSampler, texCoords);
-    color.rgb = adjustBrightness(color.rgb, u_brightnees);
-    color.rgb = adjustContrast(color.rgb, u_contrast);
-    color.rgb = adjustSaturation(color.rgb, u_saturation);
-    //adjustVibrance(color.rgb, u_vibrance);
-    //hueShift(color.rgb, u_hue);
-    adjustExposure(color.rgb,u_exposure, u_exposure_offset, u_gamma);
-    adjustColorBalance(color.rgb, u_cb_red, u_cb_green, u_cb_blue);
-    gl_FragColor = color;
-
-}`;
   adjustmentLayers: AdjustmentLayer[] = [];
   filters = {
     brightnees: 0.0,
@@ -346,8 +327,8 @@ void main() {
   }
 
   forEachPixels(cb: (x: number, y: number) => void) {
-    for (let y = 0; y < this.height; y++) {
-      for (let x = 0; x < this.width; x++) {
+    for (let y = 0; y < this.height!; y++) {
+      for (let x = 0; x < this.width!; x++) {
         cb(x, y);
       }
     }

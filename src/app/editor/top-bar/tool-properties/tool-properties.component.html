@@ -1,6 +1,6 @@
 <app-move-tool-properties
   *ngIf="selectedToolGroup == 'sizePosition'"
-  [display]="display"
+  [display]="display.parentElement!"
 ></app-move-tool-properties>
 <app-rect-select-tool-properties
   *ngIf="selectedToolGroup == 'select'"

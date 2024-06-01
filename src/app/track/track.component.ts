@@ -37,8 +37,9 @@ export class TrackComponent implements AfterViewInit {
         return;
       }
 
+      const width = this.track!.nativeElement.clientWidth;
       const x = e.clientX - rect.left;
-      if (x < 1) {
+      if (x < 1 || x > width) {
         return;
       }
 

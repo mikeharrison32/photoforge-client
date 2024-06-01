@@ -11,7 +11,7 @@ export class HueSaturationComponent {
 
   onHueChange(value: any) {
     this.adjustmentLayer?.set({
-      hue: value * 0.5,
+      hue: value / 100,
     });
   }
   onSaturationChange(value: any) {

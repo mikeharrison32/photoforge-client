@@ -33,7 +33,7 @@ export class BrushToolService {
       'mousedown',
       (e: any) => {
         mousedown = true;
-        rect = display.getBoundingClientRect();
+        rect = display.parentElement!.getBoundingClientRect();
         zoom = this.data.zoom.getValue() / 100;
         const layers = this.data.layers.getValue();
         const selectedLayers = this.data.selectedLayers.getValue();

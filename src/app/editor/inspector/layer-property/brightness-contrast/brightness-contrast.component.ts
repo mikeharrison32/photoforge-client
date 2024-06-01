@@ -12,12 +12,12 @@ export class BrightnessContrastComponent {
   @Input() adjustementLayer?: BrightnessContrastAdjustmentLayer;
   onBrightnessChange(value: any) {
     this.adjustementLayer?.set({
-      brightness: value,
+      brightness: value / 100,
     });
   }
   onContrastChange(value: any) {
     this.adjustementLayer?.set({
-      contrast: value,
+      contrast: value / 100,
     });
   }
 }
