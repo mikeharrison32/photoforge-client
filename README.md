@@ -43,4 +43,5 @@ Now the app must be running locally, usually the url is http://localhost:4200
 # Contribution 
 
 I am really looking for contributors to finish this project.
-If you are interested please let me know.
+If you are interested contact info on my profile or just fork the repo and open a PR.
+I'm always quick to respond :)
