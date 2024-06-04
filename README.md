@@ -1,9 +1,12 @@
 <img src="./src/assets/pf-pic-2.png"/>
-# Photoforge 
+
+# Photoforge
+
 <hr />
+
 Photoforge is a an online  photo editing app, built with angular and ASP.Net Core</p>
 
-![Showcase image]('./src/assets/pf-screenshot-1.png')
+![Showcase image](./src/assets/pf-screenshot-1.png)
 
 
 # Requirements
