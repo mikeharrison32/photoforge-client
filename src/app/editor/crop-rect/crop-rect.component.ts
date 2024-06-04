@@ -8,6 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Renderer } from 'pixi.js';
+import { CropToolService } from 'src/app/core/services/crop-tool.service';
 import { DataService } from 'src/app/core/services/data.service';
 
 @Component({
@@ -31,7 +32,11 @@ export class CropRectComponent implements AfterViewInit, OnDestroy {
 
   @Input() display?: HTMLElement;
   keydownListener!: () => void;
-  constructor(private renderer: Renderer2, private data: DataService) {}
+  constructor(
+    private renderer: Renderer2,
+    private data: DataService,
+    private cropToolService: CropToolService
+  ) {}
   ngAfterViewInit(): void {
     this.initCropTool();
   }
@@ -192,6 +197,7 @@ export class CropRectComponent implements AfterViewInit, OnDestroy {
           });
 
           this.data.selectedToolGroup.next('sizePosition');
+          this.cropToolService.disconfigure();
         }
       }
     });

@@ -1,6 +1,7 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { map, pipe, tap } from 'rxjs';
+import { newDocAnimation } from 'src/app/animations';
 import { ApiService } from 'src/app/core/services/api.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { LoadingService } from 'src/app/core/services/loading.service';
@@ -9,6 +10,7 @@ import { LoadingService } from 'src/app/core/services/loading.service';
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  animations: [newDocAnimation],
 })
 export class HomeComponent implements OnInit {
   activeView: string = 'window';
@@ -83,6 +85,7 @@ export class HomeComponent implements OnInit {
     this.loadProjects();
   }
   private loadProjects() {
+    this.projects = [];
     this.api
       .getProjects()
       .pipe(map((res) => res))

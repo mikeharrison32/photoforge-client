@@ -14,7 +14,42 @@ import { TypeLayer } from '../layers/type-layer';
 })
 export class LayerService {
   constructor(private data: DataService) {}
+  deleteSelectedLayers() {
+    const newLayersArray: Layer[] = [];
+    this.data.layers.getValue().forEach((layer) => {
+      if (this.data.selectedLayers.getValue().includes(layer)) {
+        layer.remove();
+      } else {
+        newLayersArray.push(layer);
+      }
+    });
+    this.data.layers.next(newLayersArray);
+  }
+  createLayerObj(renderer: Renderer2, layer: any, blob: Blob) {
+    const reader = new FileReader();
+    let promise = new Promise((resolve, reject) => {
+      reader.onload = (e) => {
+        const img = new Image();
 
+        img.onload = () => {
+          const p_layer = new PixelLayer(
+            this.data,
+            renderer,
+            layer.id,
+            layer.name,
+            layer.projectId
+          );
+          p_layer.insertImage(img);
+          this.data.layers.next([...this.data.layers.getValue(), p_layer]);
+          resolve(p_layer);
+        };
+        img.crossOrigin = '';
+        img.src = e.target!.result as string;
+      };
+      reader.readAsDataURL(blob);
+    });
+    return promise;
+  }
   newLayer(renderer: Renderer2) {
     const layer = new PixelLayer(
       this.data,

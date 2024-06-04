@@ -12,7 +12,9 @@ export class Layer extends PfObject {
   locked: boolean = false;
   width: number = 100;
   height: number = 100;
-
+  angle = 1;
+  flipX = false;
+  flipY = false;
   constructor(
     renderer: Renderer2,
     // containerElem: HTMLElement | null,
@@ -32,6 +34,12 @@ export class Layer extends PfObject {
     this.visible = false;
     this.resizer.disable();
   }
+  setAngle(ang: number) {
+    this.angle = ang;
+    this.elem.style.transform = `rotate(${ang}deg)`;
+    this.resizer.elem.style.transform = `rotate(${ang}deg)`;
+  }
+
   hideCoreners() {}
   show() {
     this.elem.style.display = 'block';

@@ -25,6 +25,8 @@ import * as PIXI from 'pixi.js-legacy';
 import { Command } from 'src/app/core';
 import { settings } from 'src/app/settings/settings';
 import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-menus',
   templateUrl: './menus.component.html',
@@ -34,6 +36,7 @@ export class MenusComponent implements OnInit, OnDestroy {
   @ViewChild('menuOptions') menuOptions!: ElementRef;
   @ViewChild('open') open!: ElementRef;
   @ViewChild('menus') menus!: ElementRef;
+  @ViewChild('appMenu') appMenu!: ElementRef;
   @Input() display?: HTMLElement;
   selectedMenu: Menus = Menus.None;
   recentProjects: Project[] = [];
@@ -50,7 +53,8 @@ export class MenusComponent implements OnInit, OnDestroy {
     private api: ApiService,
     private notification: NotificationService,
     private renderer: Renderer2,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {}
   ngOnInit(): void {
     //TODO:
@@ -60,6 +64,15 @@ export class MenusComponent implements OnInit, OnDestroy {
     this.recentProjects = this.data.projects.getValue();
   }
 
+  @HostListener('document:click', ['$event'])
+  onClickOutsizeMenus(e: MouseEvent) {
+    if (
+      !this.menus.nativeElement.contains(e.target) ||
+      !this.appMenu.nativeElement.contains(e.target)
+    ) {
+      // this.visible = false;
+    }
+  }
   backToHome() {
     //check if the the project is saved otherwise warn the user
     this.router.navigateByUrl('/start');
@@ -90,7 +103,7 @@ export class MenusComponent implements OnInit, OnDestroy {
     this.data.newMenuClick.next(true);
   }
   closeMenu() {
-    this.selectedMenu = Menus.None;
+    this.visible = false;
   }
   openProject(project: Project) {
     this.router.navigateByUrl(`editor/${project.Id}`);
@@ -99,18 +112,26 @@ export class MenusComponent implements OnInit, OnDestroy {
 
   placeEmbedded(e: any) {
     const file = e.target.files[0];
-    const selectedProject = this.data.selectedProject.getValue();
-    if (selectedProject) {
-      this.api
-        .uploadLayer(selectedProject.Id, file)
-        .then((layer) => {
-          //reload layers
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      this.closeMenu();
+    const openedProject = this.data.openedProject.getValue();
+    if (!openedProject) {
+      return;
     }
+    this.api
+      .uploadLayer(openedProject.Id, file)
+      .then((layer: any) => {
+        console.log(layer);
+
+        const imageResult = firstValueFrom(
+          this.http.get(layer.url, { responseType: 'blob' })
+        );
+        imageResult.then((res: Blob) => {
+          this.layerService.createLayerObj(this.renderer, layer, res);
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.closeMenu();
   }
   clearProject() {}
   pasteObj() {
@@ -157,7 +178,7 @@ export class MenusComponent implements OnInit, OnDestroy {
       this.renderer,
       `${Math.random()}`,
       'Layer 1',
-      selectedProject?.Id || 'aaa'
+      this.data.openedProject.getValue()?.Id || 'aaa'
     );
     layer.setWidth(this.display?.clientWidth || 200);
     layer.setHeight(this.display?.clientHeight || 200);
@@ -169,16 +190,6 @@ export class MenusComponent implements OnInit, OnDestroy {
       ...this.data.selectedLayers.getValue(),
       layer,
     ]);
-
-    const undoCommand = new Command();
-    undoCommand.execute = () => {
-      layer.canvas?.remove();
-      this.data.layers
-        .getValue()
-        .splice(this.data.layers.getValue().indexOf(layer));
-      // this.data.layers.next(newLayers);
-    };
-    this.data.history.getValue().undoStack.push(undoCommand);
   }
   addFilter(filter: Filter) {
     // this.layer.addFilter(filter);

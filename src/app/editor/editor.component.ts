@@ -43,7 +43,6 @@ import { TokenService } from '../core/services/token.service';
   selector: 'app-editor',
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.scss'],
-  // encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedLayers: Layer[] = [];
@@ -173,28 +172,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           );
           imageResult
             .then((res: Blob) => {
-              const reader = new FileReader();
-              reader.onload = (e) => {
-                const img = new Image();
-
-                img.onload = () => {
-                  const player = new PixelLayer(
-                    this.data,
-                    this.renderer,
-                    layer.id,
-                    layer.name,
-                    layer.projectId
-                  );
-                  player.insertImage(img);
-                  this.data.layers.next([
-                    ...this.data.layers.getValue(),
-                    player,
-                  ]);
-                };
-                img.crossOrigin = '';
-                img.src = e.target!.result as string;
-              };
-              reader.readAsDataURL(res);
+              this.layerService.createLayerObj(this.renderer, layer, res);
             })
             .then(() => {
               this.data.layers.getValue().forEach((layer) => {
@@ -474,15 +452,7 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy {
           const selection = this.data.currentSelection.getValue();
           if (selection) {
           } else {
-            const newLayersArray: Layer[] = [];
-            this.data.layers.getValue().forEach((layer) => {
-              if (this.selectedLayers.includes(layer)) {
-                layer.remove();
-              } else {
-                newLayersArray.push(layer);
-              }
-            });
-            this.data.layers.next(newLayersArray);
+            this.layerService.deleteSelectedLayers();
           }
           break;
         case 'Equal':

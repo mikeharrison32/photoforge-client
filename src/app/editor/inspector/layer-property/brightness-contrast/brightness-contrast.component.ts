@@ -11,6 +11,7 @@ import { PixelLayer } from 'src/app/core/layers/pixel-layer';
 export class BrightnessContrastComponent {
   @Input() adjustementLayer?: BrightnessContrastAdjustmentLayer;
   onBrightnessChange(value: any) {
+    console.log(value);
     this.adjustementLayer?.set({
       brightness: value / 100,
     });

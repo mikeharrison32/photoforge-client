@@ -80,6 +80,8 @@ export class Resizer {
   }
   update() {
     const zoom = this.data.zoom.getValue() / 100;
+    const targetRect = this.targetObject.getBoundingClientRect();
+    // this.moveTo(targetRect.left * zoom, targetRect.top * zoom);
     this.setWidth(this.targetObject.clientWidth * zoom);
     this.setHeight(this.targetObject.clientHeight * zoom);
   }
@@ -111,7 +113,6 @@ export class Resizer {
     this.enabled = false;
   }
   enable() {
-    console.log('enabling');
     this.elem.style.display = 'block';
     this.update();
     this.updateCorners();

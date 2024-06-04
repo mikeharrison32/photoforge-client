@@ -20,6 +20,7 @@ export class BrightnessContrastAdjustmentLayer extends AdjustmentLayer {
   set(options: IBrightnessContrastAdjustmentLayerOptions) {
     if (options.brightness) {
       this.pl!.filters.brightnees = options.brightness;
+      console.log('bright');
     }
 
     if (options.contrast) {

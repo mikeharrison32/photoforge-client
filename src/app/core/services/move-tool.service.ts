@@ -70,8 +70,10 @@ export class MoveToolService {
     const selectedLayers = this.data.selectedLayers.getValue();
     selectedLayers.forEach((layer) => {
       const display = this.data.displayElem.getValue();
-      layer.elem.style.top =
-        display!.clientHeight / 2 - layer.elem.clientHeight / 2 + 'px';
+      layer.moveTo(
+        layer.x,
+        display!.clientHeight / 2 - layer.elem.clientHeight / 2
+      );
     });
   }
   centerSelectedObjHorizontal() {
@@ -80,22 +82,24 @@ export class MoveToolService {
     selectedLayers.forEach((layer) => {
       const display = this.data.displayElem.getValue();
 
-      layer.elem.style.left =
-        display!.clientWidth / 2 - layer.elem.clientWidth / 2 + 'px';
+      layer.moveTo(
+        display!.clientWidth / 2 - layer.elem.clientWidth / 2,
+        layer.y
+      );
     });
   }
   alignTop() {
     const selectedLayers = this.data.selectedLayers.getValue();
 
     selectedLayers.forEach((layer) => {
-      layer.elem.style.top = '0px';
+      layer.moveTo(layer.x, 0);
     });
   }
   alignLeft() {
     const selectedLayers = this.data.selectedLayers.getValue();
 
     selectedLayers.forEach((layer) => {
-      layer.elem.style.left = '0px';
+      layer.moveTo(0, layer.y);
     });
   }
   alignRight() {
@@ -112,8 +116,11 @@ export class MoveToolService {
     const selectedLayers = this.data.selectedLayers.getValue();
 
     selectedLayers.forEach((layer) => {
-      layer.elem.style.top =
-        display!.clientHeight - layer.elem.clientHeight + 'px';
+      layer.moveTo(
+        layer.x,
+
+        display!.clientHeight - layer.elem.clientHeight
+      );
     });
   }
 }

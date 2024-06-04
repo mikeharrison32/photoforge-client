@@ -2,26 +2,42 @@
   <div class="row">
     <div class="row-item">
       <span>W</span>
-      <app-input class="input"></app-input>
+      <app-input
+        class="input"
+        [Value]="selectedLayer.width"
+        (onInputChange)="onWidthChange($event)"
+      ></app-input>
     </div>
     <div class="row-item">
       <span>H</span>
-      <app-input class="input"></app-input>
+      <app-input
+        class="input"
+        [Value]="selectedLayer.height"
+        (onInputChange)="onHeightChange($event)"
+      ></app-input>
     </div>
   </div>
   <div class="row">
     <div class="row-item">
       <span>X</span>
-      <app-input class="input"></app-input>
+      <app-input
+        class="input"
+        [Value]="selectedLayer.x"
+        (onInputChange)="onXChange($event)"
+      ></app-input>
     </div>
     <div class="row-item">
       <span>Y</span>
-      <app-input class="input"></app-input>
+      <app-input
+        class="input"
+        [Value]="selectedLayer.y"
+        (onInputChange)="onYChange($event)"
+      ></app-input>
     </div>
   </div>
 
   <div class="icons">
-    <div class="icon">
+    <div class="icon" (click)="rotate('left')">
       <svg
         role="img"
         fill="currentColor"
@@ -39,7 +55,7 @@
         ></path>
       </svg>
     </div>
-    <div class="icon">
+    <div class="icon" (click)="rotate('right')">
       <svg
         role="img"
         fill="currentColor"
@@ -57,7 +73,7 @@
         ></path>
       </svg>
     </div>
-    <div class="icon">
+    <div class="icon" (click)="flipX()">
       <svg
         role="img"
         fill="currentColor"
@@ -143,7 +159,7 @@
         ></path>
       </svg>
     </div>
-    <div class="icon">
+    <div class="icon" (click)="flipY()">
       <svg
         role="img"
         fill="currentColor"

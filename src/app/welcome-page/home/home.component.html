@@ -95,7 +95,7 @@
   </div>
 </div>
 
-<div class="delete-warning" *ngIf="deleteProjectWarn">
+<div class="delete-warning" *ngIf="deleteProjectWarn" @newDocAnim>
   <h2>
     Are you sure you want to delete
     <span *ngIf="selectedProjects.length > 1">these projects?</span>

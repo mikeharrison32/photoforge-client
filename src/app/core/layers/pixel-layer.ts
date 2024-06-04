@@ -1,22 +1,8 @@
-import { hueRotate } from '../filters/hue-rotate';
-import { rgbaFormatter } from '../rgba-formater';
 import { Layer } from './layer';
-import { IColorRGBA } from 'src/app/types/color';
-import { vibrance } from '../filters/vibrance';
 import { AdjustmentLayer } from './adjustment/adjustment_layer';
-import { BrightnessContrastAdjustmentLayer } from './adjustment/brightness_contrast';
-import {
-  createProgram,
-  drawImage,
-  drawRectangle,
-  getPixels,
-  insertPixels,
-} from 'src/app/core/utils/webglUtils';
-import * as PIXI from 'pixi.js-legacy';
-import { applyBrightneesFromProgram } from '../filters';
+import { drawImage } from 'src/app/core/utils/webglUtils';
 import { Renderer2 } from '@angular/core';
 import { DataService } from '../services/data.service';
-import { Mask } from '..';
 export class PixelLayer extends Layer {
   pixels?: Uint8Array;
   src?: string;
@@ -50,51 +36,64 @@ export class PixelLayer extends Layer {
       return 0.5 + (contrast + 1.0) * (color - 0.5);
   }
 
-  void adjustVibrance(inout vec3 color, float vibrance) {
-      float average = (color.r + color.g + color.b) / 3.0;
-      float maxColor = max(max(color.r, color.g), color.b);
-      float colorVariance = maxColor - average;
-      float adjustment = (1.0 - colorVariance) * vibrance;
+void adjustVibrance(inout vec3 color, float vibrance) {
+    float maxColor = max(color.r, max(color.g, color.b));
+    float minColor = min(color.r, min(color.g, color.b));
+    float l = (maxColor + minColor) / 2.0;
+    float s = maxColor - minColor;
 
-      color = mix(vec3(average), color, adjustment);
-  }
+    if (s > 0.0) {
+        float multiplier = (1.0 + vibrance) * l / (1.0 + vibrance * (1.0 - l));
+        color.rgb = mix(vec3(l), color.rgb, multiplier);
+    }
+}
 
-  void hueShift(inout vec3 color, float shift) {
-      float chromaMax = max(color.r, max(color.g, color.b));
-      float chromaMin = min(color.r, min(color.g, color.b));
-      float chromaDelta = chromaMax - chromaMin;
 
-      float hue = 0.0;
-      if (chromaDelta != 0.0) {
-          if (chromaMax == color.r) {
-              hue = mod((color.g - color.b) / chromaDelta, 6.0);
-          } else if (chromaMax == color.g) {
-              hue = ((color.b - color.r) / chromaDelta) + 2.0;
-          } else {
-              hue = ((color.r - color.g) / chromaDelta) + 4.0;
-          }
-      }
-      hue = hue / 6.0;
-      hue = mod(hue + shift, 1.0);
+void hueShift(inout vec3 color, float shift) {
+    float chromaMax = max(color.r, max(color.g, color.b));
+    float chromaMin = min(color.r, min(color.g, color.b));
+    float chromaDelta = chromaMax - chromaMin;
 
-      float c = (1.0 - abs(2.0 * chromaMax - 1.0));
-      float x = c * (1.0 - abs(mod(hue * 6.0, 2.0) - 1.0));
-      float m = chromaMax - c * 0.5;
-      if (0.0 <= hue && hue < 1.0/6.0) {
-          color = vec3(c, x, 0.0);
-      } else if (1.0/6.0 <= hue && hue < 2.0/6.0) {
-          color = vec3(x, c, 0.0);
-      } else if (2.0/6.0 <= hue && hue < 3.0/6.0) {
-          color = vec3(0.0, c, x);
-      } else if (3.0/6.0 <= hue && hue < 4.0/6.0) {
-          color = vec3(0.0, x, c);
-      } else if (4.0/6.0 <= hue && hue < 5.0/6.0) {
-          color = vec3(x, 0.0, c);
-      } else {
-          color = vec3(c, 0.0, x);
-      }
-      color += vec3(m);
-  }
+    float hue = 0.0;
+    float saturation = 0.0;
+    float lightness = (chromaMax + chromaMin) / 2.0;
+
+    if (chromaDelta != 0.0) {
+        saturation = chromaDelta / (1.0 - abs(2.0 * lightness - 1.0));
+
+        if (chromaMax == color.r) {
+            hue = mod((color.g - color.b) / chromaDelta, 6.0);
+        } else if (chromaMax == color.g) {
+            hue = ((color.b - color.r) / chromaDelta) + 2.0;
+        } else {
+            hue = ((color.r - color.g) / chromaDelta) + 4.0;
+        }
+    }
+    
+    hue = hue / 6.0;
+    hue = mod(hue + shift, 1.0);
+
+    float c = (1.0 - abs(2.0 * lightness - 1.0)) * saturation;
+    float x = c * (1.0 - abs(mod(hue * 6.0, 2.0) - 1.0));
+    float m = lightness - c / 2.0;
+
+    if (0.0 <= hue && hue < 1.0/6.0) {
+        color = vec3(c, x, 0.0);
+    } else if (1.0/6.0 <= hue && hue < 2.0/6.0) {
+        color = vec3(x, c, 0.0);
+    } else if (2.0/6.0 <= hue && hue < 3.0/6.0) {
+        color = vec3(0.0, c, x);
+    } else if (3.0/6.0 <= hue && hue < 4.0/6.0) {
+        color = vec3(0.0, x, c);
+    } else if (4.0/6.0 <= hue && hue < 5.0/6.0) {
+        color = vec3(x, 0.0, c);
+    } else {
+        color = vec3(c, 0.0, x);
+    }
+    
+    color += vec3(m);
+}
+
 
   vec3 adjustSaturation(vec3 color, float saturation) {
       const vec3 luminanceWeighting = vec3(0.2126, 0.7152, 0.0722);
@@ -120,7 +119,7 @@ export class PixelLayer extends Layer {
       color.rgb = adjustContrast(color.rgb, u_contrast);
       color.rgb = adjustSaturation(color.rgb, u_saturation);
       // adjustVibrance(color.rgb, u_vibrance);
-      // hueShift(color.rgb, u_hue);
+      hueShift(color.rgb, u_hue);
       adjustExposure(color.rgb, u_exposure, u_exposure_offset, u_gamma);
       adjustColorBalance(color.rgb, u_cb_red, u_cb_green, u_cb_blue);
       gl_FragColor = vec4(clamp(color.rgb, 0.0, 1.0), color.a);
@@ -255,7 +254,7 @@ export class PixelLayer extends Layer {
   private updateFilters(program: WebGLProgram) {
     const brightneesUniformLocation = this.gl?.getUniformLocation(
       program,
-      'u_brightnees'
+      'u_brightness'
     );
     const contrastUniformLocation = this.gl?.getUniformLocation(
       program,

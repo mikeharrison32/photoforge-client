@@ -120,9 +120,7 @@ export class InspectorComponent implements OnInit, OnDestroy {
   }
 
   deleteLayer() {
-    // this.selectedLayers.forEach((sl) => {
-    //   this.layerService.deleteLayer(sl.Id);
-    // });
+    this.layerService.deleteSelectedLayers();
   }
   newLayer() {
     this.layerService.newLayer(this.renderer);

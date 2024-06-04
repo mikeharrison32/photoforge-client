@@ -10,17 +10,17 @@ export class ExposureComponent {
   @Input() adjustmentLayer?: Exposure;
   onExposureChange(value: any) {
     this.adjustmentLayer?.set({
-      exposure: value,
+      exposure: value / 100,
     });
   }
   onExposureOffsetChange(value: any) {
     this.adjustmentLayer?.set({
-      offset: value,
+      offset: value / 100,
     });
   }
   onExposureGammaCorrectionChange(value: any) {
     this.adjustmentLayer?.set({
-      gammaCorrection: value,
+      gammaCorrection: value / 100,
     });
   }
 }
