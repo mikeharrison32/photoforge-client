@@ -3,6 +3,8 @@
 <hr />
 Photoforge is a an online  photo editing app, built with angular and ASP.Net Core</p>
 
+![showcase video]('./src/assets/showcase-1 - Made with ClipChamp.mp4')
+
 
 # Requirements
 
